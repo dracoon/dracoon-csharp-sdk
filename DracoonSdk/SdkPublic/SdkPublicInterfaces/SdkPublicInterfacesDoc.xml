@@ -1,0 +1,1219 @@
+﻿<docs>
+  <members name="iAccount">
+    <IAccount>
+      <summary>
+        Handler to query and update the user account.
+      </summary>
+    </IAccount>
+    <GetUserAccount>
+      <summary>
+        Retrieves user account information.
+      </summary>
+      <returns>
+        user account information. See also <seealso cref="Dracoon.Sdk.Model.UserAccount"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+    </GetUserAccount>
+    <GetCustomerAccount>
+      <summary>
+        Retrieves customer account information.
+      </summary>
+      <returns>
+        customer account information. See also <seealso cref="Dracoon.Sdk.Model.CustomerAccount"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+    </GetCustomerAccount>
+    <SetUserKeyPair>
+      <summary>
+        Sets the user's encryption key pair.
+      </summary>
+      <exception cref="Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="Error.DracoonCryptoException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/DracoonCryptoException/*'/>
+      </exception>
+    </SetUserKeyPair>
+    <CheckUserKeyPairPassword>
+      <summary>
+        Checks if the user's encryption key pair can be unlocked with the provided encryption password.
+      </summary>
+      <returns>
+        <c>true</c> if key pair could be unlocked, <c>false</c> otherwise
+      </returns>
+      <exception cref="Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="Error.DracoonCryptoException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/DracoonCryptoException/*'/>
+      </exception>
+    </CheckUserKeyPairPassword>
+    <DeleteUserKeyPair>
+      <summary>
+        Deletes the user's encryption key pair.
+      </summary>
+      <exception cref="Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+    </DeleteUserKeyPair>
+    <ValidateTokenValidity>
+      <summary>
+        Checks if the current token is still valid.
+      </summary>
+      <exception cref="Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+    </ValidateTokenValidity>
+  </members>
+
+  <members name="iLog">
+    <Tag>
+      <summary>
+        Used to identify the source of the log message (Class name).
+      </summary>
+    </Tag>
+    <Message>
+      <summary>
+        The message you can log.
+      </summary>
+    </Message>
+    <Exception>
+      <summary>
+        An exception cause for this log.
+      </summary>
+    </Exception>
+    <ILog>
+      <summary>
+        ILog is the interface for custom logger implementations of the DRACOON SDK.
+        <para>
+          A custom logger can be set via the DracoonClient constructor (<see cref="Dracoon.Sdk.DracoonClient.DracoonClient(Uri, DracoonAuth, string, ILog, DracoonHttpConfig)"/>).
+        </para>
+      </summary>
+    </ILog>
+    <DebugOne>
+      <summary>
+        Writes a DEBUG log message.
+      </summary>
+      <param name="tag">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Tag/*'/>
+      </param>
+      <param name="message">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Message/*'/>
+      </param>
+    </DebugOne>
+    <DebugTwo>
+      <summary>
+        Writes a DEBUG log message.
+      </summary>
+      <param name="tag">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Tag/*'/>
+      </param>
+      <param name="message">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Message/*'/>
+      </param>
+      <param name="e">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Exception/*'/>
+      </param>
+    </DebugTwo>
+    <InfoOne>
+      <summary>
+        Writes a INFO log message.
+      </summary>
+      <param name="tag">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Tag/*'/>
+      </param>
+      <param name="message">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Message/*'/>
+      </param>
+    </InfoOne>
+    <InfoTwo>
+      <summary>
+        Writes a INFO log message.
+      </summary>
+      <param name="tag">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Tag/*'/>
+      </param>
+      <param name="message">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Message/*'/>
+      </param>
+      <param name="e">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Exception/*'/>
+      </param>
+    </InfoTwo>
+    <WarnOne>
+      <summary>
+        Writes a WARN log message.
+      </summary>
+      <param name="tag">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Tag/*'/>
+      </param>
+      <param name="message">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Message/*'/>
+      </param>
+    </WarnOne>
+    <WarnTwo>
+      <summary>
+        Writes a WARN log message.
+      </summary>
+      <param name="tag">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Tag/*'/>
+      </param>
+      <param name="message">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Message/*'/>
+      </param>
+      <param name="e">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Exception/*'/>
+      </param>
+    </WarnTwo>
+    <ErrorOne>
+      <summary>
+        Writes a Error log message.
+      </summary>
+      <param name="tag">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Tag/*'/>
+      </param>
+      <param name="message">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Message/*'/>
+      </param>
+    </ErrorOne>
+    <ErrorTwo>
+      <summary>
+        Writes a Error log message.
+      </summary>
+      <param name="tag">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Tag/*'/>
+      </param>
+      <param name="message">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Message/*'/>
+      </param>
+      <param name="e">
+        <include file="SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/Exception/*'/>
+      </param>
+    </ErrorTwo>
+  </members>
+
+  <members name="iNodes">
+
+    <INodes>
+      <summary>
+        Handler to perform node actions.
+      </summary>
+    </INodes>
+
+    <GetNodes>
+      <summary>
+        Retrieves child nodes of a node. <para/>
+        Use <paramref name="parentNodeId"/> = 0 to retrieve root nodes.
+      </summary>
+      <param name="parentNodeId">
+        The ID of the parent node. (ID must be 0 or positive)
+      </param>
+      <param name="offset">
+        The range offset. (Zero-based index; must be 0 or positive if set)
+      </param>
+      <param name="limit">
+        The range limit. (Number of returned records; must be positive if set)
+      </param>
+      <param name="filter">
+        The filter for the request result. See also <seealso cref="Dracoon.Sdk.Filter.GetNodesFilter"/>
+      </param>
+      <returns>
+        List of nodes. See also <seealso cref="Dracoon.Sdk.Model.NodeList"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </GetNodes>
+
+    <GetNodeId>
+      <summary>
+        Retrieves a single node by id.
+      </summary>
+      <param name="nodeId">
+        The ID of the node. (ID must be positive)
+      </param>
+      <returns>
+        The node. See also <seealso cref="Dracoon.Sdk.Model.Node"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </GetNodeId>
+
+    <GetNodePath>
+      <summary>
+        Retrieves a single node by path. <para/>
+        Use <paramref name="nodePath"/> = "/" to retrieve root nodes.
+      </summary>
+      <param name="nodePath">
+        The path of the node.
+      </param>
+      <returns>
+        The node. See also <seealso cref="Dracoon.Sdk.Model.Node"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </GetNodePath>
+
+    <DeleteNodes>
+      <summary>
+        Deletes nodes.
+      </summary>
+      <param name="request">
+        The request with IDs of nodes which should be deleted. See also <seealso cref="Dracoon.Sdk.Model.DeleteNodesRequest"/>
+      </param>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </DeleteNodes>
+
+    <CopyNodes>
+      <summary>
+        Copies nodes.
+      </summary>
+      <param name="request">
+        The request with the nodes which should be copied. See also <seealso cref="Dracoon.Sdk.Model.CopyNodesRequest"/>
+      </param>
+      <returns>
+        The updated parent node. See also <seealso cref="Dracoon.Sdk.Model.Node"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </CopyNodes>
+
+    <MoveNodes>
+      <summary>
+        Moves nodes.
+      </summary>
+      <param name="request">
+        The request with the nodes which should be moved. See also <seealso cref="Dracoon.Sdk.Model.MoveNodesRequest"/>
+      </param>
+      <returns>
+        The updated parent node. See also <seealso cref="Dracoon.Sdk.Model.Node"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </MoveNodes>
+
+    <CreateRoom>
+      <summary>
+        Creates a new room.
+      </summary>
+      <param name="request">
+        The request with the informations about the new room. See also <seealso cref="Dracoon.Sdk.Model.CreateRoomRequest"/>
+      </param>
+      <returns>
+        The new node. See also <seealso cref="Dracoon.Sdk.Model.Node"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </CreateRoom>
+
+    <UpdateRoom>
+      <summary>
+        Updates a room.
+      </summary>
+      <param name="request">
+        The request with the updated informations about the room. See also <seealso cref="Dracoon.Sdk.Model.UpdateRoomRequest"/>
+      </param>
+      <returns>
+        The updated node. See also <seealso cref="Dracoon.Sdk.Model.Node"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </UpdateRoom>
+
+    <EnableRoomEncryption>
+      <summary>
+        Enables the encryption for a room.
+      </summary>
+      <param name="request">
+        The request with the encryption informations about the room. See also <seealso cref="Dracoon.Sdk.Model.EnableRoomEncryptionRequest"/>
+      </param>
+      <returns>
+        The updated room node. See also <seealso cref="Dracoon.Sdk.Model.Node"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </EnableRoomEncryption>
+
+    <CreateFolder>
+      <summary>
+        Creates a new folder.
+      </summary>
+      <param name="request">
+        The request with the informations about the new folder. See also <seealso cref="Dracoon.Sdk.Model.CreateFolderRequest"/>
+      </param>
+      <returns>
+        The new node. See also <seealso cref="Dracoon.Sdk.Model.Node"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </CreateFolder>
+
+    <UpdateFolder>
+      <summary>
+        Updates a folder.
+      </summary>
+      <param name="request">
+        The request with the updated informations about the folder. See also <seealso cref="Dracoon.Sdk.Model.UpdateFolderRequest"/>
+      </param>
+      <returns>
+        The updated node. See also <seealso cref="Dracoon.Sdk.Model.Node"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </UpdateFolder>
+
+    <UpdateFile>
+      <summary>
+        Updates a file.
+      </summary>
+      <param name="request">
+        The request with the updated infromations about the file. See also <seealso cref="Dracoon.Sdk.Model.UpdateFileRequest"/>
+      </param>
+      <returns>
+        The updated node. See also <seealso cref="Dracoon.Sdk.Model.Node"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </UpdateFile>
+
+    <UploadFile>
+      <summary>
+        Uploads a file.
+      </summary>
+      <param name="actionId">
+        A ID for the upload. (This ID can be used to keep a reference)
+      </param>
+      <param name="request">
+        The request with the informations about the file. See also <seealso cref="Dracoon.Sdk.Model.FileUploadRequest"/>
+      </param>
+      <param name="input">
+        A stream of the file.
+      </param>
+      <param name="fileSize">
+        The size of the file which will be uploaded (if known).
+      </param>
+      <param name="callback">
+        A informations callback if it's required. See also <seealso cref="Dracoon.Sdk.Model.IFileUploadCallback"/>
+      </param>
+      <returns>
+        The new node. See also <seealso cref="Dracoon.Sdk.Model.Node"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonCryptoException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/DracoonCryptoException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonFileIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonFileIOException"]/DracoonFileIOException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetInsecureException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetInsecureException"]/DracoonNetInsecureException/*'/>
+      </exception>
+    </UploadFile>
+
+    <StartUploadFileAsync>
+      <summary>
+        Starts an asynchronous file upload.
+      </summary>
+      <param name="actionId">
+        A ID for the upload. (This ID can be used to keep a reference)
+      </param>
+      <param name="request">
+        The request with the informations about the file. See also <seealso cref="Dracoon.Sdk.Model.FileUploadRequest"/>
+      </param>
+      <param name="input">
+        A stream of the file.
+      </param>
+      <param name="fileSize">
+        The size of the file which will be uploaded (if known).
+      </param>
+      <param name="callback">
+        A informations callback if it's required. See also <seealso cref="Dracoon.Sdk.Model.IFileUploadCallback"/>
+      </param>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonCryptoException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/DracoonCryptoException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonFileIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonFileIOException"]/DracoonFileIOException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetInsecureException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetInsecureException"]/DracoonNetInsecureException/*'/>
+      </exception>
+    </StartUploadFileAsync>
+
+    <CancelUploadFileAsync>
+      <summary>
+        Cancels an asynchronous file upload.
+      </summary>
+      <param name="actionId">
+        The ID of the upload.
+      </param>
+    </CancelUploadFileAsync>
+
+    <DownloadFile>
+      <summary>
+        Downloads a file.
+      </summary>
+      <param name="actionId">
+        A ID for the download. (This ID can be used to keep a reference)
+      </param>
+      <param name="nodeId">
+        The ID of the node which should be downloaded.
+      </param>
+      <param name="output">
+        A stream were the file can be written.
+      </param>
+      <param name="callback">
+        A informations callback if it's required. See also <seealso cref="Dracoon.Sdk.Model.IFileDownloadCallback"/>
+      </param>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonCryptoException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/DracoonCryptoException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonFileIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonFileIOException"]/DracoonFileIOException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetInsecureException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetInsecureException"]/DracoonNetInsecureException/*'/>
+      </exception>
+    </DownloadFile>
+
+    <StartDownloadFileAsync>
+      <summary>
+        Starts an asynchronous file download.
+      </summary>
+      <param name="actionId">
+        A ID for the download. (This ID can be used to keep a reference)
+      </param>
+      <param name="nodeId">
+        The ID of the node which should be downloaded.
+      </param>
+      <param name="output">
+        A stream were the file can be written.
+      </param>
+      <param name="callback">
+        A informations callback if it's required. See also <seealso cref="Dracoon.Sdk.Model.IFileDownloadCallback"/>
+      </param>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonCryptoException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/DracoonCryptoException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonFileIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonFileIOException"]/DracoonFileIOException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetInsecureException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetInsecureException"]/DracoonNetInsecureException/*'/>
+      </exception>
+    </StartDownloadFileAsync>
+
+    <CancelDownloadFileAsync>
+      <summary>
+        Cancles an asynchronous file download.
+      </summary>
+      <param name="actionId">
+        The ID of the upload.
+      </param>
+    </CancelDownloadFileAsync>
+
+    <SearchNodes>
+      <summary>
+        Searches child nodes of <paramref name="parentNodeId"/> by their name.<para/>
+        Use <paramref name="parentNodeId"/> = 0 to search in all root nodes.
+      </summary>
+      <param name="searchString">
+        The search string. (Search string must not null or empty)
+      </param>
+      <param name="parentNodeId">
+        The ID of the parent node. (ID must be 0 or positive)
+      </param>
+      <param name="offset">
+        The range offset. (Zero-based index; must be 0 or positive if set)
+      </param>
+      <param name="limit">
+        The range limit. (Number of returned records; must be positive if set)
+      </param>
+      <param name="filter">
+        The filter for the request result. See also <seealso cref="Dracoon.Sdk.Filter.SearchNodesFilter"/>
+      </param>
+      <param name="sort">
+        The sort for the request result. See also <seealso cref="Dracoon.Sdk.Sort.SearchNodesSort"/>
+      </param>
+      <returns>
+        List of nodes. See also <seealso cref="Dracoon.Sdk.Model.NodeList"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </SearchNodes>
+
+    <GenerateMissingFileKeys>
+      <summary>
+        Generates file keys for files with missing file keys.
+      </summary>
+      <param name="nodeId">
+        The node ID for which the files keys should be generated.
+      </param>
+      <param name="limit">
+        The maximum file keys which should be generated in one call.
+      </param>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </GenerateMissingFileKeys>
+
+    <SetNodeAsFavorite>
+      <summary>
+        Add a node the own favorites list.
+      </summary>
+      <param name="nodeId">
+        The node which should be added to the favorites.
+      </param>
+      <returns>
+        The updated node. See also <seealso cref="Dracoon.Sdk.Model.Node"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </SetNodeAsFavorite>
+
+    <DeleteNodeFromFavorites>
+      <summary>
+        Remove a node from the own favorites list.
+      </summary>
+      <param name="nodeId">
+        The node which should be remove from the favorites.
+      </param>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </DeleteNodeFromFavorites>
+
+    <GetRecycleBinItems>
+      <summary>
+        Retrieves the recycle bin for a given room.
+      </summary>
+      <param name="parentRoomId">
+        The id of the room for which the recycle bin should be requested.
+      </param>
+      <param name="offset">
+        The range offset. (Zero-based index; must be 0 or positive if set)
+      </param>
+      <param name="limit">
+        The range limit. (Number of returned records; must be positive if set)
+      </param>
+      <returns>
+        List of nodes in the recycle bin. See also <seealso cref="Dracoon.Sdk.Model.RecycleBinItem"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </GetRecycleBinItems>
+
+    <EmptyRecycleBin>
+      <summary>
+        Clear the recycle bin for a given room completely.
+      </summary>
+      <param name="parentRoomId">
+        The room id for which the recycle bin should be cleared.
+      </param>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </EmptyRecycleBin>
+
+    <GetPreviousVersions>
+      <summary>
+        Get the previous (old) versions of a requested node.
+      </summary>
+      <param name="parentId">
+        The parent id of the requested node.
+      </param>
+      <param name="type">
+        The type of the requested node.
+      </param>
+      <param name="nodeName">
+        The name of the requested node.
+      </param>
+      <param name="offset">
+        The range offset. (Zero-based index; must be 0 or positive if set)
+      </param>
+      <param name="limit">
+        The range limit. (Number of returned records; must be positive if set)
+      </param>
+      <returns>
+        The previous (old) versions of the requested node.
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </GetPreviousVersions>
+
+    <GetPreviousVersion>
+      <summary>
+        Get a single previous (old) version of a node.
+      </summary>
+      <param name="previousNodeId">
+        The id of the previous (old) version of the node.
+      </param>
+      <returns>
+        The version info of the requrested previous (old) version.
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </GetPreviousVersion>
+
+    <RestorePreviousVersion>
+      <summary>
+        Restore previous (old) versions of a node.
+      </summary>
+      <param name="request">
+        The request with the informations about the restore. See also <seealso cref="Dracoon.Sdk.Model.RestorePreviousVersionsRequest"/>
+      </param>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </RestorePreviousVersion>
+
+    <DeletePreviousVersions>
+      <summary>
+        Finally delete some previous (old) verisons of a node.
+      </summary>
+      <param name="request">
+        The request with the informations about the deletion. See also <seealso cref="Dracoon.Sdk.Model.DeletePreviousVersionsRequest"/>
+      </param>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </DeletePreviousVersions>
+
+  </members>
+
+  <members name="iServer">
+
+    <IServer>
+      <summary>
+        Handler to query server informations.
+      </summary>
+    </IServer>
+
+    <GetVersion>
+      <summary>
+        Retrieves the server's version.
+      </summary>
+      <returns>
+        The server version.
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+    </GetVersion>
+
+    <GetTime>
+      <summary>
+        Retrieves the server's time.
+      </summary>
+      <returns>
+        The server time.
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+    </GetTime>
+
+    <ServerSettings>
+      <summary>
+        Handler to query server configuration informations.
+        <para>
+          See also <seealso cref="Dracoon.Sdk.IServerSettings"/>
+        </para>
+      </summary>
+    </ServerSettings>
+
+  </members>
+
+  <members name="iServerSettings">
+
+    <IServerSettings>
+      <summary>
+        Handler to query server settings information.
+      </summary>
+    </IServerSettings>
+
+    <GetGeneral>
+      <summary>
+        Retrieves the server's general settings.
+      </summary>
+      <returns>
+        The server general settings. See also <seealso cref="Dracoon.Sdk.Model.ServerGeneralSettings"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+    </GetGeneral>
+
+    <GetInfrastructure>
+      <summary>
+        Retrieves the server's infrastructure settings.
+      </summary>
+      <returns>
+        The server infrastructure settings. See also <seealso cref="Dracoon.Sdk.Model.ServerInfrastructureSettings"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+    </GetInfrastructure>
+
+    <GetDefault>
+      <summary>
+        Retrieves the server's default settings (a server defined default for e.g. the expiration period of a download share if the share expires, <see cref="Dracoon.Sdk.Model.CreateDownloadShareRequest.Expiration"/>).
+      </summary>
+      <returns>
+        The server default settings. See also <seealso cref="Dracoon.Sdk.Model.ServerDefaultSettings"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+    </GetDefault>
+
+  </members>
+
+  <members name="iShares">
+
+    <IShares>
+      <summary>
+        Handler to maintain the shares.
+      </summary>
+    </IShares>
+
+    <CreateDownloadShare>
+      <summary>
+        Creates a download share for a node.
+      </summary>
+      <param name="request">
+        The request with the target node ID and the download share settings. See also <seealso cref="Dracoon.Sdk.Model.CreateDownloadShareRequest"/>
+      </param>
+      <returns>
+        The download share. See also <seealso cref="Dracoon.Sdk.Model.DownloadShare"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </CreateDownloadShare>
+
+    <GetDownloadShares>
+      <summary>
+        Retrieves the download shares which are created by the user.
+      </summary>
+      <param name="offset">
+        The range offset. (Zero-based index; must be 0 or positive if set)
+      </param>
+      <param name="limit">
+        The range limit. (Number of returned records; must be positive if set)
+      </param>
+      <param name="filter">
+        The filter for the request result. See also <seealso cref="Dracoon.Sdk.Filter.GetDownloadSharesFilter"/>
+      </param>
+      <returns>
+        The result list of download shares. See also <seealso cref="Dracoon.Sdk.Model.DownloadShareList"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </GetDownloadShares>
+
+    <DeleteDownloadShare>
+      <summary>
+        Delete a download shares.
+      </summary>
+      <param name="shareId">
+        The ID of the download share which should be deleted.
+      </param>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </DeleteDownloadShare>
+
+    <CreateUploadShare>
+      <summary>
+        Creates a upload share for a node.
+      </summary>
+      <param name="request">
+        The request with the target node ID and the upload share settings. See also <seealso cref="Dracoon.Sdk.Model.CreateUploadShareRequest"/>
+      </param>
+      <returns>
+        The upload share. See also <seealso cref="Dracoon.Sdk.Model.UploadShare"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </CreateUploadShare>
+
+    <GetUploadShares>
+      <summary>
+        Retrieves the upload shares which are created by the user.
+      </summary>
+      <param name="offset">
+        The range offset. (Zero-based index; must be 0 or positive if set)
+      </param>
+      <param name="limit">
+        The range limit. (Number of returned records; must be positive if set)
+      </param>
+      <param name="filter">
+        The filter for the request result. See also <seealso cref="Dracoon.Sdk.Filter.GetUploadSharesFilter"/>
+      </param>
+      <returns>
+        The result list of upload shares. See also <seealso cref="Dracoon.Sdk.Model.UploadShareList"/>
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </GetUploadShares>
+
+    <DeleteUploadShare>
+      <summary>
+        Delete a upload share.
+      </summary>
+      <param name="shareId">
+        The ID of the upload share which should be deleted.
+      </param>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </DeleteUploadShare>
+
+  </members>
+</docs>

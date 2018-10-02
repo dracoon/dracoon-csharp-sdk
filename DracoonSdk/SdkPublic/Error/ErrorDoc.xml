@@ -1,0 +1,250 @@
+﻿<docs>
+  <members name="system">
+    <ArgumentException>
+      <summary>
+        If the arguments are not correct.
+      </summary>
+    </ArgumentException>
+    <ArgumentNullException>
+      <summary>
+        If something is null which must be set.
+      </summary>
+    </ArgumentNullException>
+  </members>
+
+  <members name="dracoonApiException">
+    <DracoonApiException>
+      <summary>
+        Signals a DRACOON REST API error.
+        <para>The exception stores an error code which can be used to determine the error cause.</para>
+      </summary>
+    </DracoonApiException>
+    <ErrorCode>
+      <summary>
+        Describes what caused the error. See also <seealso cref="Dracoon.Sdk.Error.DracoonApiCode"/>
+      </summary>
+    </ErrorCode>
+    <DracoonApiExceptionConstructorOne>
+      <summary>
+        Constructs a new exception with an unknown error code.
+      </summary>
+    </DracoonApiExceptionConstructorOne>
+    <DracoonApiExceptionConstructorTwo>
+      <summary>
+        Constructs a new exception with a specified error code.
+      </summary>
+      <param name="errorCode">
+        <include file="ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/ErrorCode/*'/>
+      </param>
+    </DracoonApiExceptionConstructorTwo>
+  </members>
+
+  <members name="dracoonNetIOException">
+    <DracoonNetIOException>
+      <summary>
+        Signals a network IO error.
+      </summary>
+    </DracoonNetIOException>
+    <DracoonNetIOExceptionConstructorOne>
+      <summary>
+        Constructs a new network IO exception without any additional informations.
+      </summary>
+    </DracoonNetIOExceptionConstructorOne>
+    <DracoonNetIOExceptionConstructorTwo>
+      <summary>
+        Constructs a new network IO exception with the specified error message.
+      </summary>
+      <param name="message">
+        The error message
+      </param>
+    </DracoonNetIOExceptionConstructorTwo>
+    <DracoonNetIOExceptionConstructorThree>
+      <summary>
+        Constructs a new network IO exception with the specified error message and the causing exception.
+      </summary>
+      <param name="message">
+        The error message
+      </param>
+      <param name="cause">
+        The error causing exception
+      </param>
+    </DracoonNetIOExceptionConstructorThree>
+  </members>
+
+  <members name="dracoonNetInsecureException">
+    <DracoonNetInsecureException>
+      <summary>
+        Signals a insecure network connection.
+      </summary>
+    </DracoonNetInsecureException>
+    <DracoonNetInsecureExceptionConstructorOne>
+      <summary>
+        Constructs a new insecure network exception without any additional informations.
+      </summary>
+    </DracoonNetInsecureExceptionConstructorOne>
+    <DracoonNetInsecureExceptionConstructorTwo>
+      <summary>
+        Constructs a new insecure network exception with the specified error message.
+      </summary>
+      <param name="message">
+        The error message
+      </param>
+    </DracoonNetInsecureExceptionConstructorTwo>
+    <DracoonNetInsecureExceptionConstructorThree>
+      <summary>
+        Constructs a new insecure network exception with the specified error message and the causing exception.
+      </summary>
+      <param name="message">
+        The error message
+      </param>
+      <param name="cause">
+        The error causing exception
+      </param>
+    </DracoonNetInsecureExceptionConstructorThree>
+  </members>
+
+  <members name="dracoonFileIOException">
+    <DracoonFileIOException>
+      <summary>
+        Signals a IO error.
+      </summary>
+    </DracoonFileIOException>
+    <DracoonFileIOExceptionConstructorOne>
+      <summary>
+        Constructs a new IO exception without any additional informations.
+      </summary>
+    </DracoonFileIOExceptionConstructorOne>
+    <DracoonFileIOExceptionConstructorTwo>
+      <summary>
+        Constructs a new IO exception with the specified error message.
+      </summary>
+      <param name="message">
+        The error message
+      </param>
+    </DracoonFileIOExceptionConstructorTwo>
+    <DracoonFileIOExceptionConstructorThree>
+      <summary>
+        Constructs a new IO exception with the specified error message and the causing exception.
+      </summary>
+      <param name="message">
+        The error message
+      </param>
+      <param name="cause">
+        The error causing exception
+      </param>
+    </DracoonFileIOExceptionConstructorThree>
+  </members>
+
+  <members name="dracoonException">
+    <DracoonException>
+      <summary>
+        Signals a DRACOON SDK error.
+        <para>
+          <see cref="Dracoon.Sdk.Error.DracoonApiException"/>
+        </para>
+        <para>
+          <see cref="Dracoon.Sdk.Error.DracoonCryptoException"/>
+        </para>
+        <para>
+          <see cref="Dracoon.Sdk.Error.DracoonFileIOException"/>
+        </para>
+        <para>
+          <see cref="Dracoon.Sdk.Error.DracoonNetIOException"/>
+        </para>
+      </summary>
+    </DracoonException>
+    <DracoonExceptionConstructorOne>
+      <summary>
+        Constructs a new exception without any additional informations.
+      </summary>
+    </DracoonExceptionConstructorOne>
+    <DracoonExceptionConstructorTwo>
+      <summary>
+        Constructs a new exception with the specified error message.
+      </summary>
+      <param name="message">
+        The error message
+      </param>
+    </DracoonExceptionConstructorTwo>
+    <DracoonExceptionConstructorThree>
+      <summary>
+        Constructs a new exception with the specified error message and the causing exception.
+      </summary>
+      <param name="message">
+        The error message
+      </param>
+      <param name="cause">
+        The error causing exception
+      </param>
+    </DracoonExceptionConstructorThree>
+  </members>
+
+  <members name="dracoonCryptoException">
+    <DracoonCryptoException>
+      <summary>
+        Signals a DRACOON crypto error.
+        <para>The exception stores an error code which can be used to determine the error cause.</para>
+      </summary>
+    </DracoonCryptoException>
+    <ErrorCode>
+      <summary>
+        Describes what caused the error. See also <seealso cref="Dracoon.Sdk.Error.DracoonCryptoCode"/>
+      </summary>
+    </ErrorCode>
+    <DracoonCryptoExceptionConstructorOne>
+      <summary>
+        Constructs a new exception with an unkown error code.
+      </summary>
+    </DracoonCryptoExceptionConstructorOne>
+    <DracoonCryptoExceptionConstructorTwo>
+      <summary>
+        Constructs a new exception with a specified error code.
+      </summary>
+      <param name="errorCode">
+        <include file="ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/ErrorCode/*'/>
+      </param>
+    </DracoonCryptoExceptionConstructorTwo>
+    <DracoonCryptoExceptionConstructorThree>
+      <summary>
+        Constructs a new exception with a specified error code and cause.
+      </summary>
+      <param name="errorCode">
+        <include file="ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/ErrorCode/*'/>
+      </param>
+      <param name="cause">
+        The error causing exception
+      </param>
+    </DracoonCryptoExceptionConstructorThree>
+  </members>
+
+  <members name="dracoonApiCode">
+    <DracoonApiCode>
+      <summary>
+        Collection of DRACOON API error codes.
+      </summary>
+    </DracoonApiCode>
+
+    <ToString>
+      <summary>
+        Creates a string which contains the error number and the error message.
+      </summary>
+      <returns>A string with: Code + " " + Text</returns>
+    </ToString>
+  </members>
+
+  <members name="dracoonCryptoCode">
+    <DracoonCryptoCode>
+      <summary>
+        Collection of DRACOON Crypto error codes.
+      </summary>
+    </DracoonCryptoCode>
+
+    <ToString>
+      <summary>
+        Creates a string which contains the error number and the error message.
+      </summary>
+      <returns>A string with: Code + " " + Text</returns>
+    </ToString>
+  </members>
+
+</docs>

@@ -1,0 +1,65 @@
+﻿<docs>
+
+  <members name="generalSort">
+
+    <UpdatedAtSort>
+      <summary>
+        Sort for the field 'UpdatedAt'. For example usable on a <see cref="Dracoon.Sdk.Model.Node"/>.
+      </summary>
+      <typeparam name="T">
+        Is the specific definition for a request like <see cref="Dracoon.Sdk.Sort.SearchNodesSort"/>.
+      </typeparam>
+    </UpdatedAtSort>
+
+    <UpdatedAtSortConstructor>
+      <summary>
+        Constructs a new updated at sort.
+      </summary>
+      <param name="p">
+        The parent instance like <see cref="Dracoon.Sdk.Sort.SearchNodesSort"/>.
+      </param>
+    </UpdatedAtSortConstructor>
+
+    <SizeSort>
+      <summary>
+        Sort for the field 'Size'. For example usable on a <see cref="Dracoon.Sdk.Model.Node"/>
+      </summary>
+      <typeparam name="T">
+        Is the specific definition for a request like <see cref="Dracoon.Sdk.Sort.SearchNodesSort"/>
+      </typeparam>
+    </SizeSort>
+
+    <SizeSortConstructor>
+      <summary>
+        Constructs a new size sort.
+      </summary>
+      <param name="p">
+        The parent instance like <see cref="Dracoon.Sdk.Sort.SearchNodesSort"/>.
+      </param>
+    </SizeSortConstructor>
+
+  </members>
+
+  <members name="searchNodesSort">
+
+    <SearchNodesSort>
+      <summary>
+        This class provides filters for <see cref="Dracoon.Sdk.INodes.SearchNodes(string, long, long, long, Filter.SearchNodesFilter, SearchNodesSort)"/>.
+      </summary>
+    </SearchNodesSort>
+
+    <UpdatedAt>
+      <summary>
+        Gets a new sort for the field 'UpdatedAt' of a <see cref="Dracoon.Sdk.Model.Node"/>.
+      </summary>
+    </UpdatedAt>
+
+    <Size>
+      <summary>
+        Gets a new sort for the field 'Size' of a <see cref="Dracoon.Sdk.Model.Node"/>.
+      </summary>
+    </Size>
+
+  </members>
+
+</docs>

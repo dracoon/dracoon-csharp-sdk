@@ -1,0 +1,490 @@
+﻿<docs>
+
+  <members name="dracoonAuth">
+
+    <EnumAuthCode>
+      <summary>
+        <para>
+          This is the most common mode. Your application must request authorization and obtain an authorization code.
+          The retrieval of the access and refresh tokens with the authorization code as well as the automatic token refresh is handled by the DRACOON SDK.
+        </para>
+        <para>
+          The authorization is done within the user's browser or web view. After the user has logged in and authorized your application you receive the authorization code via
+          a callback to a pre-defined redirect URI. Depending on the type of your application you must open a local TCP port, register the redirect URI at your OS or provide an HTTP
+          endpoint which receives the callback.
+        </para>
+        (You can use <see cref="Dracoon.Sdk.OAuthHelper"/> to create the authorization URI which must be opened in the user's browser or web view and to extract the state and code from the redirect URI).
+      </summary>
+    </EnumAuthCode>
+
+    <EnumAccessToken>
+      <summary>
+        This is a simple mode. You can use it at the development or for terminal applications and scripts where a specific user account is used.
+      </summary>
+    </EnumAccessToken>
+
+    <EnumAccessRefreshToken>
+      <summary>
+        This mode can be used to obtain access and refresh token by yourself.
+      </summary>
+    </EnumAccessRefreshToken>
+
+    <DracoonAuth>
+      <summary>
+        <para>
+          The DRACOON SDK uses OAuth 2.0 for client authorization. See <see ref="https://tools.ietf.org/html/rfc6749"/> for a detailed description of OAuth 2.0. Because OAuth can be difficult to implement
+          for beginners, the DRACOON SDK can handle the OAuth authorization steps to obtain and refresh tokens.
+        </para>
+        <para>
+          This class is used to configure which steps of the OAuth authorization are made by the DRACOON SDK.
+        </para>
+        <list type="bullet">
+          <listheader>
+            <description>
+              Following three modes are supported:
+            </description>
+          </listheader>
+          <item>
+            <term>
+              Authorization Code Mode:
+            </term>
+            <description>
+              <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/EnumAuthCode/*'/>
+            </description>
+          </item>
+          <item>
+            <term>
+              Access Token Mode:
+            </term>
+            <description>
+              <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/EnumAccessToken/*'/>
+            </description>
+          </item>
+          <item>
+            <term>
+              Access and Refresh Token Mode:
+            </term>
+            <description>
+              <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/EnumAccessRefreshToken/*'/>
+            </description>
+          </item>
+        </list>
+      </summary>
+    </DracoonAuth>
+
+    <Mode>
+      <summary>
+        Enumeration of authorization modes.
+      </summary>
+    </Mode>
+
+    <UsedMode>
+      <summary>
+        The used authorization mode. See also <seealso cref="Dracoon.Sdk.DracoonAuth.Mode"/>.
+      </summary>
+    </UsedMode>
+
+    <ClientId>
+      <summary>
+        The used OAuth client ID.
+      </summary>
+    </ClientId>
+
+    <ClientSecret>
+      <summary>
+        The used OAuth client secret.
+      </summary>
+    </ClientSecret>
+
+    <AuthorizationCode>
+      <summary>
+        The used OAuth authorization code.
+      </summary>
+    </AuthorizationCode>
+
+    <AccessToken>
+      <summary>
+        The used OAuth access token.
+      </summary>
+    </AccessToken>
+
+    <RefreshToken>
+      <summary>
+        The used OAuth refresh token.
+      </summary>
+    </RefreshToken>
+
+    <DracoonAuthConstructorOne>
+      <summary>
+        Constructs a new configuration for the authorization code mode.
+      </summary>
+      <param name="clientId">
+        The OAuth client ID.
+      </param>
+      <param name="clientSecret">
+        The OAuth client secret.
+      </param>
+      <param name="authorizationCode">
+        The OAuth authorization code.
+      </param>
+    </DracoonAuthConstructorOne>
+
+    <DracoonAuthConstructorTwo>
+      <summary>
+        Constructs a new configuration for the access token mode.
+      </summary>
+      <param name="accessToken">
+        The OAuth access token.
+      </param>
+    </DracoonAuthConstructorTwo>
+
+    <DracoonAuthConstructorThree>
+      <summary>
+        Constructs a new configuration for the access and refresh token mode.
+        If the an old access token is given, the SDK automatically refreshes the access token (implied that the refresh token is valid).
+      </summary>
+      <param name="clientId">
+        The OAuth client ID.
+      </param>
+      <param name="clientSecret">
+        The OAuth client secret.
+      </param>
+      <param name="accessToken">
+        The OAuth access token.
+      </param>
+      <param name="refreshToken">
+        The OAuth refresh token.
+      </param>
+    </DracoonAuthConstructorThree>
+
+  </members>
+
+  <members name="dracoonClient">
+
+    <DracoonClient>
+      <summary>
+        <para>
+          DracoonClient is the main class of the DRACOON SDK. It contains several handlers which group the functions of the SDK logically.
+        </para>
+        <list type="bullet">
+          <listheader>
+            <description>
+              Following handlers are available:
+            </description>
+          </listheader>
+          <item>
+            <term>
+              <see cref="Dracoon.Sdk.DracoonClient.Server"/>:
+            </term>
+            <description>
+              <include file = "SdkPublicInterfaces/SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServer"]/IServer/*'/>
+            </description>
+          </item>
+          <item>
+            <term>
+              <see cref="Dracoon.Sdk.DracoonClient.Account"/>:
+            </term>
+            <description>
+              <include file = "SdkPublicInterfaces/SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/IAccount/*'/>
+            </description>
+          </item>
+          <item>
+            <term>
+              <see cref="Dracoon.Sdk.DracoonClient.Nodes"/>:
+            </term>
+            <description>
+              <include file = "SdkPublicInterfaces/SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/INodes/*'/>
+            </description>
+          </item>
+          <item>
+            <term>
+              <see cref="Dracoon.Sdk.DracoonClient.Shares"/>:
+            </term>
+            <description>
+              <include file = "SdkPublicInterfaces/SdkPublicInterfacesDoc.xml" path='docs/members[@name="iShares"]/IShares/*'/>
+            </description>
+          </item>
+        </list>
+      </summary>
+    </DracoonClient>
+
+    <ServerUri>
+      <summary>
+        The used target server URI.
+      </summary>
+    </ServerUri>
+
+    <Auth>
+      <summary>
+        The current authorization data. See also <seealso cref="Dracoon.Sdk.DracoonAuth"/>
+      </summary>
+    </Auth>
+
+    <EncryptionPassword>
+      <summary>
+        The client's encryption password.
+      </summary>
+    </EncryptionPassword>
+
+    <Account>
+      <summary>
+        Get Account handler. See also <seealso cref="Dracoon.Sdk.IAccount"/>
+      </summary>
+    </Account>
+
+    <Server>
+      <summary>
+        Get Server handler. See also <seealso cref="Dracoon.Sdk.IServer"/>
+      </summary>
+    </Server>
+
+    <Nodes>
+      <summary>
+        Get Nodes handler. See also <seealso cref="Dracoon.Sdk.INodes"/>
+      </summary>
+    </Nodes>
+
+    <Shares>
+      <summary>
+        Get Shares handler. See also <seealso cref="Dracoon.Sdk.IShares"/>
+      </summary>
+    </Shares>
+
+    <DracoonClientConstructor>
+      <summary>
+        Creates a new instance DRACOON client.
+      </summary>
+      <param name="serverUri">
+        <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonClient"]/ServerUri/*'/>
+      </param>
+      <param name="auth">
+        <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonClient"]/Auth/*'/>
+      </param>
+      <param name="encryptionPassword">
+        <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonClient"]/EncryptionPassword/*'/>
+      </param>
+      <param name="logger">
+        The logger which should be used. See also <seealso cref="Dracoon.Sdk.ILog"/>
+      </param>
+      <param name="httpConfig">
+        The self defined http configuration (otherwise the defaults of the DracoonHttpConfig is used). See also <seealso cref="Dracoon.Sdk.DracoonHttpConfig"/>
+      </param>
+    </DracoonClientConstructor>
+
+  </members>
+
+  <members name="dracoonHttpConfig">
+
+    <UserAgent>
+      <summary>
+        The User-Agent string.
+        <para>
+          (Default: <c>CSharp-SDK|[Version]|[EnvironmentOS]|-|-</c>)
+        </para>
+      </summary>
+    </UserAgent>
+
+    <WebProxy>
+      <summary>
+        The HTTP proxy settings.
+      </summary>
+    </WebProxy>
+
+    <ConnectionTimeout>
+      <summary>
+        The HTTP connection timeout in milliseconds.
+        <para>
+          (Default: <c>15000</c>)
+        </para>
+      </summary>
+    </ConnectionTimeout>
+
+    <ReadWriteTimeout>
+      <summary>
+        The HTTP read-write timeout in milliseconds.
+        <para>
+          (Default: <c>15000</c>)
+        </para>
+      </summary>
+    </ReadWriteTimeout>
+
+    <RetryEnabled>
+      <summary>
+        Enables/Disables auto retry on failed request (up to 3 tries).
+        <para>
+          (Default: <c>false</c>)
+        </para>
+      </summary>
+    </RetryEnabled>
+
+    <ChunkSize>
+      <summary>
+        The chunk size for upload/download in KiB.
+        <para>(Default: 2048 KiB)</para>
+      </summary>
+    </ChunkSize>
+
+    <DracoonHttpConfig>
+      <summary>
+        <para>
+          DracoonHttpConfig is used to configure HTTP communication options.
+        </para>
+        <list type="bullet">
+          <listheader>
+            <description>
+              Following options can be configured:
+            </description>
+          </listheader>
+          <item>
+            <description>
+              <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/UserAgent/*'/>
+            </description>
+          </item>
+          <item>
+            <description>
+              <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/RetryEnabled/*'/>
+            </description>
+          </item>
+          <item>
+            <description>
+              <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/ConnectionTimeout/*'/>
+            </description>
+          </item>
+          <item>
+            <description>
+              <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/ReadWriteTimeout/*'/>
+            </description>
+          </item>
+          <item>
+            <description>
+              <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/WebProxy/*'/>
+            </description>
+          </item>
+          <item>
+            <description>
+              <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/ChunkSize/*'/>
+            </description>
+          </item>
+        </list>
+      </summary>
+    </DracoonHttpConfig>
+
+    <DracoonHttpConfigConstructor>
+      <summary>
+        Constructs a HTTP configuration.
+      </summary>
+      <param name="retryEnabled">
+        <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/RetryEnabled/*'/>
+      </param>
+      <param name="readWriteTimeout">
+        <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/ReadWriteTimeout/*'/>
+      </param>
+      <param name="connectionTimeout">
+        <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/ConnectionTimeout/*'/>
+      </param>
+      <param name="webProxy">
+        <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/WebProxy/*'/>
+      </param>
+      <param name="ownUserAgent">
+        <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/UserAgent/*'/>
+      </param>
+      <param name="chunkSize">
+        <include file="SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/ChunkSize/*'/>
+      </param>
+    </DracoonHttpConfigConstructor>
+
+  </members>
+
+  <members name="oAuthHelper">
+
+    <OAuthHelper>
+      <summary>
+        <para>
+          The DRACOON SDK uses OAuth 2.0 for client authorization. See <see ref="https://tools.ietf.org/html/rfc6749"/> for a detailed description of OAuth 2.0.
+        </para>
+        <para>
+          OAuthHelper is a helper class for the first part of the OAuth authorization code flow.
+        </para>
+        <list type="bullet">
+          <listheader>
+            The class provides methods to:
+          </listheader>
+          <item>
+            <term>
+              <see cref="CreateAuthorizationUrl(Uri, string, string)"/>:
+            </term>
+            <description>
+              Creates the authorization URI which must be opened in the user's browser.
+            </description>
+          </item>
+          <item>
+            <term>
+              <see cref="ExtractAuthorizationStateFromUri(Uri)"/>:
+            </term>
+            <description>
+              Extracts the authorization state from the called redirect URI.
+            </description>
+          </item>
+          <item>
+            <term>
+              <see cref="ExtractAuthorizationCodeFromUri(Uri)"/>:
+            </term>
+            <description>
+              Extracts the authorization code from the called redirect URI.
+            </description>
+          </item>
+        </list>
+      </summary>
+    </OAuthHelper>
+
+    <CreateAuthorizationUrl>
+      <summary>
+        Creates the authorization URI which must be opened in the user's browser.
+      </summary>
+      <param name="baseServerUri">
+        The URI of the Dracoon server.
+      </param>
+      <param name="clientId">
+        The ID of the OAuth client.
+      </param>
+      <param name="state">
+        The state identifier which is used to track running authorizations.
+      </param>
+      <returns>
+        The authorization URI
+      </returns>
+    </CreateAuthorizationUrl>
+
+    <ExtractAuthorizationStateFromUri>
+      <summary>
+        Extracts the authorization state from the called redirect URI.
+      </summary>
+      <param name="uri">
+        The called redirect URI.
+      </param>
+      <returns>
+        The authorization state
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+    </ExtractAuthorizationStateFromUri>
+
+    <ExtractAuthorizationCodeFromUri>
+      <summary>
+        Extracts the authorization code from the called redirect URI.
+      </summary>
+      <param name="uri">
+        The called redirect URI.
+      </param>
+      <returns>
+        The authorization code
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+    </ExtractAuthorizationCodeFromUri>
+
+  </members>
+
+</docs>

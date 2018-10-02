@@ -1,0 +1,601 @@
+﻿<docs>
+
+  <members name="general">
+
+    <Or>
+      <summary>
+        Adds the possibility to define another value for the given filter which should be fulfilled.
+      </summary>
+      <param name="ef">
+        The class for which the extension is provided.
+      </param>
+      <returns>
+        The class for which the extension is provided.
+      </returns>
+    </Or>
+
+    <EqualTo>
+      <summary>
+        Adds a "equal" filter for the extended filter class.
+      </summary>
+      <param name="ef">
+        The class for which the extension is provided.
+      </param>
+      <param name="value">
+        The value which should be equal in the result.
+      </param>
+      <returns>
+        The filter parameter which can possibly add a additional condition. See also <seealso cref="Dracoon.Sdk.Filter.FilterParam{T, V}"/>
+      </returns>
+    </EqualTo>
+
+    <Contains>
+      <summary>
+        Adds a "contains" filter for the extended filter class.
+      </summary>
+      <param name="ef">
+        The class for which the extension is provided.
+      </param>
+      <param name="value">
+        The value which should be contained the result for the specified field.
+      </param>
+      <returns>
+        The filter parameter which can possibly add a additional condition. See also <seealso cref="Dracoon.Sdk.Filter.FilterParam{T, V}"/>
+      </returns>
+    </Contains>
+
+  </members>
+
+  <members name="generalFilters">
+
+    <NodeTypeFilter>
+      <summary>
+        Filter for the field 'Type' of a node. See also <seealso cref="Dracoon.Sdk.Model.Node"/>
+      </summary>
+    </NodeTypeFilter>
+
+    <NodeTypeFilterExtension>
+      <summary>
+        Extends the functions for <see cref="Dracoon.Sdk.Filter.NodeTypeFilter"/>.
+      </summary>
+    </NodeTypeFilterExtension>
+
+    <IsFavoriteFilter>
+      <summary>
+        Filter for the field 'IsFavorite' of a node. See also <seealso cref="Dracoon.Sdk.Model.Node"/>
+      </summary>
+    </IsFavoriteFilter>
+
+    <NodeIsFavoriteFilterExtension>
+      <summary>
+        Extends the functions for <see cref="Dracoon.Sdk.Filter.IsFavoriteFilter"/>.
+      </summary>
+    </NodeIsFavoriteFilterExtension>
+
+    <NameFilter>
+      <summary>
+        Filter for the field 'Name' of a node. See also <seealso cref="Dracoon.Sdk.Model.Node"/>
+      </summary>
+    </NameFilter>
+
+    <NodeNameFilterExtension>
+      <summary>
+        Extends the functions for <see cref="Dracoon.Sdk.Filter.NameFilter"/>.
+      </summary>
+    </NodeNameFilterExtension>
+
+    <NodeIsEncryptedFilter>
+      <summary>
+        Filter for the field 'IsEncrypted' of a node. See also <seealso cref="Dracoon.Sdk.Model.Node"/>
+      </summary>
+    </NodeIsEncryptedFilter>
+
+    <NodeIsEncryptedFilterExtension>
+      <summary>
+        Extends the functions for <see cref="Dracoon.Sdk.Filter.NodeIsEncryptedFilter"/>.
+      </summary>
+    </NodeIsEncryptedFilterExtension>
+
+    <UserIdFilter>
+      <summary>
+        Filter for a specific user.
+      </summary>
+    </UserIdFilter>
+
+    <UserIdFilterExtension>
+      <summary>
+        Extends the functions for <see cref="Dracoon.Sdk.Filter.UserIdFilter"/>.
+      </summary>
+    </UserIdFilterExtension>
+
+    <UpdatedByFilter>
+      <summary>
+        Filter for a specific user which updated a e.g. node.
+      </summary>
+    </UpdatedByFilter>
+
+    <UpdatedByFilterExtension>
+      <summary>
+        Extends the functions for <see cref="Dracoon.Sdk.Filter.UpdatedByFilter"/>.
+      </summary>
+    </UpdatedByFilterExtension>
+
+    <ParentPathFilter>
+      <summary>
+        Filter to get only results where the parent path field matches the requested.
+      </summary>
+    </ParentPathFilter>
+
+    <ParentPathFilterExtension>
+      <summary>
+        Extends the functions for <see cref="Dracoon.Sdk.Filter.ParentPathFilter"/>.
+      </summary>
+    </ParentPathFilterExtension>
+
+    <FileTypeFilter>
+      <summary>
+        Filter to get only results where the file type has the specified extension. E.g. 'ico', 'txt', ...
+      </summary>
+    </FileTypeFilter>
+
+    <FileTypeFilterExtension>
+      <summary>
+        Extends the functions for <see cref="Dracoon.Sdk.Filter.FileTypeFilter"/>.
+      </summary>
+    </FileTypeFilterExtension>
+
+    <ClassificationFilter>
+      <summary>
+        Filter to get only results where the classification is of the specified type.
+      </summary>
+    </ClassificationFilter>
+
+    <ClassificationFilterExtension>
+      <summary>
+        Extends the functions for <see cref="Dracoon.Sdk.Filter.ClassificationFilter"/>.
+      </summary>
+    </ClassificationFilterExtension>
+
+    <CreatedByFilter>
+      <summary>
+        Filter to get only results where the creator (firstname, lastname, login) contains the specified value.
+      </summary>
+    </CreatedByFilter>
+
+    <CreatedByFilterExtension>
+      <summary>
+        Extends the functions for <see cref="Dracoon.Sdk.Filter.CreatedByFilter"/>.
+      </summary>
+    </CreatedByFilterExtension>
+
+    <TargetIdFilter>
+      <summary>
+        Filter to get only results where the referenced node is the specified id.
+      </summary>
+    </TargetIdFilter>
+
+    <TargetIdFilterExtension>
+      <summary>
+        Extends the functions for <see cref="Dracoon.Sdk.Filter.TargetIdFilter"/>.
+      </summary>
+    </TargetIdFilterExtension>
+
+  </members>
+
+  <members name="getDownloadSharesFilter">
+
+    <GetDownloadSharesFilter>
+      <summary>
+        This class provides filters for <see cref="Dracoon.Sdk.IShares.GetDownloadShares(long?, long?, GetDownloadSharesFilter)"/>.
+      </summary>
+    </GetDownloadSharesFilter>
+
+    <UserId>
+      <summary>
+        Gets a new filter for the CreatedBy field of a download share (<see cref="Dracoon.Sdk.Model.DownloadShare"/>).
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.UserIdFilter"/>
+        </para>
+      </summary>
+    </UserId>
+
+    <Name>
+      <summary>
+        Gets a new filter for the Name field of a node (<see cref="Dracoon.Sdk.Model.DownloadShare"/>).
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.NameFilter"/>
+        </para>
+      </summary>
+    </Name>
+
+    <CreatedBy>
+      <summary>
+        Gets a new filter for created by.
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.CreatedByFilter"/>
+        </para>
+      </summary>
+    </CreatedBy>
+
+    <NodeId>
+      Gets a new filter for the referenced node id.
+      <para>
+        See also <seealso cref="Dracoon.Sdk.Filter.NodeIdFilter"/>
+      </para>
+    </NodeId>
+
+    <AddUserIdFilter>
+      <summary>
+        Adds a user id filter to the get download shares filter.
+      </summary>
+      <param name="userIdFilter">
+        The defined user id filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddUserIdFilter>
+
+    <AddNameFilter>
+      <summary>
+        Adds a name filter to the get download shares filter.
+      </summary>
+      <param name="nameFilter">
+        The defined name filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddNameFilter>
+
+    <AddCreatedByFilter>
+      <summary>
+        Adds a created by filter to the get download shares filter.
+      </summary>
+      <param name="createdByFilter">
+        The defined created by filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddCreatedByFilter>
+
+    <AddNodeIdFilter>
+      <summary>
+        Adds a node id filter to the get download shares filter.
+      </summary>
+      <param name="nodeIdFilter">
+        The defined node id filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddNodeIdFilter>
+
+  </members>
+
+  <members name="getNodesFilter">
+
+    <GetNodesFilter>
+      <summary>
+        This class provides filters for <see cref="Dracoon.Sdk.INodes.GetNodes(long, long?, long?, GetNodesFilter)"/>.
+      </summary>
+    </GetNodesFilter>
+
+    <Type>
+      <summary>
+        Gets a new filter for the Type field of a node (<see cref="Dracoon.Sdk.Model.Node"/>).
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.NodeTypeFilter"/>
+        </para>
+      </summary>
+    </Type>
+
+    <Name>
+      <summary>
+        Gets a new filter for the Name field of a node (<see cref="Dracoon.Sdk.Model.Node"/>).
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.NameFilter"/>
+        </para>
+      </summary>
+    </Name>
+
+    <IsEncrypted>
+      <summary>
+        Gets a new filter for the IsEncrypted field of a node (<see cref="Dracoon.Sdk.Model.Node"/>).
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.NodeIsEncryptedFilter"/>
+        </para>
+      </summary>
+    </IsEncrypted>
+
+    <AddNodeTypeFilter>
+      <summary>
+        Adds a type filter to the get nodes filter.
+      </summary>
+      <param name="typeFilter">
+        The defined type filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddNodeTypeFilter>
+
+    <AddNameFilter>
+      <summary>
+        Adds a name filter to the get nodes filter.
+      </summary>
+      <param name="nameFilter">
+        The defined name filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddNameFilter>
+
+    <AddNodeIsEncryptedFilter>
+      <summary>
+        Adds a is encrypted filter to the get nodes filter.
+      </summary>
+      <param name="isEncryptedFilter">
+        The defined is encrypted filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddNodeIsEncryptedFilter>
+
+  </members>
+
+  <members name="getUploadSharesFilter">
+
+    <GetUploadSharesFilter>
+      <summary>
+        This class provides the filters for <see cref="Dracoon.Sdk.IShares.GetUploadShares(long?, long?, GetUploadSharesFilter)"/>.
+      </summary>
+    </GetUploadSharesFilter>
+
+    <Name>
+      <summary>
+        Gets a new filter for the Name field of a upload share (<see cref="Dracoon.Sdk.Model.UploadShare"/>).
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.NameFilter"/>
+        </para>
+      </summary>
+    </Name>
+
+    <UserId>
+      <summary>
+        Gets a new filter for the CreatedBy field of a upload share (<see cref="Dracoon.Sdk.Model.UploadShare"/>).
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.UserIdFilter"/>
+        </para>
+      </summary>
+    </UserId>
+
+    <CreatedBy>
+      <summary>
+        Gets a new filter for created by.
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.CreatedByFilter"/>
+        </para>
+      </summary>
+    </CreatedBy>
+
+    <NodeId>
+      <summary>
+        Gets a new filter for the referenced node id.
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.NodeIdFilter"/>
+        </para>
+      </summary>
+    </NodeId>
+
+    <AddNameFilter>
+      <summary>
+        Adds a name filter to the get upload shares filter.
+      </summary>
+      <param name="nameFilter">
+        The defined name filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddNameFilter>
+
+    <AddUserIdFilter>
+      <summary>
+        Adds a user id filter to the get upload shares filter.
+      </summary>
+      <param name="userIdFilter">
+        The defined user id filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddUserIdFilter>
+
+    <AddCreatedByFilter>
+      <summary>
+        Adds a created by filter to the get upload shares filter.
+      </summary>
+      <param name="createdByFilter">
+        The defined created by filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddCreatedByFilter>
+
+    <AddNodeIdFilter>
+      <summary>
+        Adds a node id filter to the get upload shares filter.
+      </summary>
+      <param name="nodeIdFilter">
+        The defined node id filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddNodeIdFilter>
+
+  </members>
+
+  <members name="searchNodesFilter">
+
+    <SearchNodesFilter>
+      <summary>
+        This class provides filters for <see cref="Dracoon.Sdk.INodes.SearchNodes(string, long, long, long, SearchNodesFilter, Sort.SearchNodesSort)"/>.
+      </summary>
+    </SearchNodesFilter>
+
+    <Type>
+      <summary>
+        Gets a new filter for the Type field of a node (<see cref="Dracoon.Sdk.Model.Node"/>).
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.NodeTypeFilter"/>
+        </para>
+      </summary>
+    </Type>
+
+    <IsFavorite>
+      <summary>
+        Gets a new filter for the IsFavorite field of a node (<see cref="Dracoon.Sdk.Model.Node"/>).
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.IsFavoriteFilter"/>
+        </para>
+      </summary>
+    </IsFavorite>
+
+    <ParentPath>
+      <summary>
+        Gets a new filter for the ParentPath field of a node (<see cref="Dracoon.Sdk.Model.Node"/>).
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.ParentPathFilter"/>
+        </para>
+      </summary>
+    </ParentPath>
+
+    <UpdatedBy>
+      <summary>
+        Gets a new filter for the UpdatedBy field of a node  of a node (<see cref="Dracoon.Sdk.Model.Node"/>).
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.UpdatedByFilter"/>
+        </para>
+      </summary>
+    </UpdatedBy>
+
+    <CreatedBy>
+      <summary>
+        Gets a new filter for created by.
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.CreatedByFilter"/>
+        </para>
+      </summary>
+    </CreatedBy>
+
+    <FileType>
+      <summary>
+        Gets a new file type filter.
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.FileTypeFilter"/>
+        </para>
+      </summary>
+    </FileType>
+
+    <Classification>
+      <summary>
+        Gets a new classification filter.
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.ClassificationFilter"/>
+        </para>
+      </summary>
+    </Classification>
+
+    <AddNodeTypeFilter>
+      <summary>
+        Adds a type filter to the search nodes filter.
+      </summary>
+      <param name="typeFilter">
+        The defined type filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddNodeTypeFilter>
+
+    <AddIsFavoriteFilter>
+      <summary>
+        Adds a favorite filter to the search nodes filter.
+      </summary>
+      <param name="isFavoriteFilter">
+        The defined favorite filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddIsFavoriteFilter>
+
+    <AddParentPathFilter>
+      <summary>
+        Adds a parent path filter to the search nodes filter.
+      </summary>
+      <param name="parentPathFilter">
+        The defined parent path filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddParentPathFilter>
+
+    <AddUpdatedByFilter>
+      <summary>
+        Adds a updated by user filter to the search nodes filter.
+      </summary>
+      <param name="updatedByFilter">
+        The defined updated by filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddUpdatedByFilter>
+
+    <AddFileTypeFilter>
+      <summary>
+        Adds a file type filter to the search nodes filter.
+      </summary>
+      <param name="fileTypeFilter">
+        The defined file type filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddFileTypeFilter>
+
+    <AddClassificationFilter>
+      <summary>
+        Adds a classification filter to the search nodes filter.
+      </summary>
+      <param name="classificationFilter">
+        The defined classification filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddClassificationFilter>
+
+    <AddCreatedByFilter>
+      <summary>
+        Adds a created by filter to the search nodes filter.
+      </summary>
+      <param name="createdByFilter">
+        The defined created by filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddCreatedByFilter>
+
+  </members>
+
+</docs>
