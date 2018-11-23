@@ -3,16 +3,16 @@
   <metadata>
     <id>$id$</id>
     <version>$version$</version>
-    <title>Dracoon SDK</title>
-    <authors>dracoon developers</authors>
+    <title>DRACOON SDK</title>
+    <authors>DRACOON developers</authors>
     <owners>dracoon</owners>
     <licenseUrl>https://www.apache.org/licenses/LICENSE-2.0.txt</licenseUrl>
     <projectUrl>https://github.com/dracoon/dracoon-csharp-sdk</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/dracoon/dracoon-csharp-sdk/master/DracoonSdk/DracoonSdk_NugetImage.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>The Dracoon SDK for C#.</description>
-    <copyright>Copyright ©2018 Dracoon GmbH</copyright>
-    <tags>dracoon rest api sdk</tags>
+    <description>The DRACOON SDK for C#.</description>
+    <copyright>Copyright ©2018 DRACOON GmbH</copyright>
+    <tags>DRACOON rest api sdk</tags>
     <dependencies>
         <dependency id="Dracoon.Crypto.Sdk" version="1.0.2"/>
         <dependency id="Newtonsoft.Json" version="11.0.2"/>

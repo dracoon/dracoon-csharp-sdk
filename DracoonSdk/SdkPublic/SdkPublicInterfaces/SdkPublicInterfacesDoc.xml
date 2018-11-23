@@ -1114,6 +1114,9 @@
       <param name="filter">
         The filter for the request result. See also <seealso cref="Dracoon.Sdk.Filter.GetDownloadSharesFilter"/>
       </param>
+      <param name="sort">
+        The sort for the request result. See also <seealso cref="Dracoon.Sdk.Sort.SharesSort"/>
+      </param>
       <returns>
         The result list of download shares. See also <seealso cref="Dracoon.Sdk.Model.DownloadShareList"/>
       </returns>
@@ -1182,6 +1185,9 @@
       </param>
       <param name="filter">
         The filter for the request result. See also <seealso cref="Dracoon.Sdk.Filter.GetUploadSharesFilter"/>
+      </param>
+      <param name="sort">
+        The sort for the request result. See also <seealso cref="Dracoon.Sdk.Sort.SharesSort"/>
       </param>
       <returns>
         The result list of upload shares. See also <seealso cref="Dracoon.Sdk.Model.UploadShareList"/>

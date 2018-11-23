@@ -223,26 +223,27 @@
     <Compile Include="SdkPublic\Sort\DracoonSortOrder.cs" />
     <Compile Include="SdkPublic\Sort\SpecificSort\GeneralSort.cs" />
     <Compile Include="SdkPublic\Sort\SpecificSort\SearchNodesSort.cs" />
+    <Compile Include="SdkPublic\Sort\SpecificSort\SharesSort.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SdkPublic\Error\ErrorDoc.xml" />
-    <Content Include="SdkPublic\Filter\FilterDoc.xml" />
-    <Content Include="SdkPublic\Filter\SpecificFilters\SpecificFilterDoc.xml">
+    <None Include="SdkPublic\Error\ErrorDoc.xml" />
+    <None Include="SdkPublic\Filter\FilterDoc.xml" />
+    <None Include="SdkPublic\Filter\SpecificFilters\SpecificFilterDoc.xml">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="SdkPublic\Model\ModelDoc.xml">
+    </None>
+    <None Include="SdkPublic\Model\ModelDoc.xml">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="SdkPublic\Model\UserRequests\UserRequestsDoc.xml">
+    </None>
+    <None Include="SdkPublic\Model\UserRequests\UserRequestsDoc.xml">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="SdkPublic\SdkPublicDoc.xml" />
-    <Content Include="SdkPublic\SdkPublicInterfaces\SdkPublicInterfacesDoc.xml" />
-    <Content Include="SdkPublic\Sort\Sort.xml" />
-    <Content Include="SdkPublic\Sort\SpecificSort\SpecificSort.xml" />
+    </None>
+    <None Include="SdkPublic\SdkPublicDoc.xml" />
+    <None Include="SdkPublic\SdkPublicInterfaces\SdkPublicInterfacesDoc.xml" />
+    <None Include="SdkPublic\Sort\Sort.xml" />
+    <None Include="SdkPublic\Sort\SpecificSort\SpecificSort.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

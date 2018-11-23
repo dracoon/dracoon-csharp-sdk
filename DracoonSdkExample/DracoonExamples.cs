@@ -25,7 +25,7 @@ namespace Dracoon.Sdk.Example {
             IWebProxy wp = WebRequest.GetSystemWebProxy();
             wp.Credentials = CredentialCache.DefaultNetworkCredentials;
             DracoonHttpConfig config = new DracoonHttpConfig(retryEnabled: true, webProxy: wp);
-            dc = new DracoonClient(SERVER_URI, dracoonAuth, ENCRYPTION_PASSWORD, new Logger(), config);
+            dc = new DracoonClient(SERVER_URI, dracoonAuth, logger: new Logger(), httpConfig: config);
         }
 
         #region DracoonClient.Server

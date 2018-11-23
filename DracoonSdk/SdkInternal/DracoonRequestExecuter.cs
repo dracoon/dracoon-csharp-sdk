@@ -55,7 +55,7 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        public T DoSyncApiCall<T>(RestRequest request, RequestType requestType) where T : class, new() {
+        public T DoSyncApiCall<T>(RestRequest request, RequestType requestType, int authTry = 0) where T : class, new() {
             RestClient client = new RestClient(dracoonClient.ServerUri) {
                 UserAgent = dracoonClient.HttpConfig.UserAgent,
             };
@@ -70,14 +70,16 @@ namespace Dracoon.Sdk.SdkInternal {
                 try {
                     dracoonClient.ApiErrorParser.ParseError(response, requestType);
                 } catch (DracoonApiException apiError) {
-                    if (apiError.ErrorCode == DracoonApiCode.AUTH_UNAUTHORIZED) {
+                    if (apiError.ErrorCode == DracoonApiCode.AUTH_UNAUTHORIZED && authTry < 3) {
+                        dracoonClient.Log.Debug(LOGTAG, "Retry the refresh of the access token in " + authTry * 1000 + " millis again.");
+                        Thread.Sleep(1000 * authTry);
                         dracoonClient.OAuthClient.RefreshAccessToken();
                         foreach (Parameter cur in request.Parameters) {
                             if (cur.Name == ApiConfig.AuthorizationHeader) {
                                 cur.Value = dracoonClient.OAuthClient.BuildAuthString();
                             }
                         }
-                        return DoSyncApiCall<T>(request, requestType);
+                        return DoSyncApiCall<T>(request, requestType, authTry + 1);
                     } else {
                         throw apiError;
                     }
@@ -141,7 +143,7 @@ namespace Dracoon.Sdk.SdkInternal {
                     } else if (we.Status == WebExceptionStatus.RequestCanceled) {
                         throw new ThreadInterruptedException();
                     } else if (we.Status == WebExceptionStatus.ProtocolError) {
-                        dracoonClient.ApiErrorParser.ParseError(we, RequestType.GetDownloadChunk);
+                        dracoonClient.ApiErrorParser.ParseError(we, RequestType.PostUploadChunk);
                     } else {
                         string message = "Server communication failed!";
                         dracoonClient.Log.Debug(LOGTAG, message);

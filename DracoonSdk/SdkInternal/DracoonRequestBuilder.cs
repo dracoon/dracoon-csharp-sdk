@@ -361,10 +361,11 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #region GET
 
-        internal RestRequest GetDownloadShares(long? offset, long? limit, GetDownloadSharesFilter filter = null) {
+        internal RestRequest GetDownloadShares(long? offset, long? limit, GetDownloadSharesFilter filter = null, SharesSort sort = null) {
             RestRequest request = new RestRequest(ApiConfig.ApiGetDownloadShares, Method.GET);
             SetGeneralRestValues(request, true);
             AddFilters(filter, request);
+            AddSort(sort, request);
             if (offset.HasValue)
                 request.AddQueryParameter("offset", offset.ToString());
             if (limit.HasValue)
@@ -372,10 +373,11 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
-        internal RestRequest GetUploadShares(long? offset, long? limit, GetUploadSharesFilter filter = null) {
+        internal RestRequest GetUploadShares(long? offset, long? limit, GetUploadSharesFilter filter = null, SharesSort sort = null) {
             RestRequest request = new RestRequest(ApiConfig.ApiGetUploadShares, Method.GET);
             SetGeneralRestValues(request, true);
             AddFilters(filter, request);
+            AddSort(sort, request);
             if (offset.HasValue)
                 request.AddQueryParameter("offset", offset.ToString());
             if (limit.HasValue)
