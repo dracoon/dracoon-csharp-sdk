@@ -186,7 +186,7 @@
 
     <GetDownloadSharesFilter>
       <summary>
-        This class provides filters for <see cref="Dracoon.Sdk.IShares.GetDownloadShares(long?, long?, GetDownloadSharesFilter)"/>.
+        This class provides filters for <see cref="Dracoon.Sdk.IShares.GetDownloadShares(long?, long?, GetDownloadSharesFilter, Sort.SharesSort)"/>.
       </summary>
     </GetDownloadSharesFilter>
 
@@ -351,7 +351,7 @@
 
     <GetUploadSharesFilter>
       <summary>
-        This class provides the filters for <see cref="Dracoon.Sdk.IShares.GetUploadShares(long?, long?, GetUploadSharesFilter)"/>.
+        This class provides the filters for <see cref="Dracoon.Sdk.IShares.GetUploadShares(long?, long?, GetUploadSharesFilter, Sort.SharesSort)"/>.
       </summary>
     </GetUploadSharesFilter>
 

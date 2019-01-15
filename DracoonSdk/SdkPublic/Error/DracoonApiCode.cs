@@ -71,6 +71,8 @@ namespace Dracoon.Sdk.Error {
         public static readonly DracoonApiCode VALIDATION_FIELD_NOT_BETWEEN_0_9999 = new DracoonApiCode(3006, "Field value must be between 0 and 9999.");
         // CODES: -80019
         public static readonly DracoonApiCode VALIDATION_FIELD_NOT_BETWEEN_1_9999 = new DracoonApiCode(3007, "Field value must be between 1 and 9999.");
+        // CODES: -80024
+        public static readonly DracoonApiCode VALIDATION_INVALID_OFFSET_OR_LIMIT = new DracoonApiCode(3008, "Invalid offset or limit.");
 
         #endregion
         #region NODES

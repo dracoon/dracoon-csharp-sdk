@@ -164,6 +164,8 @@ namespace Dracoon.Sdk.SdkInternal {
                 return DracoonApiCode.VALIDATION_FIELD_NOT_BETWEEN_0_9999;
             } else if (apiErrorCode == -80019) {
                 return DracoonApiCode.VALIDATION_FIELD_NOT_BETWEEN_1_9999;
+            } else if (apiErrorCode == -80024) {
+                return DracoonApiCode.VALIDATION_INVALID_OFFSET_OR_LIMIT;
             } else if (apiErrorCode == -80030) {
                 return DracoonApiCode.SERVER_SMS_IS_DISABLED;
             } else if (apiErrorCode == -80034) {
