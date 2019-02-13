@@ -636,6 +636,24 @@
       </summary>
     </CountChildren>
 
+    <CountRooms>
+      <summary>
+        The number of underlying rooms.
+      </summary>
+    </CountRooms>
+
+    <CountFolders>
+      <summary>
+        The number of underlying folders.
+      </summary>
+    </CountFolders>
+
+    <CountFiles>
+      <summary>
+        The number of underlying files.
+      </summary>
+    </CountFiles>
+
     <CountDeletedVersions>
       <summary>
         The Number of deleted versions.

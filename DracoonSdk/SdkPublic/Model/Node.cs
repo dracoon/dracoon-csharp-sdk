@@ -119,6 +119,21 @@ namespace Dracoon.Sdk.Model {
             get; internal set;
         }
 
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="node"]/CountRooms/*'/>
+        public int? CountRooms {
+            get; internal set;
+        }
+
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="node"]/CountFolders/*'/>
+        public int? CountFolders {
+            get; internal set;
+        }
+
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="node"]/CountFiles/*'/>
+        public int? CountFiles {
+            get; internal set;
+        }
+
         /// <include file = "ModelDoc.xml" path='docs/members[@name="node"]/CountDeletedVersions/*'/>
         public int? CountDeletedVersions {
             get; internal set;

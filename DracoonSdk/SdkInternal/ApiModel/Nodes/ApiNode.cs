@@ -95,6 +95,18 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         public int? CountChildren {
             get; set;
         }
+        [JsonProperty("cntRooms", NullValueHandling = NullValueHandling.Ignore)]
+        public int? CountRooms {
+            get; set;
+        }
+        [JsonProperty("cntFolders", NullValueHandling = NullValueHandling.Ignore)]
+        public int? CountFolders {
+            get; set;
+        }
+        [JsonProperty("cntFiles", NullValueHandling = NullValueHandling.Ignore)]
+        public int? CountFiles {
+            get; set;
+        }
         [JsonProperty("cntDeletedVersions", NullValueHandling = NullValueHandling.Ignore)]
         public int? CountDeletedVersions {
             get; set;
