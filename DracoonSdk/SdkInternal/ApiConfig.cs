@@ -29,6 +29,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiGetUserKeyPair = ApiPrefix + "/user/account/keypair";
         internal const string ApiGetAuthenticatedPing = ApiPrefix + "/user/ping";
         internal const string ApiGetAvatar = ApiPrefix + "/user/account/avatar";
+        internal const string ApiDeleteAvatar = ApiPrefix + "/user/account/avatar";
 
         #endregion
         #region POST

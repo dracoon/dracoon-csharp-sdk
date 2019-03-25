@@ -90,6 +90,9 @@
       <summary>
         Get the downloaded avatar image for the current user.
       </summary>
+      <returns>
+        The avatar image.
+      </returns>
       <exception cref="Error.DracoonApiException">
         <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
       </exception>
@@ -100,6 +103,23 @@
         <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
       </exception>
     </GetAvatar>
+    <DeleteAvatar>
+      <summary>
+        Delete (Reset to default) the avatar of the current user.
+      </summary>
+      <returns>
+        The default avatar image.
+      </returns>
+      <exception cref="Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </DeleteAvatar>
   </members>
 
   <members name="iLog">

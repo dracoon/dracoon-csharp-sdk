@@ -25,5 +25,8 @@ namespace Dracoon.Sdk {
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/GetAvatar/*'/>
         Image GetAvatar();
+
+        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/DeleteAvatar/*'/>
+        Image DeleteAvatar();
     }
 }

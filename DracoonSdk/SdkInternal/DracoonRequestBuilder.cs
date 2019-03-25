@@ -126,6 +126,12 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        internal RestRequest DeleteAvatar() {
+            RestRequest request = new RestRequest(ApiConfig.ApiDeleteAvatar, Method.DELETE);
+            SetGeneralRestValues(request, true);
+            return request;
+        }
+
         #endregion
         #region HTTP-Request
 

@@ -104,5 +104,18 @@ namespace Dracoon.Sdk.SdkInternal {
                 }
             }
         }
+
+        public Image DeleteAvatar() {
+            client.RequestExecutor.CheckApiServerVersion();
+            RestRequest request = client.RequestBuilder.DeleteAvatar();
+            ApiAvatar defaultAvatar = client.RequestExecutor.DoSyncApiCall<ApiAvatar>(request, RequestType.DeleteAvatar);
+
+            using (WebClient avatarClient = client.RequestBuilder.ProvideAvatarDownloadWebClient()) {
+                byte[] avatarImageBytes = client.RequestExecutor.ExecuteWebClientDownload(avatarClient, new Uri(defaultAvatar.AvatarUri));
+                using (MemoryStream ms = new MemoryStream(avatarImageBytes)) {
+                    return Image.FromStream(ms);
+                }
+            }
+        }
     }
 }
