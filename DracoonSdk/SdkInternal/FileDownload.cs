@@ -130,7 +130,7 @@ namespace Dracoon.Sdk.SdkInternal {
                         progressReportTimer.Restart();
                     }
                 };
-                chunkDownloadedResultBytes = dracoonClient.RequestExecutor.ExecuteWebClientChunkDownload(requestClient, downloadUri, runningThread);
+                chunkDownloadedResultBytes = dracoonClient.RequestExecutor.ExecuteWebClientDownload(requestClient, downloadUri, runningThread);
                 downloadedByteCount += previousBytesReceivedValue;
             }
             return chunkDownloadedResultBytes;

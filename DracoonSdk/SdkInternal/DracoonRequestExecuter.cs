@@ -13,7 +13,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal enum RequestType {
             GetServerVersion, GetServerTime,
-            SetUserKeyPair, GetCustomerAccount, GetUserAccount, GetUserKeyPair, DeleteUserKeyPair,
+            SetUserKeyPair, GetCustomerAccount, GetUserAccount, GetUserKeyPair, DeleteUserKeyPair, GetAvatar,
             GetNodes, GetNode, PostRoom, PostFolder, PutFolder, PutRoom, PutEnableRoomEncryption, PutFile, DeleteNodes,
             PostDownloadToken, GetFileKey, PostUploadToken, PutCompleteUpload, PostUploadChunk,
             GetDownloadChunk, PostCopyNodes, PostMoveNodes, GetSearchNodes, GetMissingFileKeys, PostMissingFileKeys,
@@ -91,7 +91,7 @@ namespace Dracoon.Sdk.SdkInternal {
             return JsonConvert.DeserializeObject<T>(response.Content);
         }
 
-        public byte[] ExecuteWebClientChunkDownload(WebClient requestClient, Uri target, Thread asyncThread = null, int sendTry = 0) {
+        public byte[] ExecuteWebClientDownload(WebClient requestClient, Uri target, Thread asyncThread = null, int sendTry = 0) {
             byte[] response = null;
             try {
                 Task<byte[]> responseTask = requestClient.DownloadDataTaskAsync(target);
@@ -112,7 +112,7 @@ namespace Dracoon.Sdk.SdkInternal {
                         if (dracoonClient.HttpConfig.RetryEnabled && sendTry < 3) {
                             dracoonClient.Log.Debug(LOGTAG, "Retry the request in " + sendTry * 1000 + " millis again.");
                             Thread.Sleep(1000 * sendTry);
-                            ExecuteWebClientChunkDownload(requestClient, target, asyncThread, sendTry + 1);
+                            ExecuteWebClientDownload(requestClient, target, asyncThread, sendTry + 1);
                         } else {
                             if (asyncThread != null && asyncThread.ThreadState == ThreadState.Aborted) {
                                 throw new ThreadInterruptedException();

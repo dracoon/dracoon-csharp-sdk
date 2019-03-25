@@ -1,4 +1,5 @@
 ﻿using Dracoon.Sdk.Model;
+using System.Drawing;
 
 namespace Dracoon.Sdk {
     /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/IAccount/*'/>
@@ -21,5 +22,8 @@ namespace Dracoon.Sdk {
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/ValidateTokenValidity/*'/>
         void ValidateTokenValidity();
+
+        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/GetAvatar/*'/>
+        Image GetAvatar();
     }
 }

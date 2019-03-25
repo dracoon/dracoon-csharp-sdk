@@ -86,6 +86,20 @@
         <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
       </exception>
     </ValidateTokenValidity>
+    <GetAvatar>
+      <summary>
+        Get the downloaded avatar image for the current user.
+      </summary>
+      <exception cref="Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </GetAvatar>
   </members>
 
   <members name="iLog">

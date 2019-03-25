@@ -7,6 +7,9 @@ using Dracoon.Crypto.Sdk;
 using Dracoon.Crypto.Sdk.Model;
 using static Dracoon.Sdk.SdkInternal.DracoonRequestExecuter;
 using Dracoon.Sdk.Error;
+using System.Drawing;
+using System.Net;
+using System.IO;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class DracoonAccountImpl : IAccount {
@@ -87,6 +90,19 @@ namespace Dracoon.Sdk.SdkInternal {
             client.RequestExecutor.CheckApiServerVersion();
             RestRequest request = client.RequestBuilder.GetAuthenticatedPing();
             client.RequestExecutor.DoSyncApiCall<VoidResponse>(request, RequestType.GetAuthenticatedPing);
+        }
+
+        public Image GetAvatar() {
+            client.RequestExecutor.CheckApiServerVersion();
+            RestRequest request = client.RequestBuilder.GetAvatar();
+            ApiAvatar avatar = client.RequestExecutor.DoSyncApiCall<ApiAvatar>(request, RequestType.GetAvatar);
+
+            using (WebClient avatarClient = client.RequestBuilder.ProvideAvatarDownloadWebClient()) {
+                byte[] avatarImageBytes = client.RequestExecutor.ExecuteWebClientDownload(avatarClient, new Uri(avatar.AvatarUri));
+                using (MemoryStream ms = new MemoryStream(avatarImageBytes)){
+                    return Image.FromStream(ms);
+                }
+            }
         }
     }
 }

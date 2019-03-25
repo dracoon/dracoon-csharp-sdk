@@ -51,6 +51,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -86,6 +87,7 @@
     <Compile Include="SdkInternal\ApiModel\Requests\ApiMoveNode.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiSetUserFileKeysRequest.cs" />
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiUploadChunkResult.cs" />
+    <Compile Include="SdkInternal\ApiModel\User\ApiAvatar.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserIdFileId.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserIdPublicKey.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiCompleteFileUpload.cs" />

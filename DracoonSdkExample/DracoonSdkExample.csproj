@@ -47,7 +47,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Dracoon.Sdk.Example.OAuthExamples</StartupObject>
+    <StartupObject>Dracoon.Sdk.Example.DracoonExamples</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

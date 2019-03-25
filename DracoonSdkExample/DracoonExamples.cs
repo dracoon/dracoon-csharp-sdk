@@ -5,7 +5,10 @@ using Dracoon.Sdk.Sort;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Net;
 
 namespace Dracoon.Sdk.Example {
@@ -25,7 +28,7 @@ namespace Dracoon.Sdk.Example {
             IWebProxy wp = WebRequest.GetSystemWebProxy();
             wp.Credentials = CredentialCache.DefaultNetworkCredentials;
             DracoonHttpConfig config = new DracoonHttpConfig(retryEnabled: true, webProxy: wp);
-            dc = new DracoonClient(SERVER_URI, dracoonAuth, logger: new Logger(), httpConfig: config);
+            dc = new DracoonClient(SERVER_URI, dracoonAuth, ENCRYPTION_PASSWORD, new Logger(), config);
         }
 
         #region DracoonClient.Server
@@ -93,6 +96,12 @@ namespace Dracoon.Sdk.Example {
 
         private static void DeleteUserKeyPair() {
             dc.Account.DeleteUserKeyPair();
+        }
+
+        private static void GetUserAvatar() {
+            Image avatar = dc.Account.GetAvatar();
+            ImageCodecInfo info = ImageCodecInfo.GetImageDecoders().First(c => c.FormatID == avatar.RawFormat.Guid);
+            avatar.Save("PathToFile\\Filename." + info.FormatDescription);
         }
 
         #endregion

@@ -102,6 +102,12 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        internal RestRequest GetAvatar() {
+            RestRequest request = new RestRequest(ApiConfig.ApiGetAvatar, Method.GET);
+            SetGeneralRestValues(request, true);
+            return request;
+        }
+
         #endregion
         #region POST
 
@@ -118,6 +124,16 @@ namespace Dracoon.Sdk.SdkInternal {
             RestRequest request = new RestRequest(ApiConfig.ApiDeleteUserKeyPair, Method.DELETE);
             SetGeneralRestValues(request, true);
             return request;
+        }
+
+        #endregion
+        #region HTTP-Request
+
+        internal WebClient ProvideAvatarDownloadWebClient()
+        {
+            DracoonWebClientExtension requestClient = new DracoonWebClientExtension();
+            SetGeneralWebClientValues(requestClient);
+            return requestClient;
         }
 
         #endregion
