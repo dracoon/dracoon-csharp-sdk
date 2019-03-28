@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading;
+using static Dracoon.Sdk.SdkInternal.DracoonRequestExecuter;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class FileUpload {
@@ -167,7 +168,7 @@ namespace Dracoon.Sdk.SdkInternal {
                         progressReportTimer.Restart();
                     }
                 };
-                byte[] chunkUploadResultBytes = dracoonClient.RequestExecutor.ExecuteWebClientChunkUpload(requestClient, uploadUrl, multipartFormatedChunkData, runningThread);
+                byte[] chunkUploadResultBytes = dracoonClient.RequestExecutor.ExecuteWebClientChunkUpload(requestClient, uploadUrl, multipartFormatedChunkData, RequestType.PostUploadChunk, runningThread);
                 ApiUploadChunkResult chunkUploadResult = JsonConvert.DeserializeObject<ApiUploadChunkResult>(ApiConfig.encoding.GetString(chunkUploadResultBytes));
                 uploadedByteCount += previousBytesSentValue - packageFooter.LongLength - packageHeader.LongLength;
                 return chunkUploadResult;

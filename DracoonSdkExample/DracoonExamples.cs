@@ -101,7 +101,12 @@ namespace Dracoon.Sdk.Example {
         private static void GetUserAvatar() {
             Image avatar = dc.Account.GetAvatar();
             ImageCodecInfo info = ImageCodecInfo.GetImageDecoders().First(c => c.FormatID == avatar.RawFormat.Guid);
-            avatar.Save("PathToFile\\Filename." + info.FormatDescription);
+            avatar.Save("C:\\temp\\avatar." + info.FormatDescription);
+        }
+
+        private static void UpdateUserAvatar() {
+            Image newAvatar = Image.FromFile("C:\\temp\\avatar.jpg");
+            dc.Account.UpdateAvatar(newAvatar);
         }
 
         #endregion

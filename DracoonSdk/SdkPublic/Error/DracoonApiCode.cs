@@ -293,7 +293,7 @@ namespace Dracoon.Sdk.Error {
             get; private set;
         }
 
-        private DracoonApiCode(int code, string text) {
+        internal DracoonApiCode(int code, string text) {
             Code = code;
             Text = text;
         }

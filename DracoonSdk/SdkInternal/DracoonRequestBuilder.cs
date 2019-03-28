@@ -7,6 +7,9 @@ using Dracoon.Sdk.Sort;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -135,9 +138,16 @@ namespace Dracoon.Sdk.SdkInternal {
         #endregion
         #region HTTP-Request
 
-        internal WebClient ProvideAvatarDownloadWebClient()
-        {
+        internal WebClient ProvideAvatarDownloadWebClient() {
             DracoonWebClientExtension requestClient = new DracoonWebClientExtension();
+            SetGeneralWebClientValues(requestClient);
+            return requestClient;
+        }
+
+        internal WebClient ProvideAvatarUploadWebClient(string formDataBoundary) {
+            DracoonWebClientExtension requestClient = new DracoonWebClientExtension();
+            requestClient.Headers.Add(HttpRequestHeader.ContentType, "multipart/form-data; boundary=" + formDataBoundary);
+            requestClient.Headers.Add(ApiConfig.AuthorizationHeader, client.OAuthClient.BuildAuthString());
             SetGeneralWebClientValues(requestClient);
             return requestClient;
         }

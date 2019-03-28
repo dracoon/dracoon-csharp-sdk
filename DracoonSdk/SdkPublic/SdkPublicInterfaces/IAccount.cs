@@ -26,7 +26,13 @@ namespace Dracoon.Sdk {
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/GetAvatar/*'/>
         Image GetAvatar();
 
-        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/DeleteAvatar/*'/>
-        Image DeleteAvatar();
+        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/ResetAvatar/*'/>
+        Image ResetAvatar();
+
+        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/UpdateAvatar/*'/>
+        void UpdateAvatar(Image newAvatar);
+
+        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/IsCustomAvatar/*'/>
+        bool IsCustomAvatar();
     }
 }

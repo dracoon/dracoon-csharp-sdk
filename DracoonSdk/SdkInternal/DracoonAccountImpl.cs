@@ -10,6 +10,10 @@ using Dracoon.Sdk.Error;
 using System.Drawing;
 using System.Net;
 using System.IO;
+using System.Drawing.Imaging;
+using System.Linq;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class DracoonAccountImpl : IAccount {
@@ -94,28 +98,68 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public Image GetAvatar() {
             client.RequestExecutor.CheckApiServerVersion();
+            client.RequestExecutor.CheckApiServerVersion(ApiConfig.ApiAvatarFunctions);
+
             RestRequest request = client.RequestBuilder.GetAvatar();
             ApiAvatar avatar = client.RequestExecutor.DoSyncApiCall<ApiAvatar>(request, RequestType.GetAvatar);
 
             using (WebClient avatarClient = client.RequestBuilder.ProvideAvatarDownloadWebClient()) {
-                byte[] avatarImageBytes = client.RequestExecutor.ExecuteWebClientDownload(avatarClient, new Uri(avatar.AvatarUri));
-                using (MemoryStream ms = new MemoryStream(avatarImageBytes)){
+                byte[] avatarImageBytes = client.RequestExecutor.ExecuteWebClientDownload(avatarClient, new Uri(avatar.AvatarUri), RequestType.GetAvatar);
+                using (MemoryStream ms = new MemoryStream(avatarImageBytes)) {
                     return Image.FromStream(ms);
                 }
             }
         }
 
-        public Image DeleteAvatar() {
+        public Image ResetAvatar() {
             client.RequestExecutor.CheckApiServerVersion();
+            client.RequestExecutor.CheckApiServerVersion(ApiConfig.ApiAvatarFunctions);
+
             RestRequest request = client.RequestBuilder.DeleteAvatar();
             ApiAvatar defaultAvatar = client.RequestExecutor.DoSyncApiCall<ApiAvatar>(request, RequestType.DeleteAvatar);
 
             using (WebClient avatarClient = client.RequestBuilder.ProvideAvatarDownloadWebClient()) {
-                byte[] avatarImageBytes = client.RequestExecutor.ExecuteWebClientDownload(avatarClient, new Uri(defaultAvatar.AvatarUri));
+                byte[] avatarImageBytes = client.RequestExecutor.ExecuteWebClientDownload(avatarClient, new Uri(defaultAvatar.AvatarUri), RequestType.DeleteAvatar);
                 using (MemoryStream ms = new MemoryStream(avatarImageBytes)) {
                     return Image.FromStream(ms);
                 }
             }
+        }
+
+        public void UpdateAvatar(Image newAvatar) {
+            client.RequestExecutor.CheckApiServerVersion();
+            client.RequestExecutor.CheckApiServerVersion(ApiConfig.ApiAvatarFunctions);
+
+            byte[] avatarBytes = null;
+            using (MemoryStream ms = new MemoryStream()) {
+                newAvatar.Save(ms, newAvatar.RawFormat);
+                avatarBytes = ms.ToArray();
+            }
+
+            #region Build multipart
+            ImageCodecInfo info = ImageCodecInfo.GetImageDecoders().First(c => c.FormatID == newAvatar.RawFormat.Guid);
+
+            string formDataBoundary = "---------------------------" + Guid.NewGuid();
+            byte[] packageHeader = ApiConfig.encoding.GetBytes(string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\n\r\n", formDataBoundary, "file", "avatarImage"));
+            byte[] packageFooter = ApiConfig.encoding.GetBytes(string.Format("\r\n--" + formDataBoundary + "--"));
+            byte[] multipartFormatedChunkData = new byte[packageHeader.Length + packageFooter.Length + avatarBytes.Length];
+            Buffer.BlockCopy(packageHeader, 0, multipartFormatedChunkData, 0, packageHeader.Length);
+            Buffer.BlockCopy(avatarBytes, 0, multipartFormatedChunkData, packageHeader.Length, avatarBytes.Length);
+            Buffer.BlockCopy(packageFooter, 0, multipartFormatedChunkData, packageHeader.Length + avatarBytes.Length, packageFooter.Length);
+            #endregion
+
+            using (WebClient avatarClient = client.RequestBuilder.ProvideAvatarUploadWebClient(formDataBoundary)) {
+                client.RequestExecutor.ExecuteWebClientChunkUpload(avatarClient, new Uri(client.ServerUri, ApiConfig.ApiPostAvatar), multipartFormatedChunkData, RequestType.PostAvatar);
+            }
+        }
+
+        public bool IsCustomAvatar() {
+            client.RequestExecutor.CheckApiServerVersion();
+            client.RequestExecutor.CheckApiServerVersion(ApiConfig.ApiAvatarFunctions);
+
+            RestRequest request = client.RequestBuilder.GetAvatar();
+            ApiAvatar avatar = client.RequestExecutor.DoSyncApiCall<ApiAvatar>(request, RequestType.GetAvatar);
+            return avatar.IsCustomAvatar;
         }
     }
 }

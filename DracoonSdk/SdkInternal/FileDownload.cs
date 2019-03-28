@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading;
+using static Dracoon.Sdk.SdkInternal.DracoonRequestExecuter;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class FileDownload {
@@ -130,7 +131,7 @@ namespace Dracoon.Sdk.SdkInternal {
                         progressReportTimer.Restart();
                     }
                 };
-                chunkDownloadedResultBytes = dracoonClient.RequestExecutor.ExecuteWebClientDownload(requestClient, downloadUri, runningThread);
+                chunkDownloadedResultBytes = dracoonClient.RequestExecutor.ExecuteWebClientDownload(requestClient, downloadUri, RequestType.GetDownloadChunk, runningThread);
                 downloadedByteCount += previousBytesReceivedValue;
             }
             return chunkDownloadedResultBytes;

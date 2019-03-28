@@ -22,6 +22,12 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #region User-Endpoint
 
+        #region Minimum version requirements
+
+        internal const string ApiAvatarFunctions = "4.11.0";
+
+        #endregion
+
         #region GET
 
         internal const string ApiGetUserAccount = ApiPrefix + "/user/account";
@@ -35,6 +41,7 @@ namespace Dracoon.Sdk.SdkInternal {
         #region POST
 
         internal const string ApiPostUserKeyPair = ApiPrefix + "/user/account/keypair";
+        internal const string ApiPostAvatar = ApiPrefix + "/user/account/avatar";
 
         #endregion
         #region DELETE
