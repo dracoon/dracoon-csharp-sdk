@@ -106,5 +106,13 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             }
             return userPublicKeys;
         }
+
+        internal static AvatarInfo FromApiAvatarInfo(ApiAvatarInfo apiInfo) {
+            AvatarInfo info = new AvatarInfo() {
+                AvatarUUID = apiInfo.AvatarUUID,
+                IsCustomAvatar = apiInfo.IsCustomAvatar
+            };
+            return info;
+        }
     }
 }

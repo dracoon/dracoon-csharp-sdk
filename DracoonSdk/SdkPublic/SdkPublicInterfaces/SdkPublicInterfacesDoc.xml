@@ -103,12 +103,29 @@
         <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
       </exception>
     </GetAvatar>
+    <GetAvatarInfo>
+      <summary>
+        Get the informations about the current set avatar image of the current user.
+      </summary>
+      <returns>
+        The avatar image informations. See also <seealso cref="Dracoon.Sdk.Model.AvatarInfo"/>
+      </returns>
+      <exception cref="Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </GetAvatarInfo>
     <ResetAvatar>
       <summary>
         Delete (Reset to default) the avatar of the current user.
       </summary>
       <returns>
-        The default avatar image.
+        The new default (on server generated) avatar image informations. See also <seealso cref="Dracoon.Sdk.Model.AvatarInfo"/>
       </returns>
       <exception cref="Error.DracoonApiException">
         <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
@@ -125,7 +142,7 @@
         Update the avatar image of the current user.
       </summary>
       <returns>
-        The new avatar image in the specified dimensions.
+        The new avatar image informations. See also <seealso cref="Dracoon.Sdk.Model.AvatarInfo"/>
       </returns>
       <exception cref="Error.DracoonApiException">
         <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
@@ -137,23 +154,6 @@
         <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
       </exception>
     </UpdateAvatar>
-    <IsCustomAvatar>
-      <summary>
-        Check which type of avatar is currently set.
-      </summary>
-      <returns>
-        <c>true</c> if the current is custom, <c>false</c> otherwise
-      </returns>
-      <exception cref="Error.DracoonApiException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
-      </exception>
-      <exception cref="Error.DracoonNetIOException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
-      </exception>
-      <exception cref="System.ArgumentException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
-      </exception>
-    </IsCustomAvatar>
   </members>
 
   <members name="iLog">

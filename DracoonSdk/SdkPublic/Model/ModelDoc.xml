@@ -34,6 +34,28 @@
 
   </members>
 
+  <members name="avatarInfo">
+
+    <AvatarInfo>
+      <summary>
+        Informations about the current set avatar.
+      </summary>
+    </AvatarInfo>
+
+    <AvatarUUID>
+      <summary>
+        The unique id of the current set avatar image.
+      </summary>
+    </AvatarUUID>
+
+    <IsCustomAvatar>
+      <summary>
+        Indicates if the current set avatar is a custom set image or the default server generated image.
+      </summary>
+    </IsCustomAvatar>
+
+  </members>
+
   <members name="customerAccount">
 
     <CustomerAccount>

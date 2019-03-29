@@ -87,7 +87,7 @@
     <Compile Include="SdkInternal\ApiModel\Requests\ApiMoveNode.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiSetUserFileKeysRequest.cs" />
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiUploadChunkResult.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiAvatar.cs" />
+    <Compile Include="SdkInternal\ApiModel\User\ApiAvatarInfo.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserIdFileId.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserIdPublicKey.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiCompleteFileUpload.cs" />
@@ -171,6 +171,7 @@
     <Compile Include="SdkPublic\Filter\FilterParam.cs" />
     <Compile Include="SdkPublic\Filter\SpecificFilters\GetUploadSharesFilter.cs" />
     <Compile Include="SdkPublic\Filter\SpecificFilters\SearchNodesFilter.cs" />
+    <Compile Include="SdkPublic\Model\AvatarInfo.cs" />
     <Compile Include="SdkPublic\Model\Classification.cs" />
     <Compile Include="SdkPublic\Model\CustomerAccount.cs" />
     <Compile Include="SdkPublic\Model\RecycleBinItem.cs" />
