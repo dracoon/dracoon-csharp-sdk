@@ -129,6 +129,7 @@
     <Compile Include="SdkInternal\DracoonRequestExecuter.cs" />
     <Compile Include="SdkInternal\DracoonServerImpl.cs" />
     <Compile Include="SdkInternal\DracoonSharesImpl.cs" />
+    <Compile Include="SdkInternal\DracoonUsersImpl.cs" />
     <Compile Include="SdkInternal\EncFileDownload.cs" />
     <Compile Include="SdkInternal\EncFileUpload.cs" />
     <Compile Include="SdkInternal\FileDownload.cs" />
@@ -222,6 +223,7 @@
     <Compile Include="SdkPublic\SdkPublicInterfaces\INodes.cs" />
     <Compile Include="SdkPublic\SdkPublicInterfaces\IServer.cs" />
     <Compile Include="SdkPublic\SdkPublicInterfaces\IShares.cs" />
+    <Compile Include="SdkPublic\SdkPublicInterfaces\IUsers.cs" />
     <Compile Include="SdkPublic\Sort\DracoonSort.cs" />
     <Compile Include="SdkPublic\Sort\DracoonSortOrder.cs" />
     <Compile Include="SdkPublic\Sort\SpecificSort\GeneralSort.cs" />

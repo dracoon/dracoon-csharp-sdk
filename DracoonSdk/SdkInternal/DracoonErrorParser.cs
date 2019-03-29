@@ -240,6 +240,8 @@ namespace Dracoon.Sdk.SdkInternal {
                 return DracoonApiCode.SERVER_UL_SHARE_NOT_FOUND;
             } else if (apiErrorCode == -70020) {
                 return DracoonApiCode.SERVER_USER_KEY_PAIR_NOT_FOUND;
+            } else if (apiErrorCode == -70028) {
+                return DracoonApiCode.SERVER_USER_AVATAR_NOT_FOUND;
             } else if (apiErrorCode == -70501) {
                 return DracoonApiCode.SERVER_USER_NOT_FOUND;
             }

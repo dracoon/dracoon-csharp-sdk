@@ -153,6 +153,16 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #endregion
 
+        #region Resources-Endpoint
+
+        #region GET
+
+        internal const string ApiResourcesGetAvatar = ApiPrefix + "/resources/users/{userId}/avatar/{uuid}";
+
+        #endregion
+
+        #endregion
+
         internal static Uri BuildApiUrl(Uri baseUrl, params string[] pathSegments) {
             UriBuilder uriBuilder = new UriBuilder(baseUrl);
             for (int i = 0; i < pathSegments.Length; i++) {

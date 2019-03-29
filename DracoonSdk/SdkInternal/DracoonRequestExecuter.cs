@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,13 +13,14 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal enum RequestType {
             GetServerVersion, GetServerTime,
-            SetUserKeyPair, GetCustomerAccount, GetUserAccount, GetUserKeyPair, DeleteUserKeyPair, GetUserAvatar, DeleteUserAvatar, PostUserAvatar,
-            GetNodes, GetNode, PostRoom, PostFolder, PutFolder, PutRoom, PutEnableRoomEncryption, PutFile, DeleteNodes,
-            PostDownloadToken, GetFileKey, PostUploadToken, PutCompleteUpload, PostUploadChunk,
+            SetUserKeyPair, GetCustomerAccount, GetUserAccount, GetUserKeyPair, DeleteUserKeyPair, GetUserAvatar, DeleteUserAvatar,
+            PostUserAvatar, GetResourcesAvatar, GetNodes, GetNode, PostRoom, PostFolder, PutFolder, PutRoom, PutEnableRoomEncryption,
+            PutFile, DeleteNodes, PostDownloadToken, GetFileKey, PostUploadToken, PutCompleteUpload, PostUploadChunk,
             GetDownloadChunk, PostCopyNodes, PostMoveNodes, GetSearchNodes, GetMissingFileKeys, PostMissingFileKeys,
             PostCreateDownloadShare, DeleteDownloadShare, GetDownloadShares, PostCreateUploadShare, DeleteUploadShare,
-            GetUploadShares, PostFavorite, DeleteFavorite, GetAuthenticatedPing, PostOAuthToken, PostOAuthRefresh, GetGeneralSettings, GetInfrastructureSettings, GetDefaultsSettings,
-            GetRecycleBin, DeleteRecycleBin, GetPreviousVersions, GetPreviousVersion, PostRestoreNodeVersion, DeletePreviousVersions
+            GetUploadShares, PostFavorite, DeleteFavorite, GetAuthenticatedPing, PostOAuthToken, PostOAuthRefresh,
+            GetGeneralSettings, GetInfrastructureSettings, GetDefaultsSettings, GetRecycleBin, DeleteRecycleBin, GetPreviousVersions,
+            GetPreviousVersion, PostRestoreNodeVersion, DeletePreviousVersions
         }
 
         private static readonly string LOGTAG = typeof(DracoonRequestExecuter).Name;

@@ -260,6 +260,8 @@ namespace Dracoon.Sdk.Error {
         public static readonly DracoonApiCode SERVER_USER_KEY_PAIR_ALREADY_SET = new DracoonApiCode(5551, "Encryption key pair was already set.");
         // CODES: -40761
         public static readonly DracoonApiCode SERVER_FILE_KEY_NOT_FOUND = new DracoonApiCode(5552, "Encryption file key could not be found.");
+        // CODES: -70028
+        public static readonly DracoonApiCode SERVER_USER_AVATAR_NOT_FOUND = new DracoonApiCode(5553, "Avatar for this user could not be found.");
         #endregion
 
         #region GROUPS

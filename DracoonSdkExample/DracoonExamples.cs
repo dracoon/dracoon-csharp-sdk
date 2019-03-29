@@ -120,6 +120,14 @@ namespace Dracoon.Sdk.Example {
             }
         }
 
+        private static void GetAvatarImageOfNodeCreator() {
+            long nodeId = 1;
+            Node node = dc.Nodes.GetNode(nodeId);
+            Image avatar = dc.Users.GetUserAvatar(node.CreatedBy.Id.Value, node.CreatedBy.AvatarUUID);
+            ImageCodecInfo info = ImageCodecInfo.GetImageDecoders().First(c => c.FormatID == avatar.RawFormat.Guid);
+            avatar.Save("C:\\temp\\avatar." + info.FormatDescription);
+        }
+
         private static void ListFilteredRootNodes() {
             GetNodesFilter getNodesFilter = new GetNodesFilter();
             getNodesFilter.AddNodeTypeFilter(GetNodesFilter.Type.EqualTo(NodeType.Room).Or().EqualTo(NodeType.Folder).Build());

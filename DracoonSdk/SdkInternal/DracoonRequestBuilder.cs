@@ -7,9 +7,6 @@ using Dracoon.Sdk.Sort;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -498,6 +495,22 @@ namespace Dracoon.Sdk.SdkInternal {
         internal RestRequest GetDefaultsSettings() {
             RestRequest request = new RestRequest(ApiConfig.ApiGetDefaultsConfig, Method.GET);
             SetGeneralRestValues(request, true);
+            return request;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Resources-Endpoint
+
+        #region GET
+
+        internal RestRequest GetUserAvatar(long userId, string avatarUUID) {
+            RestRequest request = new RestRequest(ApiConfig.ApiResourcesGetAvatar, Method.GET);
+            SetGeneralRestValues(request, false);
+            request.AddUrlSegment("userId", userId);
+            request.AddUrlSegment("uuid", avatarUUID);
             return request;
         }
 

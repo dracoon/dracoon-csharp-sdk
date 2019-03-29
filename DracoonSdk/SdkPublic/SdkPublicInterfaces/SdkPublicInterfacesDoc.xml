@@ -1290,4 +1290,39 @@
     </DeleteUploadShare>
 
   </members>
+
+  <members name="iUsers">
+
+    <IUsers>
+      <summary>
+        Handler to do actions on other users.
+      </summary>
+    </IUsers>
+
+    <GetUserAvatar>
+      <summary>
+        Get the avatar image of a given user.
+      </summary>
+      <param name="userId">
+        The ID of the user for which the avatar should be returned.
+      </param>
+      <param name="avatarUUID">
+        The corresponding uuid of the current avatar image for the given user.
+      </param>
+      <returns>
+        The avatar image of the requested user.
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </GetUserAvatar>
+
+  </members>
+
 </docs>

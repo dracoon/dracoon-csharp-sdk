@@ -1415,6 +1415,12 @@
       </summary>
     </DisplayName>
 
+    <AvatarUUID>
+      <summary>
+        The uuid of the avatar image for this user.
+      </summary>
+    </AvatarUUID>
+    
   </members>
 
   <members name="userRole">

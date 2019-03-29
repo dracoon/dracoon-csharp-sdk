@@ -14,7 +14,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
 
             UserInfo userInfo = new UserInfo() {
                 Id = apiUserInfo.Id,
-                DisplayName = apiUserInfo.DisplayName
+                DisplayName = apiUserInfo.DisplayName,
+                AvatarUUID = apiUserInfo.AvatarUUID
             };
             return userInfo;
         }
