@@ -17,8 +17,8 @@ using static Dracoon.Sdk.SdkInternal.DracoonRequestExecuter;
 namespace Dracoon.Sdk.SdkInternal {
     internal class FileUpload {
         protected string LOGTAG;
-        
-        protected readonly long PROGRESS_UPDATE_INTERVAL = 250;
+
+        protected readonly long PROGRESS_UPDATE_INTERVAL = 500;
 
         protected List<IFileUploadCallback> callbacks = new List<IFileUploadCallback>();
         protected DracoonClient dracoonClient;
@@ -157,20 +157,23 @@ namespace Dracoon.Sdk.SdkInternal {
             Buffer.BlockCopy(packageFooter, 0, multipartFormatedChunkData, packageHeader.Length + bytesRead, packageFooter.Length);
             #endregion
 
+            long headerLength = packageFooter.LongLength + packageHeader.LongLength;
+
             using (WebClient requestClient = dracoonClient.RequestBuilder.ProvideChunkUploadWebClient(bytesRead, uploadedByteCount, formDataBoundary, optionalFileSize == -1 ? "*" : optionalFileSize.ToString())) {
-                long currentUploadedByteCount = uploadedByteCount;
-                long previousBytesSentValue = 0;
+                long previousBytesSentValue = uploadedByteCount;
+                long currentUploadedByteCount = 0;
                 requestClient.UploadProgressChanged += (o, progressEvent) => {
-                    previousBytesSentValue = progressEvent.BytesSent;
-                    if (progressReportTimer.ElapsedMilliseconds > PROGRESS_UPDATE_INTERVAL) {
-                        NotifyProgress(actionId, currentUploadedByteCount + previousBytesSentValue, optionalFileSize);
+                    long increaseWithoutHeader = (progressEvent.BytesSent - currentUploadedByteCount - headerLength);
+                    currentUploadedByteCount += increaseWithoutHeader;
+                    if (progressReportTimer.ElapsedMilliseconds > PROGRESS_UPDATE_INTERVAL && increaseWithoutHeader > 0) {
                         lastNotifiedProgressValue = currentUploadedByteCount + previousBytesSentValue;
+                        NotifyProgress(actionId, lastNotifiedProgressValue, optionalFileSize);
                         progressReportTimer.Restart();
                     }
                 };
                 byte[] chunkUploadResultBytes = dracoonClient.RequestExecutor.ExecuteWebClientChunkUpload(requestClient, uploadUrl, multipartFormatedChunkData, RequestType.PostUploadChunk, runningThread);
                 ApiUploadChunkResult chunkUploadResult = JsonConvert.DeserializeObject<ApiUploadChunkResult>(ApiConfig.encoding.GetString(chunkUploadResultBytes));
-                uploadedByteCount += previousBytesSentValue - packageFooter.LongLength - packageHeader.LongLength;
+                uploadedByteCount += currentUploadedByteCount;
                 return chunkUploadResult;
             }
         }
