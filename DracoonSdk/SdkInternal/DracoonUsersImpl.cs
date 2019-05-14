@@ -33,9 +33,8 @@ namespace Dracoon.Sdk.SdkInternal {
 
             using (WebClient avatarClient = client.RequestBuilder.ProvideAvatarDownloadWebClient()) {
                 byte[] avatarImageBytes = client.RequestExecutor.ExecuteWebClientDownload(avatarClient, new Uri(apiAvatarInfo.AvatarUri), RequestType.GetResourcesAvatar);
-                using (MemoryStream ms = new MemoryStream(avatarImageBytes)) {
-                    return Image.FromStream(ms);
-                }
+                MemoryStream ms = new MemoryStream(avatarImageBytes);
+                return Image.FromStream(ms);
             }
         }
     }
