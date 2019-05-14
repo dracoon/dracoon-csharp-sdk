@@ -6,6 +6,7 @@ using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Mapper;
 using Dracoon.Sdk.SdkInternal.Validator;
+using Dracoon.Sdk.Sort;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -86,14 +87,14 @@ namespace Dracoon.Sdk.SdkInternal {
             client.RequestExecutor.DoSyncApiCall<VoidResponse>(restRequest, DracoonRequestExecuter.RequestType.DeleteDownloadShare);
         }
 
-        public DownloadShareList GetDownloadShares(long? offset = null, long? limit = null, GetDownloadSharesFilter filter = null) {
+        public DownloadShareList GetDownloadShares(long? offset = null, long? limit = null, GetDownloadSharesFilter filter = null, SharesSort sort = null) {
             client.RequestExecutor.CheckApiServerVersion();
             #region Parameter Validation
             offset.MustNotNegative(nameof(offset));
             limit.MustPositive(nameof(limit));
             #endregion
 
-            RestRequest restRequest = client.RequestBuilder.GetDownloadShares(offset, limit, filter);
+            RestRequest restRequest = client.RequestBuilder.GetDownloadShares(offset, limit, filter, sort);
             ApiDownloadShareList result = client.RequestExecutor.DoSyncApiCall<ApiDownloadShareList>(restRequest, DracoonRequestExecuter.RequestType.GetDownloadShares);
             return ShareMapper.FromApiDownloadShareList(result);
         }
@@ -142,14 +143,14 @@ namespace Dracoon.Sdk.SdkInternal {
             client.RequestExecutor.DoSyncApiCall<VoidResponse>(restRequest, DracoonRequestExecuter.RequestType.DeleteUploadShare);
         }
 
-        public UploadShareList GetUploadShares(long? offset = null, long? limit = null, GetUploadSharesFilter filter = null) {
+        public UploadShareList GetUploadShares(long? offset = null, long? limit = null, GetUploadSharesFilter filter = null, SharesSort sort = null) {
             client.RequestExecutor.CheckApiServerVersion();
             #region Parameter Validation
             offset.MustNotNegative(nameof(offset));
             limit.MustPositive(nameof(limit));
             #endregion
 
-            RestRequest restRequest = client.RequestBuilder.GetUploadShares(offset, limit, filter);
+            RestRequest restRequest = client.RequestBuilder.GetUploadShares(offset, limit, filter, sort);
             ApiUploadShareList result = client.RequestExecutor.DoSyncApiCall<ApiUploadShareList>(restRequest, DracoonRequestExecuter.RequestType.GetUploadShares);
             return ShareMapper.FromApiUploadShareList(result);
         }

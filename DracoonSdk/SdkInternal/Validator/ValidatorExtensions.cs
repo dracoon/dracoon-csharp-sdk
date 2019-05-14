@@ -64,6 +64,9 @@ namespace Dracoon.Sdk.SdkInternal.Validator {
             if (param.EndsWith("/")) {
                 throw new ArgumentException("The node path cannot end with '/'.");
             }
+            if (param.Length > 4096) {
+                throw new ArgumentException("The node path is to long. Only a path length up to 4096 chars are allowed.");
+            }
 
             List<string> foundInvalidChars = new List<string>(INVALID_PATH_CHARS.Length);
             foreach (string current in INVALID_PATH_CHARS) {

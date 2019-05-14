@@ -75,6 +75,10 @@ namespace Dracoon.Sdk {
             get; private set;
         }
 
+        internal DracoonUsersImpl UsersImpl {
+            get; private set;
+        }
+
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonClient"]/Account/*'/>
         public IAccount Account {
             get {
@@ -100,6 +104,13 @@ namespace Dracoon.Sdk {
         public IShares Shares {
             get {
                 return SharesImpl;
+            }
+        }
+
+        /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonClient"]/Users/*'/>
+        public IUsers Users {
+            get {
+                return UsersImpl;
             }
         }
 
@@ -131,6 +142,7 @@ namespace Dracoon.Sdk {
             ServerImpl = new DracoonServerImpl(this);
             NodesImpl = new DracoonNodesImpl(this);
             SharesImpl = new DracoonSharesImpl(this);
+            UsersImpl = new DracoonUsersImpl(this);
 
             #endregion
         }

@@ -10,5 +10,9 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         public string DisplayName {
             get; set;
         }
+        [JsonProperty("avatarUuid", NullValueHandling = NullValueHandling.Ignore)]
+        public string AvatarUUID {
+            get; set;
+        }
     }
 }

@@ -12,5 +12,10 @@ namespace Dracoon.Sdk.Model {
         public string DisplayName {
             get; internal set;
         }
+
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/AvatarUUID/*'/>
+        public string AvatarUUID {
+            get; internal set;
+        }
     }
 }

@@ -71,6 +71,8 @@ namespace Dracoon.Sdk.Error {
         public static readonly DracoonApiCode VALIDATION_FIELD_NOT_BETWEEN_0_9999 = new DracoonApiCode(3006, "Field value must be between 0 and 9999.");
         // CODES: -80019
         public static readonly DracoonApiCode VALIDATION_FIELD_NOT_BETWEEN_1_9999 = new DracoonApiCode(3007, "Field value must be between 1 and 9999.");
+        // CODES: -80024
+        public static readonly DracoonApiCode VALIDATION_INVALID_OFFSET_OR_LIMIT = new DracoonApiCode(3008, "Invalid offset or limit.");
 
         #endregion
         #region NODES
@@ -258,6 +260,8 @@ namespace Dracoon.Sdk.Error {
         public static readonly DracoonApiCode SERVER_USER_KEY_PAIR_ALREADY_SET = new DracoonApiCode(5551, "Encryption key pair was already set.");
         // CODES: -40761
         public static readonly DracoonApiCode SERVER_FILE_KEY_NOT_FOUND = new DracoonApiCode(5552, "Encryption file key could not be found.");
+        // CODES: -70028
+        public static readonly DracoonApiCode SERVER_USER_AVATAR_NOT_FOUND = new DracoonApiCode(5553, "Avatar for this user could not be found.");
         #endregion
 
         #region GROUPS
@@ -291,7 +295,7 @@ namespace Dracoon.Sdk.Error {
             get; private set;
         }
 
-        private DracoonApiCode(int code, string text) {
+        internal DracoonApiCode(int code, string text) {
             Code = code;
             Text = text;
         }

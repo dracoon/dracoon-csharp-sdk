@@ -204,6 +204,14 @@
               <include file = "SdkPublicInterfaces/SdkPublicInterfacesDoc.xml" path='docs/members[@name="iShares"]/IShares/*'/>
             </description>
           </item>
+          <item>
+            <term>
+              <see cref="Dracoon.Sdk.DracoonClient.Users"/>:
+            </term>
+            <description>
+              <include file = "SdkPublicInterfaces/SdkPublicInterfacesDoc.xml" path='docs/members[@name="iUsers"]/IUsers/*'/>
+            </description>
+          </item>
         </list>
       </summary>
     </DracoonClient>
@@ -249,6 +257,12 @@
         Get Shares handler. See also <seealso cref="Dracoon.Sdk.IShares"/>
       </summary>
     </Shares>
+
+    <Users>
+      <summary>
+        Get Users handler. See also <seealso cref="Dracoon.Sdk.IUsers"/>
+      </summary>
+    </Users>
 
     <DracoonClientConstructor>
       <summary>

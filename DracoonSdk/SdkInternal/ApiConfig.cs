@@ -22,17 +22,26 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #region User-Endpoint
 
+        #region Minimum version requirements
+
+        internal const string ApiAvatarFunctions = "4.11.0";
+
+        #endregion
+
         #region GET
 
         internal const string ApiGetUserAccount = ApiPrefix + "/user/account";
         internal const string ApiGetCustomerAccount = ApiPrefix + "/user/account/customer";
         internal const string ApiGetUserKeyPair = ApiPrefix + "/user/account/keypair";
         internal const string ApiGetAuthenticatedPing = ApiPrefix + "/user/ping";
+        internal const string ApiGetAvatar = ApiPrefix + "/user/account/avatar";
+        internal const string ApiDeleteAvatar = ApiPrefix + "/user/account/avatar";
 
         #endregion
         #region POST
 
         internal const string ApiPostUserKeyPair = ApiPrefix + "/user/account/keypair";
+        internal const string ApiPostAvatar = ApiPrefix + "/user/account/avatar";
 
         #endregion
         #region DELETE
@@ -139,6 +148,16 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #endregion
         #region PUT
+
+        #endregion
+
+        #endregion
+
+        #region Resources-Endpoint
+
+        #region GET
+
+        internal const string ApiResourcesGetAvatar = ApiPrefix + "/resources/users/{userId}/avatar/{uuid}";
 
         #endregion
 

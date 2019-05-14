@@ -7,6 +7,13 @@ using Dracoon.Crypto.Sdk;
 using Dracoon.Crypto.Sdk.Model;
 using static Dracoon.Sdk.SdkInternal.DracoonRequestExecuter;
 using Dracoon.Sdk.Error;
+using System.Drawing;
+using System.Net;
+using System.IO;
+using System.Drawing.Imaging;
+using System.Linq;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class DracoonAccountImpl : IAccount {
@@ -88,5 +95,72 @@ namespace Dracoon.Sdk.SdkInternal {
             RestRequest request = client.RequestBuilder.GetAuthenticatedPing();
             client.RequestExecutor.DoSyncApiCall<VoidResponse>(request, RequestType.GetAuthenticatedPing);
         }
+
+        #region Avatar functions
+
+        public Image GetAvatar() {
+            ApiAvatarInfo apiAvatarInfo = GetApiAvatarInfoInternally();
+
+            using (WebClient avatarClient = client.RequestBuilder.ProvideAvatarDownloadWebClient()) {
+                byte[] avatarImageBytes = client.RequestExecutor.ExecuteWebClientDownload(avatarClient, new Uri(apiAvatarInfo.AvatarUri), RequestType.GetUserAvatar);
+                MemoryStream ms = new MemoryStream(avatarImageBytes);
+                return Image.FromStream(ms);
+            }
+        }
+
+        public AvatarInfo GetAvatarInfo() {
+            ApiAvatarInfo apiAvatarInfo = GetApiAvatarInfoInternally();
+            return UserMapper.FromApiAvatarInfo(apiAvatarInfo);
+        }
+
+        private ApiAvatarInfo GetApiAvatarInfoInternally() {
+            client.RequestExecutor.CheckApiServerVersion();
+            client.RequestExecutor.CheckApiServerVersion(ApiConfig.ApiAvatarFunctions);
+
+            RestRequest request = client.RequestBuilder.GetAvatar();
+            ApiAvatarInfo apiAvatarInfo = client.RequestExecutor.DoSyncApiCall<ApiAvatarInfo>(request, RequestType.GetUserAvatar);
+            return apiAvatarInfo;
+        }
+
+        public AvatarInfo ResetAvatar() {
+            client.RequestExecutor.CheckApiServerVersion();
+            client.RequestExecutor.CheckApiServerVersion(ApiConfig.ApiAvatarFunctions);
+
+            RestRequest request = client.RequestBuilder.DeleteAvatar();
+            ApiAvatarInfo defaultAvatarInfo = client.RequestExecutor.DoSyncApiCall<ApiAvatarInfo>(request, RequestType.DeleteUserAvatar);
+            return UserMapper.FromApiAvatarInfo(defaultAvatarInfo);
+        }
+
+        public AvatarInfo UpdateAvatar(Image newAvatar) {
+            client.RequestExecutor.CheckApiServerVersion();
+            client.RequestExecutor.CheckApiServerVersion(ApiConfig.ApiAvatarFunctions);
+
+            byte[] avatarBytes = null;
+            using (MemoryStream ms = new MemoryStream()) {
+                newAvatar.Save(ms, newAvatar.RawFormat);
+                avatarBytes = ms.ToArray();
+            }
+
+            #region Build multipart
+            ImageCodecInfo info = ImageCodecInfo.GetImageDecoders().First(c => c.FormatID == newAvatar.RawFormat.Guid);
+
+            string formDataBoundary = "---------------------------" + Guid.NewGuid();
+            byte[] packageHeader = ApiConfig.encoding.GetBytes(string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\n\r\n", formDataBoundary, "file", "avatarImage"));
+            byte[] packageFooter = ApiConfig.encoding.GetBytes(string.Format("\r\n--" + formDataBoundary + "--"));
+            byte[] multipartFormatedChunkData = new byte[packageHeader.Length + packageFooter.Length + avatarBytes.Length];
+            Buffer.BlockCopy(packageHeader, 0, multipartFormatedChunkData, 0, packageHeader.Length);
+            Buffer.BlockCopy(avatarBytes, 0, multipartFormatedChunkData, packageHeader.Length, avatarBytes.Length);
+            Buffer.BlockCopy(packageFooter, 0, multipartFormatedChunkData, packageHeader.Length + avatarBytes.Length, packageFooter.Length);
+            #endregion
+
+            ApiAvatarInfo resultAvatarInfo;
+            using (WebClient avatarClient = client.RequestBuilder.ProvideAvatarUploadWebClient(formDataBoundary)) {
+                byte[] resultAvatarInfoBytes = client.RequestExecutor.ExecuteWebClientChunkUpload(avatarClient, new Uri(client.ServerUri, ApiConfig.ApiPostAvatar), multipartFormatedChunkData, RequestType.PostUserAvatar);
+                resultAvatarInfo = JsonConvert.DeserializeObject<ApiAvatarInfo>(Encoding.UTF8.GetString(resultAvatarInfoBytes));
+            }
+            return UserMapper.FromApiAvatarInfo(resultAvatarInfo);
+        }
+
+        #endregion
     }
 }

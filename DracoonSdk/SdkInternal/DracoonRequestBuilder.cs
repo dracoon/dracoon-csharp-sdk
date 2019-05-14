@@ -102,6 +102,12 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        internal RestRequest GetAvatar() {
+            RestRequest request = new RestRequest(ApiConfig.ApiGetAvatar, Method.GET);
+            SetGeneralRestValues(request, true);
+            return request;
+        }
+
         #endregion
         #region POST
 
@@ -118,6 +124,29 @@ namespace Dracoon.Sdk.SdkInternal {
             RestRequest request = new RestRequest(ApiConfig.ApiDeleteUserKeyPair, Method.DELETE);
             SetGeneralRestValues(request, true);
             return request;
+        }
+
+        internal RestRequest DeleteAvatar() {
+            RestRequest request = new RestRequest(ApiConfig.ApiDeleteAvatar, Method.DELETE);
+            SetGeneralRestValues(request, true);
+            return request;
+        }
+
+        #endregion
+        #region HTTP-Request
+
+        internal WebClient ProvideAvatarDownloadWebClient() {
+            DracoonWebClientExtension requestClient = new DracoonWebClientExtension();
+            SetGeneralWebClientValues(requestClient);
+            return requestClient;
+        }
+
+        internal WebClient ProvideAvatarUploadWebClient(string formDataBoundary) {
+            DracoonWebClientExtension requestClient = new DracoonWebClientExtension();
+            requestClient.Headers.Add(HttpRequestHeader.ContentType, "multipart/form-data; boundary=" + formDataBoundary);
+            requestClient.Headers.Add(ApiConfig.AuthorizationHeader, client.OAuthClient.BuildAuthString());
+            SetGeneralWebClientValues(requestClient);
+            return requestClient;
         }
 
         #endregion
@@ -361,10 +390,11 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #region GET
 
-        internal RestRequest GetDownloadShares(long? offset, long? limit, GetDownloadSharesFilter filter = null) {
+        internal RestRequest GetDownloadShares(long? offset, long? limit, GetDownloadSharesFilter filter = null, SharesSort sort = null) {
             RestRequest request = new RestRequest(ApiConfig.ApiGetDownloadShares, Method.GET);
             SetGeneralRestValues(request, true);
             AddFilters(filter, request);
+            AddSort(sort, request);
             if (offset.HasValue)
                 request.AddQueryParameter("offset", offset.ToString());
             if (limit.HasValue)
@@ -372,10 +402,11 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
-        internal RestRequest GetUploadShares(long? offset, long? limit, GetUploadSharesFilter filter = null) {
+        internal RestRequest GetUploadShares(long? offset, long? limit, GetUploadSharesFilter filter = null, SharesSort sort = null) {
             RestRequest request = new RestRequest(ApiConfig.ApiGetUploadShares, Method.GET);
             SetGeneralRestValues(request, true);
             AddFilters(filter, request);
+            AddSort(sort, request);
             if (offset.HasValue)
                 request.AddQueryParameter("offset", offset.ToString());
             if (limit.HasValue)
@@ -464,6 +495,22 @@ namespace Dracoon.Sdk.SdkInternal {
         internal RestRequest GetDefaultsSettings() {
             RestRequest request = new RestRequest(ApiConfig.ApiGetDefaultsConfig, Method.GET);
             SetGeneralRestValues(request, true);
+            return request;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Resources-Endpoint
+
+        #region GET
+
+        internal RestRequest GetUserAvatar(long userId, string avatarUUID) {
+            RestRequest request = new RestRequest(ApiConfig.ApiResourcesGetAvatar, Method.GET);
+            SetGeneralRestValues(request, false);
+            request.AddUrlSegment("userId", userId);
+            request.AddUrlSegment("uuid", avatarUUID);
             return request;
         }
 

@@ -51,6 +51,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -86,6 +87,7 @@
     <Compile Include="SdkInternal\ApiModel\Requests\ApiMoveNode.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiSetUserFileKeysRequest.cs" />
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiUploadChunkResult.cs" />
+    <Compile Include="SdkInternal\ApiModel\User\ApiAvatarInfo.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserIdFileId.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserIdPublicKey.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiCompleteFileUpload.cs" />
@@ -127,6 +129,7 @@
     <Compile Include="SdkInternal\DracoonRequestExecuter.cs" />
     <Compile Include="SdkInternal\DracoonServerImpl.cs" />
     <Compile Include="SdkInternal\DracoonSharesImpl.cs" />
+    <Compile Include="SdkInternal\DracoonUsersImpl.cs" />
     <Compile Include="SdkInternal\EncFileDownload.cs" />
     <Compile Include="SdkInternal\EncFileUpload.cs" />
     <Compile Include="SdkInternal\FileDownload.cs" />
@@ -169,6 +172,7 @@
     <Compile Include="SdkPublic\Filter\FilterParam.cs" />
     <Compile Include="SdkPublic\Filter\SpecificFilters\GetUploadSharesFilter.cs" />
     <Compile Include="SdkPublic\Filter\SpecificFilters\SearchNodesFilter.cs" />
+    <Compile Include="SdkPublic\Model\AvatarInfo.cs" />
     <Compile Include="SdkPublic\Model\Classification.cs" />
     <Compile Include="SdkPublic\Model\CustomerAccount.cs" />
     <Compile Include="SdkPublic\Model\RecycleBinItem.cs" />
@@ -219,30 +223,32 @@
     <Compile Include="SdkPublic\SdkPublicInterfaces\INodes.cs" />
     <Compile Include="SdkPublic\SdkPublicInterfaces\IServer.cs" />
     <Compile Include="SdkPublic\SdkPublicInterfaces\IShares.cs" />
+    <Compile Include="SdkPublic\SdkPublicInterfaces\IUsers.cs" />
     <Compile Include="SdkPublic\Sort\DracoonSort.cs" />
     <Compile Include="SdkPublic\Sort\DracoonSortOrder.cs" />
     <Compile Include="SdkPublic\Sort\SpecificSort\GeneralSort.cs" />
     <Compile Include="SdkPublic\Sort\SpecificSort\SearchNodesSort.cs" />
+    <Compile Include="SdkPublic\Sort\SpecificSort\SharesSort.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SdkPublic\Error\ErrorDoc.xml" />
-    <Content Include="SdkPublic\Filter\FilterDoc.xml" />
-    <Content Include="SdkPublic\Filter\SpecificFilters\SpecificFilterDoc.xml">
+    <None Include="SdkPublic\Error\ErrorDoc.xml" />
+    <None Include="SdkPublic\Filter\FilterDoc.xml" />
+    <None Include="SdkPublic\Filter\SpecificFilters\SpecificFilterDoc.xml">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="SdkPublic\Model\ModelDoc.xml">
+    </None>
+    <None Include="SdkPublic\Model\ModelDoc.xml">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="SdkPublic\Model\UserRequests\UserRequestsDoc.xml">
+    </None>
+    <None Include="SdkPublic\Model\UserRequests\UserRequestsDoc.xml">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="SdkPublic\SdkPublicDoc.xml" />
-    <Content Include="SdkPublic\SdkPublicInterfaces\SdkPublicInterfacesDoc.xml" />
-    <Content Include="SdkPublic\Sort\Sort.xml" />
-    <Content Include="SdkPublic\Sort\SpecificSort\SpecificSort.xml" />
+    </None>
+    <None Include="SdkPublic\SdkPublicDoc.xml" />
+    <None Include="SdkPublic\SdkPublicInterfaces\SdkPublicInterfacesDoc.xml" />
+    <None Include="SdkPublic\Sort\Sort.xml" />
+    <None Include="SdkPublic\Sort\SpecificSort\SpecificSort.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

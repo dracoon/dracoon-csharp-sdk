@@ -86,6 +86,74 @@
         <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
       </exception>
     </ValidateTokenValidity>
+    <GetAvatar>
+      <summary>
+        Get the downloaded avatar image for the current user.
+      </summary>
+      <returns>
+        The avatar image.
+      </returns>
+      <exception cref="Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </GetAvatar>
+    <GetAvatarInfo>
+      <summary>
+        Get the informations about the current set avatar image of the current user.
+      </summary>
+      <returns>
+        The avatar image informations. See also <seealso cref="Dracoon.Sdk.Model.AvatarInfo"/>
+      </returns>
+      <exception cref="Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </GetAvatarInfo>
+    <ResetAvatar>
+      <summary>
+        Delete (Reset to default) the avatar of the current user.
+      </summary>
+      <returns>
+        The new default (on server generated) avatar image informations. See also <seealso cref="Dracoon.Sdk.Model.AvatarInfo"/>
+      </returns>
+      <exception cref="Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </ResetAvatar>
+    <UpdateAvatar>
+      <summary>
+        Update the avatar image of the current user.
+      </summary>
+      <returns>
+        The new avatar image informations. See also <seealso cref="Dracoon.Sdk.Model.AvatarInfo"/>
+      </returns>
+      <exception cref="Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </UpdateAvatar>
   </members>
 
   <members name="iLog">
@@ -1114,6 +1182,9 @@
       <param name="filter">
         The filter for the request result. See also <seealso cref="Dracoon.Sdk.Filter.GetDownloadSharesFilter"/>
       </param>
+      <param name="sort">
+        The sort for the request result. See also <seealso cref="Dracoon.Sdk.Sort.SharesSort"/>
+      </param>
       <returns>
         The result list of download shares. See also <seealso cref="Dracoon.Sdk.Model.DownloadShareList"/>
       </returns>
@@ -1183,6 +1254,9 @@
       <param name="filter">
         The filter for the request result. See also <seealso cref="Dracoon.Sdk.Filter.GetUploadSharesFilter"/>
       </param>
+      <param name="sort">
+        The sort for the request result. See also <seealso cref="Dracoon.Sdk.Sort.SharesSort"/>
+      </param>
       <returns>
         The result list of upload shares. See also <seealso cref="Dracoon.Sdk.Model.UploadShareList"/>
       </returns>
@@ -1216,4 +1290,39 @@
     </DeleteUploadShare>
 
   </members>
+
+  <members name="iUsers">
+
+    <IUsers>
+      <summary>
+        Handler to do actions on other users.
+      </summary>
+    </IUsers>
+
+    <GetUserAvatar>
+      <summary>
+        Get the avatar image of a given user.
+      </summary>
+      <param name="userId">
+        The ID of the user for which the avatar should be returned.
+      </param>
+      <param name="avatarUUID">
+        The corresponding uuid of the current avatar image for the given user.
+      </param>
+      <returns>
+        The avatar image of the requested user.
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </GetUserAvatar>
+
+  </members>
+
 </docs>

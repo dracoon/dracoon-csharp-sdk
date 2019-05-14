@@ -17,6 +17,23 @@ namespace Dracoon.Sdk.SdkInternal {
             dracoonClient = client;
         }
 
+        private bool CheckResponseHasHeader(dynamic response, string headerName, string headerValue) {
+            if (response is IRestResponse restResponse) {
+                foreach (Parameter current in restResponse.Headers) {
+                    if (current.Name.Equals(headerName) && current.Value.Equals(headerValue)) {
+                        return true;
+                    }
+                }
+            }
+            if (response is HttpWebResponse webResponse) {
+                string searchedValue = webResponse.Headers.Get(headerName);
+                if (searchedValue.Equals(headerValue)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private ApiErrorResponse GetApiErrorResponse(string errorResponseBody) {
             try {
                 ApiErrorResponse apiError = JsonConvert.DeserializeObject<ApiErrorResponse>(errorResponseBody);
@@ -41,7 +58,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal void ParseError(IRestResponse response, RequestType requestType) {
             ApiErrorResponse apiError = GetApiErrorResponse(response.Content);
-            DracoonApiCode dracoonResultCode = Parse((int) response.StatusCode, apiError, requestType);
+            DracoonApiCode dracoonResultCode = Parse((int) response.StatusCode, response, apiError, requestType);
             dracoonClient.Log.Debug(LOGTAG, String.Format("Query for '{0}' failed with '{1}'", requestType.ToString(), dracoonResultCode.Text));
 
             throw new DracoonApiException(dracoonResultCode);
@@ -51,7 +68,7 @@ namespace Dracoon.Sdk.SdkInternal {
             if (exception.Status == WebExceptionStatus.ProtocolError) {
                 ApiErrorResponse apiError = GetApiErrorResponse(ReadErrorResponseFromWebException(exception));
                 if (exception.Response is HttpWebResponse response) {
-                    DracoonApiCode dracoonResultCode = Parse((int) response.StatusCode, apiError, requestType);
+                    DracoonApiCode dracoonResultCode = Parse((int) response.StatusCode, response, apiError, requestType);
                     dracoonClient.Log.Debug(LOGTAG, String.Format("Query for '{0}' failed with '{1}'", requestType.ToString(), dracoonResultCode.Text));
                     throw new DracoonApiException(dracoonResultCode);
                 } else {
@@ -62,36 +79,36 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        private DracoonApiCode Parse(int httpStatusCode, ApiErrorResponse apiError, RequestType requestType) {
+        private DracoonApiCode Parse(int httpStatusCode, dynamic response, ApiErrorResponse apiError, RequestType requestType) {
             int? apiErrorCode = null;
             if (apiError != null) {
                 apiErrorCode = apiError.ErrorCode;
             }
             switch (httpStatusCode) {
                 case (int) HttpStatusCode.BadRequest:
-                    return ParseBadRequest(apiErrorCode, requestType);
+                    return ParseBadRequest(apiErrorCode, response, requestType);
                 case (int) HttpStatusCode.Unauthorized:
-                    return ParseUnauthorized(apiErrorCode, requestType);
+                    return ParseUnauthorized(apiErrorCode, response, requestType);
                 case (int) HttpStatusCode.Forbidden:
-                    return ParseForbidden(apiErrorCode, requestType);
+                    return ParseForbidden(apiErrorCode, response, requestType);
                 case (int) HttpStatusCode.NotFound:
-                    return ParseNotFound(apiErrorCode, requestType);
+                    return ParseNotFound(apiErrorCode, response, requestType);
                 case (int) HttpStatusCode.Conflict:
-                    return ParseConflict(apiErrorCode, requestType);
+                    return ParseConflict(apiErrorCode, response, requestType);
                 case (int) HttpStatusCode.PreconditionFailed:
-                    return ParsePreconditionFailed(apiErrorCode, requestType);
+                    return ParsePreconditionFailed(apiErrorCode, response, requestType);
                 case (int) HttpStatusCode.BadGateway:
-                    return ParseBadGateway(apiErrorCode, requestType);
+                    return ParseBadGateway(apiErrorCode, response, requestType);
                 case 507:
-                    return ParseInsufficentStorage(apiErrorCode, requestType);
+                    return ParseInsufficentStorage(apiErrorCode, response, requestType);
                 case 901:
-                    return ParseCustomError(apiErrorCode, requestType);
+                    return ParseCustomError(apiErrorCode, response, requestType);
                 default:
                     return DracoonApiCode.SERVER_UNKNOWN_ERROR;
             }
         }
 
-        private DracoonApiCode ParseBadRequest(int? apiErrorCode, RequestType requestType) {
+        private DracoonApiCode ParseBadRequest(int? apiErrorCode, dynamic response, RequestType requestType) {
             if (apiErrorCode == -10002) {
                 return DracoonApiCode.VALIDATION_PASSWORT_NOT_SECURE;
             } else if (apiErrorCode == -40001) {
@@ -164,6 +181,8 @@ namespace Dracoon.Sdk.SdkInternal {
                 return DracoonApiCode.VALIDATION_FIELD_NOT_BETWEEN_0_9999;
             } else if (apiErrorCode == -80019) {
                 return DracoonApiCode.VALIDATION_FIELD_NOT_BETWEEN_1_9999;
+            } else if (apiErrorCode == -80024) {
+                return DracoonApiCode.VALIDATION_INVALID_OFFSET_OR_LIMIT;
             } else if (apiErrorCode == -80030) {
                 return DracoonApiCode.SERVER_SMS_IS_DISABLED;
             } else if (apiErrorCode == -80034) {
@@ -174,15 +193,17 @@ namespace Dracoon.Sdk.SdkInternal {
             return DracoonApiCode.VALIDATION_UNKNOWN_ERROR;
         }
 
-        private DracoonApiCode ParseUnauthorized(int? apiErrorCode, RequestType requestType) {
+        private DracoonApiCode ParseUnauthorized(int? apiErrorCode, dynamic response, RequestType requestType) {
             if (apiErrorCode == -10006) {
                 return DracoonApiCode.AUTH_OAUTH_CLIENT_NO_PERMISSION;
             }
             return DracoonApiCode.AUTH_UNAUTHORIZED;
         }
 
-        private DracoonApiCode ParseForbidden(int? apiErrorCode, RequestType requestType) {
-            if (apiErrorCode == -10003 || apiErrorCode == -10007) {
+        private DracoonApiCode ParseForbidden(int? apiErrorCode, dynamic response, RequestType requestType) {
+            if (CheckResponseHasHeader(response, "X-Forbidden", "403")) {
+                return DracoonApiCode.SERVER_MALICIOUS_FILE_DETECTED;
+            } else if (apiErrorCode == -10003 || apiErrorCode == -10007) {
                 return DracoonApiCode.AUTH_USER_LOCKED;
             } else if (apiErrorCode == -10004) {
                 return DracoonApiCode.AUTH_USER_EXPIRED;
@@ -210,7 +231,7 @@ namespace Dracoon.Sdk.SdkInternal {
             return DracoonApiCode.PERMISSION_UNKNOWN_ERROR;
         }
 
-        private DracoonApiCode ParseNotFound(int? apiErrorCode, RequestType requestType) {
+        private DracoonApiCode ParseNotFound(int? apiErrorCode, dynamic response, RequestType requestType) {
             if (apiErrorCode == -40751) {
                 return DracoonApiCode.SERVER_FILE_NOT_FOUND;
             } else if (apiErrorCode == -41000 || apiErrorCode == -40000) {
@@ -238,13 +259,15 @@ namespace Dracoon.Sdk.SdkInternal {
                 return DracoonApiCode.SERVER_UL_SHARE_NOT_FOUND;
             } else if (apiErrorCode == -70020) {
                 return DracoonApiCode.SERVER_USER_KEY_PAIR_NOT_FOUND;
+            } else if (apiErrorCode == -70028) {
+                return DracoonApiCode.SERVER_USER_AVATAR_NOT_FOUND;
             } else if (apiErrorCode == -70501) {
                 return DracoonApiCode.SERVER_USER_NOT_FOUND;
             }
             return DracoonApiCode.SERVER_UNKNOWN_ERROR;
         }
 
-        private DracoonApiCode ParseConflict(int? apiErrorCode, RequestType requestType) {
+        private DracoonApiCode ParseConflict(int? apiErrorCode, dynamic response, RequestType requestType) {
             if (apiErrorCode == -41001) {
                 return DracoonApiCode.VALIDATION_NODE_ALREADY_EXISTS;
             } else if (apiErrorCode == -41304) {
@@ -273,7 +296,7 @@ namespace Dracoon.Sdk.SdkInternal {
             return DracoonApiCode.SERVER_UNKNOWN_ERROR;
         }
 
-        private DracoonApiCode ParsePreconditionFailed(int? apiErrorCode, RequestType requestType) {
+        private DracoonApiCode ParsePreconditionFailed(int? apiErrorCode, dynamic response, RequestType requestType) {
             if (apiErrorCode == -10103) {
                 return DracoonApiCode.PRECONDITION_MUST_ACCEPT_EULA;
             } else if (apiErrorCode == -10104) {
@@ -284,14 +307,14 @@ namespace Dracoon.Sdk.SdkInternal {
             return DracoonApiCode.PRECONDITION_UNKNOWN_ERROR;
         }
 
-        private DracoonApiCode ParseBadGateway(int? apiErrorCode, RequestType requestType) {
+        private DracoonApiCode ParseBadGateway(int? apiErrorCode, dynamic response, RequestType requestType) {
             if (apiErrorCode == -90090) {
                 return DracoonApiCode.SERVER_SMS_COULD_NOT_BE_SENT;
             }
             return DracoonApiCode.SERVER_UNKNOWN_ERROR;
         }
 
-        private DracoonApiCode ParseInsufficentStorage(int? apiErrorCode, RequestType requestType) {
+        private DracoonApiCode ParseInsufficentStorage(int? apiErrorCode, dynamic response, RequestType requestType) {
             if (apiErrorCode == -90200) {
                 return DracoonApiCode.SERVER_INSUFFICIENT_CUSTOMER_QUOTA;
             } else if (apiErrorCode == -40200) {
@@ -302,7 +325,7 @@ namespace Dracoon.Sdk.SdkInternal {
             return DracoonApiCode.SERVER_INSUFFICIENT_STORAGE;
         }
 
-        private DracoonApiCode ParseCustomError(int? apiErrorCode, RequestType requestType) {
+        private DracoonApiCode ParseCustomError(int? apiErrorCode, dynamic response, RequestType requestType) {
             return DracoonApiCode.SERVER_MALICIOUS_FILE_DETECTED;
         }
 

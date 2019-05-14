@@ -13,13 +13,14 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal enum RequestType {
             GetServerVersion, GetServerTime,
-            SetUserKeyPair, GetCustomerAccount, GetUserAccount, GetUserKeyPair, DeleteUserKeyPair,
-            GetNodes, GetNode, PostRoom, PostFolder, PutFolder, PutRoom, PutEnableRoomEncryption, PutFile, DeleteNodes,
-            PostDownloadToken, GetFileKey, PostUploadToken, PutCompleteUpload, PostUploadChunk,
+            SetUserKeyPair, GetCustomerAccount, GetUserAccount, GetUserKeyPair, DeleteUserKeyPair, GetUserAvatar, DeleteUserAvatar,
+            PostUserAvatar, GetResourcesAvatar, GetNodes, GetNode, PostRoom, PostFolder, PutFolder, PutRoom, PutEnableRoomEncryption,
+            PutFile, DeleteNodes, PostDownloadToken, GetFileKey, PostUploadToken, PutCompleteUpload, PostUploadChunk,
             GetDownloadChunk, PostCopyNodes, PostMoveNodes, GetSearchNodes, GetMissingFileKeys, PostMissingFileKeys,
             PostCreateDownloadShare, DeleteDownloadShare, GetDownloadShares, PostCreateUploadShare, DeleteUploadShare,
-            GetUploadShares, PostFavorite, DeleteFavorite, GetAuthenticatedPing, PostOAuthToken, PostOAuthRefresh, GetGeneralSettings, GetInfrastructureSettings, GetDefaultsSettings,
-            GetRecycleBin, DeleteRecycleBin, GetPreviousVersions, GetPreviousVersion, PostRestoreNodeVersion, DeletePreviousVersions
+            GetUploadShares, PostFavorite, DeleteFavorite, GetAuthenticatedPing, PostOAuthToken, PostOAuthRefresh,
+            GetGeneralSettings, GetInfrastructureSettings, GetDefaultsSettings, GetRecycleBin, DeleteRecycleBin, GetPreviousVersions,
+            GetPreviousVersion, PostRestoreNodeVersion, DeletePreviousVersions
         }
 
         private static readonly string LOGTAG = typeof(DracoonRequestExecuter).Name;
@@ -47,7 +48,11 @@ namespace Dracoon.Sdk.SdkInternal {
                 if (remoteVersionPart > minVersionPart) {
                     break;
                 } else if (remoteVersionPart < minVersionPart) {
-                    throw new DracoonApiException(DracoonApiCode.API_VERSION_NOT_SUPPORTED);
+                    if (minVersionForCheck == ApiConfig.MinimumApiVersion) {
+                        throw new DracoonApiException(DracoonApiCode.API_VERSION_NOT_SUPPORTED);
+                    } else {
+                        throw new DracoonApiException(new DracoonApiCode(0, "Server API versions < " + minVersionForCheck + " are not supported."));
+                    }
                 }
             }
             if (minVersionForCheck == ApiConfig.MinimumApiVersion) {
@@ -55,7 +60,7 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        public T DoSyncApiCall<T>(RestRequest request, RequestType requestType) where T : class, new() {
+        public T DoSyncApiCall<T>(RestRequest request, RequestType requestType, int authTry = 0) where T : class, new() {
             RestClient client = new RestClient(dracoonClient.ServerUri) {
                 UserAgent = dracoonClient.HttpConfig.UserAgent,
             };
@@ -70,14 +75,16 @@ namespace Dracoon.Sdk.SdkInternal {
                 try {
                     dracoonClient.ApiErrorParser.ParseError(response, requestType);
                 } catch (DracoonApiException apiError) {
-                    if (apiError.ErrorCode == DracoonApiCode.AUTH_UNAUTHORIZED) {
+                    if (apiError.ErrorCode == DracoonApiCode.AUTH_UNAUTHORIZED && authTry < 3) {
+                        dracoonClient.Log.Debug(LOGTAG, "Retry the refresh of the access token in " + authTry * 1000 + " millis again.");
+                        Thread.Sleep(1000 * authTry);
                         dracoonClient.OAuthClient.RefreshAccessToken();
                         foreach (Parameter cur in request.Parameters) {
                             if (cur.Name == ApiConfig.AuthorizationHeader) {
                                 cur.Value = dracoonClient.OAuthClient.BuildAuthString();
                             }
                         }
-                        return DoSyncApiCall<T>(request, requestType);
+                        return DoSyncApiCall<T>(request, requestType, authTry + 1);
                     } else {
                         throw apiError;
                     }
@@ -89,7 +96,7 @@ namespace Dracoon.Sdk.SdkInternal {
             return JsonConvert.DeserializeObject<T>(response.Content);
         }
 
-        public byte[] ExecuteWebClientChunkDownload(WebClient requestClient, Uri target, Thread asyncThread = null, int sendTry = 0) {
+        public byte[] ExecuteWebClientDownload(WebClient requestClient, Uri target, RequestType type, Thread asyncThread = null, int sendTry = 0) {
             byte[] response = null;
             try {
                 Task<byte[]> responseTask = requestClient.DownloadDataTaskAsync(target);
@@ -103,14 +110,14 @@ namespace Dracoon.Sdk.SdkInternal {
                     } else if (we.Status == WebExceptionStatus.RequestCanceled) {
                         throw new ThreadInterruptedException();
                     } else if (we.Status == WebExceptionStatus.ProtocolError) {
-                        dracoonClient.ApiErrorParser.ParseError(we, RequestType.GetDownloadChunk);
+                        dracoonClient.ApiErrorParser.ParseError(we, type);
                     } else {
                         string message = "Server communication failed!";
                         dracoonClient.Log.Debug(LOGTAG, message);
                         if (dracoonClient.HttpConfig.RetryEnabled && sendTry < 3) {
                             dracoonClient.Log.Debug(LOGTAG, "Retry the request in " + sendTry * 1000 + " millis again.");
                             Thread.Sleep(1000 * sendTry);
-                            ExecuteWebClientChunkDownload(requestClient, target, asyncThread, sendTry + 1);
+                            ExecuteWebClientDownload(requestClient, target, type, asyncThread, sendTry + 1);
                         } else {
                             if (asyncThread != null && asyncThread.ThreadState == ThreadState.Aborted) {
                                 throw new ThreadInterruptedException();
@@ -118,7 +125,7 @@ namespace Dracoon.Sdk.SdkInternal {
                                 if (we.Status == WebExceptionStatus.RequestCanceled) {
                                     throw new ThreadInterruptedException();
                                 }
-                                dracoonClient.ApiErrorParser.ParseError(we, RequestType.GetDownloadChunk);
+                                dracoonClient.ApiErrorParser.ParseError(we, type);
                             }
                         }
                     }
@@ -127,7 +134,7 @@ namespace Dracoon.Sdk.SdkInternal {
             return response;
         }
 
-        public byte[] ExecuteWebClientChunkUpload(WebClient requestClient, Uri target, byte[] multipartFormatedChunk, Thread asyncThread = null, int sendTry = 0) {
+        public byte[] ExecuteWebClientChunkUpload(WebClient requestClient, Uri target, byte[] multipartFormatedChunk, RequestType type, Thread asyncThread = null, int sendTry = 0) {
             byte[] response = null;
             try {
                 Task<byte[]> responseTask = requestClient.UploadDataTaskAsync(target, "POST", multipartFormatedChunk);
@@ -141,14 +148,14 @@ namespace Dracoon.Sdk.SdkInternal {
                     } else if (we.Status == WebExceptionStatus.RequestCanceled) {
                         throw new ThreadInterruptedException();
                     } else if (we.Status == WebExceptionStatus.ProtocolError) {
-                        dracoonClient.ApiErrorParser.ParseError(we, RequestType.GetDownloadChunk);
+                        dracoonClient.ApiErrorParser.ParseError(we, type);
                     } else {
                         string message = "Server communication failed!";
                         dracoonClient.Log.Debug(LOGTAG, message);
                         if (dracoonClient.HttpConfig.RetryEnabled && sendTry < 3) {
                             dracoonClient.Log.Debug(LOGTAG, "Retry the request in " + sendTry * 1000 + " millis again.");
                             Thread.Sleep(1000 * sendTry);
-                            ExecuteWebClientChunkUpload(requestClient, target, multipartFormatedChunk, asyncThread, sendTry + 1);
+                            ExecuteWebClientChunkUpload(requestClient, target, multipartFormatedChunk, type, asyncThread, sendTry + 1);
                         } else {
                             if (asyncThread != null && asyncThread.ThreadState == ThreadState.Aborted) {
                                 throw new ThreadInterruptedException();
@@ -156,7 +163,7 @@ namespace Dracoon.Sdk.SdkInternal {
                                 if (we.Status == WebExceptionStatus.RequestCanceled) {
                                     throw new ThreadInterruptedException();
                                 }
-                                dracoonClient.ApiErrorParser.ParseError(we, RequestType.PostUploadChunk);
+                                dracoonClient.ApiErrorParser.ParseError(we, type);
                             }
                         }
                     }
