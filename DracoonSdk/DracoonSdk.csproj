@@ -70,6 +70,7 @@
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiDeletedNodeVersionsList.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiDeletePreviousVersionsRequest.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiEnableRoomEncryptionRequest.cs" />
+    <Compile Include="SdkInternal\ApiModel\Requests\ApiGetS3Urls.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiRestorePreviousVersionsRequest.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiDefaultsSettings.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiInfrastructureSettings.cs" />

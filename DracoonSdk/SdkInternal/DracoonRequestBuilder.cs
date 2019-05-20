@@ -272,7 +272,14 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
-        IRestRequest IRequestBuilder.PostCopyNodes(long targetNodeId, ApiCopyNodesRequest copyParams) {
+        internal RestRequest PostGetS3Urls(string uploadId, ApiGetS3Urls s3UrlParams) {
+            RestRequest request = new RestRequest(ApiConfig.ApiPostGetS3Urls, Method.POST);
+            SetGeneralRestValues(request, false, s3UrlParams);
+            request.AddUrlSegment("uploadId", uploadId);
+            return request;
+        }
+
+        internal RestRequest PostCopyNodes(long targetNodeId, ApiCopyNodesRequest copyParams) {
             RestRequest request = new RestRequest(ApiConfig.ApiPostCopyNodes, Method.POST);
             SetGeneralRestValues(request, true, copyParams);
             request.AddUrlSegment("nodeId", targetNodeId);

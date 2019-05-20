@@ -74,6 +74,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiPostFolder = ApiPrefix + "/nodes/folders";
         internal const string ApiPostCreateFileDownload = ApiPrefix + "/nodes/files/{fileId}/downloads";
         internal const string ApiPostCreateFileUpload = ApiPrefix + "/nodes/files/uploads";
+        internal const string ApiPostGetS3Urls = ApiPrefix + "/nodes/files/uploads/{uploadId}/s3urls";
         internal const string ApiPostCopyNodes = ApiPrefix + "/nodes/{nodeId}/copy_to";
         internal const string ApiPostMoveNodes = ApiPrefix + "/nodes/{nodeId}/move_to";
         internal const string ApiPostMissingFileKeys = ApiPrefix + "/nodes/files/keys";
@@ -83,6 +84,7 @@ namespace Dracoon.Sdk.SdkInternal {
         #region Minimum version requirements
 
         internal const string ApiUseHomeDefaultClassificationMinApiVersion = "4.9.0";
+        internal const string ApiS3UploadPossible = "4.12.0";
 
         #endregion
 
