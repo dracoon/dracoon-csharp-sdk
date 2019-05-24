@@ -350,6 +350,13 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        internal RestRequest PutCompleteS3FileUpload(string uploadId, ApiCompleteFileUpload completeParams) {
+            RestRequest request = new RestRequest(ApiConfig.ApiPutCompleteS3Upload, Method.PUT);
+            SetGeneralRestValues(request, false, completeParams);
+            request.AddUrlSegment("uploadId", uploadId);
+            return request;
+        }
+
         #endregion
 
         #region DELETE
@@ -394,6 +401,13 @@ namespace Dracoon.Sdk.SdkInternal {
             DracoonWebClientExtension requestClient = new DracoonWebClientExtension();
             requestClient.Headers.Add(HttpRequestHeader.ContentRange, "bytes " + offset + "-" + (offset + chunkLength) + "/" + totalFileSize);
             requestClient.Headers.Add(HttpRequestHeader.ContentType, "multipart/form-data; boundary=" + formDataBoundary);
+            SetGeneralWebClientValues(requestClient);
+            return requestClient;
+        }
+
+        internal WebClient ProvideS3ChunkUploadWebClient(int chunkLength) {
+            DracoonWebClientExtension requestClient = new DracoonWebClientExtension();
+            requestClient.Headers.Add(HttpRequestHeader.ContentType, "application/octet-stream");
             SetGeneralWebClientValues(requestClient);
             return requestClient;
         }

@@ -84,7 +84,7 @@ namespace Dracoon.Sdk.SdkInternal {
         #region Minimum version requirements
 
         internal const string ApiUseHomeDefaultClassificationMinApiVersion = "4.9.0";
-        internal const string ApiS3UploadPossible = "4.12.0";
+        internal const string ApiS3UploadPossible = "4.13.0";
 
         #endregion
 
@@ -96,6 +96,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiPutFolder = ApiPrefix + "/nodes/folders/{folderId}";
         internal const string ApiPutFileUpdate = ApiPrefix + "/nodes/files/{fileId}";
         internal const string ApiPutEnableRoomEncryption = ApiPrefix + "/nodes/rooms/{roomId}/encrypt";
+        internal const string ApiPutCompleteS3Upload = ApiPrefix + "/nodes/files/uploads/{uploadId}/s3";
 
         #endregion
 
