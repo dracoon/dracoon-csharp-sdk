@@ -274,7 +274,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal RestRequest PostGetS3Urls(string uploadId, ApiGetS3Urls s3UrlParams) {
             RestRequest request = new RestRequest(ApiConfig.ApiPostGetS3Urls, Method.POST);
-            SetGeneralRestValues(request, false, s3UrlParams);
+            SetGeneralRestValues(request, true, s3UrlParams);
             request.AddUrlSegment("uploadId", uploadId);
             return request;
         }

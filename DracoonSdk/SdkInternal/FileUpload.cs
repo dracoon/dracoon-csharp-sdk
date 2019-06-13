@@ -231,7 +231,7 @@ namespace Dracoon.Sdk.SdkInternal {
             try {
                 progressReportTimer = Stopwatch.StartNew();
                 int chunkSize = dracoonClient.HttpConfig.ChunkSize;
-                int s3UrlBatchSize = 1;
+                int s3UrlBatchSize = 5;
                 if (chunkSize < S3_MINIMUM_CHUNKSIZE) {
                     dracoonClient.Log.Debug(LOGTAG, "FYI: The defined chunk size [" + dracoonClient.HttpConfig.ChunkSize +
                         "] is lower than the minimum chunk size of s3 direct upload [" + S3_MINIMUM_CHUNKSIZE +
@@ -302,11 +302,11 @@ namespace Dracoon.Sdk.SdkInternal {
                 LastPartNumber = firstPartNumber + count
             };
             RestRequest s3UrlRequest = dracoonClient.RequestBuilder.PostGetS3Urls(uploadId, getS3UrlParams);
-            List<string> s3UrlsResult = dracoonClient.RequestExecutor.DoSyncApiCall<List<string>>(s3UrlRequest, RequestType.PostGetS3Urls);
+            List<ApiS3Url> s3UrlsResult = dracoonClient.RequestExecutor.DoSyncApiCall<ApiS3Urls>(s3UrlRequest, RequestType.PostGetS3Urls).Urls;
 
             Queue<Uri> newS3UrlQueue = new Queue<Uri>(s3UrlsResult.Count);
-            foreach (string currentS3Url in s3UrlsResult) {
-                newS3UrlQueue.Enqueue(new Uri(currentS3Url));
+            foreach (ApiS3Url currentS3Url in s3UrlsResult) {
+                newS3UrlQueue.Enqueue(new Uri(currentS3Url.Url));
             }
             return newS3UrlQueue;
         }
