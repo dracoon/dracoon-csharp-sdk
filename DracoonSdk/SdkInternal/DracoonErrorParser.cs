@@ -14,7 +14,7 @@ namespace Dracoon.Sdk.SdkInternal {
         private static bool CheckResponseHasHeader(dynamic response, string headerName, string headerValue) {
             if (response is IRestResponse restResponse && restResponse.Headers != null) {
                 foreach (Parameter current in restResponse.Headers) {
-                    if (current.Name.Equals(headerName) && current.Value.Equals(headerValue)) {
+                    if (headerName.Equals(current.Name) && headerValue.Equals(current.Value)) {
                         return true;
                     }
                 }

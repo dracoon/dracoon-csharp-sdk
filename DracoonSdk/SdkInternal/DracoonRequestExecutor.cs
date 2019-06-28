@@ -16,7 +16,7 @@ namespace Dracoon.Sdk.SdkInternal {
             GetUserKeyPair, DeleteUserKeyPair, GetUserAvatar, DeleteUserAvatar, PostUserAvatar,
             GetResourcesAvatar, GetNodes, GetNode, PostRoom, PostFolder,
             PutFolder, PutRoom, PutEnableRoomEncryption, PutFile, DeleteNodes,
-            PostDownloadToken, GetFileKey, PostUploadToken, PutCompleteUpload, PutCompleteS3Upload, PostUploadChunk, PostUploadS3Chunk,
+            PostDownloadToken, GetFileKey, PostUploadToken, PutCompleteUpload, PutCompleteS3Upload, PostUploadChunk, PutUploadS3Chunk,
             GetDownloadChunk, PostCopyNodes, PostMoveNodes, GetSearchNodes, GetMissingFileKeys,
             PostMissingFileKeys, PostCreateDownloadShare, DeleteDownloadShare, GetDownloadShares, PostCreateUploadShare,
             DeleteUploadShare, GetUploadShares, PostFavorite, DeleteFavorite, GetAuthenticatedPing,
@@ -161,12 +161,28 @@ namespace Dracoon.Sdk.SdkInternal {
             return response;
         }
 
-        byte[] IRequestExecutor.ExecuteWebClientChunkUpload(WebClient requestClient, Uri target, byte[] multipartFormatedChunk, RequestType type,
-            Thread asyncThread = null, int sendTry = 0) {
+        public byte[] ExecuteWebClientChunkUpload(WebClient requestClient, Uri target, byte[] data, RequestType type, Thread asyncThread = null,
+            int sendTry = 0) {
             byte[] response = null;
             try {
-                Task<byte[]> responseTask = requestClient.UploadDataTaskAsync(target, "POST", multipartFormatedChunk);
-                response = responseTask.Result;
+                string method = "POST";
+                if (type == RequestType.PutUploadS3Chunk) {
+                    method = "PUT";
+                }
+
+                Task<byte[]> responseTask = requestClient.UploadDataTaskAsync(target, method, data);
+                if (type == RequestType.PutUploadS3Chunk) {
+                    responseTask.Wait();
+                    for (int i = 0; i < requestClient.ResponseHeaders.Count; i++) {
+                        if (requestClient.ResponseHeaders.GetKey(i).Equals("ETag")) {
+                            string eTag = requestClient.ResponseHeaders.Get(i);
+                            eTag = eTag.Replace("\"", "").Replace("\\", "").Replace("/", "");
+                            response = ApiConfig.ENCODING.GetBytes(eTag);
+                        }
+                    }
+                } else {
+                    response = responseTask.Result;
+                }
             } catch (AggregateException ae) {
                 if (ae.InnerException is WebException we) {
                     if (we.Status == WebExceptionStatus.SecureChannelFailure) {
@@ -189,7 +205,7 @@ namespace Dracoon.Sdk.SdkInternal {
                             Thread.Sleep(1000 * sendTry);
                             ((IRequestExecutor) this).ExecuteWebClientChunkUpload(requestClient,
                                 target,
-                                multipartFormatedChunk,
+                                data,
                                 type,
                                 asyncThread,
                                 sendTry + 1);

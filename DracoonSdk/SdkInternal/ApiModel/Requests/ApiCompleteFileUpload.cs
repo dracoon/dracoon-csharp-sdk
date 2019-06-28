@@ -10,16 +10,9 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
         public string ResolutionStrategy { get; set; }
 
         [JsonProperty("fileKey", NullValueHandling = NullValueHandling.Ignore)]
-        public ApiFileKey FileKey {
-            get; set;
-        }
-        [JsonProperty("partNumber", NullValueHandling = NullValueHandling.Ignore)]
-        public List<int> PartNumber {
-            get; set;
-        }
-        [JsonProperty("partEtag", NullValueHandling = NullValueHandling.Ignore)]
-        public List<string> PartEtags {
-            get; set;
-        }
+        public ApiFileKey FileKey { get; set; }
+
+        [JsonProperty("parts", NullValueHandling = NullValueHandling.Ignore)]
+        public List<ApiS3FileUploadPart> Parts { get; set; }
     }
 }
