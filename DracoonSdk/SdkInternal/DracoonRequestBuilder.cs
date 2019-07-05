@@ -243,6 +243,13 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        internal RestRequest GetS3Status(string uploadId) {
+            RestRequest request = new RestRequest(ApiConfig.ApiGetS3Status, Method.GET);
+            SetGeneralRestValues(request, true);
+            request.AddUrlSegment("uploadId", uploadId);
+            return request;
+        }
+
         #endregion
 
         #region POST
@@ -405,7 +412,7 @@ namespace Dracoon.Sdk.SdkInternal {
             return requestClient;
         }
 
-        internal WebClient ProvideS3ChunkUploadWebClient(int chunkLength) {
+        internal WebClient ProvideS3ChunkUploadWebClient() {
             DracoonWebClientExtension requestClient = new DracoonWebClientExtension();
             SetGeneralWebClientValues(requestClient);
             return requestClient;

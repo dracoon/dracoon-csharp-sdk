@@ -16,13 +16,13 @@ namespace Dracoon.Sdk.SdkInternal {
             GetUserKeyPair, DeleteUserKeyPair, GetUserAvatar, DeleteUserAvatar, PostUserAvatar,
             GetResourcesAvatar, GetNodes, GetNode, PostRoom, PostFolder,
             PutFolder, PutRoom, PutEnableRoomEncryption, PutFile, DeleteNodes,
-            PostDownloadToken, GetFileKey, PostUploadToken, PutCompleteUpload, PutCompleteS3Upload, PostUploadChunk, PutUploadS3Chunk,
-            GetDownloadChunk, PostCopyNodes, PostMoveNodes, GetSearchNodes, GetMissingFileKeys,
-            PostMissingFileKeys, PostCreateDownloadShare, DeleteDownloadShare, GetDownloadShares, PostCreateUploadShare,
-            DeleteUploadShare, GetUploadShares, PostFavorite, DeleteFavorite, GetAuthenticatedPing,
-            PostOAuthToken, PostOAuthRefresh, GetGeneralSettings, GetInfrastructureSettings, GetDefaultsSettings,
-            GetRecycleBin, DeleteRecycleBin, GetPreviousVersions, GetPreviousVersion, PostRestoreNodeVersion,
-            DeletePreviousVersions, PostGetS3Urls
+            PostDownloadToken, GetFileKey, PostUploadToken, PutCompleteUpload, PutCompleteS3Upload,
+            PostUploadChunk, PutUploadS3Chunk, GetDownloadChunk, PostCopyNodes, PostMoveNodes,
+            GetSearchNodes, GetMissingFileKeys, PostMissingFileKeys, PostCreateDownloadShare, DeleteDownloadShare,
+            GetDownloadShares, PostCreateUploadShare, DeleteUploadShare, GetUploadShares, PostFavorite,
+            DeleteFavorite, GetAuthenticatedPing, PostOAuthToken, PostOAuthRefresh, GetGeneralSettings,
+            GetInfrastructureSettings, GetDefaultsSettings, GetRecycleBin, DeleteRecycleBin, GetPreviousVersions,
+            GetPreviousVersion, PostRestoreNodeVersion, DeletePreviousVersions, PostGetS3Urls, GetS3Status
         }
 
         private const string Logtag = nameof(DracoonRequestExecutor);
@@ -174,7 +174,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 if (type == RequestType.PutUploadS3Chunk) {
                     responseTask.Wait();
                     for (int i = 0; i < requestClient.ResponseHeaders.Count; i++) {
-                        if (requestClient.ResponseHeaders.GetKey(i).Equals("ETag")) {
+                        if (requestClient.ResponseHeaders.GetKey(i).ToLower().Equals("etag")) {
                             string eTag = requestClient.ResponseHeaders.Get(i);
                             eTag = eTag.Replace("\"", "").Replace("\\", "").Replace("/", "");
                             response = ApiConfig.ENCODING.GetBytes(eTag);

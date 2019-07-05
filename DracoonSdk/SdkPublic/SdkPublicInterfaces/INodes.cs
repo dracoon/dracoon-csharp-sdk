@@ -43,10 +43,10 @@ namespace Dracoon.Sdk {
         Node UpdateFile(UpdateFileRequest request);
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/UploadFile/*'/>
-        Node UploadFile(string actionId, FileUploadRequest request, Stream input, long fileSize = -1, IFileUploadCallback callback = null, bool preferS3 = true);
+        Node UploadFile(string actionId, FileUploadRequest request, Stream input, long fileSize = -1, IFileUploadCallback callback = null);
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/StartUploadFileAsync/*'/>
-        void StartUploadFileAsync(string actionId, FileUploadRequest request, Stream input, long fileSize = -1, IFileUploadCallback callback = null, bool preferS3 = true);
+        void StartUploadFileAsync(string actionId, FileUploadRequest request, Stream input, long fileSize = -1, IFileUploadCallback callback = null);
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/CancelUploadFileAsync/*'/>
         void CancelUploadFileAsync(string actionId);

@@ -192,6 +192,10 @@ namespace Dracoon.Sdk.SdkInternal {
                     return DracoonApiCode.VALIDATION_KEEPSHARELINKS_ONLY_WITH_OVERWRITE;
                 case -80035:
                     return DracoonApiCode.VALIDATION_FIELD_NOT_BETWEEN_0_10;
+                case -80045:
+                    return DracoonApiCode.VALIDATION_INVALID_ETAG;
+                case -90033:
+                    return DracoonApiCode.SERVER_S3_IS_ENFORCED;
                 default:
                     return DracoonApiCode.VALIDATION_UNKNOWN_ERROR;
             }
@@ -296,6 +300,8 @@ namespace Dracoon.Sdk.SdkInternal {
                     return DracoonApiCode.SERVER_USER_AVATAR_NOT_FOUND;
                 case -70501:
                     return DracoonApiCode.SERVER_USER_NOT_FOUND;
+                case -90034:
+                    return DracoonApiCode.SERVER_S3_UPLOAD_ID_NOT_FOUND;
                 default:
                     return DracoonApiCode.SERVER_UNKNOWN_ERROR;
             }
@@ -346,6 +352,8 @@ namespace Dracoon.Sdk.SdkInternal {
                     return DracoonApiCode.PRECONDITION_MUST_CHANGE_PASSWORD;
                 case -10106:
                     return DracoonApiCode.PRECONDITION_MUST_CHANGE_USER_NAME;
+                case -90030:
+                    return DracoonApiCode.PRECONDITION_S3_DISABLED;
                 default:
                     return DracoonApiCode.PRECONDITION_UNKNOWN_ERROR;
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -34,21 +35,39 @@ namespace Dracoon.Sdk.SdkInternal {
                     apiFileUploadRequest.Classification = 1;
                 }
             }
-
+            try {
+                apiFileUploadRequest.UseS3 = CheckUseS3();
+            } catch (DracoonApiException apiException) {
+                dracoonClient.Log.Warn(LOGTAG, "S3 direct upload is not possible.", apiException);
+            }
             IRestRequest uploadTokenRequest = Client.Builder.PostCreateFileUpload(apiFileUploadRequest);
             ApiUploadToken token = Client.Executor.DoSyncApiCall<ApiUploadToken>(uploadTokenRequest, RequestType.PostUploadToken);
 
+            Node publicResultNode = null;
             PlainFileKey plainFileKey = CreateFileKey();
-            EncryptedUpload(new Uri(token.UploadUrl), ref plainFileKey);
+            ApiCompleteFileUpload apiCompleteFileUpload = FileMapper.ToApiCompleteFileUpload(fileUploadRequest);
+            if (apiFileUploadRequest.UseS3.HasValue && apiFileUploadRequest.UseS3.Value) {
+                List<ApiS3FileUploadPart> s3Parts = EncryptedS3Upload(ref plainFileKey);
+                EncryptedFileKey encryptedFileKey = EncryptFileKey(plainFileKey);
+                apiCompleteFileUpload.FileKey = FileMapper.ToApiFileKey(encryptedFileKey);
+                apiCompleteFileUpload.Parts = s3Parts;
+                RestRequest completeFileUploadRequest =
+                    dracoonClient.RequestBuilder.PutCompleteS3FileUpload(uploadToken.UploadId, apiCompleteFileUpload);
+                dracoonClient.RequestExecutor.DoSyncApiCall<dynamic>(completeFileUploadRequest,
+                    DracoonRequestExecuter.RequestType.PutCompleteS3Upload);
+                publicResultNode = NodeMapper.FromApiNode(S3Finished());
+            } else {
+                EncryptedUpload(ref plainFileKey);
+                EncryptedFileKey encryptedFileKey = EncryptFileKey(plainFileKey);
+                apiCompleteFileUpload.FileKey = FileMapper.ToApiFileKey(encryptedFileKey);
+                RestRequest completeFileUploadRequest =
+                    dracoonClient.RequestBuilder.PutCompleteFileUpload(new Uri(uploadToken.UploadUrl).PathAndQuery, apiCompleteFileUpload);
+                ApiNode resultNode =
+                    dracoonClient.RequestExecutor.DoSyncApiCall<ApiNode>(completeFileUploadRequest,
+                        DracoonRequestExecuter.RequestType.PutCompleteUpload);
+                publicResultNode = NodeMapper.FromApiNode(resultNode);
+            }
 
-            EncryptedFileKey encryptedFileKey = EncryptFileKey(plainFileKey);
-            ApiCompleteFileUpload apiCompleteFileUpload = FileMapper.ToApiCompleteFileUpload(FileUploadRequest);
-            apiCompleteFileUpload.FileKey = FileMapper.ToApiFileKey(encryptedFileKey);
-
-            IRestRequest completeFileUploadRequest =
-                Client.Builder.PutCompleteFileUpload(new Uri(token.UploadUrl).PathAndQuery, apiCompleteFileUpload);
-            ApiNode resultNode = Client.Executor.DoSyncApiCall<ApiNode>(completeFileUploadRequest, RequestType.PutCompleteUpload);
-            Node publicResultNode = NodeMapper.FromApiNode(resultNode);
             NotifyFinished(ActionId, publicResultNode);
             return publicResultNode;
         }
@@ -73,8 +92,24 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        private void EncryptedUpload(Uri uploadUrl, ref PlainFileKey plainFileKey) {
-            FileEncryptionCipher cipher;
+        private EncryptedDataContainer EncryptChunk(FileEncryptionCipher cipher, int byteCount, byte[] chunk, bool isFinalBlock) {
+            EncryptedDataContainer encryptedContainer = null;
+            if (isFinalBlock) {
+                encryptedContainer = cipher.DoFinal();
+            } else {
+                byte[] plainChunkBytes = new byte[byteCount];
+                Buffer.BlockCopy(chunk, 0, plainChunkBytes, 0, byteCount);
+                encryptedContainer = cipher.ProcessBytes(new PlainDataContainer(plainChunkBytes));
+            }
+
+            return encryptedContainer;
+        }
+
+        #region Normal upload
+
+        private void EncryptedUpload(ref PlainFileKey plainFileKey) {
+            dracoonClient.Log.Debug(LOGTAG, "Uploading file [" + fileUploadRequest.Name + "] in encrypted proxied way.");
+            FileEncryptionCipher cipher = null;
             try {
                 cipher = Crypto.Sdk.Crypto.CreateFileEncryptionCipher(plainFileKey);
             } catch (CryptoException ce) {
@@ -111,26 +146,13 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        private string ProcessEncryptedChunk(Uri uploadUrl, byte[] buffer, long uploadedByteCount, int bytesRead, FileEncryptionCipher cipher,
+        private string ProcessEncryptedChunk(Uri uploadUrl, byte[] buffer, ref long uploadedByteCount, int bytesRead, FileEncryptionCipher cipher,
             bool isFinalBlock, int sendTry = 1) {
-            #region Encryption part
-
-            EncryptedDataContainer encryptedContainer;
-            if (isFinalBlock) {
-                encryptedContainer = cipher.DoFinal();
-            } else {
-                byte[] plainChunkBytes = new byte[bytesRead];
-                Buffer.BlockCopy(buffer, 0, plainChunkBytes, 0, bytesRead);
-                encryptedContainer = cipher.ProcessBytes(new PlainDataContainer(plainChunkBytes));
-            }
-
-            byte[] encryptedChunkBytes = encryptedContainer.Content;
-
-            #endregion
+            EncryptedDataContainer encryptedContainer = EncryptChunk(cipher, bytesRead, buffer, isFinalBlock);
 
             ApiUploadChunkResult chunkResult =
-                UploadChunkWebClient(uploadUrl, encryptedChunkBytes, uploadedByteCount, encryptedChunkBytes.Length);
-            if (!FileHash.CompareFileHashes(chunkResult.Hash, encryptedChunkBytes, encryptedChunkBytes.Length)) {
+                UploadChunkWebClient(uploadUrl, encryptedContainer.Content, ref uploadedByteCount, encryptedContainer.Content.Length);
+            if (!FileHash.CompareFileHashes(chunkResult.Hash, encryptedContainer.Content, encryptedContainer.Content.Length)) {
                 if (sendTry <= 3) {
                     return ProcessEncryptedChunk(uploadUrl, buffer, uploadedByteCount, bytesRead, cipher, isFinalBlock, sendTry + 1);
                 } else {
@@ -140,5 +162,67 @@ namespace Dracoon.Sdk.SdkInternal {
 
             return isFinalBlock ? Convert.ToBase64String(encryptedContainer.Tag) : null;
         }
+
+        #endregion
+
+        #region S3 upload
+
+        private List<ApiS3FileUploadPart> EncryptedS3Upload(ref PlainFileKey plainFileKey) {
+            dracoonClient.Log.Debug(LOGTAG, "Uploading file [" + fileUploadRequest.Name + "] via encrypted s3 direct upload.");
+            FileEncryptionCipher cipher = null;
+            try {
+                cipher = Crypto.Sdk.Crypto.CreateFileEncryptionCipher(plainFileKey);
+            } catch (CryptoException ce) {
+                string message = "Creation of encryption engine for encrypted upload " + actionId + " failed!";
+                dracoonClient.Log.Debug(LOGTAG, message);
+                throw new DracoonCryptoException(CryptoErrorMapper.ParseCause(ce));
+            }
+
+            try {
+                progressReportTimer = Stopwatch.StartNew();
+                int chunkSize = DefineS3ChunkSize();
+                int s3UrlBatchSize = DefineS3BatchSize(chunkSize);
+                List<ApiS3FileUploadPart> s3Parts = new List<ApiS3FileUploadPart>();
+                Queue<Uri> s3Urls = new Queue<Uri>();
+
+                long uploadedByteCount = 0;
+                byte[] buffer = new byte[chunkSize];
+                int bytesRead = 0;
+                while ((bytesRead = inputStream.Read(buffer, 0, buffer.Length)) > 0) {
+                    EncryptedDataContainer encryptedContainer = EncryptChunk(cipher, bytesRead, buffer, false);
+                    if (encryptedContainer.Content.Length < chunkSize) {
+                        s3Urls.Clear();
+                        s3Urls = RequestS3Urls(s3Parts.Count + 1, 1, encryptedContainer.Content.Length);
+                    } else if (s3Urls.Count == 0) {
+                        s3Urls = RequestS3Urls(s3Parts.Count + 1, s3UrlBatchSize, chunkSize);
+                    }
+
+
+                    string partETag = UploadS3ChunkWebClient(s3Urls.Dequeue(), encryptedContainer.Content, ref uploadedByteCount);
+                    s3Parts.Add(new ApiS3FileUploadPart() {PartEtag = partETag, PartNumber = s3Parts.Count + 1});
+                }
+
+                byte[] finalBlockTagBytes = EncryptChunk(cipher, bytesRead, buffer, true).Tag;
+                plainFileKey.Tag = Convert.ToBase64String(finalBlockTagBytes);
+                if (lastNotifiedProgressValue != uploadedByteCount) {
+                    // Notify 100 percent progress
+                    NotifyProgress(actionId, uploadedByteCount, optionalFileSize);
+                }
+
+                return s3Parts;
+            } catch (IOException ioe) {
+                if (isInterrupted) {
+                    throw new ThreadInterruptedException();
+                }
+
+                string message = "Read from stream failed!";
+                dracoonClient.Log.Debug(LOGTAG, message);
+                throw new DracoonFileIOException(message, ioe);
+            } finally {
+                progressReportTimer.Stop();
+            }
+        }
+
+        #endregion
     }
 }
