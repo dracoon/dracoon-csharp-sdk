@@ -180,30 +180,54 @@ namespace Dracoon.Sdk.SdkInternal {
 
             try {
                 progressReportTimer = Stopwatch.StartNew();
+
                 int chunkSize = DefineS3ChunkSize();
                 int s3UrlBatchSize = DefineS3BatchSize(chunkSize);
                 List<ApiS3FileUploadPart> s3Parts = new List<ApiS3FileUploadPart>();
                 Queue<Uri> s3Urls = new Queue<Uri>();
-
                 long uploadedByteCount = 0;
                 byte[] buffer = new byte[chunkSize];
                 int bytesRead = 0;
-                while ((bytesRead = inputStream.Read(buffer, 0, buffer.Length)) > 0) {
-                    EncryptedDataContainer encryptedContainer = EncryptChunk(cipher, bytesRead, buffer, false);
-                    if (encryptedContainer.Content.Length < chunkSize) {
-                        s3Urls.Clear();
-                        s3Urls = RequestS3Urls(s3Parts.Count + 1, 1, encryptedContainer.Content.Length);
+                int offset = 0;
+
+                while ((bytesRead = inputStream.Read(buffer, offset, buffer.Length - offset)) > 0) {
+                    int nextByte = inputStream.ReadByte(); // Check if further bytes are available
+                    int chunkByteCount = 0;
+
+                    EncryptedDataContainer container = EncryptChunk(cipher, bytesRead + offset, buffer, false);
+                    chunkByteCount = container.Content.Length;
+                    if (nextByte == -1) {
+                        // It is the last block
+                        EncryptedDataContainer finalContainer = EncryptChunk(cipher, bytesRead, buffer, true);
+                        if (container.Content.Length + finalContainer.Content.Length < chunkSize) {
+                            chunkByteCount += finalContainer.Content.Length;
+                            plainFileKey.Tag = Convert.ToBase64String(finalContainer.Tag);
+                        }
+
+                        buffer = new byte[chunkByteCount];
+                        Buffer.BlockCopy(container.Content, 0, buffer, 0, container.Content.Length);
+                        Buffer.BlockCopy(finalContainer.Content, 0, buffer, container.Content.Length, finalContainer.Content.Length);
+                    }
+
+                    if (chunkByteCount < chunkSize) {
+                        s3Urls = RequestS3Urls(s3Parts.Count + 1, 1, chunkByteCount);
                     } else if (s3Urls.Count == 0) {
                         s3Urls = RequestS3Urls(s3Parts.Count + 1, s3UrlBatchSize, chunkSize);
                     }
 
+                    string partETag = UploadS3ChunkWebClient(s3Urls.Dequeue(), buffer, ref uploadedByteCount);
+                    s3Parts.Add(new ApiS3FileUploadPart() {
+                        PartEtag = partETag,
+                        PartNumber = s3Parts.Count + 1
+                    });
 
-                    string partETag = UploadS3ChunkWebClient(s3Urls.Dequeue(), encryptedContainer.Content, ref uploadedByteCount);
-                    s3Parts.Add(new ApiS3FileUploadPart() {PartEtag = partETag, PartNumber = s3Parts.Count + 1});
+                    if (nextByte != -1) {
+                        // Do it every time if the current block isn't the last
+                        buffer[0] = (byte)nextByte;
+                        offset = 1;
+                    }
                 }
 
-                byte[] finalBlockTagBytes = EncryptChunk(cipher, bytesRead, buffer, true).Tag;
-                plainFileKey.Tag = Convert.ToBase64String(finalBlockTagBytes);
                 if (lastNotifiedProgressValue != uploadedByteCount) {
                     // Notify 100 percent progress
                     NotifyProgress(actionId, uploadedByteCount, optionalFileSize);

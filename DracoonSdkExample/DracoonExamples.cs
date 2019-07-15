@@ -222,9 +222,9 @@ namespace Dracoon.Sdk.Example {
         }
 
         private static void UploadFile() {
-            FileUploadRequest reqeust = new FileUploadRequest(25398, "50MBplus1BTest.txt");
-            FileStream stream = File.Open("C:\\temp\\50MBplus1BTest.txt", FileMode.Open);
-            Node uploadedNode = dc.Nodes.UploadFile(Guid.NewGuid().ToString(), reqeust, stream, callback: new ULCallback());
+            FileUploadRequest request = new FileUploadRequest(1, "test.txt");
+            FileStream stream = File.Open("C:\\temp\\test.txt", FileMode.Open);
+            Node uploadedNode = dc.Nodes.UploadFile(Guid.NewGuid().ToString(), request, stream, callback: new ULCallback());
         }
 
         private static void DownloadEncryptedFile() {
