@@ -254,7 +254,7 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         protected int DefineS3BatchSize(int chunkSize) {
-            int fileDependentBatchSize = (int)Math.Ceiling((double)optionalFileSize / chunkSize);
+            int fileDependentBatchSize = (int) Math.Ceiling((double) optionalFileSize / chunkSize);
             if (fileDependentBatchSize == 0) {
                 return 1;
             }
@@ -273,8 +273,6 @@ namespace Dracoon.Sdk.SdkInternal {
                     "] is lower than the minimum chunk size of s3 direct upload [" + S3_MINIMUM_CHUNKSIZE +
                     "]. Therefore the minimum s3 direct upload chunk size will be used.");
                 return S3_MINIMUM_CHUNKSIZE;
-            } else if (dracoonClient.HttpConfig.ChunkSize % 16 != 0) {
-                return (int)(Math.Floor(dracoonClient.HttpConfig.ChunkSize / (double)16) * 16 + 16);
             }
 
             return dracoonClient.HttpConfig.ChunkSize;
@@ -293,7 +291,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 long uploadedByteCount = 0;
                 byte[] buffer = new byte[chunkSize];
                 int bytesRead = 0;
-                while ((bytesRead = inputStream.Read(buffer, 0, buffer.Length)) >= 0) {
+                while ((bytesRead = inputStream.Read(buffer, 0, buffer.Length)) > 0) {
                     if (bytesRead < chunkSize) {
                         s3Urls = RequestS3Urls(s3Parts.Count + 1, 1, bytesRead);
                     } else if (s3Urls.Count == 0) {
@@ -340,6 +338,7 @@ namespace Dracoon.Sdk.SdkInternal {
                         progressReportTimer.Restart();
                     }
                 };
+
                 byte[] result =
                     dracoonClient.RequestExecutor.ExecuteWebClientChunkUpload(requestClient, uploadUrl, buffer, RequestType.PutUploadS3Chunk,
                         runningThread);

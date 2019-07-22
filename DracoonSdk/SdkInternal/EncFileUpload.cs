@@ -53,7 +53,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 apiCompleteFileUpload.Parts = s3Parts;
                 RestRequest completeFileUploadRequest =
                     dracoonClient.RequestBuilder.PutCompleteS3FileUpload(uploadToken.UploadId, apiCompleteFileUpload);
-                dracoonClient.RequestExecutor.DoSyncApiCall<dynamic>(completeFileUploadRequest,
+                dracoonClient.RequestExecutor.DoSyncApiCall<VoidResponse>(completeFileUploadRequest,
                     DracoonRequestExecuter.RequestType.PutCompleteS3Upload);
                 publicResultNode = NodeMapper.FromApiNode(S3Finished());
             } else {
@@ -93,16 +93,13 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         private EncryptedDataContainer EncryptChunk(FileEncryptionCipher cipher, int byteCount, byte[] chunk, bool isFinalBlock) {
-            EncryptedDataContainer encryptedContainer = null;
             if (isFinalBlock) {
-                encryptedContainer = cipher.DoFinal();
-            } else {
-                byte[] plainChunkBytes = new byte[byteCount];
-                Buffer.BlockCopy(chunk, 0, plainChunkBytes, 0, byteCount);
-                encryptedContainer = cipher.ProcessBytes(new PlainDataContainer(plainChunkBytes));
+                return cipher.DoFinal();
             }
 
-            return encryptedContainer;
+            byte[] plainChunkBytes = new byte[byteCount];
+            Buffer.BlockCopy(chunk, 0, plainChunkBytes, 0, byteCount);
+            return cipher.ProcessBytes(new PlainDataContainer(plainChunkBytes));
         }
 
         #region Normal upload
@@ -190,7 +187,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 int bytesRead = 0;
                 int offset = 0;
 
-                while ((bytesRead = inputStream.Read(buffer, offset, buffer.Length - offset)) > 0) {
+                while ((bytesRead = inputStream.Read(buffer, offset, buffer.Length - offset)) >= 0) {
                     int nextByte = inputStream.ReadByte(); // Check if further bytes are available
                     int chunkByteCount = 0;
 
@@ -198,15 +195,15 @@ namespace Dracoon.Sdk.SdkInternal {
                     chunkByteCount = container.Content.Length;
                     if (nextByte == -1) {
                         // It is the last block
-                        EncryptedDataContainer finalContainer = EncryptChunk(cipher, bytesRead, buffer, true);
-                        if (container.Content.Length + finalContainer.Content.Length < chunkSize) {
-                            chunkByteCount += finalContainer.Content.Length;
-                            plainFileKey.Tag = Convert.ToBase64String(finalContainer.Tag);
-                        }
-
+                        EncryptedDataContainer finalContainer = EncryptChunk(cipher, bytesRead + offset, buffer, true);
+                        chunkByteCount += finalContainer.Content.Length;
+                        plainFileKey.Tag = Convert.ToBase64String(finalContainer.Tag);
                         buffer = new byte[chunkByteCount];
                         Buffer.BlockCopy(container.Content, 0, buffer, 0, container.Content.Length);
                         Buffer.BlockCopy(finalContainer.Content, 0, buffer, container.Content.Length, finalContainer.Content.Length);
+                    } else {
+                        buffer = new byte[chunkByteCount];
+                        Buffer.BlockCopy(container.Content, 0, buffer, 0, container.Content.Length);
                     }
 
                     if (chunkByteCount < chunkSize) {
@@ -223,8 +220,10 @@ namespace Dracoon.Sdk.SdkInternal {
 
                     if (nextByte != -1) {
                         // Do it every time if the current block isn't the last
-                        buffer[0] = (byte)nextByte;
+                        Buffer.SetByte(buffer, 0, (byte) nextByte);
                         offset = 1;
+                    } else {
+                        break;
                     }
                 }
 

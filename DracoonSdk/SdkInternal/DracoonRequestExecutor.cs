@@ -46,10 +46,15 @@ namespace Dracoon.Sdk.SdkInternal {
                 return;
             }
 
-            if (_apiVersion == null) {
-                IRestRequest request = _client.Builder.GetServerVersion();
-                ApiServerVersion serverVersion = ((IRequestExecutor) this).DoSyncApiCall<ApiServerVersion>(request, RequestType.GetServerVersion);
-                _apiVersion = Regex.Split(serverVersion.ServerVersion, "\\.");
+            if (remoteRestApiVersion == null) {
+                ApiServerVersion serverVersion =
+                    DoSyncApiCall<ApiServerVersion>(dracoonClient.RequestBuilder.GetServerVersion(), RequestType.GetServerVersion);
+                string version = serverVersion.RestApiVersion;
+                if (version.Contains("-")) {
+                    version = version.Remove(version.IndexOf("-"));
+                }
+
+                remoteRestApiVersion = Regex.Split(version, "\\.");
             }
 
             string[] minVersion = Regex.Split(minVersionForCheck, "\\.");
