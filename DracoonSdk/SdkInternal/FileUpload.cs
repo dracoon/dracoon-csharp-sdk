@@ -14,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
+using Timer = System.Timers.Timer;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class FileUpload {
@@ -35,6 +36,8 @@ namespace Dracoon.Sdk.SdkInternal {
         protected long optionalFileSize;
         protected long lastNotifiedProgressValue = 0;
         protected ApiUploadToken uploadToken;
+        protected Queue<Uri> s3Urls = new Queue<Uri>();
+        protected List<ApiS3FileUploadPart> s3Parts = new List<ApiS3FileUploadPart>();
 
         public FileUpload(DracoonClient client, string actionId, FileUploadRequest request, Stream input, long fileSize) {
             dracoonClient = client;
@@ -110,7 +113,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             RestRequest uploadTokenRequest = dracoonClient.RequestBuilder.PostCreateFileUpload(apiFileUploadRequest);
             uploadToken = dracoonClient.RequestExecutor.DoSyncApiCall<ApiUploadToken>(uploadTokenRequest, RequestType.PostUploadToken);
-            Node publicResultNode = null;
+            Node publicResultNode;
             if (apiFileUploadRequest.UseS3.HasValue && apiFileUploadRequest.UseS3.Value) {
                 List<ApiS3FileUploadPart> s3Parts = UploadS3();
                 ApiCompleteFileUpload apiCompleteFileUpload = FileMapper.ToApiCompleteFileUpload(fileUploadRequest);
@@ -141,8 +144,8 @@ namespace Dracoon.Sdk.SdkInternal {
                 long uploadedByteCount = 0;
                 byte[] buffer = new byte[DracoonClient.HttpConfig.ChunkSize];
                 int bytesRead = 0;
-                while ((bytesRead = InputStream.Read(buffer, 0, buffer.Length)) > 0) {
-                    ProcessChunk(uploadUrl, buffer, uploadedByteCount, bytesRead);
+                while ((bytesRead = inputStream.Read(buffer, 0, buffer.Length)) > 0) {
+                    ProcessChunk(new Uri(uploadToken.UploadUrl), buffer, uploadedByteCount, bytesRead);
                     uploadedByteCount += bytesRead;
                 }
 
@@ -190,21 +193,21 @@ namespace Dracoon.Sdk.SdkInternal {
 
             long headerLength = packageFooter.LongLength + packageHeader.LongLength;
 
-            using (WebClient requestClient = Client.Builder.ProvideChunkUploadWebClient(bytesRead, uploadedByteCount, formDataBoundary,
-                OptionalFileSize == -1 ? "*" : OptionalFileSize.ToString())) {
-                long currentUploadedByteCount = uploadedByteCount;
-                requestClient.UploadProgressChanged += (o, progressEvent) => {
-                    lock (ProgressReportTimer) {
-                        long increaseWithoutHeader = (progressEvent.BytesSent - headerLength);
-                        if (ProgressReportTimer.ElapsedMilliseconds > ProgressUpdateInterval && increaseWithoutHeader > 0) {
-                            LastNotifiedProgressValue = currentUploadedByteCount + increaseWithoutHeader;
-                            NotifyProgress(ActionId, LastNotifiedProgressValue, OptionalFileSize);
-                            ProgressReportTimer.Restart();
+            using (WebClient requestClient = dracoonClient.RequestBuilder.ProvideChunkUploadWebClient(bytesRead, uploadedByteCount, formDataBoundary,
+                optionalFileSize == -1 ? "*" : optionalFileSize.ToString())) {
+                requestClient.UploadProgressChanged += (sender, e) => {
+                    lock (progressReportTimer) {
+                        long increaseWithoutHeader = e.BytesSent - headerLength;
+                        if (progressReportTimer.ElapsedMilliseconds > PROGRESS_UPDATE_INTERVAL && increaseWithoutHeader > 0) {
+                            lastNotifiedProgressValue = increaseWithoutHeader + uploadedByteCount;
+                            NotifyProgress(actionId, lastNotifiedProgressValue, optionalFileSize);
+                            progressReportTimer.Restart();
                         }
                     }
                 };
-                byte[] chunkUploadResultBytes = Client.Executor.ExecuteWebClientChunkUpload(requestClient, uploadUrl, multipartFormatedChunkData,
-                    RequestType.PostUploadChunk, RunningThread);
+                progressReportTimer = Stopwatch.StartNew();
+                byte[] chunkUploadResultBytes = dracoonClient.RequestExecutor.ExecuteWebClientChunkUpload(requestClient, uploadUrl,
+                    multipartFormatedChunkData, RequestType.PostUploadChunk, runningThread);
                 ApiUploadChunkResult chunkUploadResult =
                     JsonConvert.DeserializeObject<ApiUploadChunkResult>(ApiConfig.ENCODING.GetString(chunkUploadResultBytes));
                 return chunkUploadResult;
@@ -216,15 +219,11 @@ namespace Dracoon.Sdk.SdkInternal {
         #region S3 upload
 
         protected bool CheckUseS3() {
-            dracoonClient.RequestExecutor.CheckApiServerVersion(ApiConfig.ApiS3UploadPossible);
+            dracoonClient.RequestExecutor.CheckApiServerVersion(ApiConfig.ApiS3DirectUploadPossible);
             RestRequest generalSettingsRequest = dracoonClient.RequestBuilder.GetGeneralSettings();
             ApiGeneralSettings apiGeneralSettings =
                 dracoonClient.RequestExecutor.DoSyncApiCall<ApiGeneralSettings>(generalSettingsRequest, RequestType.GetGeneralSettings);
-            if (apiGeneralSettings.UseS3Storage) {
-                return true;
-            }
-
-            return false;
+            return apiGeneralSettings.UseS3Storage;
         }
 
         protected ApiNode S3Finished() {
@@ -234,14 +233,18 @@ namespace Dracoon.Sdk.SdkInternal {
                 if (s3Polling.ElapsedMilliseconds >= currentInterval) {
                     RestRequest request = dracoonClient.RequestBuilder.GetS3Status(uploadToken.UploadId);
                     ApiS3Status status = dracoonClient.RequestExecutor.DoSyncApiCall<ApiS3Status>(request, RequestType.GetS3Status);
-                    if (status.Status == "done") {
-                        s3Polling.Stop();
-                        return status.Node;
-                    }
-
-                    if (status.Status == "error") {
-                        s3Polling.Stop();
-                        throw new DracoonApiException();
+                    switch (status.Status) {
+                        case "done":
+                            s3Polling.Stop();
+                            return status.Node;
+                        case "transfer":
+                            break;
+                        case "finishing":
+                            break;
+                        default:
+                            s3Polling.Stop();
+                            // TODO parse error info of status error response model
+                            throw new DracoonApiException(DracoonApiCode.SERVER_S3_UPLOAD_COMPLETION_FAILED);
                     }
 
                     if (currentInterval < MAX_S3_POLLING_INTERVAL) {
@@ -254,16 +257,16 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         protected int DefineS3BatchSize(int chunkSize) {
+            if (optionalFileSize <= 0) {
+                return S3_URL_BATCH;
+            }
+
             int fileDependentBatchSize = (int) Math.Ceiling((double) optionalFileSize / chunkSize);
             if (fileDependentBatchSize == 0) {
                 return 1;
             }
 
-            if (fileDependentBatchSize <= S3_URL_BATCH) {
-                return fileDependentBatchSize;
-            }
-
-            return S3_URL_BATCH;
+            return fileDependentBatchSize < S3_URL_BATCH ? fileDependentBatchSize : S3_URL_BATCH;
         }
 
         protected int DefineS3ChunkSize() {
@@ -281,16 +284,12 @@ namespace Dracoon.Sdk.SdkInternal {
         private List<ApiS3FileUploadPart> UploadS3() {
             dracoonClient.Log.Debug(LOGTAG, "Uploading file [" + fileUploadRequest.Name + "] via s3 direct upload.");
             try {
-                progressReportTimer = Stopwatch.StartNew();
                 int chunkSize = DefineS3ChunkSize();
                 int s3UrlBatchSize = DefineS3BatchSize(chunkSize);
 
-                List<ApiS3FileUploadPart> s3Parts = new List<ApiS3FileUploadPart>();
-                Queue<Uri> s3Urls = new Queue<Uri>();
-
                 long uploadedByteCount = 0;
                 byte[] buffer = new byte[chunkSize];
-                int bytesRead = 0;
+                int bytesRead;
                 while ((bytesRead = inputStream.Read(buffer, 0, buffer.Length)) > 0) {
                     if (bytesRead < chunkSize) {
                         s3Urls = RequestS3Urls(s3Parts.Count + 1, 1, bytesRead);
@@ -300,11 +299,12 @@ namespace Dracoon.Sdk.SdkInternal {
 
                     byte[] chunk = new byte[bytesRead];
                     Buffer.BlockCopy(buffer, 0, chunk, 0, bytesRead);
-                    string partETag = UploadS3ChunkWebClient(s3Urls.Dequeue(), chunk, ref uploadedByteCount);
-                    s3Parts.Add(new ApiS3FileUploadPart() {
+                    string partETag = UploadS3ChunkWebClient(s3Urls.Dequeue(), chunk, uploadedByteCount);
+                    s3Parts.Add(new ApiS3FileUploadPart {
                         PartEtag = partETag,
                         PartNumber = s3Parts.Count + 1
                     });
+                    uploadedByteCount += chunk.Length;
                 }
 
                 if (lastNotifiedProgressValue != uploadedByteCount) {
@@ -326,23 +326,21 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        protected string UploadS3ChunkWebClient(Uri uploadUrl, byte[] buffer, ref long uploadedByteCount) {
+        protected string UploadS3ChunkWebClient(Uri uploadUrl, byte[] chunk, long uploadedByteCount) {
             using (WebClient requestClient = dracoonClient.RequestBuilder.ProvideS3ChunkUploadWebClient()) {
-                long previousBytesSentValue = uploadedByteCount;
-                long currentUploadedByteCount = 0;
-                requestClient.UploadProgressChanged += (o, progressEvent) => {
-                    currentUploadedByteCount += progressEvent.BytesSent - currentUploadedByteCount;
-                    if (progressReportTimer.ElapsedMilliseconds > PROGRESS_UPDATE_INTERVAL && progressEvent.BytesSent > 0) {
-                        lastNotifiedProgressValue = currentUploadedByteCount + previousBytesSentValue;
-                        NotifyProgress(actionId, lastNotifiedProgressValue, optionalFileSize);
-                        progressReportTimer.Restart();
+                requestClient.UploadProgressChanged += (sender, e) => {
+                    lock (progressReportTimer) {
+                        if (progressReportTimer.ElapsedMilliseconds > PROGRESS_UPDATE_INTERVAL) {
+                            lastNotifiedProgressValue = e.BytesSent + uploadedByteCount;
+                            NotifyProgress(actionId, lastNotifiedProgressValue, optionalFileSize);
+                            progressReportTimer.Restart();
+                        }
                     }
                 };
-
+                progressReportTimer = Stopwatch.StartNew();
                 byte[] result =
-                    dracoonClient.RequestExecutor.ExecuteWebClientChunkUpload(requestClient, uploadUrl, buffer, RequestType.PutUploadS3Chunk,
+                    dracoonClient.RequestExecutor.ExecuteWebClientChunkUpload(requestClient, uploadUrl, chunk, RequestType.PutUploadS3Chunk,
                         runningThread);
-                uploadedByteCount += currentUploadedByteCount;
                 return ApiConfig.encoding.GetString(result);
             }
         }

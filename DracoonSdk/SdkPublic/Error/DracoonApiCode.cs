@@ -243,6 +243,7 @@ namespace Dracoon.Sdk.Error {
         public static readonly DracoonApiCode SERVER_UPLOAD_NOT_FOUND = new DracoonApiCode(5112, "The upload with the given id was not found.");
         // CODES: -90034
         public static readonly DracoonApiCode SERVER_S3_UPLOAD_ID_NOT_FOUND = new DracoonApiCode(5113, "Corresponding S3 upload ID not found.");
+        public static readonly DracoonApiCode SERVER_S3_UPLOAD_COMPLETION_FAILED = new DracoonApiCode(5114, "Server failed to complete S3 upload.");
         #endregion
 
         #region SHARES

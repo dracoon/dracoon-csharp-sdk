@@ -85,7 +85,7 @@ namespace Dracoon.Sdk.SdkInternal {
         #region Minimum version requirements
 
         internal const string ApiUseHomeDefaultClassificationMinApiVersion = "4.9.0";
-        internal const string ApiS3UploadPossible = "4.13.0";
+        internal const string ApiS3DirectUploadPossible = "4.13.0";
 
         #endregion
 

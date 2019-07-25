@@ -7,5 +7,8 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
 
         [JsonProperty("node", NullValueHandling = NullValueHandling.Ignore)]
         public ApiNode Node { get; set; }
+
+        [JsonProperty("errorDetails", NullValueHandling = NullValueHandling.Ignore)]
+        public ApiErrorResponse ErrorInfo { get; set; }
     }
 }
