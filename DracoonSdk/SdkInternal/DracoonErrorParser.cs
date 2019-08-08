@@ -76,7 +76,16 @@ namespace Dracoon.Sdk.SdkInternal {
             throw new DracoonNetIOException("The request for '" + requestType.ToString() + "' failed with '" + exception.Message + "'", exception);
         }
 
-        private static DracoonApiCode Parse(int httpStatusCode, dynamic response, ApiErrorResponse apiError, RequestType requestType) {
+        internal void ParseError(ApiErrorResponse apiError, RequestType requestType) {
+            int code = 0;
+            if (apiError.Code.HasValue) {
+                code = apiError.Code.Value;
+            }
+            DracoonApiCode dracoonResultCode = Parse(code, null, apiError, requestType);
+            throw new DracoonApiException(dracoonResultCode);
+        }
+
+        private DracoonApiCode Parse(int httpStatusCode, dynamic response, ApiErrorResponse apiError, RequestType requestType) {
             int? apiErrorCode = null;
             if (apiError != null) {
                 apiErrorCode = apiError.ErrorCode;
@@ -364,7 +373,12 @@ namespace Dracoon.Sdk.SdkInternal {
                 case -90090:
                     return DracoonApiCode.SERVER_SMS_COULD_NOT_BE_SENT;
                 default:
-                    return DracoonApiCode.SERVER_UNKNOWN_ERROR;
+                    switch (requestType) {
+                        case RequestType.PutCompleteS3Upload:
+                            return DracoonApiCode.SERVER_S3_UPLOAD_COMPLETION_FAILED;
+                        default:
+                            return DracoonApiCode.SERVER_UNKNOWN_ERROR;
+                    }
             }
         }
 

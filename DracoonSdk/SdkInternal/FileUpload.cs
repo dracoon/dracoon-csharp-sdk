@@ -241,9 +241,12 @@ namespace Dracoon.Sdk.SdkInternal {
                             break;
                         case "finishing":
                             break;
+                        case "error":
+                            s3Polling.Stop();
+                            dracoonClient.ApiErrorParser.ParseError(status.ErrorInfo, RequestType.GetS3Status);
+                            goto default;
                         default:
                             s3Polling.Stop();
-                            // TODO parse error info of status error response model
                             throw new DracoonApiException(DracoonApiCode.SERVER_S3_UPLOAD_COMPLETION_FAILED);
                     }
 
