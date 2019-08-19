@@ -1,25 +1,23 @@
 ﻿namespace Dracoon.Sdk.Sort {
     /// <include file="Sort.xml" path='docs/members[@name="dracoonSortOrder"]/DracoonSortOrder/*'/>
     public class DracoonSortOrder<T> where T : DracoonSort {
-
-        internal T parent;
+        internal T Parent;
 
         /// <include file="Sort.xml" path='docs/members[@name="dracoonSortOrder"]/DracoonSortOrderConstructor/*'/>
         public DracoonSortOrder(T parent) {
-            this.parent = parent;
+            Parent = parent;
         }
 
         /// <include file="Sort.xml" path='docs/members[@name="dracoonSortOrder"]/Ascending/*'/>
         public T Ascending() {
-            parent.sortString += ":asc";
-            return parent;
+            Parent.SortString += ":asc";
+            return Parent;
         }
 
         /// <include file="Sort.xml" path='docs/members[@name="dracoonSortOrder"]/Descending/*'/>
         public T Descending() {
-            parent.sortString += ":desc";
-            return parent;
+            Parent.SortString += ":desc";
+            return Parent;
         }
-
     }
 }

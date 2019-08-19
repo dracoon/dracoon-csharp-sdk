@@ -1,49 +1,33 @@
 ﻿using System;
 
 namespace Dracoon.Sdk {
-
     /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/DracoonAuth/*'/>
     public class DracoonAuth {
-
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/Mode/*'/>
         public enum Mode {
             /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/EnumAuthCode/*'/>
-            AUTHORIZATION_CODE,
-            /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/EnumAccessToken/*'/>
-            ACCESS_TOKEN,
-            /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/EnumAccessRefreshToken/*'/>
+            AUTHORIZATION_CODE, /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/EnumAccessToken/*'/>
+            ACCESS_TOKEN, /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/EnumAccessRefreshToken/*'/>
             ACCESS_REFRESH_TOKEN
         }
 
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/UsedMode/*'/>
-        public Mode UsedMode {
-            get; internal set;
-        }
+        public Mode UsedMode { get; internal set; }
 
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/ClientId/*'/>
-        public string ClientId {
-            get; internal set;
-        }
+        public string ClientId { get; internal set; }
 
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/ClientSecret/*'/>
-        public string ClientSecret {
-            get; internal set;
-        }
+        public string ClientSecret { get; internal set; }
 
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/AuthorizationCode/*'/>
-        public string AuthorizationCode {
-            get; internal set;
-        }
+        public string AuthorizationCode { get; internal set; }
 
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/AccessToken/*'/>
-        public string AccessToken {
-            get; internal set;
-        }
+        public string AccessToken { get; internal set; }
 
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/RefreshToken/*'/>
-        public string RefreshToken {
-            get; internal set;
-        }
+        public string RefreshToken { get; internal set; }
 
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonAuth"]/DracoonAuthConstructorOne/*'/>
         public DracoonAuth(string clientId, string clientSecret, string authorizationCode) {
@@ -76,11 +60,12 @@ namespace Dracoon.Sdk {
             RefreshToken = refreshToken;
         }
 
-        private void ValidateParameters(string name, string value, bool nullable = false) {
+        private static void ValidateParameters(string name, string value, bool nullable = false) {
             if (value == null && !nullable) {
                 throw new ArgumentNullException(name);
             }
-            if (String.IsNullOrWhiteSpace(value)) {
+
+            if (string.IsNullOrWhiteSpace(value)) {
                 throw new ArgumentException(name + " cannot be empty or whitespaced.");
             }
         }

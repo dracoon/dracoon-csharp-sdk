@@ -5,34 +5,34 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Net;
-using static Dracoon.Sdk.SdkInternal.DracoonRequestExecuter;
+using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class DracoonUsersImpl : IUsers {
+        internal const string Logtag = nameof(DracoonUsersImpl);
+        private readonly IInternalDracoonClient _client;
 
-        internal static readonly string LOGTAG = typeof(DracoonUsersImpl).Name;
-        private DracoonClient client;
-
-        internal DracoonUsersImpl(DracoonClient client) {
-            this.client = client;
+        internal DracoonUsersImpl(IInternalDracoonClient client) {
+            _client = client;
         }
 
-        public Image GetUserAvatar(long userId, string avatarUUID) {
-            client.RequestExecutor.CheckApiServerVersion();
-            client.RequestExecutor.CheckApiServerVersion(ApiConfig.ApiAvatarFunctions);
+        public Image GetUserAvatar(long userId, string avatarUuid) {
+            _client.Executor.CheckApiServerVersion();
+            _client.Executor.CheckApiServerVersion(ApiConfig.ApiAvatarFunctions);
 
             #region Parameter Validation
 
             userId.MustPositive(nameof(userId));
-            avatarUUID.MustNotNullOrEmptyOrWhitespace(nameof(avatarUUID));
+            avatarUuid.MustNotNullOrEmptyOrWhitespace(nameof(avatarUuid));
 
             #endregion
 
-            RestRequest request = client.RequestBuilder.GetUserAvatar(userId, avatarUUID);
-            ApiAvatarInfo apiAvatarInfo = client.RequestExecutor.DoSyncApiCall<ApiAvatarInfo>(request, RequestType.GetResourcesAvatar);
+            IRestRequest request = _client.Builder.GetUserAvatar(userId, avatarUuid);
+            ApiAvatarInfo apiAvatarInfo = _client.Executor.DoSyncApiCall<ApiAvatarInfo>(request, RequestType.GetResourcesAvatar);
 
-            using (WebClient avatarClient = client.RequestBuilder.ProvideAvatarDownloadWebClient()) {
-                byte[] avatarImageBytes = client.RequestExecutor.ExecuteWebClientDownload(avatarClient, new Uri(apiAvatarInfo.AvatarUri), RequestType.GetResourcesAvatar);
+            using (WebClient avatarClient = _client.Builder.ProvideAvatarDownloadWebClient()) {
+                byte[] avatarImageBytes =
+                    _client.Executor.ExecuteWebClientDownload(avatarClient, new Uri(apiAvatarInfo.AvatarUri), RequestType.GetResourcesAvatar);
                 MemoryStream ms = new MemoryStream(avatarImageBytes);
                 return Image.FromStream(ms);
             }

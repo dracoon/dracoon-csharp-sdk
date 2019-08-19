@@ -1,22 +1,14 @@
-﻿
-namespace Dracoon.Sdk.Model {
+﻿namespace Dracoon.Sdk.Model {
     /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="createFolderRequest"]/CreateFolderRequest/*'/>
     public class CreateFolderRequest {
-
         /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="createFolderRequest"]/ParentId/*'/>
-        public long ParentId {
-            get; private set;
-        }
+        public long ParentId { get; private set; }
 
         /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="createFolderRequest"]/Name/*'/>
-        public string Name {
-            get; private set;
-        }
+        public string Name { get; private set; }
 
         /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="createFolderRequest"]/Notes/*'/>
-        public string Notes {
-            get; set;
-        }
+        public string Notes { get; set; }
 
         /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="createFolderRequest"]/CreateFolderRequest/*'/>
         public CreateFolderRequest(long parentId, string name, string notes = null) {

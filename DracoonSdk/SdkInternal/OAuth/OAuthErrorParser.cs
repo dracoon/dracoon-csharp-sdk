@@ -3,65 +3,59 @@ using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Net;
-using static Dracoon.Sdk.SdkInternal.DracoonRequestExecuter;
+using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
 namespace Dracoon.Sdk.SdkInternal.OAuth {
     internal class OAuthErrorParser {
+        private const string Logtag = nameof(OAuthErrorParser);
 
-        protected readonly string LOGTAG = typeof(OAuthErrorParser).Name;
-
-        private const string ERR_INVALID_REQUEST = "invalid_request";
-        private const string ERR_UNSUPPORTED_RESPONSE_TYPE = "unsupported_response_type";
-        private const string ERR_UNSUPPORTED_GRANT_TYPE = "unsupported_grant_type";
-        private const string ERR_INVALID_CLIENT = "invalid_client";
-        private const string ERR_INVALID_GRANT = "invalid_grant";
-        private const string ERR_INVALID_SCOPE = "invalid_scope";
-        private const string ERR_ACCESS_DENIED = "access_denied";
-
-        private DracoonClient dracoonClient;
-
-        internal OAuthErrorParser(DracoonClient client) {
-            dracoonClient = client;
-        }
+        private const string ErrInvalidRequest = "invalid_request";
+        private const string ErrUnsupportedResponseType = "unsupported_response_type";
+        private const string ErrUnsupportedGrantType = "unsupported_grant_type";
+        private const string ErrInvalidClient = "invalid_client";
+        private const string ErrInvalidGrant = "invalid_grant";
+        private const string ErrInvalidScope = "invalid_scope";
+        private const string ErrAccessDenied = "access_denied";
 
         internal static void ParseError(string error) {
             switch (error) {
-                case ERR_UNSUPPORTED_RESPONSE_TYPE:
+                case ErrUnsupportedResponseType:
                     throw new DracoonApiException(DracoonApiCode.AUTH_OAUTH_AUTHORIZATION_REQUEST_INVALID);
-                case ERR_INVALID_CLIENT:
+                case ErrInvalidClient:
                     throw new DracoonApiException(DracoonApiCode.AUTH_OAUTH_CLIENT_UNKNOWN);
-                case ERR_INVALID_GRANT:
+                case ErrInvalidGrant:
                     throw new DracoonApiException(DracoonApiCode.AUTH_OAUTH_GRANT_TYPE_NOT_ALLOWED);
-                case ERR_INVALID_SCOPE:
+                case ErrInvalidScope:
                     throw new DracoonApiException(DracoonApiCode.AUTH_OAUTH_AUTHORIZATION_SCOPE_INVALID);
-                case ERR_ACCESS_DENIED:
+                case ErrAccessDenied:
                     throw new DracoonApiException(DracoonApiCode.AUTH_OAUTH_AUTHORIZATION_ACCESS_DENIED);
                 default:
                     throw new DracoonApiException(DracoonApiCode.AUTH_UNKNOWN_ERROR);
             }
         }
 
-        private OAuthError GetOAuthError(string errorResponseBody) {
+        private static OAuthError GetOAuthError(string errorResponseBody) {
             try {
                 OAuthError apiError = JsonConvert.DeserializeObject<OAuthError>(errorResponseBody);
                 if (apiError != null) {
-                    dracoonClient.Log.Debug(LOGTAG, apiError.ToString());
+                    DracoonClient.Log.Debug(Logtag, apiError.ToString());
                 }
+
                 return apiError;
             } catch (Exception) {
                 return null;
             }
         }
 
-        internal void ParseError(IRestResponse response, RequestType requestType) {
+        internal static void ParseError(IRestResponse response, RequestType requestType) {
             OAuthError oauthError = GetOAuthError(response.Content);
-            DracoonApiCode dracoonResultCode = Parse(response.StatusCode, oauthError, requestType);
-            dracoonClient.Log.Debug(LOGTAG, String.Format("Query for '{0}' failed with {1}", requestType.ToString(), dracoonResultCode.Text));
+            DracoonApiCode resultCode = Parse(response.StatusCode, oauthError, requestType);
+            DracoonClient.Log.Debug(Logtag, $"Query for '{requestType.ToString()}' failed with {resultCode.Text}");
 
-            throw new DracoonApiException(dracoonResultCode);
+            throw new DracoonApiException(resultCode);
         }
 
-        private DracoonApiCode Parse(HttpStatusCode statusCode, OAuthError oAuthError, RequestType requestType) {
+        private static DracoonApiCode Parse(HttpStatusCode statusCode, OAuthError oAuthError, RequestType requestType) {
             switch ((int) statusCode) {
                 case (int) HttpStatusCode.BadRequest:
                     return ParseBadRequest(oAuthError, requestType);
@@ -72,33 +66,36 @@ namespace Dracoon.Sdk.SdkInternal.OAuth {
             }
         }
 
-        private DracoonApiCode ParseBadRequest(OAuthError oAuthError, RequestType requestType) {
+        private static DracoonApiCode ParseBadRequest(OAuthError oAuthError, RequestType requestType) {
             switch (oAuthError.Error) {
-                case ERR_INVALID_REQUEST:
-                case ERR_UNSUPPORTED_GRANT_TYPE:
-                    if (requestType == RequestType.PostOAuthToken) {
-                        return DracoonApiCode.AUTH_OAUTH_TOKEN_REQUEST_INVALID;
-                    } else if (requestType == RequestType.PostOAuthRefresh) {
-                        return DracoonApiCode.AUTH_OAUTH_REFRESH_REQUEST_INVALID;
-                    } else {
-                        return DracoonApiCode.AUTH_UNKNOWN_ERROR;
+                case ErrUnsupportedGrantType:
+                    switch (requestType) {
+                        case RequestType.PostOAuthToken:
+                            return DracoonApiCode.AUTH_OAUTH_TOKEN_REQUEST_INVALID;
+                        case RequestType.PostOAuthRefresh:
+                            return DracoonApiCode.AUTH_OAUTH_REFRESH_REQUEST_INVALID;
+                        default:
+                            return DracoonApiCode.AUTH_UNKNOWN_ERROR;
                     }
-                case ERR_INVALID_CLIENT:
+
+                case ErrInvalidClient:
                     return DracoonApiCode.AUTH_OAUTH_GRANT_TYPE_NOT_ALLOWED;
-                case ERR_INVALID_GRANT:
-                    if (requestType == RequestType.PostOAuthToken) {
-                        return DracoonApiCode.AUTH_OAUTH_TOKEN_CODE_INVALID;
-                    } else if (requestType == RequestType.PostOAuthRefresh) {
-                        return DracoonApiCode.AUTH_OAUTH_REFRESH_TOKEN_INVALID;
-                    } else {
-                        return DracoonApiCode.AUTH_UNKNOWN_ERROR;
+                case ErrInvalidGrant:
+                    switch (requestType) {
+                        case RequestType.PostOAuthToken:
+                            return DracoonApiCode.AUTH_OAUTH_TOKEN_CODE_INVALID;
+                        case RequestType.PostOAuthRefresh:
+                            return DracoonApiCode.AUTH_OAUTH_REFRESH_TOKEN_INVALID;
+                        default:
+                            return DracoonApiCode.AUTH_UNKNOWN_ERROR;
                     }
+
                 default:
                     return DracoonApiCode.AUTH_UNKNOWN_ERROR;
             }
         }
 
-        private DracoonApiCode ParseUnauthorized(OAuthError oAuthError, RequestType requestType) {
+        private static DracoonApiCode ParseUnauthorized(OAuthError oAuthError, RequestType requestType) {
             return DracoonApiCode.AUTH_OAUTH_CLIENT_UNAUTHORIZED;
         }
     }

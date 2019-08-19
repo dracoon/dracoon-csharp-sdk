@@ -1,12 +1,8 @@
-﻿
-namespace Dracoon.Sdk.Error {
+﻿namespace Dracoon.Sdk.Error {
     /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
     public class DracoonApiException : DracoonException {
-
         /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/ErrorCode/*'/>
-        public DracoonApiCode ErrorCode {
-            get; private set;
-        }
+        public DracoonApiCode ErrorCode { get; }
 
         /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiExceptionConstructorOne/*'/>
         public DracoonApiException() {
@@ -17,6 +13,5 @@ namespace Dracoon.Sdk.Error {
         public DracoonApiException(DracoonApiCode errorCode) : base(errorCode.Text) {
             ErrorCode = errorCode;
         }
-
     }
 }

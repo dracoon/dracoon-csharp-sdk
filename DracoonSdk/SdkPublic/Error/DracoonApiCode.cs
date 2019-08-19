@@ -1,7 +1,10 @@
 ﻿
+using System;
+using System.Collections.Generic;
+
 namespace Dracoon.Sdk.Error {
     /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonApiCode"]/DracoonApiCode/*'/>
-    public class DracoonApiCode {
+    public class DracoonApiCode : IEquatable<DracoonApiCode> {
         public static readonly DracoonApiCode API_VERSION_NOT_SUPPORTED = new DracoonApiCode(0, "Server API versions < " + SdkInternal.ApiConfig.MinimumApiVersion + " are not supported.");
 
         #region Error codes '1000' --> AUTH
@@ -285,14 +288,14 @@ namespace Dracoon.Sdk.Error {
         /// The error message.
         /// </summary>
         public string Text {
-            get; private set;
+            get;
         }
 
         /// <summary>
         /// The error code.
         /// </summary>
         public int Code {
-            get; private set;
+            get;
         }
 
         internal DracoonApiCode(int code, string text) {
@@ -343,6 +346,26 @@ namespace Dracoon.Sdk.Error {
         /// <returns><c>true</c> if error is a server error; <c>false</c> otherwise</returns>
         public bool IsServerError() {
             return Code >= 5000 && Code < 6000;
+        }
+
+        public bool Equals(DracoonApiCode other) {
+            return string.Equals(Text, other.Text) && Code == other.Code;
+        }
+
+        public override bool Equals(object obj) {
+            if (obj is null) {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj)) {
+                return true;
+            }
+
+            if (obj.GetType() != GetType()) {
+                return false;
+            }
+
+            return Equals((DracoonApiCode) obj);
         }
     }
 }

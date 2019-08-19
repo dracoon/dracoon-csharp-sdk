@@ -12,168 +12,172 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading;
-using static Dracoon.Sdk.SdkInternal.DracoonRequestExecuter;
+using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class FileUpload {
-        protected string LOGTAG;
+        protected string Logtag = nameof(FileUpload);
 
-        protected readonly long PROGRESS_UPDATE_INTERVAL = 500;
+        protected const long ProgressUpdateInterval = 500;
 
-        protected List<IFileUploadCallback> callbacks = new List<IFileUploadCallback>();
-        protected DracoonClient dracoonClient;
-        protected string actionId;
-        protected Thread runningThread = null;
-        protected Stream inputStream;
-        protected Stopwatch progressReportTimer;
-        protected bool isInterrupted = false;
-        protected FileUploadRequest fileUploadRequest;
-        protected long optionalFileSize;
-        protected long lastNotifiedProgressValue = 0;
+        protected List<IFileUploadCallback> Callbacks = new List<IFileUploadCallback>();
+        protected IInternalDracoonClient Client;
+        protected string ActionId;
+        internal Thread RunningThread;
+        protected Stream InputStream;
+        protected Stopwatch ProgressReportTimer;
+        protected bool IsInterrupted;
+        protected FileUploadRequest FileUploadRequest;
+        protected long OptionalFileSize;
+        protected long LastNotifiedProgressValue;
 
-        public FileUpload(DracoonClient client, string actionId, FileUploadRequest request, Stream input, long fileSize) {
-            dracoonClient = client;
-            this.actionId = actionId;
-            inputStream = input;
-            fileUploadRequest = request;
-            optionalFileSize = fileSize;
-
-            LOGTAG = typeof(FileUpload).Name;
+        public FileUpload(IInternalDracoonClient client, string actionId, FileUploadRequest request, Stream input, long fileSize) {
+            Client = client;
+            ActionId = actionId;
+            InputStream = input;
+            FileUploadRequest = request;
+            OptionalFileSize = fileSize;
         }
 
         public void AddFileUploadCallback(IFileUploadCallback callback) {
             if (callback != null) {
-                callbacks.Add(callback);
-            }
-        }
-
-        public void RemoveFileUploadCallback(IFileUploadCallback callback) {
-            if (callback != null) {
-                callbacks.Remove(callback);
+                Callbacks.Add(callback);
             }
         }
 
         public void RunAsync() {
-            ThreadStart child = new ThreadStart(() => {
+            void Child() {
                 try {
                     StartUpload();
                 } catch (DracoonException de) {
-                    NotifyFailed(actionId, de);
+                    NotifyFailed(ActionId, de);
                 } catch (ThreadAbortException) {
-                    NotifyCanceled(actionId);
+                    NotifyCanceled(ActionId);
                 } catch (ThreadInterruptedException) {
-                    NotifyCanceled(actionId);
+                    NotifyCanceled(ActionId);
                 }
-            });
-            runningThread = new Thread(child);
-            runningThread.Start();
+            }
+
+            RunningThread = new Thread(Child);
+            RunningThread.Start();
         }
 
         public Node RunSync() {
             try {
                 return StartUpload();
             } catch (DracoonException de) {
-                NotifyFailed(actionId, de);
+                NotifyFailed(ActionId, de);
                 throw de;
             } catch (ThreadAbortException) {
-                NotifyCanceled(actionId);
+                NotifyCanceled(ActionId);
                 return null;
             } catch (ThreadInterruptedException) {
-                NotifyCanceled(actionId);
+                NotifyCanceled(ActionId);
                 return null;
             }
         }
 
         public void CancelUpload() {
-            if (runningThread != null && runningThread.IsAlive) {
-                isInterrupted = true;
-                runningThread.Abort();
+            if (RunningThread != null && RunningThread.IsAlive) {
+                IsInterrupted = true;
+                RunningThread.Abort();
             }
         }
 
         protected virtual Node StartUpload() {
-            NotifyStarted(actionId);
-            ApiCreateFileUpload apiFileUploadRequest = FileMapper.ToApiCreateFileUpload(fileUploadRequest);
+            NotifyStarted(ActionId);
+            ApiCreateFileUpload apiFileUploadRequest = FileMapper.ToApiCreateFileUpload(FileUploadRequest);
             if (apiFileUploadRequest.Classification == null) {
                 try {
-                    dracoonClient.RequestExecutor.CheckApiServerVersion(ApiConfig.ApiUseHomeDefaultClassificationMinApiVersion);
+                    Client.Executor.CheckApiServerVersion(ApiConfig.ApiUseHomeDefaultClassificationMinApiVersion);
                 } catch (DracoonApiException) {
                     apiFileUploadRequest.Classification = 1;
                 }
             }
-            RestRequest uploadTokenRequest = dracoonClient.RequestBuilder.PostCreateFileUpload(apiFileUploadRequest);
-            ApiUploadToken token = dracoonClient.RequestExecutor.DoSyncApiCall<ApiUploadToken>(uploadTokenRequest, DracoonRequestExecuter.RequestType.PostUploadToken);
+
+            IRestRequest uploadTokenRequest = Client.Builder.PostCreateFileUpload(apiFileUploadRequest);
+            ApiUploadToken token = Client.Executor.DoSyncApiCall<ApiUploadToken>(uploadTokenRequest, RequestType.PostUploadToken);
             Upload(new Uri(token.UploadUrl));
-            RestRequest completeFileUploadRequest = dracoonClient.RequestBuilder.PutCompleteFileUpload(new Uri(token.UploadUrl).PathAndQuery, FileMapper.ToApiCompleteFileUpload(fileUploadRequest));
-            ApiNode resultNode = dracoonClient.RequestExecutor.DoSyncApiCall<ApiNode>(completeFileUploadRequest, DracoonRequestExecuter.RequestType.PutCompleteUpload);
+            IRestRequest completeFileUploadRequest = Client.Builder.PutCompleteFileUpload(new Uri(token.UploadUrl).PathAndQuery,
+                FileMapper.ToApiCompleteFileUpload(FileUploadRequest));
+            ApiNode resultNode = Client.Executor.DoSyncApiCall<ApiNode>(completeFileUploadRequest, RequestType.PutCompleteUpload);
             Node publicResultNode = NodeMapper.FromApiNode(resultNode);
-            NotifyFinished(actionId, publicResultNode);
+            NotifyFinished(ActionId, publicResultNode);
             return publicResultNode;
         }
 
         private void Upload(Uri uploadUrl) {
             try {
-                progressReportTimer = Stopwatch.StartNew();
+                ProgressReportTimer = Stopwatch.StartNew();
                 long uploadedByteCount = 0;
-                byte[] buffer = new byte[dracoonClient.HttpConfig.ChunkSize];
+                byte[] buffer = new byte[DracoonClient.HttpConfig.ChunkSize];
                 int bytesRead = 0;
-                while ((bytesRead = inputStream.Read(buffer, 0, buffer.Length)) > 0) {
-                    ProcessChunk(uploadUrl, buffer, ref uploadedByteCount, bytesRead);
+                while ((bytesRead = InputStream.Read(buffer, 0, buffer.Length)) > 0) {
+                    ProcessChunk(uploadUrl, buffer, uploadedByteCount, bytesRead);
+                    uploadedByteCount += bytesRead;
                 }
-                if (lastNotifiedProgressValue != uploadedByteCount) { // Notify 100 percent progress
-                    NotifyProgress(actionId, uploadedByteCount, optionalFileSize);
+
+                if (LastNotifiedProgressValue != uploadedByteCount) {
+                    // Notify 100 percent progress
+                    NotifyProgress(ActionId, uploadedByteCount, OptionalFileSize);
                 }
             } catch (IOException ioe) {
-                if (isInterrupted) {
+                if (IsInterrupted) {
                     throw new ThreadInterruptedException();
                 }
-                string message = "Read from stream failed!";
-                dracoonClient.Log.Debug(LOGTAG, message);
+
+                const string message = "Read from stream failed!";
+                DracoonClient.Log.Debug(Logtag, message);
                 throw new DracoonFileIOException(message, ioe);
             } finally {
-                progressReportTimer.Stop();
+                ProgressReportTimer.Stop();
             }
         }
 
-        private void ProcessChunk(Uri uploadUrl, byte[] buffer, ref long uploadedByteCount, int bytesRead, int sendTry = 1) {
-            ApiUploadChunkResult chunkResult = UploadChunkWebClient(uploadUrl, buffer, ref uploadedByteCount, bytesRead);
+        private void ProcessChunk(Uri uploadUrl, byte[] buffer, long uploadedByteCount, int bytesRead, int sendTry = 1) {
+            ApiUploadChunkResult chunkResult = UploadChunkWebClient(uploadUrl, buffer, uploadedByteCount, bytesRead);
             if (!FileHash.CompareFileHashes(chunkResult.Hash, buffer, bytesRead)) {
                 if (sendTry <= 3) {
-                    ProcessChunk(uploadUrl, buffer, ref uploadedByteCount, bytesRead, sendTry + 1);
+                    ProcessChunk(uploadUrl, buffer, uploadedByteCount, bytesRead, sendTry + 1);
                 } else {
                     throw new DracoonNetIOException("The uploaded chunk hash and local chunk hash are not equal!");
                 }
             }
         }
 
-        protected ApiUploadChunkResult UploadChunkWebClient(Uri uploadUrl, byte[] buffer, ref long uploadedByteCount, int bytesRead) {
+        protected ApiUploadChunkResult UploadChunkWebClient(Uri uploadUrl, byte[] buffer, long uploadedByteCount, int bytesRead) {
             #region Build multipart
+
             string formDataBoundary = "---------------------------" + Guid.NewGuid();
-            byte[] packageHeader = ApiConfig.encoding.GetBytes(string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\"\r\n\r\n", formDataBoundary, "file", fileUploadRequest.Name));
-            byte[] packageFooter = ApiConfig.encoding.GetBytes(string.Format("\r\n--" + formDataBoundary + "--"));
+            byte[] packageHeader = ApiConfig.ENCODING.GetBytes(
+                $"--{formDataBoundary}\r\nContent-Disposition: form-data; name=\"{"file"}\"; filename=\"{FileUploadRequest.Name}\"\r\n\r\n");
+            byte[] packageFooter = ApiConfig.ENCODING.GetBytes(string.Format("\r\n--" + formDataBoundary + "--"));
             byte[] multipartFormatedChunkData = new byte[packageHeader.Length + packageFooter.Length + bytesRead];
             Buffer.BlockCopy(packageHeader, 0, multipartFormatedChunkData, 0, packageHeader.Length);
             Buffer.BlockCopy(buffer, 0, multipartFormatedChunkData, packageHeader.Length, bytesRead);
             Buffer.BlockCopy(packageFooter, 0, multipartFormatedChunkData, packageHeader.Length + bytesRead, packageFooter.Length);
+
             #endregion
 
             long headerLength = packageFooter.LongLength + packageHeader.LongLength;
 
-            using (WebClient requestClient = dracoonClient.RequestBuilder.ProvideChunkUploadWebClient(bytesRead, uploadedByteCount, formDataBoundary, optionalFileSize == -1 ? "*" : optionalFileSize.ToString())) {
-                long previousBytesSentValue = uploadedByteCount;
-                long currentUploadedByteCount = 0;
+            using (WebClient requestClient = Client.Builder.ProvideChunkUploadWebClient(bytesRead, uploadedByteCount, formDataBoundary,
+                OptionalFileSize == -1 ? "*" : OptionalFileSize.ToString())) {
+                long currentUploadedByteCount = uploadedByteCount;
                 requestClient.UploadProgressChanged += (o, progressEvent) => {
-                    long increaseWithoutHeader = (progressEvent.BytesSent - currentUploadedByteCount - headerLength);
-                    currentUploadedByteCount += increaseWithoutHeader;
-                    if (progressReportTimer.ElapsedMilliseconds > PROGRESS_UPDATE_INTERVAL && increaseWithoutHeader > 0) {
-                        lastNotifiedProgressValue = currentUploadedByteCount + previousBytesSentValue;
-                        NotifyProgress(actionId, lastNotifiedProgressValue, optionalFileSize);
-                        progressReportTimer.Restart();
+                    lock (ProgressReportTimer) {
+                        long increaseWithoutHeader = (progressEvent.BytesSent - headerLength);
+                        if (ProgressReportTimer.ElapsedMilliseconds > ProgressUpdateInterval && increaseWithoutHeader > 0) {
+                            LastNotifiedProgressValue = currentUploadedByteCount + increaseWithoutHeader;
+                            NotifyProgress(ActionId, LastNotifiedProgressValue, OptionalFileSize);
+                            ProgressReportTimer.Restart();
+                        }
                     }
                 };
-                byte[] chunkUploadResultBytes = dracoonClient.RequestExecutor.ExecuteWebClientChunkUpload(requestClient, uploadUrl, multipartFormatedChunkData, RequestType.PostUploadChunk, runningThread);
-                ApiUploadChunkResult chunkUploadResult = JsonConvert.DeserializeObject<ApiUploadChunkResult>(ApiConfig.encoding.GetString(chunkUploadResultBytes));
-                uploadedByteCount += currentUploadedByteCount;
+                byte[] chunkUploadResultBytes = Client.Executor.ExecuteWebClientChunkUpload(requestClient, uploadUrl, multipartFormatedChunkData,
+                    RequestType.PostUploadChunk, RunningThread);
+                ApiUploadChunkResult chunkUploadResult =
+                    JsonConvert.DeserializeObject<ApiUploadChunkResult>(ApiConfig.ENCODING.GetString(chunkUploadResultBytes));
                 return chunkUploadResult;
             }
         }
@@ -181,23 +185,23 @@ namespace Dracoon.Sdk.SdkInternal {
         #region Callback helper functions
 
         protected void NotifyStarted(string actionId) {
-            callbacks.ForEach(currentCallback => currentCallback.OnStarted(actionId));
+            Callbacks.ForEach(currentCallback => currentCallback.OnStarted(actionId));
         }
 
         protected void NotifyProgress(string actionId, long bytesDone, long bytesTotal) {
-            callbacks.ForEach(currentCallback => currentCallback.OnRunning(actionId, bytesDone, bytesTotal));
+            Callbacks.ForEach(currentCallback => currentCallback.OnRunning(actionId, bytesDone, bytesTotal));
         }
 
         protected void NotifyFinished(string actionId, Node result) {
-            callbacks.ForEach(currentCallback => currentCallback.OnFinished(actionId, result));
+            Callbacks.ForEach(currentCallback => currentCallback.OnFinished(actionId, result));
         }
 
         protected void NotifyCanceled(string actionId) {
-            callbacks.ForEach(currentCallback => currentCallback.OnCanceled(actionId));
+            Callbacks.ForEach(currentCallback => currentCallback.OnCanceled(actionId));
         }
 
         protected void NotifyFailed(string id, DracoonException de) {
-            callbacks.ForEach(currentCallback => currentCallback.OnFailed(actionId, de));
+            Callbacks.ForEach(currentCallback => currentCallback.OnFailed(ActionId, de));
         }
 
         #endregion

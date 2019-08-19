@@ -3,7 +3,6 @@
 namespace Dracoon.Sdk.Model {
     /// <include file = "ModelDoc.xml" path='docs/members[@name="iFileUploadCallback"]/IFileUploadCallback/*'/>
     public interface IFileUploadCallback {
-
         /// <include file = "ModelDoc.xml" path='docs/members[@name="iFileUploadCallback"]/OnStarted/*'/>
         void OnStarted(string actionId);
 

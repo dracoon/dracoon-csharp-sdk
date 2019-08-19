@@ -2,22 +2,20 @@
 using Dracoon.Sdk.SdkInternal.Validator;
 
 namespace Dracoon.Sdk.Filter {
-
     #region NodeType-Filter
 
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/NodeTypeFilter/*'/>
     public class NodeTypeFilter : DracoonFilterType<NodeTypeFilter> {
         internal NodeTypeFilter() {
-            filterTypeString += "type";
+            FilterTypeString += "type";
         }
     }
 
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/NodeTypeFilterExtension/*'/>
     public static class NodeTypeFilterExtension {
-
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="general"]/Or/*'/>
         public static NodeTypeFilter Or(this FilterParam<NodeTypeFilter, DracoonFilterType<NodeTypeFilter>> ef) {
-            return ef.parent;
+            return ef.Parent;
         }
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="general"]/EqualTo/*'/>
@@ -34,13 +32,12 @@ namespace Dracoon.Sdk.Filter {
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/IsFavoriteFilter/*'/>
     public class IsFavoriteFilter : DracoonFilterType<IsFavoriteFilter> {
         internal IsFavoriteFilter() {
-            filterTypeString += "isFavorite";
+            FilterTypeString += "isFavorite";
         }
     }
 
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/NodeIsFavoriteFilterExtension/*'/>
     public static class NodeIsFavoriteFilterExtension {
-
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="general"]/EqualTo/*'/>
         public static FilterParam<IsFavoriteFilter, DracoonFilterType<IsFavoriteFilter>> EqualTo(this IsFavoriteFilter ef, bool value) {
             ef.AddOperatorAndValue(value, "eq", nameof(value));
@@ -55,13 +52,12 @@ namespace Dracoon.Sdk.Filter {
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/NameFilter/*'/>
     public class NameFilter : DracoonFilterType<NameFilter> {
         internal NameFilter() {
-            filterTypeString += "name";
+            FilterTypeString += "name";
         }
     }
 
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/NodeNameFilterExtension/*'/>
     public static class NodeNameFilterExtension {
-
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="general"]/Contains/*'/>
         public static FilterParam<NameFilter, DracoonFilterType<NameFilter>> Contains(this NameFilter ef, string value) {
             value.MustNotNullOrEmptyOrWhitespace(nameof(value));
@@ -77,15 +73,15 @@ namespace Dracoon.Sdk.Filter {
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/NodeIsEncryptedFilter/*'/>
     public class NodeIsEncryptedFilter : DracoonFilterType<NodeIsEncryptedFilter> {
         internal NodeIsEncryptedFilter() {
-            filterTypeString += "encrypted";
+            FilterTypeString += "encrypted";
         }
     }
 
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/NodeIsEncryptedFilterExtension/*'/>
     public static class NodeIsEncryptedFilterExtension {
-
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="general"]/EqualTo/*'/>
-        public static FilterParam<NodeIsEncryptedFilter, DracoonFilterType<NodeIsEncryptedFilter>> EqualTo(this NodeIsEncryptedFilter ef, bool value) {
+        public static FilterParam<NodeIsEncryptedFilter, DracoonFilterType<NodeIsEncryptedFilter>>
+            EqualTo(this NodeIsEncryptedFilter ef, bool value) {
             ef.AddOperatorAndValue(value, "eq", nameof(value));
             return new FilterParam<NodeIsEncryptedFilter, DracoonFilterType<NodeIsEncryptedFilter>>(ef, ef);
         }
@@ -98,13 +94,12 @@ namespace Dracoon.Sdk.Filter {
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/UserIdFilter/*'/>
     public class UserIdFilter : DracoonFilterType<UserIdFilter> {
         internal UserIdFilter() {
-            filterTypeString += "userId";
+            FilterTypeString += "userId";
         }
     }
 
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/UserIdFilterExtension/*'/>
     public static class UserIdFilterExtension {
-
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="general"]/EqualTo/*'/>
         public static FilterParam<UserIdFilter, DracoonFilterType<UserIdFilter>> EqualTo(this UserIdFilter ef, long value) {
             value.MustPositive(nameof(value));
@@ -120,13 +115,12 @@ namespace Dracoon.Sdk.Filter {
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/UpdatedByFilter/*'/>
     public class UpdatedByFilter : DracoonFilterType<UpdatedByFilter> {
         internal UpdatedByFilter() {
-            filterTypeString += "updatedBy";
+            FilterTypeString += "updatedBy";
         }
     }
 
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/UpdatedByFilterExtension/*'/>
     public static class UpdatedByFilterExtension {
-
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="general"]/EqualTo/*'/>
         public static FilterParam<UpdatedByFilter, DracoonFilterType<UpdatedByFilter>> EqualTo(this UpdatedByFilter ef, string value) {
             value.MustNotNullOrEmptyOrWhitespace(nameof(value));
@@ -142,7 +136,6 @@ namespace Dracoon.Sdk.Filter {
         }
     }
 
-
     #endregion
 
     #region ParentPath-Filter
@@ -150,13 +143,12 @@ namespace Dracoon.Sdk.Filter {
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/ParentPathFilter/*'/>
     public class ParentPathFilter : DracoonFilterType<ParentPathFilter> {
         internal ParentPathFilter() {
-            filterTypeString += "parentPath";
+            FilterTypeString += "parentPath";
         }
     }
 
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/ParentPathFilterExtension/*'/>
     public static class ParentPathFilterExtension {
-
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="general"]/EqualTo/*'/>
         public static FilterParam<ParentPathFilter, DracoonFilterType<ParentPathFilter>> EqualTo(this ParentPathFilter ef, string value) {
             value.MustNotNullOrEmptyOrWhitespace(nameof(value));
@@ -179,13 +171,12 @@ namespace Dracoon.Sdk.Filter {
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/FileTypeFilter/*'/>
     public class FileTypeFilter : DracoonFilterType<FileTypeFilter> {
         internal FileTypeFilter() {
-            filterTypeString += "fileType";
+            FilterTypeString += "fileType";
         }
     }
 
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/FileTypeFilterExtension/*'/>
     public static class FileTypeFilterExtension {
-
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="general"]/EqualTo/*'/>
         public static FilterParam<FileTypeFilter, DracoonFilterType<FileTypeFilter>> EqualTo(this FileTypeFilter ef, string value) {
             value.MustNotNullOrEmptyOrWhitespace(nameof(value));
@@ -208,15 +199,15 @@ namespace Dracoon.Sdk.Filter {
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/ClassificationFilter/*'/>
     public class ClassificationFilter : DracoonFilterType<ClassificationFilter> {
         internal ClassificationFilter() {
-            filterTypeString += "classification";
+            FilterTypeString += "classification";
         }
     }
 
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/ClassificationFilterExtension/*'/>
     public static class ClassificationFilterExtension {
-
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="general"]/EqualTo/*'/>
-        public static FilterParam<ClassificationFilter, DracoonFilterType<ClassificationFilter>> EqualTo(this ClassificationFilter ef, Classification value) {
+        public static FilterParam<ClassificationFilter, DracoonFilterType<ClassificationFilter>> EqualTo(this ClassificationFilter ef,
+            Classification value) {
             ef.AddOperatorAndValue((int) value, "eq", nameof(value));
             return new FilterParam<ClassificationFilter, DracoonFilterType<ClassificationFilter>>(ef, ef);
         }
@@ -229,13 +220,12 @@ namespace Dracoon.Sdk.Filter {
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/CreatedByFilter/*'/>
     public class CreatedByFilter : DracoonFilterType<CreatedByFilter> {
         internal CreatedByFilter() {
-            filterTypeString += "createdBy";
+            FilterTypeString += "createdBy";
         }
     }
 
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/CreatedByFilterExtension/*'/>
     public static class CreatedByFilterExtension {
-
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="general"]/Contains/*'/>
         public static FilterParam<CreatedByFilter, DracoonFilterType<CreatedByFilter>> Contains(this CreatedByFilter ef, string value) {
             value.MustNotNullOrEmptyOrWhitespace(nameof(value));
@@ -251,13 +241,12 @@ namespace Dracoon.Sdk.Filter {
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/TargetIdFilter/*'/>
     public class NodeIdFilter : DracoonFilterType<NodeIdFilter> {
         internal NodeIdFilter(string filterName) {
-            filterTypeString += filterName;
+            FilterTypeString += filterName;
         }
     }
 
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/TargetIdFilterExtension/*'/>
     public static class TargetIdFilterExtension {
-
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="general"]/EqualTo/*'/>
         public static FilterParam<NodeIdFilter, DracoonFilterType<NodeIdFilter>> EqualTo(this NodeIdFilter ef, long value) {
             value.MustPositive(nameof(value));
@@ -267,5 +256,4 @@ namespace Dracoon.Sdk.Filter {
     }
 
     #endregion
-
 }
