@@ -3,7 +3,6 @@
 namespace Dracoon.Sdk {
     /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/ILog/*'/>
     public interface ILog {
-
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iLog"]/DebugOne/*'/>
         void Debug(String tag, String message);
 

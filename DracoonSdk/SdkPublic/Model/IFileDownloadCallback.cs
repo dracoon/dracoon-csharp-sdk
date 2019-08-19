@@ -1,10 +1,8 @@
-﻿
-using Dracoon.Sdk.Error;
+﻿using Dracoon.Sdk.Error;
 
 namespace Dracoon.Sdk.Model {
     /// <include file = "ModelDoc.xml" path='docs/members[@name="iFileDownloadCallback"]/IFileDownloadCallback/*'/>
     public interface IFileDownloadCallback {
-
         /// <include file = "ModelDoc.xml" path='docs/members[@name="iFileDownloadCallback"]/OnStarted/*'/>
         void OnStarted(string actionId);
 

@@ -1,19 +1,17 @@
 ﻿namespace Dracoon.Sdk.Filter {
     /// <include file="FilterDoc.xml" path='docs/members[@name="filterParam"]/FilterParam/*'/>
-    public class FilterParam<T, V> {
+    public class FilterParam<T, TV> {
+        internal T Parent;
+        internal TV Superclass;
 
-        internal T parent;
-        internal V superclass;
-
-        internal FilterParam(T parent, V superclass) {
-            this.parent = parent;
-            this.superclass = superclass;
+        internal FilterParam(T parent, TV superclass) {
+            Parent = parent;
+            Superclass = superclass;
         }
 
         /// <include file="FilterDoc.xml" path='docs/members[@name="filterParam"]/Build/*'/>    
-        public V Build() {
-            return superclass;
+        public TV Build() {
+            return Superclass;
         }
     }
-
 }

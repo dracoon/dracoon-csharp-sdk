@@ -1,16 +1,11 @@
-﻿
-using System;
-
-namespace Dracoon.Sdk.SdkInternal.OAuth {
+﻿namespace Dracoon.Sdk.SdkInternal.OAuth {
     internal class OAuthConfig {
-
         internal class OAuthGrantTypes {
             public static readonly OAuthGrantTypes AUTHORIZATION_CODE = new OAuthGrantTypes("authorization_code");
             public static readonly OAuthGrantTypes REFRESH_TOKEN = new OAuthGrantTypes("refresh_token");
 
-            public string Text {
-                get; private set;
-            }
+            public string Text { get; }
+
             private OAuthGrantTypes(string text) {
                 Text = text;
             }
@@ -20,7 +15,6 @@ namespace Dracoon.Sdk.SdkInternal.OAuth {
         internal const string OAuthAuthorizePath = "/authorize";
         internal const string AuthorizationType = "Bearer ";
         internal const string OAuthFlow = "code";
-        internal static TimeSpan AuthorizationRefreshInterval = new TimeSpan(0, 59, 0); // 60 minutes substracted with 60 seconds tolerance
 
         #region POST
 

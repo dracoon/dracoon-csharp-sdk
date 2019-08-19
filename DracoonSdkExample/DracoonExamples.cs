@@ -13,7 +13,6 @@ using System.Net;
 
 namespace Dracoon.Sdk.Example {
     public static class DracoonExamples {
-
         private static readonly Uri SERVER_URI = new Uri("https://dracoon.team");
         private static readonly string ACCESS_TOKEN = "access-token";
         private static readonly string ENCRYPTION_PASSWORD = "encryption-password";
@@ -71,18 +70,15 @@ namespace Dracoon.Sdk.Example {
 
         private static void GetUserAccount() {
             UserAccount userAccount = dc.Account.GetUserAccount();
-            Console.WriteLine("UserId: " + userAccount.Id
-                + "; FirstName: " + userAccount.FirstName
-                + "; LastName: " + userAccount.LastName
-                + "; E-mail: " + userAccount.Email);
+            Console.WriteLine("UserId: " + userAccount.Id + "; FirstName: " + userAccount.FirstName + "; LastName: " + userAccount.LastName +
+                              "; E-mail: " + userAccount.Email);
         }
 
         private static void GetCustomerAccount() {
             CustomerAccount customerAccount = dc.Account.GetCustomerAccount();
-            Console.WriteLine("CustomerId: " + customerAccount.Id
-                + "; Name: " + customerAccount.Name
-                + "; Accounts: " + customerAccount.AccountsUsed + "/" + customerAccount.AccountsLimit
-                + "; Space: " + customerAccount.SpaceUsed + "/" + customerAccount.SpaceLimit);
+            Console.WriteLine("CustomerId: " + customerAccount.Id + "; Name: " + customerAccount.Name + "; Accounts: " +
+                              customerAccount.AccountsUsed + "/" + customerAccount.AccountsLimit + "; Space: " + customerAccount.SpaceUsed + "/" +
+                              customerAccount.SpaceLimit);
         }
 
         private static void SetUserKeyPair() {
@@ -140,7 +136,9 @@ namespace Dracoon.Sdk.Example {
         }
 
         private static void CreateRoom() {
-            List<long> roomAdminIds = new List<long> { 1 };
+            List<long> roomAdminIds = new List<long> {
+                1
+            };
 
             CreateRoomRequest request = new CreateRoomRequest("TestRoom", adminUserIds: roomAdminIds, notes: "It's a test room creation.");
             Node createdRoomNode = dc.Nodes.CreateRoom(request);
@@ -160,7 +158,10 @@ namespace Dracoon.Sdk.Example {
         }
 
         private static void DeleteNodes() {
-            List<long> nodeIdsForDeletion = new List<long> { 1, 2 };
+            List<long> nodeIdsForDeletion = new List<long> {
+                1,
+                2
+            };
 
             DeleteNodesRequest request = new DeleteNodesRequest(nodeIdsForDeletion);
             dc.Nodes.DeleteNodes(request);
@@ -221,8 +222,8 @@ namespace Dracoon.Sdk.Example {
         }
 
         private static void UploadFile() {
-            FileUploadRequest reqeust = new FileUploadRequest(1, "testFile.txt");
-            FileStream stream = File.Open("C:\\temp\\testFile.txt", FileMode.Open);
+            FileUploadRequest reqeust = new FileUploadRequest(25398, "50MBplus1BTest.txt");
+            FileStream stream = File.Open("C:\\temp\\50MBplus1BTest.txt", FileMode.Open);
             Node uploadedNode = dc.Nodes.UploadFile(Guid.NewGuid().ToString(), reqeust, stream, callback: new ULCallback());
         }
 
@@ -230,7 +231,7 @@ namespace Dracoon.Sdk.Example {
             dc.EncryptionPassword = ENCRYPTION_PASSWORD;
             Node node = dc.Nodes.GetNode(1);
             FileStream stream = File.Create("C:\\temp\\" + node.Name);
-            dc.Nodes.DownloadFile(Guid.NewGuid().ToString(), node.Id, stream);
+            dc.Nodes.DownloadFile(Guid.NewGuid().ToString(), node.Id, stream, new DLCallback());
         }
 
         private static void DownloadFileAsync() {
@@ -252,16 +253,20 @@ namespace Dracoon.Sdk.Example {
         private static void GetFileVersions() {
             RecycleBinItemList binItems = dc.Nodes.GetRecycleBinItems(1);
             foreach (RecycleBinItem current in binItems.Items) {
-                Console.WriteLine("NodeName: " + current.Name + "; Versions: " + current.VersionsCount + "; LastDeletedNodeId: " + current.LastDeletedNodeId + "; ParentPath: " + current.ParentPath);
+                Console.WriteLine("NodeName: " + current.Name + "; Versions: " + current.VersionsCount + "; LastDeletedNodeId: " +
+                                  current.LastDeletedNodeId + "; ParentPath: " + current.ParentPath);
             }
 
             PreviousVersionList versionList = dc.Nodes.GetPreviousVersions(1, NodeType.File, "test.txt");
             foreach (PreviousVersion current in versionList.Items) {
-                Console.WriteLine("NodeName: " + current.Name + "; Id: " + current.Id + "; ParentPath: " + current.ParentPath + "; DeletedAt: " + current.DeletedAt.ToString());
+                Console.WriteLine("NodeName: " + current.Name + "; Id: " + current.Id + "; ParentPath: " + current.ParentPath + "; DeletedAt: " +
+                                  current.DeletedAt.ToString());
             }
 
             // Restore the last version of the node "test.txt"
-            RestorePreviousVersionsRequest request = new RestorePreviousVersionsRequest(new List<long>() { versionList.Items[0].Id.Value });
+            RestorePreviousVersionsRequest request = new RestorePreviousVersionsRequest(new List<long>() {
+                versionList.Items[0].Id.Value
+            });
             dc.Nodes.RestorePreviousVersion(request);
         }
 
@@ -271,6 +276,7 @@ namespace Dracoon.Sdk.Example {
 
         private class DLCallback : IFileDownloadCallback {
             private Dictionary<string, Stopwatch> requestTimings = new Dictionary<string, Stopwatch>();
+
             public void OnCanceled(string actionId) {
                 requestTimings.Remove(actionId);
                 Console.WriteLine("DLCallback -> " + "Download canceled: " + actionId);
@@ -306,6 +312,7 @@ namespace Dracoon.Sdk.Example {
 
         private class ULCallback : IFileUploadCallback {
             private Dictionary<string, Stopwatch> requestTimings = new Dictionary<string, Stopwatch>();
+
             public void OnCanceled(string actionId) {
                 requestTimings.Remove(actionId);
                 Console.WriteLine("ULCallback -> " + "Upload canceled: " + actionId);
@@ -319,7 +326,8 @@ namespace Dracoon.Sdk.Example {
             public void OnFinished(string actionId, Node resultNode) {
                 if (requestTimings.TryGetValue(actionId, out Stopwatch watch)) {
                     watch.Stop();
-                    Console.WriteLine("ULCallback -> " + "Upload finished: " + actionId + " | New node id is " + resultNode.Id + " and name " + resultNode.Name + " (" + watch.Elapsed.ToString() + ")");
+                    Console.WriteLine("ULCallback -> " + "Upload finished: " + actionId + " | New node id is " + resultNode.Id + " and name " +
+                                      resultNode.Name + " (" + watch.Elapsed.ToString() + ")");
                     requestTimings.Remove(actionId);
                 } else {
                     Console.WriteLine("ULCallback -> " + "Upload finished: " + actionId);

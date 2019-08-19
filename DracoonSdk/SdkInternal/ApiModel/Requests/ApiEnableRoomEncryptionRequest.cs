@@ -3,16 +3,12 @@
 namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
     internal class ApiEnableRoomEncryptionRequest {
         [JsonProperty("isEncrypted", NullValueHandling = NullValueHandling.Ignore)]
-        public bool IsEncryptionEnabled {
-            get; set;
-        }
+        public bool IsEncryptionEnabled { get; set; }
+
         [JsonProperty("useDataSpaceRescueKey", NullValueHandling = NullValueHandling.Ignore)]
-        public bool UseDataSpaceRescueKey {
-            get; set;
-        }
+        public bool UseDataSpaceRescueKey { get; set; }
+
         [JsonProperty("dataRoomRescueKey", NullValueHandling = NullValueHandling.Ignore)]
-        public ApiUserKeyPair DataRoomRescueKey {
-            get; set;
-        }
+        public ApiUserKeyPair DataRoomRescueKey { get; set; }
     }
 }

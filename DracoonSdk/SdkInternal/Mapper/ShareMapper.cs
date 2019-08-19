@@ -6,17 +6,16 @@ using System.Collections.Generic;
 
 namespace Dracoon.Sdk.SdkInternal.Mapper {
     internal class ShareMapper {
-
         internal static ApiCreateDownloadShareRequest ToUnencryptedApiCreateDownloadShareRequest(CreateDownloadShareRequest request) {
             ApiExpiration apiExpiration = null;
             if (request.Expiration.HasValue) {
-                apiExpiration = new ApiExpiration() {
+                apiExpiration = new ApiExpiration {
                     ExpireAt = request.Expiration,
                     EnableExpiration = request.Expiration.Value.Ticks != 0
                 };
             }
 
-            ApiCreateDownloadShareRequest apiCreateDownloadShareRequest = new ApiCreateDownloadShareRequest() {
+            ApiCreateDownloadShareRequest apiCreateDownloadShareRequest = new ApiCreateDownloadShareRequest {
                 NodeId = request.NodeId,
                 Name = request.Name,
                 Notes = request.Notes,
@@ -28,7 +27,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 Password = request.AccessPassword
             };
 
-            if (request.EmailRecipients != null) { // Check if the list is not empty is still in the previous validator done
+            if (request.EmailRecipients != null) {
+                // Check if the list is not empty is still in the previous validator done
                 apiCreateDownloadShareRequest.SendMail = true;
                 apiCreateDownloadShareRequest.MailRecipients = GenerateRecipientString(request.EmailRecipients);
                 apiCreateDownloadShareRequest.MailBody = request.EmailBody;
@@ -37,17 +37,19 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 apiCreateDownloadShareRequest.SendMail = false;
             }
 
-            if (request.SmsRecipients != null) { // Check if the list is not empty is still in the previous validator done
+            if (request.SmsRecipients != null) {
+                // Check if the list is not empty is still in the previous validator done
                 apiCreateDownloadShareRequest.SendSms = true;
                 apiCreateDownloadShareRequest.SmsRecipients = GenerateRecipientString(request.SmsRecipients);
             } else {
                 apiCreateDownloadShareRequest.SendSms = false;
             }
+
             return apiCreateDownloadShareRequest;
         }
 
         internal static DownloadShare FromApiDownloadShare(ApiDownloadShare apiDownloadShare) {
-            DownloadShare downloadShare = new DownloadShare() {
+            DownloadShare downloadShare = new DownloadShare {
                 ShareId = apiDownloadShare.ShareId,
                 NodeId = apiDownloadShare.NodeId,
                 NodePath = apiDownloadShare.NodePath,
@@ -70,7 +72,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
         }
 
         internal static DownloadShareList FromApiDownloadShareList(ApiDownloadShareList apiDownloadShareList) {
-            DownloadShareList shareList = new DownloadShareList() {
+            DownloadShareList shareList = new DownloadShareList {
                 Offset = apiDownloadShareList.Range.Offset,
                 Limit = apiDownloadShareList.Range.Limit,
                 Total = apiDownloadShareList.Range.Total,
@@ -79,19 +81,20 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             foreach (ApiDownloadShare currentShare in apiDownloadShareList.Items) {
                 shareList.Items.Add(FromApiDownloadShare(currentShare));
             }
+
             return shareList;
         }
 
         internal static ApiCreateUploadShareRequest ToApiCreateUploadShareRequest(CreateUploadShareRequest request) {
             ApiExpiration apiExpiration = null;
             if (request.Expiration.HasValue) {
-                apiExpiration = new ApiExpiration() {
+                apiExpiration = new ApiExpiration {
                     ExpireAt = request.Expiration,
                     EnableExpiration = request.Expiration.Value.Ticks != 0
                 };
             }
 
-            ApiCreateUploadShareRequest apiCreateUploadShareRequest = new ApiCreateUploadShareRequest() {
+            ApiCreateUploadShareRequest apiCreateUploadShareRequest = new ApiCreateUploadShareRequest {
                 NodeId = request.NodeId,
                 Name = request.Name,
                 AccessPassword = request.AccessPassword,
@@ -104,7 +107,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 MaxAllowedTotalSizeOverAllUploadedFiles = request.MaxAllowedTotalSizeOverAllUploadedFiles
             };
 
-            if (request.EmailRecipients != null) { // Check if the list is not empty is still in the previous validator done
+            if (request.EmailRecipients != null) {
+                // Check if the list is not empty is still in the previous validator done
                 apiCreateUploadShareRequest.SendMail = true;
                 apiCreateUploadShareRequest.MailRecipients = GenerateRecipientString(request.EmailRecipients);
                 apiCreateUploadShareRequest.MailBody = request.EmailBody;
@@ -113,7 +117,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 apiCreateUploadShareRequest.SendMail = false;
             }
 
-            if (request.SmsRecipients != null) { // Check if the list is not empty is still in the previous validator done
+            if (request.SmsRecipients != null) {
+                // Check if the list is not empty is still in the previous validator done
                 apiCreateUploadShareRequest.SendSms = true;
                 apiCreateUploadShareRequest.SmsRecipients = GenerateRecipientString(request.SmsRecipients);
             } else {
@@ -124,7 +129,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
         }
 
         internal static UploadShare FromApiUploadShare(ApiUploadShare apiUploadShare) {
-            UploadShare uploadShare = new UploadShare() {
+            UploadShare uploadShare = new UploadShare {
                 ShareId = apiUploadShare.ShareId,
                 NodeId = apiUploadShare.NodeId,
                 Name = apiUploadShare.Name,
@@ -148,7 +153,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
         }
 
         internal static UploadShareList FromApiUploadShareList(ApiUploadShareList apiUploadShareList) {
-            UploadShareList shareList = new UploadShareList() {
+            UploadShareList shareList = new UploadShareList {
                 Offset = apiUploadShareList.Range.Offset,
                 Limit = apiUploadShareList.Range.Limit,
                 Total = apiUploadShareList.Range.Total,
@@ -157,10 +162,11 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             foreach (ApiUploadShare currentShare in apiUploadShareList.Items) {
                 shareList.Items.Add(FromApiUploadShare(currentShare));
             }
+
             return shareList;
         }
 
-        private static string GenerateRecipientString(List<string> recipientList) {
+        private static string GenerateRecipientString(IReadOnlyList<string> recipientList) {
             string recipientsString = "";
             for (int i = 0; i < recipientList.Count; i++) {
                 if (i == recipientList.Count - 1) {
@@ -169,6 +175,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                     recipientsString += recipientList[i] + ",";
                 }
             }
+
             return recipientsString;
         }
     }

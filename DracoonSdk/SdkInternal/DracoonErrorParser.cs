@@ -5,50 +5,47 @@ using RestSharp;
 using System;
 using System.IO;
 using System.Net;
-using static Dracoon.Sdk.SdkInternal.DracoonRequestExecuter;
+using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class DracoonErrorParser {
+        private const string Logtag = nameof(DracoonErrorParser);
 
-        private readonly string LOGTAG = typeof(DracoonErrorParser).Name;
-        private DracoonClient dracoonClient;
-
-        internal DracoonErrorParser(DracoonClient client) {
-            dracoonClient = client;
-        }
-
-        private bool CheckResponseHasHeader(dynamic response, string headerName, string headerValue) {
-            if (response is IRestResponse restResponse) {
+        private static bool CheckResponseHasHeader(dynamic response, string headerName, string headerValue) {
+            if (response is IRestResponse restResponse && restResponse.Headers != null) {
                 foreach (Parameter current in restResponse.Headers) {
                     if (current.Name.Equals(headerName) && current.Value.Equals(headerValue)) {
                         return true;
                     }
                 }
             }
-            if (response is HttpWebResponse webResponse) {
+
+            if (response is HttpWebResponse webResponse && webResponse.Headers != null) {
                 string searchedValue = webResponse.Headers.Get(headerName);
-                if (searchedValue.Equals(headerValue)) {
+                if (headerValue.Equals(searchedValue)) {
                     return true;
                 }
             }
+
             return false;
         }
 
-        private ApiErrorResponse GetApiErrorResponse(string errorResponseBody) {
+        private static ApiErrorResponse GetApiErrorResponse(string errorResponseBody) {
             try {
                 ApiErrorResponse apiError = JsonConvert.DeserializeObject<ApiErrorResponse>(errorResponseBody);
                 if (apiError != null) {
-                    dracoonClient.Log.Debug(LOGTAG, apiError.ToString());
+                    DracoonClient.Log.Debug(Logtag, apiError.ToString());
                 }
+
                 return apiError;
             } catch (Exception) {
                 return null;
             }
         }
 
-        private string ReadErrorResponseFromWebException(WebException exception) {
+        private static string ReadErrorResponseFromWebException(WebException exception) {
             try {
-                using (StreamReader sr = new StreamReader(exception.Response.GetResponseStream())) {
+                using (StreamReader sr = new StreamReader(exception.Response.GetResponseStream() ?? throw new ArgumentNullException())) {
                     return sr.ReadToEnd();
                 }
             } catch (Exception) {
@@ -56,34 +53,35 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        internal void ParseError(IRestResponse response, RequestType requestType) {
+        internal static void ParseError(IRestResponse response, RequestType requestType) {
             ApiErrorResponse apiError = GetApiErrorResponse(response.Content);
-            DracoonApiCode dracoonResultCode = Parse((int) response.StatusCode, response, apiError, requestType);
-            dracoonClient.Log.Debug(LOGTAG, String.Format("Query for '{0}' failed with '{1}'", requestType.ToString(), dracoonResultCode.Text));
+            DracoonApiCode resultCode = Parse((int) response.StatusCode, response, apiError, requestType);
+            DracoonClient.Log.Debug(Logtag, $"Query for '{requestType.ToString()}' failed with '{resultCode.Text}'");
 
-            throw new DracoonApiException(dracoonResultCode);
+            throw new DracoonApiException(resultCode);
         }
 
-        internal void ParseError(WebException exception, RequestType requestType) {
+        internal static void ParseError(WebException exception, RequestType requestType) {
             if (exception.Status == WebExceptionStatus.ProtocolError) {
                 ApiErrorResponse apiError = GetApiErrorResponse(ReadErrorResponseFromWebException(exception));
                 if (exception.Response is HttpWebResponse response) {
-                    DracoonApiCode dracoonResultCode = Parse((int) response.StatusCode, response, apiError, requestType);
-                    dracoonClient.Log.Debug(LOGTAG, String.Format("Query for '{0}' failed with '{1}'", requestType.ToString(), dracoonResultCode.Text));
-                    throw new DracoonApiException(dracoonResultCode);
-                } else {
-                    throw new DracoonApiException(DracoonApiCode.SERVER_UNKNOWN_ERROR);
+                    DracoonApiCode resultCode = Parse((int) response.StatusCode, response, apiError, requestType);
+                    DracoonClient.Log.Debug(Logtag, $"Query for '{requestType.ToString()}' failed with '{resultCode.Text}'");
+                    throw new DracoonApiException(resultCode);
                 }
-            } else {
-                throw new DracoonNetIOException("The request for '" + requestType.ToString() + "' failed with '" + exception.Message + "'", exception);
+
+                throw new DracoonApiException(DracoonApiCode.SERVER_UNKNOWN_ERROR);
             }
+
+            throw new DracoonNetIOException("The request for '" + requestType.ToString() + "' failed with '" + exception.Message + "'", exception);
         }
 
-        private DracoonApiCode Parse(int httpStatusCode, dynamic response, ApiErrorResponse apiError, RequestType requestType) {
+        private static DracoonApiCode Parse(int httpStatusCode, dynamic response, ApiErrorResponse apiError, RequestType requestType) {
             int? apiErrorCode = null;
             if (apiError != null) {
                 apiErrorCode = apiError.ErrorCode;
             }
+
             switch (httpStatusCode) {
                 case (int) HttpStatusCode.BadRequest:
                     return ParseBadRequest(apiErrorCode, response, requestType);
@@ -108,226 +106,275 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        private DracoonApiCode ParseBadRequest(int? apiErrorCode, dynamic response, RequestType requestType) {
-            if (apiErrorCode == -10002) {
-                return DracoonApiCode.VALIDATION_PASSWORT_NOT_SECURE;
-            } else if (apiErrorCode == -40001) {
-                if (requestType == RequestType.PostCopyNodes || requestType == RequestType.PostMoveNodes) {
+        private static DracoonApiCode ParseBadRequest(int? apiErrorCode, dynamic response, RequestType requestType) {
+            switch (apiErrorCode) {
+                case -10002:
+                    return DracoonApiCode.VALIDATION_PASSWORT_NOT_SECURE;
+                case -40001 when requestType == RequestType.PostCopyNodes || requestType == RequestType.PostMoveNodes:
                     return DracoonApiCode.VALIDATION_SOURCE_ROOM_ENCRYPTED;
-                }
-                return DracoonApiCode.VALIDATION_ROOM_NOT_ENCRYPTED;
-            } else if (apiErrorCode == -40002) {
-                if (requestType == RequestType.PostCopyNodes || requestType == RequestType.PostMoveNodes) {
+                case -40001:
+                    return DracoonApiCode.VALIDATION_ROOM_NOT_ENCRYPTED;
+                case -40002 when requestType == RequestType.PostCopyNodes || requestType == RequestType.PostMoveNodes:
                     return DracoonApiCode.VALIDATION_TARGET_ROOM_ENCRYPTED;
-                }
-                return DracoonApiCode.VALIDATION_ROOM_ENCRYPTED;
-            } else if (apiErrorCode == -40003) {
-                return DracoonApiCode.VALIDATION_ROOM_CANNOT_UNENCRYPTED_WITH_FILES;
-            } else if (apiErrorCode == -40004) {
-                return DracoonApiCode.VALIDATION_ROOM_STILL_HAS_RESCUE_KEY;
-            } else if (apiErrorCode == -40008) {
-                return DracoonApiCode.VALIDATION_ROOM_CANNOT_ENCRYPTED_WITH_FILES;
-            } else if (apiErrorCode == -40012) {
-                return DracoonApiCode.VALIDATION_ROOM_CANNOT_ENCRYPTED_WITH_RECYCLEBIN;
-            } else if (apiErrorCode == -40013) {
-                return DracoonApiCode.VALIDATION_ENCRYPTED_FILE_CAN_ONLY_RESTOREED_IN_ORIGINAL_ROOM;
-            } else if (apiErrorCode == -40014) {
-                return DracoonApiCode.VALIDATION_USER_HAS_NO_FILE_KEY;
-            } else if (apiErrorCode == -40018) {
-                return DracoonApiCode.VALIDATION_ROOM_CANNOT_DECRYPTED_WITH_RECYCLEBIN;
-            } else if (apiErrorCode == -40755) {
-                return DracoonApiCode.VALIDATION_BAD_FILE_NAME;
-            } else if (apiErrorCode == -40761) {
-                return DracoonApiCode.VALIDATION_USER_HAS_NO_FILE_KEY;
-            } else if (apiErrorCode == -41052) {
-                if (requestType == RequestType.PostCopyNodes) {
+                case -40002:
+                    return DracoonApiCode.VALIDATION_ROOM_ENCRYPTED;
+                case -40003:
+                    return DracoonApiCode.VALIDATION_ROOM_CANNOT_UNENCRYPTED_WITH_FILES;
+                case -40004:
+                    return DracoonApiCode.VALIDATION_ROOM_STILL_HAS_RESCUE_KEY;
+                case -40008:
+                    return DracoonApiCode.VALIDATION_ROOM_CANNOT_ENCRYPTED_WITH_FILES;
+                case -40012:
+                    return DracoonApiCode.VALIDATION_ROOM_CANNOT_ENCRYPTED_WITH_RECYCLEBIN;
+                case -40013:
+                    return DracoonApiCode.VALIDATION_ENCRYPTED_FILE_CAN_ONLY_RESTOREED_IN_ORIGINAL_ROOM;
+                case -40014:
+                    return DracoonApiCode.VALIDATION_USER_HAS_NO_FILE_KEY;
+                case -40018:
+                    return DracoonApiCode.VALIDATION_ROOM_CANNOT_DECRYPTED_WITH_RECYCLEBIN;
+                case -40755:
+                    return DracoonApiCode.VALIDATION_BAD_FILE_NAME;
+                case -40761:
+                    return DracoonApiCode.VALIDATION_USER_HAS_NO_FILE_KEY;
+                case -41052 when requestType == RequestType.PostCopyNodes:
                     return DracoonApiCode.VALIDATION_CANNOT_COPY_ROOM;
-                } else if (requestType == RequestType.PostMoveNodes) {
+                case -41052 when requestType == RequestType.PostMoveNodes:
                     return DracoonApiCode.VALIDATION_CANNOT_MOVE_ROOM;
+                case -41053:
+                    return DracoonApiCode.VALIDATION_FILE_CANNOT_BE_TARGET;
+                case -41054:
+                    return DracoonApiCode.VALIDATION_NODES_NOT_IN_SAME_PARENT;
+                case -41200:
+                    return DracoonApiCode.VALIDATION_PATH_TOO_LONG;
+                case -41301:
+                    return DracoonApiCode.VALIDATION_NODE_IS_NO_FAVORITE;
+                case -41302:
+                case -41303: {
+                    switch (requestType) {
+                        case RequestType.PostCopyNodes:
+                            return DracoonApiCode.VALIDATION_CANNOT_COPY_NODE_TO_OWN_PLACE_WITHOUT_RENAME;
+                        case RequestType.PostMoveNodes:
+                            return DracoonApiCode.VALIDATION_CANNOT_MOVE_NODE_TO_OWN_PLACE;
+                        default:
+                            return DracoonApiCode.VALIDATION_UNKNOWN_ERROR;
+                    }
                 }
-            } else if (apiErrorCode == -41053) {
-                return DracoonApiCode.VALIDATION_FILE_CANNOT_BE_TARGET;
-            } else if (apiErrorCode == -41054) {
-                return DracoonApiCode.VALIDATION_NODES_NOT_IN_SAME_PARENT;
-            } else if (apiErrorCode == -41200) {
-                return DracoonApiCode.VALIDATION_PATH_TOO_LONG;
-            } else if (apiErrorCode == -41301) {
-                return DracoonApiCode.VALIDATION_NODE_IS_NO_FAVORITE;
-            } else if (apiErrorCode == -41302 || apiErrorCode == -41303) {
-                if (requestType == RequestType.PostCopyNodes) {
-                    return DracoonApiCode.VALIDATION_CANNOT_COPY_NODE_TO_OWN_PLACE_WITHOUT_RENAME;
-                } else if (requestType == RequestType.PostMoveNodes) {
-                    return DracoonApiCode.VALIDATION_CANNOT_MOVE_NODE_TO_OWN_PLACE;
-                }
-            } else if (apiErrorCode == -70020) {
-                return DracoonApiCode.VALIDATION_USER_HAS_NO_KEY_PAIR;
-            } else if (apiErrorCode == -70022 || apiErrorCode == -70023) {
-                return DracoonApiCode.VALIDATION_USER_KEY_PAIR_INVALID;
-            } else if (apiErrorCode == -80000) {
-                return DracoonApiCode.VALIDATION_FIELD_CANNOT_BE_EMPTY;
-            } else if (apiErrorCode == -80001) {
-                return DracoonApiCode.VALIDATION_FIELD_NOT_POSITIVE;
-            } else if (apiErrorCode == -80003) {
-                return DracoonApiCode.VALIDATION_FIELD_NOT_ZERO_POSITIVE;
-            } else if (apiErrorCode == -80006) {
-                return DracoonApiCode.VALIDATION_EXPIRATION_DATE_IN_PAST;
-            } else if (apiErrorCode == -80007) {
-                return DracoonApiCode.VALIDATION_FIELD_MAX_LENGTH_EXCEEDED;
-            } else if (apiErrorCode == -80008 || apiErrorCode == -80012) {
-                return DracoonApiCode.VALIDATION_EXPIRATION_DATE_TOO_LATE;
-            } else if (apiErrorCode == -80009) {
-                return DracoonApiCode.VALIDATION_INVALID_EMAIL_ADDRESS;
-            } else if (apiErrorCode == -80018) {
-                return DracoonApiCode.VALIDATION_FIELD_NOT_BETWEEN_0_9999;
-            } else if (apiErrorCode == -80019) {
-                return DracoonApiCode.VALIDATION_FIELD_NOT_BETWEEN_1_9999;
-            } else if (apiErrorCode == -80024) {
-                return DracoonApiCode.VALIDATION_INVALID_OFFSET_OR_LIMIT;
-            } else if (apiErrorCode == -80030) {
-                return DracoonApiCode.SERVER_SMS_IS_DISABLED;
-            } else if (apiErrorCode == -80034) {
-                return DracoonApiCode.VALIDATION_KEEPSHARELINKS_ONLY_WITH_OVERWRITE;
-            } else if (apiErrorCode == -80035) {
-                return DracoonApiCode.VALIDATION_FIELD_NOT_BETWEEN_0_10;
+
+                case -70020:
+                    return DracoonApiCode.VALIDATION_USER_HAS_NO_KEY_PAIR;
+                case -70022:
+                case -70023:
+                    return DracoonApiCode.VALIDATION_USER_KEY_PAIR_INVALID;
+                case -80000:
+                    return DracoonApiCode.VALIDATION_FIELD_CANNOT_BE_EMPTY;
+                case -80001:
+                    return DracoonApiCode.VALIDATION_FIELD_NOT_POSITIVE;
+                case -80003:
+                    return DracoonApiCode.VALIDATION_FIELD_NOT_ZERO_POSITIVE;
+                case -80006:
+                    return DracoonApiCode.VALIDATION_EXPIRATION_DATE_IN_PAST;
+                case -80007:
+                    return DracoonApiCode.VALIDATION_FIELD_MAX_LENGTH_EXCEEDED;
+                case -80008:
+                case -80012:
+                    return DracoonApiCode.VALIDATION_EXPIRATION_DATE_TOO_LATE;
+                case -80009:
+                    return DracoonApiCode.VALIDATION_INVALID_EMAIL_ADDRESS;
+                case -80018:
+                    return DracoonApiCode.VALIDATION_FIELD_NOT_BETWEEN_0_9999;
+                case -80019:
+                    return DracoonApiCode.VALIDATION_FIELD_NOT_BETWEEN_1_9999;
+                case -80024:
+                    return DracoonApiCode.VALIDATION_INVALID_OFFSET_OR_LIMIT;
+                case -80030:
+                    return DracoonApiCode.SERVER_SMS_IS_DISABLED;
+                case -80034:
+                    return DracoonApiCode.VALIDATION_KEEPSHARELINKS_ONLY_WITH_OVERWRITE;
+                case -80035:
+                    return DracoonApiCode.VALIDATION_FIELD_NOT_BETWEEN_0_10;
+                default:
+                    return DracoonApiCode.VALIDATION_UNKNOWN_ERROR;
             }
-            return DracoonApiCode.VALIDATION_UNKNOWN_ERROR;
         }
 
-        private DracoonApiCode ParseUnauthorized(int? apiErrorCode, dynamic response, RequestType requestType) {
-            if (apiErrorCode == -10006) {
-                return DracoonApiCode.AUTH_OAUTH_CLIENT_NO_PERMISSION;
+        private static DracoonApiCode ParseUnauthorized(int? apiErrorCode, dynamic response, RequestType requestType) {
+            switch (apiErrorCode) {
+                case -10006:
+                    return DracoonApiCode.AUTH_OAUTH_CLIENT_NO_PERMISSION;
+                default:
+                    return DracoonApiCode.AUTH_UNAUTHORIZED;
             }
-            return DracoonApiCode.AUTH_UNAUTHORIZED;
         }
 
-        private DracoonApiCode ParseForbidden(int? apiErrorCode, dynamic response, RequestType requestType) {
+        private static DracoonApiCode ParseForbidden(int? apiErrorCode, dynamic response, RequestType requestType) {
             if (CheckResponseHasHeader(response, "X-Forbidden", "403")) {
                 return DracoonApiCode.SERVER_MALICIOUS_FILE_DETECTED;
-            } else if (apiErrorCode == -10003 || apiErrorCode == -10007) {
-                return DracoonApiCode.AUTH_USER_LOCKED;
-            } else if (apiErrorCode == -10004) {
-                return DracoonApiCode.AUTH_USER_EXPIRED;
-            } else if (apiErrorCode == -10005) {
-                return DracoonApiCode.AUTH_USER_TEMPORARY_LOCKED;
-            } else if (apiErrorCode == -70020) {
-                return DracoonApiCode.SERVER_USER_KEY_PAIR_NOT_FOUND;
-            } else if (apiErrorCode == -40761) {
-                return DracoonApiCode.SERVER_FILE_KEY_NOT_FOUND;
-            } else if (requestType == RequestType.DeleteNodes || requestType == RequestType.PostMoveNodes) {
-                return DracoonApiCode.PERMISSION_DELETE_ERROR;
-            } else if (requestType == RequestType.PutRoom || requestType == RequestType.PutFolder || requestType == RequestType.PutFile) {
-                return DracoonApiCode.PERMISSION_UPDATE_ERROR;
-            } else if (requestType == RequestType.GetNode || requestType == RequestType.GetNodes || requestType == RequestType.GetSearchNodes
-                || requestType == RequestType.PostDownloadToken || requestType == RequestType.PostFavorite || requestType == RequestType.DeleteFavorite
-                || requestType == RequestType.PostCopyNodes || requestType == RequestType.PostMoveNodes) {
-                return DracoonApiCode.PERMISSION_READ_ERROR;
-            } else if (requestType == RequestType.PostRoom || requestType == RequestType.PostFolder || requestType == RequestType.PostCopyNodes || requestType == RequestType.PostMoveNodes) {
-                return DracoonApiCode.PERMISSION_CREATE_ERROR;
-            } else if (requestType == RequestType.PostCreateDownloadShare || requestType == RequestType.DeleteDownloadShare) {
-                return DracoonApiCode.PERMISSION_MANAGE_DL_SHARES_ERROR;
-            } else if (requestType == RequestType.PostCreateUploadShare || requestType == RequestType.DeleteUploadShare) {
-                return DracoonApiCode.PERMISSION_MANAGE_UL_SHARES_ERROR;
             }
+
+            switch (apiErrorCode) {
+                case -10003:
+                case -10007:
+                    return DracoonApiCode.AUTH_USER_LOCKED;
+                case -10004:
+                    return DracoonApiCode.AUTH_USER_EXPIRED;
+                case -10005:
+                    return DracoonApiCode.AUTH_USER_TEMPORARY_LOCKED;
+                case -70020:
+                    return DracoonApiCode.SERVER_USER_KEY_PAIR_NOT_FOUND;
+                case -40761:
+                    return DracoonApiCode.SERVER_FILE_KEY_NOT_FOUND;
+                default: {
+                    switch (requestType) {
+                        case RequestType.DeleteNodes:
+                            return DracoonApiCode.PERMISSION_DELETE_ERROR;
+                        case RequestType.PutRoom:
+                        case RequestType.PutFolder:
+                        case RequestType.PutFile:
+                        case RequestType.PostMoveNodes:
+                            return DracoonApiCode.PERMISSION_UPDATE_ERROR;
+                        case RequestType.GetNode:
+                        case RequestType.GetNodes:
+                        case RequestType.GetSearchNodes:
+                        case RequestType.PostDownloadToken:
+                        case RequestType.PostFavorite:
+                        case RequestType.DeleteFavorite:
+                            return DracoonApiCode.PERMISSION_READ_ERROR;
+                        case RequestType.PostRoom:
+                        case RequestType.PostFolder:
+                        case RequestType.PostCopyNodes:
+                            return DracoonApiCode.PERMISSION_CREATE_ERROR;
+                        case RequestType.PostCreateDownloadShare:
+                        case RequestType.DeleteDownloadShare:
+                            return DracoonApiCode.PERMISSION_MANAGE_DL_SHARES_ERROR;
+                        case RequestType.PostCreateUploadShare:
+                        case RequestType.DeleteUploadShare:
+                            return DracoonApiCode.PERMISSION_MANAGE_UL_SHARES_ERROR;
+                    }
+
+                    break;
+                }
+            }
+
             return DracoonApiCode.PERMISSION_UNKNOWN_ERROR;
         }
 
-        private DracoonApiCode ParseNotFound(int? apiErrorCode, dynamic response, RequestType requestType) {
-            if (apiErrorCode == -40751) {
-                return DracoonApiCode.SERVER_FILE_NOT_FOUND;
-            } else if (apiErrorCode == -41000 || apiErrorCode == -40000) {
-                if (requestType == RequestType.PostRoom) {
-                    return DracoonApiCode.SERVER_TARGET_ROOM_NOT_FOUND;
-                } else if (requestType == RequestType.PostFolder) {
+        private static DracoonApiCode ParseNotFound(int? apiErrorCode, dynamic response, RequestType requestType) {
+            switch (apiErrorCode) {
+                case -40751:
+                    return DracoonApiCode.SERVER_FILE_NOT_FOUND;
+                case -41000:
+                case -40000: {
+                    switch (requestType) {
+                        case RequestType.PostRoom:
+                            return DracoonApiCode.SERVER_TARGET_ROOM_NOT_FOUND;
+                        case RequestType.PostFolder:
+                            return DracoonApiCode.SERVER_TARGET_NODE_NOT_FOUND;
+                        case RequestType.PutFolder:
+                            return DracoonApiCode.SERVER_FOLDER_NOT_FOUND;
+                        case RequestType.PutRoom:
+                        case RequestType.GetMissingFileKeys:
+                            return DracoonApiCode.SERVER_ROOM_NOT_FOUND;
+                        default:
+                            return DracoonApiCode.SERVER_NODE_NOT_FOUND;
+                    }
+                }
+
+                case -41050:
+                    return DracoonApiCode.SERVER_SOURCE_NODE_NOT_FOUND;
+                case -41051:
                     return DracoonApiCode.SERVER_TARGET_NODE_NOT_FOUND;
-                } else if (requestType == RequestType.PutFolder) {
-                    return DracoonApiCode.SERVER_FOLDER_NOT_FOUND;
-                } else if (requestType == RequestType.PutRoom) {
-                    return DracoonApiCode.SERVER_ROOM_NOT_FOUND;
-                } else if (requestType == RequestType.GetMissingFileKeys) {
-                    return DracoonApiCode.SERVER_ROOM_NOT_FOUND;
-                }
-                return DracoonApiCode.SERVER_NODE_NOT_FOUND;
-            } else if (apiErrorCode == -41050) {
-                return DracoonApiCode.SERVER_SOURCE_NODE_NOT_FOUND;
-            } else if (apiErrorCode == -41051) {
-                return DracoonApiCode.SERVER_TARGET_NODE_NOT_FOUND;
-            } else if (apiErrorCode == -41100) {
-                return DracoonApiCode.SERVER_RESTOREVERSION_NOT_FOUND;
-            } else if (apiErrorCode == -60000) {
-                return DracoonApiCode.SERVER_DL_SHARE_NOT_FOUND;
-            } else if (apiErrorCode == -60500 || apiErrorCode == -20501) {
-                return DracoonApiCode.SERVER_UL_SHARE_NOT_FOUND;
-            } else if (apiErrorCode == -70020) {
-                return DracoonApiCode.SERVER_USER_KEY_PAIR_NOT_FOUND;
-            } else if (apiErrorCode == -70028) {
-                return DracoonApiCode.SERVER_USER_AVATAR_NOT_FOUND;
-            } else if (apiErrorCode == -70501) {
-                return DracoonApiCode.SERVER_USER_NOT_FOUND;
+                case -41100:
+                    return DracoonApiCode.SERVER_RESTOREVERSION_NOT_FOUND;
+                case -60000:
+                    return DracoonApiCode.SERVER_DL_SHARE_NOT_FOUND;
+                case -60500:
+                case -20501:
+                    return DracoonApiCode.SERVER_UL_SHARE_NOT_FOUND;
+                case -70020:
+                    return DracoonApiCode.SERVER_USER_KEY_PAIR_NOT_FOUND;
+                case -70028:
+                    return DracoonApiCode.SERVER_USER_AVATAR_NOT_FOUND;
+                case -70501:
+                    return DracoonApiCode.SERVER_USER_NOT_FOUND;
+                default:
+                    return DracoonApiCode.SERVER_UNKNOWN_ERROR;
             }
-            return DracoonApiCode.SERVER_UNKNOWN_ERROR;
         }
 
-        private DracoonApiCode ParseConflict(int? apiErrorCode, dynamic response, RequestType requestType) {
-            if (apiErrorCode == -41001) {
-                return DracoonApiCode.VALIDATION_NODE_ALREADY_EXISTS;
-            } else if (apiErrorCode == -41304) {
-                if (requestType == RequestType.PostMoveNodes) {
+        private static DracoonApiCode ParseConflict(int? apiErrorCode, dynamic response, RequestType requestType) {
+            switch (apiErrorCode) {
+                case -41001:
+                    return DracoonApiCode.VALIDATION_NODE_ALREADY_EXISTS;
+                case -41304 when requestType == RequestType.PostMoveNodes:
                     return DracoonApiCode.VALIDATION_CANNOT_MOVE_TO_CHILD;
-                } else if (requestType == RequestType.PostCopyNodes) {
+                case -41304 when requestType == RequestType.PostCopyNodes:
                     return DracoonApiCode.VALIDATION_CANNOT_COPY_TO_CHILD;
+                case -70021:
+                    return DracoonApiCode.SERVER_USER_KEY_PAIR_ALREADY_SET;
+                default: {
+                    switch (requestType) {
+                        case RequestType.PostRoom:
+                            return DracoonApiCode.VALIDATION_ROOM_ALREADY_EXISTS;
+                        case RequestType.PostFolder:
+                        case RequestType.PutFolder:
+                            return DracoonApiCode.VALIDATION_FOLDER_ALREADY_EXISTS;
+                        case RequestType.PutRoom:
+                            return DracoonApiCode.VALIDATION_ROOM_ALREADY_EXISTS;
+                        case RequestType.PutFile:
+                            return DracoonApiCode.VALIDATION_FILE_ALREADY_EXISTS;
+                        default: {
+                            if (apiErrorCode == -40010) {
+                                return DracoonApiCode.VALIDATION_ROOM_FOLDER_CAN_NOT_BE_OVERWRITTEN;
+                            }
+
+                            if (requestType == RequestType.PostCreateUploadShare) {
+                                return DracoonApiCode.VALIDATION_UL_SHARE_NAME_ALREADY_EXISTS;
+                            }
+
+                            return DracoonApiCode.SERVER_UNKNOWN_ERROR;
+                        }
+                    }
                 }
-            } else if (apiErrorCode == -70021) {
-                return DracoonApiCode.SERVER_USER_KEY_PAIR_ALREADY_SET;
-            } else if (requestType == RequestType.PostRoom) {
-                return DracoonApiCode.VALIDATION_ROOM_ALREADY_EXISTS;
-            } else if (requestType == RequestType.PostFolder) {
-                return DracoonApiCode.VALIDATION_FOLDER_ALREADY_EXISTS;
-            } else if (requestType == RequestType.PutFolder) {
-                return DracoonApiCode.VALIDATION_FOLDER_ALREADY_EXISTS;
-            } else if (requestType == RequestType.PutRoom) {
-                return DracoonApiCode.VALIDATION_ROOM_ALREADY_EXISTS;
-            } else if (requestType == RequestType.PutFile) {
-                return DracoonApiCode.VALIDATION_FILE_ALREADY_EXISTS;
-            } else if (apiErrorCode == -40010) {
-                return DracoonApiCode.VALIDATION_ROOM_FOLDER_CAN_NOT_BE_OVERWRITTEN;
-            } else if (requestType == RequestType.PostCreateUploadShare) {
-                return DracoonApiCode.VALIDATION_UL_SHARE_NAME_ALREADY_EXISTS;
             }
-            return DracoonApiCode.SERVER_UNKNOWN_ERROR;
         }
 
-        private DracoonApiCode ParsePreconditionFailed(int? apiErrorCode, dynamic response, RequestType requestType) {
-            if (apiErrorCode == -10103) {
-                return DracoonApiCode.PRECONDITION_MUST_ACCEPT_EULA;
-            } else if (apiErrorCode == -10104) {
-                return DracoonApiCode.PRECONDITION_MUST_CHANGE_PASSWORD;
-            } else if (apiErrorCode == -10106) {
-                return DracoonApiCode.PRECONDITION_MUST_CHANGE_USER_NAME;
+        private static DracoonApiCode ParsePreconditionFailed(int? apiErrorCode, dynamic response, RequestType requestType) {
+            switch (apiErrorCode) {
+                case -10103:
+                    return DracoonApiCode.PRECONDITION_MUST_ACCEPT_EULA;
+                case -10104:
+                    return DracoonApiCode.PRECONDITION_MUST_CHANGE_PASSWORD;
+                case -10106:
+                    return DracoonApiCode.PRECONDITION_MUST_CHANGE_USER_NAME;
+                default:
+                    return DracoonApiCode.PRECONDITION_UNKNOWN_ERROR;
             }
-            return DracoonApiCode.PRECONDITION_UNKNOWN_ERROR;
         }
 
-        private DracoonApiCode ParseBadGateway(int? apiErrorCode, dynamic response, RequestType requestType) {
-            if (apiErrorCode == -90090) {
-                return DracoonApiCode.SERVER_SMS_COULD_NOT_BE_SENT;
+        private static DracoonApiCode ParseBadGateway(int? apiErrorCode, dynamic response, RequestType requestType) {
+            switch (apiErrorCode) {
+                case -90090:
+                    return DracoonApiCode.SERVER_SMS_COULD_NOT_BE_SENT;
+                default:
+                    return DracoonApiCode.SERVER_UNKNOWN_ERROR;
             }
-            return DracoonApiCode.SERVER_UNKNOWN_ERROR;
         }
 
-        private DracoonApiCode ParseInsufficentStorage(int? apiErrorCode, dynamic response, RequestType requestType) {
-            if (apiErrorCode == -90200) {
-                return DracoonApiCode.SERVER_INSUFFICIENT_CUSTOMER_QUOTA;
-            } else if (apiErrorCode == -40200) {
-                return DracoonApiCode.SERVER_INSUFFICIENT_ROOM_QUOTA;
-            } else if (apiErrorCode == -50504) {
-                return DracoonApiCode.SERVER_INSUFFICIENT_UL_SHARE_QUOTA;
+        private static DracoonApiCode ParseInsufficentStorage(int? apiErrorCode, dynamic response, RequestType requestType) {
+            switch (apiErrorCode) {
+                case -90200:
+                    return DracoonApiCode.SERVER_INSUFFICIENT_CUSTOMER_QUOTA;
+                case -40200:
+                    return DracoonApiCode.SERVER_INSUFFICIENT_ROOM_QUOTA;
+                case -50504:
+                    return DracoonApiCode.SERVER_INSUFFICIENT_UL_SHARE_QUOTA;
+                default:
+                    return DracoonApiCode.SERVER_INSUFFICIENT_STORAGE;
             }
-            return DracoonApiCode.SERVER_INSUFFICIENT_STORAGE;
         }
 
-        private DracoonApiCode ParseCustomError(int? apiErrorCode, dynamic response, RequestType requestType) {
+        private static DracoonApiCode ParseCustomError(int? apiErrorCode, dynamic response, RequestType requestType) {
             return DracoonApiCode.SERVER_MALICIOUS_FILE_DETECTED;
         }
-
     }
 }

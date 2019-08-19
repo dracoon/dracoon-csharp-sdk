@@ -3,7 +3,6 @@ using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Util;
-using System.Collections.Generic;
 
 namespace Dracoon.Sdk.SdkInternal.Mapper {
     internal static class FileMapper {
@@ -15,7 +14,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                     EnableExpiration = updateFileRequest.Expiration.Value.Ticks != 0
                 };
             }
-            ApiUpdateFileRequest apiUpdateFileRequest = new ApiUpdateFileRequest() {
+
+            ApiUpdateFileRequest apiUpdateFileRequest = new ApiUpdateFileRequest {
                 Name = updateFileRequest.Name,
                 Notes = updateFileRequest.Notes,
                 Classification = EnumConverter.ConvertClassificationEnumToValue(updateFileRequest.Classification),
@@ -25,7 +25,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
         }
 
         internal static ApiFileKey ToApiFileKey(EncryptedFileKey encryptedFileKey) {
-            ApiFileKey apiEncryptedFileKey = new ApiFileKey() {
+            ApiFileKey apiEncryptedFileKey = new ApiFileKey {
                 Key = encryptedFileKey.Key,
                 Iv = encryptedFileKey.Iv,
                 Tag = encryptedFileKey.Tag,
@@ -35,7 +35,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
         }
 
         internal static EncryptedFileKey FromApiFileKey(ApiFileKey apiEncryptedFileKey) {
-            EncryptedFileKey encryptedFileKey = new EncryptedFileKey() {
+            EncryptedFileKey encryptedFileKey = new EncryptedFileKey {
                 Key = apiEncryptedFileKey.Key,
                 Iv = apiEncryptedFileKey.Iv,
                 Tag = apiEncryptedFileKey.Tag,
@@ -47,12 +47,13 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
         internal static ApiCreateFileUpload ToApiCreateFileUpload(FileUploadRequest fileUploadRequest) {
             ApiExpiration apiExpiration = null;
             if (fileUploadRequest.ExpirationDate.HasValue) {
-                apiExpiration = new ApiExpiration() {
+                apiExpiration = new ApiExpiration {
                     ExpireAt = fileUploadRequest.ExpirationDate,
                     EnableExpiration = fileUploadRequest.ExpirationDate.Value.Ticks != 0
                 };
             }
-            ApiCreateFileUpload apiCreateFileUpload = new ApiCreateFileUpload() {
+
+            ApiCreateFileUpload apiCreateFileUpload = new ApiCreateFileUpload {
                 ParentId = fileUploadRequest.ParentId,
                 Name = fileUploadRequest.Name,
                 Classification = EnumConverter.ConvertClassificationEnumToValue(fileUploadRequest.Classification),
@@ -63,7 +64,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
         }
 
         internal static ApiCompleteFileUpload ToApiCompleteFileUpload(FileUploadRequest fileUploadRequest) {
-            ApiCompleteFileUpload apiCompleteFileUpload = new ApiCompleteFileUpload() {
+            ApiCompleteFileUpload apiCompleteFileUpload = new ApiCompleteFileUpload {
                 FileName = fileUploadRequest.Name,
                 ResolutionStrategy = EnumConverter.ConvertResolutionStrategyToValue(fileUploadRequest.ResolutionStrategy)
             };

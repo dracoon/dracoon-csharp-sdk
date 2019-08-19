@@ -1,36 +1,32 @@
 ﻿using Dracoon.Sdk.SdkInternal.ApiModel;
 using RestSharp;
 using System;
-using static Dracoon.Sdk.SdkInternal.DracoonRequestExecuter;
+using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class DracoonServerImpl : IServer {
+        internal const string Logtag = nameof(DracoonServerImpl);
+        private readonly IInternalDracoonClient _client;
 
-        internal static readonly string LOGTAG = typeof(DracoonServerImpl).Name;
-        private DracoonClient client;
+        public IServerSettings ServerSettings { get; set; }
 
-        public IServerSettings ServerSettings {
-            get; set;
-        }
-
-        internal DracoonServerImpl(DracoonClient client) {
-            this.client = client;
+        internal DracoonServerImpl(IInternalDracoonClient client) {
+            _client = client;
             ServerSettings = new DracoonServerSettingsImpl(client);
         }
 
         public string GetVersion() {
-            client.RequestExecutor.CheckApiServerVersion();
-            RestRequest request = client.RequestBuilder.GetServerVersion();
-            ApiServerVersion result = client.RequestExecutor.DoSyncApiCall<ApiServerVersion>(request, RequestType.GetServerVersion);
+            _client.Executor.CheckApiServerVersion();
+            IRestRequest request = _client.Builder.GetServerVersion();
+            ApiServerVersion result = _client.Executor.DoSyncApiCall<ApiServerVersion>(request, RequestType.GetServerVersion);
             return result.ServerVersion;
         }
 
         public DateTime? GetTime() {
-            client.RequestExecutor.CheckApiServerVersion();
-            RestRequest request = client.RequestBuilder.GetServerTime();
-            ApiServerTime result = client.RequestExecutor.DoSyncApiCall<ApiServerTime>(request, RequestType.GetServerTime);
+            _client.Executor.CheckApiServerVersion();
+            IRestRequest request = _client.Builder.GetServerTime();
+            ApiServerTime result = _client.Executor.DoSyncApiCall<ApiServerTime>(request, RequestType.GetServerTime);
             return result.Time;
         }
-
     }
 }

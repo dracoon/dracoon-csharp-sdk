@@ -3,8 +3,6 @@
 namespace Dracoon.Sdk.SdkInternal.ApiModel {
     internal class ApiUserRole {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public int Id {
-            get; set;
-        }
+        public int Id { get; set; }
     }
 }
