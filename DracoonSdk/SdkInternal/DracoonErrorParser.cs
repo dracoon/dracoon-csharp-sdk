@@ -9,7 +9,7 @@ using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class DracoonErrorParser {
-        private const string Logtag = nameof(DracoonErrorParser);
+        private const string LogTag = nameof(DracoonErrorParser);
 
         private static bool CheckResponseHasHeader(dynamic response, string headerName, string headerValue) {
             if (response is IRestResponse restResponse && restResponse.Headers != null) {
@@ -34,7 +34,7 @@ namespace Dracoon.Sdk.SdkInternal {
             try {
                 ApiErrorResponse apiError = JsonConvert.DeserializeObject<ApiErrorResponse>(errorResponseBody);
                 if (apiError != null) {
-                    DracoonClient.Log.Debug(Logtag, apiError.ToString());
+                    DracoonClient.Log.Debug(LogTag, apiError.ToString());
                 }
 
                 return apiError;
@@ -56,7 +56,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal static void ParseError(IRestResponse response, RequestType requestType) {
             ApiErrorResponse apiError = GetApiErrorResponse(response.Content);
             DracoonApiCode resultCode = Parse((int) response.StatusCode, response, apiError, requestType);
-            DracoonClient.Log.Debug(Logtag, $"Query for '{requestType.ToString()}' failed with '{resultCode.Text}'");
+            DracoonClient.Log.Debug(LogTag, $"Query for '{requestType.ToString()}' failed with '{resultCode.Text}'");
 
             throw new DracoonApiException(resultCode);
         }
@@ -66,7 +66,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 ApiErrorResponse apiError = GetApiErrorResponse(ReadErrorResponseFromWebException(exception));
                 if (exception.Response is HttpWebResponse response) {
                     DracoonApiCode resultCode = Parse((int) response.StatusCode, response, apiError, requestType);
-                    DracoonClient.Log.Debug(Logtag, $"Query for '{requestType.ToString()}' failed with '{resultCode.Text}'");
+                    DracoonClient.Log.Debug(LogTag, $"Query for '{requestType.ToString()}' failed with '{resultCode.Text}'");
                     throw new DracoonApiException(resultCode);
                 }
 
@@ -76,16 +76,17 @@ namespace Dracoon.Sdk.SdkInternal {
             throw new DracoonNetIOException("The request for '" + requestType.ToString() + "' failed with '" + exception.Message + "'", exception);
         }
 
-        internal void ParseError(ApiErrorResponse apiError, RequestType requestType) {
+        internal static void ParseError(ApiErrorResponse apiError, RequestType requestType) {
             int code = 0;
             if (apiError.Code.HasValue) {
                 code = apiError.Code.Value;
             }
-            DracoonApiCode dracoonResultCode = Parse(code, null, apiError, requestType);
-            throw new DracoonApiException(dracoonResultCode);
+
+            DracoonApiCode resultCode = Parse(code, null, apiError, requestType);
+            throw new DracoonApiException(resultCode);
         }
 
-        private DracoonApiCode Parse(int httpStatusCode, dynamic response, ApiErrorResponse apiError, RequestType requestType) {
+        private static DracoonApiCode Parse(int httpStatusCode, dynamic response, ApiErrorResponse apiError, RequestType requestType) {
             int? apiErrorCode = null;
             if (apiError != null) {
                 apiErrorCode = apiError.ErrorCode;
@@ -107,7 +108,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 case (int) HttpStatusCode.BadGateway:
                     return ParseBadGateway(apiErrorCode, response, requestType);
                 case 507:
-                    return ParseInsufficentStorage(apiErrorCode, response, requestType);
+                    return ParseInsufficientStorage(apiErrorCode, response, requestType);
                 case 901:
                     return ParseCustomError(apiErrorCode, response, requestType);
                 default:
@@ -382,7 +383,7 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        private static DracoonApiCode ParseInsufficentStorage(int? apiErrorCode, dynamic response, RequestType requestType) {
+        private static DracoonApiCode ParseInsufficientStorage(int? apiErrorCode, dynamic response, RequestType requestType) {
             switch (apiErrorCode) {
                 case -90200:
                     return DracoonApiCode.SERVER_INSUFFICIENT_CUSTOMER_QUOTA;

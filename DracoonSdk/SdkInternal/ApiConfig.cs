@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class ApiConfig {

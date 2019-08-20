@@ -243,7 +243,7 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
-        internal RestRequest GetS3Status(string uploadId) {
+        IRestRequest IRequestBuilder.GetS3Status(string uploadId) {
             RestRequest request = new RestRequest(ApiConfig.ApiGetS3Status, Method.GET);
             SetGeneralRestValues(request, true);
             request.AddUrlSegment("uploadId", uploadId);
@@ -279,14 +279,14 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
-        internal RestRequest PostGetS3Urls(string uploadId, ApiGetS3Urls s3UrlParams) {
+        IRestRequest IRequestBuilder.PostGetS3Urls(string uploadId, ApiGetS3Urls s3UrlParams) {
             RestRequest request = new RestRequest(ApiConfig.ApiPostGetS3Urls, Method.POST);
             SetGeneralRestValues(request, true, s3UrlParams);
             request.AddUrlSegment("uploadId", uploadId);
             return request;
         }
 
-        internal RestRequest PostCopyNodes(long targetNodeId, ApiCopyNodesRequest copyParams) {
+        IRestRequest IRequestBuilder.PostCopyNodes(long targetNodeId, ApiCopyNodesRequest copyParams) {
             RestRequest request = new RestRequest(ApiConfig.ApiPostCopyNodes, Method.POST);
             SetGeneralRestValues(request, true, copyParams);
             request.AddUrlSegment("nodeId", targetNodeId);
@@ -357,7 +357,7 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
-        internal RestRequest PutCompleteS3FileUpload(string uploadId, ApiCompleteFileUpload completeParams) {
+        IRestRequest IRequestBuilder.PutCompleteS3FileUpload(string uploadId, ApiCompleteFileUpload completeParams) {
             RestRequest request = new RestRequest(ApiConfig.ApiPutCompleteS3Upload, Method.PUT);
             SetGeneralRestValues(request, true, completeParams);
             request.AddUrlSegment("uploadId", uploadId);
@@ -412,7 +412,7 @@ namespace Dracoon.Sdk.SdkInternal {
             return requestClient;
         }
 
-        internal WebClient ProvideS3ChunkUploadWebClient() {
+        WebClient IRequestBuilder.ProvideS3ChunkUploadWebClient() {
             DracoonWebClientExtension requestClient = new DracoonWebClientExtension();
             SetGeneralWebClientValues(requestClient);
             return requestClient;

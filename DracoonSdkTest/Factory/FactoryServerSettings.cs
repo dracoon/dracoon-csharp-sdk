@@ -57,7 +57,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     DownloadShareDefaultExpirationPeriodInDays = 5,
                     FileUploadDefaultExpirationPeriodInDays = 4,
                     LanguageDefault = "DE",
-                    UploadShareDefaultExpirationPeriodInDays = 7,
+                    UploadShareDefaultExpirationPeriodInDays = 7
                 };
             }
         }
@@ -68,7 +68,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     DownloadShareDefaultExpirationPeriodInDays = 5,
                     FileUploadDefaultExpirationPeriodInDays = 4,
                     LanguageDefault = "DE",
-                    UploadShareDefaultExpirationPeriodInDays = 7,
+                    UploadShareDefaultExpirationPeriodInDays = 7
                 };
             }
         }

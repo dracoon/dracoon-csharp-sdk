@@ -58,6 +58,8 @@ namespace Dracoon.Sdk.SdkInternal {
 
         IRestRequest GetPreviousVersion(long previousNodeId);
 
+        IRestRequest GetS3Status(string uploadId);
+
         IRestRequest PostRoom(ApiCreateRoomRequest roomParams);
 
         IRestRequest PostFolder(ApiCreateFolderRequest folderParams);
@@ -65,6 +67,8 @@ namespace Dracoon.Sdk.SdkInternal {
         IRestRequest PostFileDownload(long fileId);
 
         IRestRequest PostCreateFileUpload(ApiCreateFileUpload uploadParams);
+
+        IRestRequest PostGetS3Urls(string uploadId, ApiGetS3Urls s3UrlParams);
 
         IRestRequest PostCopyNodes(long targetNodeId, ApiCopyNodesRequest copyParams);
 
@@ -86,6 +90,8 @@ namespace Dracoon.Sdk.SdkInternal {
 
         IRestRequest PutCompleteFileUpload(string uploadPath, ApiCompleteFileUpload completeParams);
 
+        IRestRequest PutCompleteS3FileUpload(string uploadId, ApiCompleteFileUpload completeParams);
+
         IRestRequest DeleteNodes(ApiDeleteNodesRequest deleteParams);
 
         IRestRequest DeleteFavorite(long nodeId);
@@ -97,6 +103,8 @@ namespace Dracoon.Sdk.SdkInternal {
         WebClient ProvideChunkDownloadWebClient(long offset, long count);
 
         WebClient ProvideChunkUploadWebClient(int chunkLength, long offset, string formDataBoundary, string totalFileSize);
+
+        WebClient ProvideS3ChunkUploadWebClient();
 
         #endregion
 

@@ -46,15 +46,15 @@ namespace Dracoon.Sdk.SdkInternal {
                 return;
             }
 
-            if (remoteRestApiVersion == null) {
+            if (_apiVersion == null) {
                 ApiServerVersion serverVersion =
-                    DoSyncApiCall<ApiServerVersion>(dracoonClient.RequestBuilder.GetServerVersion(), RequestType.GetServerVersion);
+                    ((IRequestExecutor) this).DoSyncApiCall<ApiServerVersion>(_client.Builder.GetServerVersion(), RequestType.GetServerVersion);
                 string version = serverVersion.RestApiVersion;
                 if (version.Contains("-")) {
                     version = version.Remove(version.IndexOf("-"));
                 }
 
-                remoteRestApiVersion = Regex.Split(version, "\\.");
+                _apiVersion = Regex.Split(version, "\\.");
             }
 
             string[] minVersion = Regex.Split(minVersionForCheck, "\\.");
@@ -152,11 +152,12 @@ namespace Dracoon.Sdk.SdkInternal {
                         if (DracoonClient.HttpConfig.RetryEnabled && sendTry < 3) {
                             DracoonClient.Log.Debug(Logtag, "Retry the request in " + sendTry * 1000 + " millis again.");
                             Thread.Sleep(1000 * sendTry);
-                            ((IRequestExecutor) this).ExecuteWebClientDownload(requestClient, target, type, asyncThread, sendTry + 1);
+                            return ((IRequestExecutor) this).ExecuteWebClientDownload(requestClient, target, type, asyncThread, sendTry + 1);
                         } else {
                             if (asyncThread != null && asyncThread.ThreadState == ThreadState.Aborted) {
                                 throw new ThreadInterruptedException();
                             }
+
                             DracoonErrorParser.ParseError(we, type);
                         }
                     }
@@ -208,12 +209,7 @@ namespace Dracoon.Sdk.SdkInternal {
                         if (DracoonClient.HttpConfig.RetryEnabled && sendTry < 3) {
                             DracoonClient.Log.Debug(Logtag, "Retry the request in " + sendTry * 1000 + " millis again.");
                             Thread.Sleep(1000 * sendTry);
-                            ((IRequestExecutor) this).ExecuteWebClientChunkUpload(requestClient,
-                                target,
-                                data,
-                                type,
-                                asyncThread,
-                                sendTry + 1);
+                            return ((IRequestExecutor) this).ExecuteWebClientChunkUpload(requestClient, target, data, type, asyncThread, sendTry + 1);
                         } else {
                             if (asyncThread != null && asyncThread.ThreadState == ThreadState.Aborted) {
                                 throw new ThreadInterruptedException();

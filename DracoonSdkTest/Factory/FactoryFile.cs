@@ -86,7 +86,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     },
                     Name = "FileName1",
                     Notes = "Some notes!",
-                    ParentId = 436897
+                    ParentId = 436897,
+                    UseS3 = false
                 };
             }
         }
@@ -173,6 +174,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
         internal static ApiUploadToken ApiUploadToken {
             get {
                 return new ApiUploadToken {
+                    UploadId = "uploadId",
                     UploadUrl = "https://dracoon.team/uploadtoken"
                 };
             }
