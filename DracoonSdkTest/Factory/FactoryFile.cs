@@ -102,6 +102,19 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             }
         }
 
+        internal static ApiCompleteFileUpload ApiCompleteS3FileUpload {
+            get {
+                return new ApiCompleteFileUpload {
+                    FileName = "FileName1",
+                    ResolutionStrategy = "overwrite",
+                    FileKey = ApiFileKey,
+                    Parts = new List<ApiS3FileUploadPart> {
+                        ApiS3FileUploadPart
+                    }
+                };
+            }
+        }
+
         internal static ApiSetUserFileKeysRequest ApiSetUserFileKeysRequest {
             get {
                 return new ApiSetUserFileKeysRequest {
@@ -176,6 +189,54 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                 return new ApiUploadToken {
                     UploadId = "uploadId",
                     UploadUrl = "https://dracoon.team/uploadtoken"
+                };
+            }
+        }
+
+        internal static ApiGetS3Urls ApiGetS3UrlsRequest {
+            get {
+                return new ApiGetS3Urls {
+                    Size = 3456,
+                    FirstPartNumber = 1,
+                    LastPartNumber = 5
+                };
+            }
+        }
+
+        internal static ApiS3Urls ApiS3Urls {
+            get {
+                return new ApiS3Urls {
+                    Urls = new List<ApiS3Url> {
+                        ApiS3Url
+                    }
+                };
+            }
+        }
+
+        internal static ApiS3Url ApiS3Url {
+            get {
+                return new ApiS3Url {
+                    PartNumber = 1,
+                    Url = "https://dracoon.s3.com"
+                };
+            }
+        }
+
+        internal static ApiS3Status ApiS3Status {
+            get {
+                return new ApiS3Status {
+                    Node = FactoryNode.ApiNode,
+                    Status = "done",
+                    ErrorInfo = null
+                };
+            }
+        }
+
+        internal static ApiS3FileUploadPart ApiS3FileUploadPart {
+            get {
+                return new ApiS3FileUploadPart {
+                    PartNumber = 1,
+                    PartEtag = "f78dfg67s7fd8s8f7"
                 };
             }
         }

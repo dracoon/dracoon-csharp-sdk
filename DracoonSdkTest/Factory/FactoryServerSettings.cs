@@ -36,7 +36,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                 return new ServerInfrastructureSettings {
                     MediaServerConfigEnabled = true,
                     S3DefaultRegion = "DE",
-                    SmsConfigEnabled = true
+                    SmsConfigEnabled = true,
+                    S3EnforceDirectUpload = false
                 };
             }
         }

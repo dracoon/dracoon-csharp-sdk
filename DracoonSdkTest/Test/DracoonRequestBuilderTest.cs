@@ -474,8 +474,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
             RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostRestoreNodeVersion, Method.POST);
-            expected.AddParameter("application/json",
-                JsonConvert.SerializeObject(FactoryNode.ApiRestorePreviousVersionsRequest),
+            expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryNode.ApiRestorePreviousVersionsRequest),
                 ParameterType.RequestBody);
 
             // ACT
@@ -507,8 +506,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             long id = 39478;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
             RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPutEnableRoomEncryption, Method.PUT);
-            expected.AddParameter("application/json",
-                JsonConvert.SerializeObject(FactoryRoom.ApiEnableRoomEncryptionRequest),
+            expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryRoom.ApiEnableRoomEncryptionRequest),
                 ParameterType.RequestBody);
             expected.AddUrlSegment("roomId", id);
 
@@ -615,8 +613,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
             RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeletePreviousVersions, Method.DELETE);
-            expected.AddParameter("application/json",
-                JsonConvert.SerializeObject(FactoryNode.ApiDeletePreviousVersionsRequest),
+            expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryNode.ApiDeletePreviousVersionsRequest),
                 ParameterType.RequestBody);
 
             // ACT
@@ -662,6 +659,66 @@ namespace Dracoon.Sdk.UnitTest.Test {
 
             // ASSERT
             Assert.Equal(expected, actual, new WebClientComparer());
+        }
+
+        [Fact]
+        public void Nodes_ProvideS3ChunkUploadWebClient() {
+            // ARRANGE
+            DracoonHttpConfig conf = new DracoonHttpConfig();
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            DracoonWebClientExtension expected = new DracoonWebClientExtension();
+            expected.Headers.Add(HttpRequestHeader.UserAgent, conf.UserAgent);
+            expected.SetHttpConfigParams(conf);
+
+            // ACT
+            WebClient actual = builder.ProvideS3ChunkUploadWebClient();
+
+            // ASSERT
+            Assert.Equal(expected, actual, new WebClientComparer());
+        }
+
+        [Fact]
+        public void Nodes_PostGetS3Urls() {
+            // ARRANGE
+            string uploadId = "GH6D5";
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.PostGetS3Urls(uploadId, FactoryFile.ApiGetS3UrlsRequest);
+
+            // ACT
+            IRestRequest actual = builder.PostGetS3Urls(uploadId, FactoryFile.ApiGetS3UrlsRequest);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void Nodes_GetS3Status() {
+            // ARRANGE
+            string uploadId = "GH6D5";
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.GetS3Status(uploadId);
+
+            // ACT
+            IRestRequest actual = builder.GetS3Status(uploadId);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void Nodes_PutCompleteS3FileUpload() {
+            // ARRANGE
+            string uploadId = "GH6D5";
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPutCompleteS3Upload, Method.PUT);
+            expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryFile.ApiCompleteS3FileUpload), ParameterType.RequestBody);
+            expected.AddUrlSegment("uploadId", uploadId);
+
+            // ACT
+            IRestRequest actual = builder.PutCompleteS3FileUpload("GH6D5", FactoryFile.ApiCompleteS3FileUpload);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
         }
 
         #endregion
@@ -747,8 +804,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
             RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostCreateDownloadShare, Method.POST);
-            expected.AddParameter("application/json",
-                JsonConvert.SerializeObject(FactoryShare.ApiCreateDownloadShareRequest),
+            expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryShare.ApiCreateDownloadShareRequest),
                 ParameterType.RequestBody);
 
             // ACT
@@ -763,8 +819,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
             RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostCreateUploadShare, Method.POST);
-            expected.AddParameter("application/json",
-                JsonConvert.SerializeObject(FactoryShare.ApiCreateUploadShareRequest),
+            expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryShare.ApiCreateUploadShareRequest),
                 ParameterType.RequestBody);
 
             // ACT

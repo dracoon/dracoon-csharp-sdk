@@ -56,7 +56,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             ApiInfrastructureSettings param = new ApiInfrastructureSettings {
                 MediaServerConfigEnabled = expected.MediaServerConfigEnabled,
                 S3DefaultRegion = expected.S3DefaultRegion,
-                SmsConfigEnabled = expected.SmsConfigEnabled
+                SmsConfigEnabled = expected.SmsConfigEnabled,
+                S3EnforceDirectUpload = expected.S3EnforceDirectUpload
             };
 
             // ACT

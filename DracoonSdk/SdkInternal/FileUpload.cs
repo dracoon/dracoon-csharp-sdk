@@ -117,7 +117,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 ApiCompleteFileUpload apiCompleteFileUpload = FileMapper.ToApiCompleteFileUpload(FileUploadRequest);
                 apiCompleteFileUpload.Parts = s3Parts;
                 IRestRequest completeFileUploadRequest = Client.Builder.PutCompleteS3FileUpload(UploadToken.UploadId, apiCompleteFileUpload);
-                Client.Executor.DoSyncApiCall<dynamic>(completeFileUploadRequest, RequestType.PutCompleteS3Upload);
+                Client.Executor.DoSyncApiCall<VoidResponse>(completeFileUploadRequest, RequestType.PutCompleteS3Upload);
                 publicResultNode = NodeMapper.FromApiNode(S3Finished());
             } else {
                 Upload();
@@ -261,10 +261,9 @@ namespace Dracoon.Sdk.SdkInternal {
                 return S3_URL_BATCH;
             }
 
-            int fileDependentBatchSize = (int) Math.Ceiling((double) OptionalFileSize / chunkSize);
-            if (fileDependentBatchSize == 0) {
-                return 1;
-            }
+            double divided = (double) OptionalFileSize / chunkSize;
+            double floored = Math.Floor(divided);
+            int fileDependentBatchSize = (int) floored;
 
             return fileDependentBatchSize < S3_URL_BATCH ? fileDependentBatchSize : S3_URL_BATCH;
         }

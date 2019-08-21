@@ -274,6 +274,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         private static DracoonApiCode ParseNotFound(int? apiErrorCode, dynamic response, RequestType requestType) {
             switch (apiErrorCode) {
+                case -20501:
                 case -40751:
                     return DracoonApiCode.SERVER_FILE_NOT_FOUND;
                 case -41000:
@@ -302,7 +303,6 @@ namespace Dracoon.Sdk.SdkInternal {
                 case -60000:
                     return DracoonApiCode.SERVER_DL_SHARE_NOT_FOUND;
                 case -60500:
-                case -20501:
                     return DracoonApiCode.SERVER_UL_SHARE_NOT_FOUND;
                 case -70020:
                     return DracoonApiCode.SERVER_USER_KEY_PAIR_NOT_FOUND;
