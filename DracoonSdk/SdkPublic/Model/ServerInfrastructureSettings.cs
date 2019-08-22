@@ -18,6 +18,7 @@ namespace Dracoon.Sdk.Model {
             get; internal set;
         }
 
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="serverInfrastructureSettings"]/S3EnforceDirectUpload/*'/>
         public bool S3EnforceDirectUpload {
             get; internal set;
         }
