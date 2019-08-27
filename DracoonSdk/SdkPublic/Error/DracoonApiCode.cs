@@ -140,7 +140,7 @@ namespace Dracoon.Sdk.Error {
         public static readonly DracoonApiCode VALIDATION_ENCRYPTED_FILE_CAN_ONLY_RESTOREED_IN_ORIGINAL_ROOM = new DracoonApiCode(3127, "Encrypted files cannot be restored inside antoher than its original room.");
         // CODES: -80034
         public static readonly DracoonApiCode VALIDATION_KEEPSHARELINKS_ONLY_WITH_OVERWRITE = new DracoonApiCode(3128, "Keep share links is only allowed with resolution strategy 'overwrite'.");
-        // CODES: -80034
+        // CODES: -80045
         public static readonly DracoonApiCode VALIDATION_INVALID_ETAG = new DracoonApiCode(3129, "Invalid Etag(s).");
 
         #endregion

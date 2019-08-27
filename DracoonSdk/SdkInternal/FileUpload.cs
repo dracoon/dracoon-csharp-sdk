@@ -55,15 +55,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public void RunAsync() {
             void Child() {
-                try {
-                    StartUpload();
-                } catch (DracoonException de) {
-                    NotifyFailed(ActionId, de);
-                } catch (ThreadAbortException) {
-                    NotifyCanceled(ActionId);
-                } catch (ThreadInterruptedException) {
-                    NotifyCanceled(ActionId);
-                }
+                RunSync();
             }
 
             RunningThread = new Thread(Child);

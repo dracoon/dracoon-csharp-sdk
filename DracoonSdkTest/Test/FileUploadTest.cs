@@ -232,60 +232,6 @@ namespace Dracoon.Sdk.UnitTest.Test {
         #region RunAsync
 
         [Fact]
-        public void RunAsync_IOException_Interrupted() {
-            // ARRANGE
-            byte[] fileMock = new byte[1888];
-            new Random().NextBytes(fileMock);
-            Stream s = new MemoryStream(fileMock);
-            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
-            FileUploadCallbackMock callback = new FileUploadCallbackMock();
-            FileUpload f = new FileUpload(c, "id1", FactoryFile.UploadFileRequest, s, fileMock.Length);
-            f.AddFileUploadCallback(callback);
-            Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock())
-                .OnAllThreads();
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostUploadToken, 0))
-                .Returns(FactoryFile.ApiUploadToken).OnAllThreads();
-            Mock.Arrange(() => c.Builder.PutCompleteFileUpload(Arg.AnyString, Arg.IsAny<ApiCompleteFileUpload>()))
-                .Returns(FactoryRestSharp.PutCompleteFileUploadMock("path")).OnAllThreads();
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<IRestRequest>(), RequestType.PutCompleteUpload, 0))
-                .Returns(FactoryNode.ApiNode).OnAllThreads();
-            Mock.Arrange(() => c.Builder.GetGeneralSettings())
-                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).OnAllThreads();
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
-                .Returns(FactoryServerSettings.ApiGeneralSettings).OnAllThreads();
-            Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(FactoryFile.ApiCreateFileUpload)
-                .OnAllThreads();
-            Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).OnAllThreads();
-            Mock.Arrange(() => FileHash.CompareFileHashes(Arg.AnyString, Arg.IsAny<byte[]>(), Arg.AnyInt)).Returns(true).OnAllThreads();
-            DracoonWebClientExtension wc = Mock.Create<DracoonWebClientExtension>();
-            Mock.Arrange(() => Mock.Create<UploadProgressChangedEventArgs>().BytesSent).IgnoreInstance().OnAllThreads();
-            Mock.Arrange(() => c.Executor.ExecuteWebClientChunkUpload(Arg.IsAny<WebClient>(), Arg.IsAny<Uri>(), Arg.IsAny<byte[]>(),
-                    RequestType.PostUploadChunk, Arg.IsAny<Thread>(), Arg.AnyInt)).DoInstead(() => {
-                    while (f.RunningThread.IsAlive) {
-
-                    }
-                }).Raises(() => wc.UploadProgressChanged += null, null, Mock.Create<UploadProgressChangedEventArgs>()).Returns(new byte[13])
-                .OnAllThreads();
-            Mock.Arrange(() => c.Builder.ProvideChunkUploadWebClient(Arg.AnyInt, Arg.AnyLong, Arg.AnyString, Arg.AnyString)).Returns(wc)
-                .OnAllThreads();
-            Mock.Arrange(() => JsonConvert.DeserializeObject<ApiUploadChunkResult>(Arg.AnyString)).Returns(FactoryFile.ApiUploadChunkResult)
-                .OnAllThreads();
-            Mock.Arrange(() => callback.OnStarted(Arg.AnyString)).Occurs(1);
-            Mock.Arrange(() => callback.OnCanceled(Arg.AnyString)).Occurs(1);
-
-            // ACT
-            f.RunAsync();
-            Thread.Sleep(1000);
-            f.CancelUpload();
-            Thread.Sleep(1000);
-            s.Close();
-
-
-            // ASSERT
-            Mock.Assert(callback);
-        }
-
-        [Fact]
         public void RunAsync_IOException() {
             // ARRANGE
             byte[] fileMock = new byte[1888];
@@ -330,7 +276,6 @@ namespace Dracoon.Sdk.UnitTest.Test {
             while (f.RunningThread.IsAlive) { }
 
             s.Close();
-
 
             // ASSERT
             Mock.Assert(callback);
