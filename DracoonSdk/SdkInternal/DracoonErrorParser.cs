@@ -107,6 +107,8 @@ namespace Dracoon.Sdk.SdkInternal {
                     return ParsePreconditionFailed(apiErrorCode, response, requestType);
                 case (int) HttpStatusCode.BadGateway:
                     return ParseBadGateway(apiErrorCode, response, requestType);
+                case (int) HttpStatusCode.GatewayTimeout:
+                    return ParseGatewayTimeout(apiErrorCode, response, requestType);
                 case 507:
                     return ParseInsufficientStorage(apiErrorCode, response, requestType);
                 case 901:
@@ -380,6 +382,15 @@ namespace Dracoon.Sdk.SdkInternal {
                         default:
                             return DracoonApiCode.SERVER_UNKNOWN_ERROR;
                     }
+            }
+        }
+
+        private static DracoonApiCode ParseGatewayTimeout(int? apiErrorCode, dynamic response, RequestType requestType) {
+            switch (apiErrorCode) {
+                case -90027:
+                    return DracoonApiCode.SERVER_S3_CONNECTION_FAILED;
+                default:
+                    return DracoonApiCode.SERVER_UNKNOWN_ERROR;
             }
         }
 
