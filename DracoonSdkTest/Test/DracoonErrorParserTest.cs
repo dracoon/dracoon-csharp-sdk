@@ -100,6 +100,8 @@ namespace Dracoon.Sdk.UnitTest.Test {
         [InlineData(RequestType.GetAuthenticatedPing, -80030, new string[] { }, new string[] { }, 5800)]
         [InlineData(RequestType.GetAuthenticatedPing, -80034, new string[] { }, new string[] { }, 3128)]
         [InlineData(RequestType.GetAuthenticatedPing, -80035, new string[] { }, new string[] { }, 3005)]
+        [InlineData(RequestType.GetAuthenticatedPing, -80045, new string[] { }, new string[] { }, 3129)]
+        [InlineData(RequestType.GetAuthenticatedPing, -90033, new string[] { }, new string[] { }, 5802)]
         [InlineData(RequestType.GetAuthenticatedPing, 0, new string[] { }, new string[] { }, 3000)]
         internal void TestBadRequestCodes(RequestType type, int apiCode, string[] headerNames, string[] headerValues, int expectedSdkErrorCode) {
             // ARRANGE
@@ -137,15 +139,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
         }
 
         [Theory]
-        [InlineData(RequestType.GetAuthenticatedPing,
-            0,
-            new[] {
-                "X-Forbidden"
-            },
-            new[] {
-                "403"
-            },
-            5090)]
+        [InlineData(RequestType.GetAuthenticatedPing, 0, new[] {
+            "X-Forbidden"
+        }, new[] {
+            "403"
+        }, 5090)]
         [InlineData(RequestType.GetAuthenticatedPing, -10003, new string[] { }, new string[] { }, 1301)]
         [InlineData(RequestType.GetAuthenticatedPing, -10007, new string[] { }, new string[] { }, 1301)]
         [InlineData(RequestType.GetAuthenticatedPing, -10004, new string[] { }, new string[] { }, 1302)]
@@ -188,6 +186,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
         }
 
         [Theory]
+        [InlineData(RequestType.GetAuthenticatedPing, -20501, new string[] { }, new string[] { }, 5103)]
         [InlineData(RequestType.GetAuthenticatedPing, -40751, new string[] { }, new string[] { }, 5103)]
         [InlineData(RequestType.PostRoom, -41000, new string[] { }, new string[] { }, 5106)]
         [InlineData(RequestType.PostFolder, -41000, new string[] { }, new string[] { }, 5105)]
@@ -203,10 +202,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         [InlineData(RequestType.GetAuthenticatedPing, -41100, new string[] { }, new string[] { }, 5111)]
         [InlineData(RequestType.GetAuthenticatedPing, -60000, new string[] { }, new string[] { }, 5200)]
         [InlineData(RequestType.GetAuthenticatedPing, -60500, new string[] { }, new string[] { }, 5201)]
-        [InlineData(RequestType.GetAuthenticatedPing, -20501, new string[] { }, new string[] { }, 5201)]
         [InlineData(RequestType.GetAuthenticatedPing, -70020, new string[] { }, new string[] { }, 5550)]
         [InlineData(RequestType.GetAuthenticatedPing, -70028, new string[] { }, new string[] { }, 5553)]
         [InlineData(RequestType.GetAuthenticatedPing, -70501, new string[] { }, new string[] { }, 5500)]
+        [InlineData(RequestType.GetAuthenticatedPing, -90034, new string[] { }, new string[] { }, 5113)]
         [InlineData(RequestType.GetAuthenticatedPing, 0, new string[] { }, new string[] { }, 5000)]
         internal void TestNotFoundCodes(RequestType type, int apiCode, string[] headerNames, string[] headerValues, int expectedSdkErrorCode) {
             // ARRANGE
@@ -256,6 +255,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
         [InlineData(RequestType.GetAuthenticatedPing, -10103, new string[] { }, new string[] { }, 2101)]
         [InlineData(RequestType.GetAuthenticatedPing, -10104, new string[] { }, new string[] { }, 2103)]
         [InlineData(RequestType.GetAuthenticatedPing, -10106, new string[] { }, new string[] { }, 2102)]
+        [InlineData(RequestType.GetAuthenticatedPing, -90030, new string[] { }, new string[] { }, 2104)]
         [InlineData(RequestType.GetAuthenticatedPing, 0, new string[] { }, new string[] { }, 2000)]
         internal void TestPreconditionFailedCodes(RequestType type, int apiCode, string[] headerNames, string[] headerValues,
             int expectedSdkErrorCode) {
@@ -337,8 +337,14 @@ namespace Dracoon.Sdk.UnitTest.Test {
         internal void TestCustomErrorCodesIRestRequest() {
             // ARRANGE
             IRestResponse response = FactoryRestSharp.RestResponse;
-            response.Headers.Add(new Parameter() { Name = "testHeader", Value = "1234" });
-            response.Headers.Add(new Parameter() { Name = "X-Forbidden", Value = "403" });
+            response.Headers.Add(new Parameter() {
+                Name = "testHeader",
+                Value = "1234"
+            });
+            response.Headers.Add(new Parameter() {
+                Name = "X-Forbidden",
+                Value = "403"
+            });
 
             try {
                 // ACT

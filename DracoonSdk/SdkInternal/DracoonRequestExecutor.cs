@@ -16,13 +16,13 @@ namespace Dracoon.Sdk.SdkInternal {
             GetUserKeyPair, DeleteUserKeyPair, GetUserAvatar, DeleteUserAvatar, PostUserAvatar,
             GetResourcesAvatar, GetNodes, GetNode, PostRoom, PostFolder,
             PutFolder, PutRoom, PutEnableRoomEncryption, PutFile, DeleteNodes,
-            PostDownloadToken, GetFileKey, PostUploadToken, PutCompleteUpload, PostUploadChunk,
-            GetDownloadChunk, PostCopyNodes, PostMoveNodes, GetSearchNodes, GetMissingFileKeys,
-            PostMissingFileKeys, PostCreateDownloadShare, DeleteDownloadShare, GetDownloadShares, PostCreateUploadShare,
-            DeleteUploadShare, GetUploadShares, PostFavorite, DeleteFavorite, GetAuthenticatedPing,
-            PostOAuthToken, PostOAuthRefresh, GetGeneralSettings, GetInfrastructureSettings, GetDefaultsSettings,
-            GetRecycleBin, DeleteRecycleBin, GetPreviousVersions, GetPreviousVersion, PostRestoreNodeVersion,
-            DeletePreviousVersions
+            PostDownloadToken, GetFileKey, PostUploadToken, PutCompleteUpload, PutCompleteS3Upload,
+            PostUploadChunk, PutUploadS3Chunk, GetDownloadChunk, PostCopyNodes, PostMoveNodes,
+            GetSearchNodes, GetMissingFileKeys, PostMissingFileKeys, PostCreateDownloadShare, DeleteDownloadShare,
+            GetDownloadShares, PostCreateUploadShare, DeleteUploadShare, GetUploadShares, PostFavorite,
+            DeleteFavorite, GetAuthenticatedPing, PostOAuthToken, PostOAuthRefresh, GetGeneralSettings,
+            GetInfrastructureSettings, GetDefaultsSettings, GetRecycleBin, DeleteRecycleBin, GetPreviousVersions,
+            GetPreviousVersion, PostRestoreNodeVersion, DeletePreviousVersions, PostGetS3Urls, GetS3Status
         }
 
         private const string Logtag = nameof(DracoonRequestExecutor);
@@ -47,9 +47,14 @@ namespace Dracoon.Sdk.SdkInternal {
             }
 
             if (_apiVersion == null) {
-                IRestRequest request = _client.Builder.GetServerVersion();
-                ApiServerVersion serverVersion = ((IRequestExecutor) this).DoSyncApiCall<ApiServerVersion>(request, RequestType.GetServerVersion);
-                _apiVersion = Regex.Split(serverVersion.ServerVersion, "\\.");
+                ApiServerVersion serverVersion =
+                    ((IRequestExecutor) this).DoSyncApiCall<ApiServerVersion>(_client.Builder.GetServerVersion(), RequestType.GetServerVersion);
+                string version = serverVersion.RestApiVersion;
+                if (version.Contains("-")) {
+                    version = version.Remove(version.IndexOf("-"));
+                }
+
+                _apiVersion = Regex.Split(version, "\\.");
             }
 
             string[] minVersion = Regex.Split(minVersionForCheck, "\\.");
@@ -147,11 +152,12 @@ namespace Dracoon.Sdk.SdkInternal {
                         if (DracoonClient.HttpConfig.RetryEnabled && sendTry < 3) {
                             DracoonClient.Log.Debug(Logtag, "Retry the request in " + sendTry * 1000 + " millis again.");
                             Thread.Sleep(1000 * sendTry);
-                            ((IRequestExecutor) this).ExecuteWebClientDownload(requestClient, target, type, asyncThread, sendTry + 1);
+                            return ((IRequestExecutor) this).ExecuteWebClientDownload(requestClient, target, type, asyncThread, sendTry + 1);
                         } else {
                             if (asyncThread != null && asyncThread.ThreadState == ThreadState.Aborted) {
                                 throw new ThreadInterruptedException();
                             }
+
                             DracoonErrorParser.ParseError(we, type);
                         }
                     }
@@ -161,12 +167,28 @@ namespace Dracoon.Sdk.SdkInternal {
             return response;
         }
 
-        byte[] IRequestExecutor.ExecuteWebClientChunkUpload(WebClient requestClient, Uri target, byte[] multipartFormatedChunk, RequestType type,
-            Thread asyncThread = null, int sendTry = 0) {
+        public byte[] ExecuteWebClientChunkUpload(WebClient requestClient, Uri target, byte[] data, RequestType type, Thread asyncThread = null,
+            int sendTry = 0) {
             byte[] response = null;
             try {
-                Task<byte[]> responseTask = requestClient.UploadDataTaskAsync(target, "POST", multipartFormatedChunk);
-                response = responseTask.Result;
+                string method = "POST";
+                if (type == RequestType.PutUploadS3Chunk) {
+                    method = "PUT";
+                }
+
+                Task<byte[]> responseTask = requestClient.UploadDataTaskAsync(target, method, data);
+                if (type == RequestType.PutUploadS3Chunk) {
+                    responseTask.Wait();
+                    for (int i = 0; i < requestClient.ResponseHeaders.Count; i++) {
+                        if (requestClient.ResponseHeaders.GetKey(i).ToLower().Equals("etag")) {
+                            string eTag = requestClient.ResponseHeaders.Get(i);
+                            eTag = eTag.Replace("\"", "").Replace("\\", "").Replace("/", "");
+                            response = ApiConfig.ENCODING.GetBytes(eTag);
+                        }
+                    }
+                } else {
+                    response = responseTask.Result;
+                }
             } catch (AggregateException ae) {
                 if (ae.InnerException is WebException we) {
                     if (we.Status == WebExceptionStatus.SecureChannelFailure) {
@@ -187,12 +209,7 @@ namespace Dracoon.Sdk.SdkInternal {
                         if (DracoonClient.HttpConfig.RetryEnabled && sendTry < 3) {
                             DracoonClient.Log.Debug(Logtag, "Retry the request in " + sendTry * 1000 + " millis again.");
                             Thread.Sleep(1000 * sendTry);
-                            ((IRequestExecutor) this).ExecuteWebClientChunkUpload(requestClient,
-                                target,
-                                multipartFormatedChunk,
-                                type,
-                                asyncThread,
-                                sendTry + 1);
+                            return ((IRequestExecutor) this).ExecuteWebClientChunkUpload(requestClient, target, data, type, asyncThread, sendTry + 1);
                         } else {
                             if (asyncThread != null && asyncThread.ThreadState == ThreadState.Aborted) {
                                 throw new ThreadInterruptedException();

@@ -39,6 +39,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             if (withVersionCheckOccurance) {
                 Mock.Arrange(() => e.CheckApiServerVersion(Arg.AnyString)).DoNothing().OccursAtLeast(1);
             }
+
             Mock.Arrange(() => c.Executor).Returns(e);
             return c;
         }
@@ -269,6 +270,15 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                         wc.SetHttpConfigParams(new DracoonHttpConfig());
                         return wc;
                     });
+                Mock.Arrange(() => r.PostGetS3Urls(Arg.AnyString, Arg.IsAny<ApiGetS3Urls>())).Returns((string id) => {
+                    RestRequest rr = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostGetS3Urls, Method.POST);
+                    rr.AddParameter("application/json", JsonConvert.SerializeObject(FactoryFile.ApiGetS3UrlsRequest), ParameterType.RequestBody);
+                    rr.AddUrlSegment("uploadId", id);
+                    return rr;
+                });
+
+                Mock.Arrange(() => r.GetS3Status(Arg.AnyString)).Returns((string id) =>
+                    FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetS3Status, Method.GET).AddUrlSegment("uploadId", id));
 
                 #endregion
 
@@ -387,6 +397,5 @@ namespace Dracoon.Sdk.UnitTest.Factory {
 
             requestForSortAdding.AddQueryParameter("sort", sortString);
         }
-
     }
 }

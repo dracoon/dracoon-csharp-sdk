@@ -243,6 +243,13 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        IRestRequest IRequestBuilder.GetS3Status(string uploadId) {
+            RestRequest request = new RestRequest(ApiConfig.ApiGetS3Status, Method.GET);
+            SetGeneralRestValues(request, true);
+            request.AddUrlSegment("uploadId", uploadId);
+            return request;
+        }
+
         #endregion
 
         #region POST
@@ -269,6 +276,13 @@ namespace Dracoon.Sdk.SdkInternal {
         IRestRequest IRequestBuilder.PostCreateFileUpload(ApiCreateFileUpload uploadParams) {
             RestRequest request = new RestRequest(ApiConfig.ApiPostCreateFileUpload, Method.POST);
             SetGeneralRestValues(request, true, uploadParams);
+            return request;
+        }
+
+        IRestRequest IRequestBuilder.PostGetS3Urls(string uploadId, ApiGetS3Urls s3UrlParams) {
+            RestRequest request = new RestRequest(ApiConfig.ApiPostGetS3Urls, Method.POST);
+            SetGeneralRestValues(request, true, s3UrlParams);
+            request.AddUrlSegment("uploadId", uploadId);
             return request;
         }
 
@@ -343,6 +357,13 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        IRestRequest IRequestBuilder.PutCompleteS3FileUpload(string uploadId, ApiCompleteFileUpload completeParams) {
+            RestRequest request = new RestRequest(ApiConfig.ApiPutCompleteS3Upload, Method.PUT);
+            SetGeneralRestValues(request, true, completeParams);
+            request.AddUrlSegment("uploadId", uploadId);
+            return request;
+        }
+
         #endregion
 
         #region DELETE
@@ -387,6 +408,12 @@ namespace Dracoon.Sdk.SdkInternal {
             DracoonWebClientExtension requestClient = new DracoonWebClientExtension();
             requestClient.Headers.Add(HttpRequestHeader.ContentRange, "bytes " + offset + "-" + (offset + chunkLength) + "/" + totalFileSize);
             requestClient.Headers.Add(HttpRequestHeader.ContentType, "multipart/form-data; boundary=" + formDataBoundary);
+            SetGeneralWebClientValues(requestClient);
+            return requestClient;
+        }
+
+        WebClient IRequestBuilder.ProvideS3ChunkUploadWebClient() {
+            DracoonWebClientExtension requestClient = new DracoonWebClientExtension();
             SetGeneralWebClientValues(requestClient);
             return requestClient;
         }

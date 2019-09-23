@@ -176,7 +176,7 @@
 
     <TargetIdFilterExtension>
       <summary>
-        Extends the functions for <see cref="Dracoon.Sdk.Filter.TargetIdFilter"/>.
+        Extends the functions for <see cref="Dracoon.Sdk.Filter.NodeIdFilter"/>.
       </summary>
     </TargetIdFilterExtension>
 

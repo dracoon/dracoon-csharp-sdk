@@ -331,5 +331,13 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                         JsonConvert.SerializeObject(FactoryFile.ApiCompleteFileUpload), ParameterType.RequestBody);
         }
 
+        internal static IRestRequest PostGetS3UrlsMock() {
+            return RestRequestWithAuth(ApiConfig.ApiPostGetS3Urls, Method.POST).AddUrlSegment("uploadId", 1);
+        }
+
+        internal static IRestRequest GetS3StatusMock() {
+            return RestRequestWithAuth(ApiConfig.ApiGetS3Status, Method.GET).AddUrlSegment("uploadId", 1);
+        }
+
     }
 }

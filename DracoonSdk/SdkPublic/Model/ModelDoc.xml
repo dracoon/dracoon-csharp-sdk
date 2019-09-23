@@ -1151,6 +1151,12 @@
       </summary>
     </S3DefaultRegion>
 
+    <S3EnforceDirectUpload>
+      <summary>
+        Is <c>true</c> if s3 direct upload must be used and a normal proxied upload isn possible. Otherwise <c>false</c>.
+      </summary>
+    </S3EnforceDirectUpload>
+
   </members>
 
   <members name="uploadShare">

@@ -15,6 +15,12 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
         public string Notes { get; set; }
 
         [JsonProperty("expiration", NullValueHandling = NullValueHandling.Ignore)]
-        public ApiExpiration Expiration { get; set; }
+        public ApiExpiration Expiration {
+            get; set;
+        }
+        [JsonProperty("directS3Upload", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? UseS3 {
+            get; set;
+        }
     }
 }

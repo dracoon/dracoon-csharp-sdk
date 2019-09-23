@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
     internal class ApiCompleteFileUpload {
@@ -10,5 +11,8 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
 
         [JsonProperty("fileKey", NullValueHandling = NullValueHandling.Ignore)]
         public ApiFileKey FileKey { get; set; }
+
+        [JsonProperty("parts", NullValueHandling = NullValueHandling.Ignore)]
+        public List<ApiS3FileUploadPart> Parts { get; set; }
     }
 }

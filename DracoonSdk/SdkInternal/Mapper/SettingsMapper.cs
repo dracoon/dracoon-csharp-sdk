@@ -28,7 +28,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             ServerInfrastructureSettings infrastructure = new ServerInfrastructureSettings {
                 MediaServerConfigEnabled = apiInfrastructureConfig.MediaServerConfigEnabled,
                 S3DefaultRegion = apiInfrastructureConfig.S3DefaultRegion,
-                SmsConfigEnabled = apiInfrastructureConfig.SmsConfigEnabled
+                SmsConfigEnabled = apiInfrastructureConfig.SmsConfigEnabled,
+                S3EnforceDirectUpload = apiInfrastructureConfig.S3EnforceDirectUpload
             };
             return infrastructure;
         }
