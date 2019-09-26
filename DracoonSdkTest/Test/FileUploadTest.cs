@@ -514,32 +514,14 @@ namespace Dracoon.Sdk.UnitTest.Test {
 
         #region S3-Upload
 
-        [Theory]
-        [InlineData("done", 2356)]
-        [InlineData("done", 27262976)]
-        [InlineData("transfer", 2356)]
-        [InlineData("finishing", 2356)]
-        public void RunSync_S3_KnownFileSize_Success(string statusChecking, int fileSize) {
+        [Fact]
+        public void RunSync_S3_KnownFileSize_Success() {
             // ARRANGE
             ApiS3Status resultStatus = FactoryFile.ApiS3Status;
-            switch (statusChecking) {
-                case "done":
-                    resultStatus.Node = FactoryNode.ApiNode;
-                    resultStatus.Status = "done";
-                    resultStatus.ErrorInfo = null;
-                    break;
-                case "transfer":
-                    resultStatus.Node = null;
-                    resultStatus.Status = "transfer";
-                    resultStatus.ErrorInfo = null;
-                    break;
-                case "finishing":
-                    resultStatus.Node = null;
-                    resultStatus.Status = "finishing";
-                    resultStatus.ErrorInfo = null;
-                    break;
-            }
-            byte[] fileMock = new byte[fileSize];
+            resultStatus.Node = FactoryNode.ApiNode;
+            resultStatus.Status = "done";
+            resultStatus.ErrorInfo = null;
+            byte[] fileMock = new byte[6487516];
             new Random().NextBytes(fileMock);
             Stream s = new MemoryStream(fileMock);
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
@@ -567,8 +549,8 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Urls>(Arg.IsAny<IRestRequest>(), RequestType.PostGetS3Urls, 0))
                 .Returns(FactoryFile.ApiS3Urls).OccursAtLeast(1);
             Mock.Arrange(() => c.Builder.GetS3Status(Arg.AnyString)).Returns(FactoryRestSharp.GetS3StatusMock).OccursAtLeast(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Status>(Arg.IsAny<IRestRequest>(), RequestType.GetS3Status, 0))
-                .Returns(resultStatus).OccursAtLeast(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Status>(Arg.IsAny<IRestRequest>(), RequestType.GetS3Status, 0)).Returns(resultStatus)
+                .OccursAtLeast(1);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
             Mock.Arrange(() => FileMapper.ToApiCompleteFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(FactoryFile.ApiCompleteFileUpload);
@@ -579,11 +561,6 @@ namespace Dracoon.Sdk.UnitTest.Test {
                 .Raises(() => wc.UploadProgressChanged += null, null, Mock.Create<UploadProgressChangedEventArgs>()).Returns(new byte[13]);
             Mock.Arrange(() => c.Builder.ProvideS3ChunkUploadWebClient()).Returns(wc);
             Mock.Arrange(() => JsonConvert.DeserializeObject<ApiUploadChunkResult>(Arg.AnyString)).Returns(FactoryFile.ApiUploadChunkResult);
-            Mock.Arrange(() => new Stopwatch().Restart()).IgnoreInstance().DoInstead(() => {
-                resultStatus.Node = FactoryNode.ApiNode;
-                resultStatus.Status = "done";
-                resultStatus.ErrorInfo = null;
-            });
 
             Mock.Arrange(() => callback.OnStarted(Arg.AnyString)).Occurs(1);
             Mock.Arrange(() => callback.OnRunning(Arg.AnyString, Arg.AnyLong, Arg.AnyLong)).OccursAtLeast(1);
@@ -635,8 +612,8 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Urls>(Arg.IsAny<IRestRequest>(), RequestType.PostGetS3Urls, 0))
                 .Returns(FactoryFile.ApiS3Urls).OccursAtLeast(1);
             Mock.Arrange(() => c.Builder.GetS3Status(Arg.AnyString)).Returns(FactoryRestSharp.GetS3StatusMock).OccursAtLeast(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Status>(Arg.IsAny<IRestRequest>(), RequestType.GetS3Status, 0))
-                .Returns(resultStatus).OccursAtLeast(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Status>(Arg.IsAny<IRestRequest>(), RequestType.GetS3Status, 0)).Returns(resultStatus)
+                .OccursAtLeast(1);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
             Mock.Arrange(() => FileMapper.ToApiCompleteFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(FactoryFile.ApiCompleteFileUpload);
