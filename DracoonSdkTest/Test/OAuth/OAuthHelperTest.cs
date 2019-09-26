@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+using System.Web;
 using Dracoon.Sdk.Error;
 using Dracoon.Sdk.SdkInternal.OAuth;
 using Dracoon.Sdk.SdkInternal.Validator;
@@ -14,12 +16,14 @@ namespace Dracoon.Sdk.UnitTest.Test.OAuth {
             string clientId = "clientId1";
             string state = "state1";
             string baseUri = "https://dracoon.team";
-            Uri expected = new Uri(baseUri + "/oauth/authorize?response_type=code&client_id=" + clientId + "&state=" + state);
+            string deviceName = "ImTheDeviceNo1324";
+            string base64DeviceName = HttpUtility.UrlEncode(Convert.ToBase64String(Encoding.UTF8.GetBytes(deviceName)));
+            Uri expected = new Uri(baseUri + "/oauth/authorize?response_type=code&client_id=" + clientId + "&state=" + state + "&user_agent_info=" + base64DeviceName);
             Mock.Arrange(() => Arg.IsAny<Uri>().MustBeValid(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(2);
 
             // ACT
-            Uri actual = OAuthHelper.CreateAuthorizationUrl(new Uri(baseUri), clientId, state);
+            Uri actual = OAuthHelper.CreateAuthorizationUrl(new Uri(baseUri), clientId, state, deviceName);
 
             // ASSERT
             Assert.Equal(expected.ToString(), actual.ToString());

@@ -425,7 +425,7 @@
           </listheader>
           <item>
             <term>
-              <see cref="CreateAuthorizationUrl(Uri, string, string)"/>:
+              <see cref="CreateAuthorizationUrl(Uri, string, string, string)"/>:
             </term>
             <description>
               Creates the authorization URI which must be opened in the user's browser.
@@ -463,6 +463,9 @@
       </param>
       <param name="state">
         The state identifier which is used to track running authorizations.
+      </param>
+      <param name="deviceName">
+        The deviceName gives the possibility to match corresponding requests on server side.
       </param>
       <returns>
         The authorization URI
