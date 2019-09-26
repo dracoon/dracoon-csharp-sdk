@@ -3,10 +3,8 @@ using Dracoon.Sdk.Model;
 using Dracoon.Sdk.Sort;
 
 namespace Dracoon.Sdk {
-
     /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iShares"]/IShares/*'/>
     public interface IShares {
-
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iShares"]/CreateDownloadShare/*'/>
         DownloadShare CreateDownloadShare(CreateDownloadShareRequest request);
 

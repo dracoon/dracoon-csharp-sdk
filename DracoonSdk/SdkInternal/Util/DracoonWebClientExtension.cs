@@ -1,33 +1,35 @@
-﻿using Dracoon.Sdk.Model;
-using System;
+﻿using System;
 using System.Net;
 
 namespace Dracoon.Sdk.SdkInternal.Util {
     internal class DracoonWebClientExtension : WebClient {
-
-        private readonly long? rangeFrom;
-        private readonly long? rangeTo;
-        private DracoonHttpConfig config;
+        private readonly long? _rangeFrom;
+        private readonly long? _rangeTo;
+        private DracoonHttpConfig _config;
 
         public DracoonWebClientExtension(long? rangeFrom = null, long? rangeTo = null) {
-            this.rangeFrom = rangeFrom;
-            this.rangeTo = rangeTo;
+            _rangeFrom = rangeFrom;
+            _rangeTo = rangeTo;
         }
 
         public void SetHttpConfigParams(DracoonHttpConfig httpConfig) {
-            config = httpConfig;
+            _config = httpConfig;
         }
 
         protected override WebRequest GetWebRequest(Uri address) {
             HttpWebRequest request = (HttpWebRequest) base.GetWebRequest(address);
-            if (rangeFrom.HasValue && rangeTo.HasValue) {
-                request.AddRange(rangeFrom.Value, rangeTo.Value);
+            if (request != null) {
+                if (_rangeFrom.HasValue && _rangeTo.HasValue) {
+                    request.AddRange(_rangeFrom.Value, _rangeTo.Value);
+                }
+
+                request.ReadWriteTimeout = _config.ReadWriteTimeout;
+                request.Timeout = _config.ConnectionTimeout;
+                if (_config.WebProxy != null) {
+                    request.Proxy = _config.WebProxy;
+                }
             }
-            request.ReadWriteTimeout = config.ReadWriteTimeout;
-                request.Timeout = config.ConnectionTimeout;
-            if (config.WebProxy != null) {
-                request.Proxy = config.WebProxy;
-            }
+
             return request;
         }
     }

@@ -6,7 +6,6 @@ using System.IO;
 namespace Dracoon.Sdk {
     /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/INodes/*'/>
     public interface INodes {
-
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/GetNodes/*'/>
         NodeList GetNodes(long parentNodeId = 0, long? offset = null, long? limit = null, GetNodesFilter filter = null);
 
@@ -62,7 +61,8 @@ namespace Dracoon.Sdk {
         void CancelDownloadFileAsync(string actionId);
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/SearchNodes/*'/>
-        NodeList SearchNodes(string searchString, long parentNodeId = 0, long offset = 0, long limit = 500, SearchNodesFilter filter = null, SearchNodesSort sort = null);
+        NodeList SearchNodes(string searchString, long parentNodeId = 0, long offset = 0, long limit = 500, SearchNodesFilter filter = null,
+            SearchNodesSort sort = null);
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/GenerateMissingFileKeys/*'/>
         void GenerateMissingFileKeys(long? nodeId = null, int limit = int.MaxValue);

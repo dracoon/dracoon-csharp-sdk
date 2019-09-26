@@ -3,16 +3,12 @@
 namespace Dracoon.Sdk.SdkInternal.ApiModel {
     internal class ApiSetUserFileKey {
         [JsonProperty("userId", NullValueHandling = NullValueHandling.Ignore)]
-        public long UserId {
-            get; set;
-        }
+        public long UserId { get; set; }
+
         [JsonProperty("fileId", NullValueHandling = NullValueHandling.Ignore)]
-        public long FileId {
-            get; set;
-        }
+        public long FileId { get; set; }
+
         [JsonProperty("fileKey", NullValueHandling = NullValueHandling.Ignore)]
-        public ApiFileKey FileKey {
-            get; set;
-        }
+        public ApiFileKey FileKey { get; set; }
     }
 }

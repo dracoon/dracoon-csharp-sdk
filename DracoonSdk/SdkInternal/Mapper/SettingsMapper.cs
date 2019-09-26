@@ -7,7 +7,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             if (apiGeneralConfig == null) {
                 return null;
             }
-            ServerGeneralSettings general = new ServerGeneralSettings() {
+
+            ServerGeneralSettings general = new ServerGeneralSettings {
                 CryptoEnabled = apiGeneralConfig.CryptoEnabled,
                 EmailNotificationButtonEnabled = apiGeneralConfig.EmailNotificationButtonEnabled,
                 EulaEnabled = apiGeneralConfig.EulaEnabled,
@@ -23,10 +24,12 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             if (apiInfrastructureConfig == null) {
                 return null;
             }
-            ServerInfrastructureSettings infrastructure = new ServerInfrastructureSettings() {
+
+            ServerInfrastructureSettings infrastructure = new ServerInfrastructureSettings {
                 MediaServerConfigEnabled = apiInfrastructureConfig.MediaServerConfigEnabled,
                 S3DefaultRegion = apiInfrastructureConfig.S3DefaultRegion,
-                SmsConfigEnabled = apiInfrastructureConfig.SmsConfigEnabled
+                SmsConfigEnabled = apiInfrastructureConfig.SmsConfigEnabled,
+                S3EnforceDirectUpload = apiInfrastructureConfig.S3EnforceDirectUpload
             };
             return infrastructure;
         }
@@ -35,7 +38,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             if (apiDefaultsConfig == null) {
                 return null;
             }
-            ServerDefaultSettings defaults = new ServerDefaultSettings() {
+
+            ServerDefaultSettings defaults = new ServerDefaultSettings {
                 LanguageDefault = apiDefaultsConfig.LanguageDefault,
                 DownloadShareDefaultExpirationPeriodInDays = apiDefaultsConfig.DownloadShareDefaultExpirationPeriodInDays,
                 FileUploadDefaultExpirationPeriodInDays = apiDefaultsConfig.FileUploadDefaultExpirationPeriodInDays,

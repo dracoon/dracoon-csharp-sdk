@@ -3,12 +3,9 @@
 namespace Dracoon.Sdk.SdkInternal.ApiModel {
     internal class ApiUserPublicKey {
         [JsonProperty("version", NullValueHandling = NullValueHandling.Ignore)]
-        public string Version {
-            get; set;
-        }
+        public string Version { get; set; }
+
         [JsonProperty("publicKey", NullValueHandling = NullValueHandling.Ignore)]
-        public string PublicKey {
-            get; set;
-        }
+        public string PublicKey { get; set; }
     }
 }

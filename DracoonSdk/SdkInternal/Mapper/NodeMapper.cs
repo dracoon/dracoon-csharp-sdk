@@ -2,6 +2,7 @@
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Util;
+using System;
 using System.Collections.Generic;
 
 namespace Dracoon.Sdk.SdkInternal.Mapper {
@@ -11,7 +12,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 return null;
             }
 
-            NodeList nodeList = new NodeList() {
+            NodeList nodeList = new NodeList {
                 Offset = apiNodeList.Range.Offset,
                 Limit = apiNodeList.Range.Limit,
                 Total = apiNodeList.Range.Total,
@@ -20,6 +21,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             foreach (ApiNode currentNode in apiNodeList.Items) {
                 nodeList.Items.Add(FromApiNode(currentNode));
             }
+
             return nodeList;
         }
 
@@ -28,7 +30,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 return null;
             }
 
-            Node node = new Node() {
+            Node node = new Node {
                 Id = apiNode.Id,
                 Type = EnumConverter.ConvertValueToNodeTypeEnum(apiNode.Type),
                 ParentId = apiNode.ParentId,
@@ -69,7 +71,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 return null;
             }
 
-            NodePermissions nodePermissions = new NodePermissions() {
+            NodePermissions nodePermissions = new NodePermissions {
                 Manage = apiNodePermissions.Manage,
                 Read = apiNodePermissions.Read,
                 Create = apiNodePermissions.Create,
@@ -85,7 +87,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
         }
 
         internal static ApiDeleteNodesRequest ToApiDeleteNodesRequest(DeleteNodesRequest request) {
-            ApiDeleteNodesRequest apiDeleteNodesRequest = new ApiDeleteNodesRequest() {
+            ApiDeleteNodesRequest apiDeleteNodesRequest = new ApiDeleteNodesRequest {
                 NodeIds = request.Ids
             };
             return apiDeleteNodesRequest;
@@ -101,7 +103,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 copyNodeList.Add(apiCopyNode);
             }
 
-            ApiCopyNodesRequest apiCopyNodesRequest = new ApiCopyNodesRequest() {
+            ApiCopyNodesRequest apiCopyNodesRequest = new ApiCopyNodesRequest {
                 Nodes = copyNodeList,
                 ResolutionStrategy = EnumConverter.ConvertResolutionStrategyToValue(request.ResolutionStrategy),
                 KeepShareLinks = request.KeepShareLinks
@@ -119,7 +121,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 moveNodesList.Add(apiMoveNode);
             }
 
-            ApiMoveNodesRequest apiMoveNodesRequest = new ApiMoveNodesRequest() {
+            ApiMoveNodesRequest apiMoveNodesRequest = new ApiMoveNodesRequest {
                 Nodes = moveNodesList,
                 ResolutionStrategy = EnumConverter.ConvertResolutionStrategyToValue(request.ResolutionStrategy),
                 KeepShareLinks = request.KeepShareLinks
@@ -132,7 +134,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 return null;
             }
 
-            RecycleBinItemList nodeList = new RecycleBinItemList() {
+            RecycleBinItemList nodeList = new RecycleBinItemList {
                 Offset = apiNodeList.Range.Offset,
                 Limit = apiNodeList.Range.Limit,
                 Total = apiNodeList.Range.Total,
@@ -141,6 +143,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             foreach (ApiDeletedNodeSummary currentNode in apiNodeList.Items) {
                 nodeList.Items.Add(FromApiDeletedNodeSummary(currentNode));
             }
+
             return nodeList;
         }
 
@@ -149,7 +152,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 return null;
             }
 
-            RecycleBinItem node = new RecycleBinItem() {
+            RecycleBinItem node = new RecycleBinItem {
                 Type = EnumConverter.ConvertValueToNodeTypeEnum(apiNode.Type),
                 ParentId = apiNode.ParentId,
                 ParentPath = apiNode.ParentPath,
@@ -167,7 +170,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 return null;
             }
 
-            PreviousVersionList nodeList = new PreviousVersionList() {
+            PreviousVersionList nodeList = new PreviousVersionList {
                 Offset = apiNodeList.Range.Offset,
                 Limit = apiNodeList.Range.Limit,
                 Total = apiNodeList.Range.Total,
@@ -176,6 +179,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             foreach (ApiDeletedNodeVersion currentNode in apiNodeList.Items) {
                 nodeList.Items.Add(FromApiDeletedNodeVersion(currentNode));
             }
+
             return nodeList;
         }
 
@@ -184,7 +188,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 return null;
             }
 
-            PreviousVersion node = new PreviousVersion() {
+            PreviousVersion node = new PreviousVersion {
                 Type = EnumConverter.ConvertValueToNodeTypeEnum(apiNode.Type),
                 ParentId = apiNode.ParentId,
                 ParentPath = apiNode.ParentPath,
@@ -207,7 +211,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
         }
 
         internal static ApiRestorePreviousVersionsRequest ToApiRestorePreviousVersionsRequest(RestorePreviousVersionsRequest request) {
-            ApiRestorePreviousVersionsRequest apiRequest = new ApiRestorePreviousVersionsRequest() {
+            ApiRestorePreviousVersionsRequest apiRequest = new ApiRestorePreviousVersionsRequest {
                 DeletedNodeIds = request.RestoreVersionIds,
                 KeepShareLinks = request.KeepShareLinks,
                 ParentId = request.NewParentNodeId,
@@ -217,7 +221,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
         }
 
         internal static ApiDeletePreviousVersionsRequest ToApiDeletePreviousVersionsRequest(DeletePreviousVersionsRequest request) {
-            ApiDeletePreviousVersionsRequest apiRequest = new ApiDeletePreviousVersionsRequest() {
+            ApiDeletePreviousVersionsRequest apiRequest = new ApiDeletePreviousVersionsRequest {
                 VersionsToBeDeleted = request.VersionIds
             };
             return apiRequest;

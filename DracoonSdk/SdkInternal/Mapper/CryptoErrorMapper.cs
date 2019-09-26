@@ -7,15 +7,17 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
         internal static DracoonCryptoCode ParseCause(Exception e) {
             if (e.GetType() == typeof(InvalidPasswordException)) {
                 return DracoonCryptoCode.INVALID_PASSWORD_ERROR;
-            } else if (e.GetType() == typeof(BadFileException)) {
-                return DracoonCryptoCode.BAD_FILE_ERROR;
-            } else if (e.GetType() == typeof(InvalidKeyPairException) || e.GetType() == typeof(InvalidFileKeyException)) {
-                return DracoonCryptoCode.INTERNAL_ERROR;
-            } else if (e.GetType() == typeof(CryptoSystemException)) {
-                return DracoonCryptoCode.SYSTEM_ERROR;
-            } else {
-                return DracoonCryptoCode.UNKNOWN_ERROR;
             }
+
+            if (e.GetType() == typeof(BadFileException)) {
+                return DracoonCryptoCode.BAD_FILE_ERROR;
+            }
+
+            if (e.GetType() == typeof(InvalidKeyPairException) || e.GetType() == typeof(InvalidFileKeyException)) {
+                return DracoonCryptoCode.INTERNAL_ERROR;
+            }
+
+            return e.GetType() == typeof(CryptoSystemException) ? DracoonCryptoCode.SYSTEM_ERROR : DracoonCryptoCode.UNKNOWN_ERROR;
         }
     }
 }

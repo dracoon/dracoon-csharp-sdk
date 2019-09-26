@@ -3,11 +3,10 @@ using System.Text;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class ApiConfig {
-
         internal const string MinimumApiVersion = "4.6.0";
         internal const string ApiPrefix = "api/v4";
         internal const string AuthorizationHeader = "Authorization";
-        internal static readonly Encoding encoding = Encoding.UTF8;
+        internal static readonly Encoding ENCODING = Encoding.UTF8;
 
         #region Public-Endpoint
 
@@ -38,12 +37,14 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiDeleteAvatar = ApiPrefix + "/user/account/avatar";
 
         #endregion
+
         #region POST
 
         internal const string ApiPostUserKeyPair = ApiPrefix + "/user/account/keypair";
         internal const string ApiPostAvatar = ApiPrefix + "/user/account/avatar";
 
         #endregion
+
         #region DELETE
 
         internal const string ApiDeleteUserKeyPair = ApiPrefix + "/user/account/keypair";
@@ -65,14 +66,17 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiGetRecycleBin = ApiPrefix + "/nodes/{roomId}/deleted_nodes";
         internal const string ApiGetPreviousVersions = ApiPrefix + "/nodes/{nodeId}/deleted_nodes/versions";
         internal const string ApiGetPreviousVersion = ApiPrefix + "/nodes/deleted_nodes/{previoudNodeId}";
+        internal const string ApiGetS3Status = ApiPrefix + "/nodes/files/uploads/{uploadId}";
 
         #endregion
+
         #region POST
 
         internal const string ApiPostRoom = ApiPrefix + "/nodes/rooms";
         internal const string ApiPostFolder = ApiPrefix + "/nodes/folders";
         internal const string ApiPostCreateFileDownload = ApiPrefix + "/nodes/files/{fileId}/downloads";
         internal const string ApiPostCreateFileUpload = ApiPrefix + "/nodes/files/uploads";
+        internal const string ApiPostGetS3Urls = ApiPrefix + "/nodes/files/uploads/{uploadId}/s3_urls";
         internal const string ApiPostCopyNodes = ApiPrefix + "/nodes/{nodeId}/copy_to";
         internal const string ApiPostMoveNodes = ApiPrefix + "/nodes/{nodeId}/move_to";
         internal const string ApiPostMissingFileKeys = ApiPrefix + "/nodes/files/keys";
@@ -82,18 +86,22 @@ namespace Dracoon.Sdk.SdkInternal {
         #region Minimum version requirements
 
         internal const string ApiUseHomeDefaultClassificationMinApiVersion = "4.9.0";
+        internal const string ApiS3DirectUploadPossible = "4.15.0";
 
         #endregion
 
         #endregion
+
         #region PUT
 
         internal const string ApiPutRoom = ApiPrefix + "/nodes/rooms/{roomId}";
         internal const string ApiPutFolder = ApiPrefix + "/nodes/folders/{folderId}";
         internal const string ApiPutFileUpdate = ApiPrefix + "/nodes/files/{fileId}";
         internal const string ApiPutEnableRoomEncryption = ApiPrefix + "/nodes/rooms/{roomId}/encrypt";
+        internal const string ApiPutCompleteS3Upload = ApiPrefix + "/nodes/files/uploads/{uploadId}/s3";
 
         #endregion
+
         #region DELETE
 
         internal const string ApiDeleteNodes = ApiPrefix + "/nodes";
@@ -113,12 +121,14 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiGetUploadShares = ApiPrefix + "/shares/uploads";
 
         #endregion
+
         #region POST
 
         internal const string ApiPostCreateDownloadShare = ApiPrefix + "/shares/downloads";
         internal const string ApiPostCreateUploadShare = ApiPrefix + "/shares/uploads";
 
         #endregion
+
         #region DELETE
 
         internal const string ApiDeleteDownloadShare = ApiPrefix + "/shares/downloads/{shareId}";
@@ -147,6 +157,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiPostFileUpload = ApiPrefix + "/uploads";
 
         #endregion
+
         #region PUT
 
         #endregion
@@ -168,6 +179,7 @@ namespace Dracoon.Sdk.SdkInternal {
             for (int i = 0; i < pathSegments.Length; i++) {
                 uriBuilder.Path += i != 0 ? "/" + pathSegments[i] : pathSegments[i];
             }
+
             return uriBuilder.Uri;
         }
     }

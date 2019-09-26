@@ -3,16 +3,12 @@
 namespace Dracoon.Sdk.SdkInternal.ApiModel {
     internal class ApiAvatarInfo {
         [JsonProperty("avatarUri", NullValueHandling = NullValueHandling.Ignore)]
-        public string AvatarUri {
-            get; set;
-        }
-        [JsonProperty("avatarUUID", NullValueHandling = NullValueHandling.Ignore)]
-        public string AvatarUUID {
-            get; set;
-        }
+        public string AvatarUri { get; set; }
+
+        [JsonProperty("avatarUuid", NullValueHandling = NullValueHandling.Ignore)]
+        public string AvatarUuid { get; set; }
+
         [JsonProperty("isCustomAvatar", NullValueHandling = NullValueHandling.Ignore)]
-        public bool IsCustomAvatar {
-            get; set;
-        }
+        public bool IsCustomAvatar { get; set; }
     }
 }

@@ -1,14 +1,10 @@
-﻿
-using System;
+﻿using System;
 
 namespace Dracoon.Sdk.Error {
     /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/DracoonCryptoException/*'/>
     public class DracoonCryptoException : DracoonException {
-
         /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/ErrorCode/*'/>
-        public DracoonCryptoCode ErrorCode {
-            get; private set;
-        }
+        public DracoonCryptoCode ErrorCode { get; }
 
         /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/DracoonCryptoExceptionConstructorOne/*'/>
         public DracoonCryptoException() {

@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Dracoon.Sdk.SdkInternal.Validator {
     internal static class ValidatorExtensions {
-
-        private static readonly string[] INVALID_PATH_CHARS = { "<", ">", ":", "\"", "|", "?", "*" };
+        private static readonly string[] InvalidPathChars = {"<", ">", ":", "\"", "|", "?", "*"};
 
         internal static void MustNotNull<T>(this T param, string paramName) {
             if (param == null) {
@@ -22,13 +22,13 @@ namespace Dracoon.Sdk.SdkInternal.Validator {
         }
 
         internal static bool CheckEnumerableNullOrEmpty<T>(this IEnumerable<T> param) {
-            if (param == null) {
-                return true;
+            switch (param) {
+                case null:
+                case ICollection<T> colParam when colParam.Count == 0:
+                    return true;
+                default:
+                    return false;
             }
-            if (param is ICollection<T> colParam && colParam.Count == 0) {
-                return true;
-            }
-            return false;
         }
 
         internal static void MustNotNullOrEmptyOrWhitespace(this string param, string paramName, bool nullAllowed = false) {
@@ -43,11 +43,12 @@ namespace Dracoon.Sdk.SdkInternal.Validator {
             }
 
             int whitespaces = 0;
-            for (int i = 0; i < param.Length; i++) {
-                if (char.IsWhiteSpace(param[i])) {
+            foreach (char current in param) {
+                if (char.IsWhiteSpace(current)) {
                     whitespaces++;
                 }
             }
+
             if (param.Length == whitespaces) {
                 throw new ArgumentException(paramName + " cannot be whitespace.");
             }
@@ -58,22 +59,22 @@ namespace Dracoon.Sdk.SdkInternal.Validator {
             if (param == "/") {
                 throw new ArgumentException("You cannot request the root because it has no usable node object.");
             }
+
             if (!param.StartsWith("/")) {
                 throw new ArgumentException("The node path must start with '/'.");
             }
+
             if (param.EndsWith("/")) {
                 throw new ArgumentException("The node path cannot end with '/'.");
             }
+
             if (param.Length > 4096) {
                 throw new ArgumentException("The node path is to long. Only a path length up to 4096 chars are allowed.");
             }
 
-            List<string> foundInvalidChars = new List<string>(INVALID_PATH_CHARS.Length);
-            foreach (string current in INVALID_PATH_CHARS) {
-                if (param.Contains(current)) {
-                    foundInvalidChars.Add(current);
-                }
-            }
+            List<string> foundInvalidChars = new List<string>(InvalidPathChars.Length);
+            foundInvalidChars.AddRange(InvalidPathChars.Where(param.Contains));
+
             if (foundInvalidChars.Count > 0) {
                 throw new ArgumentException("The node path cannot contain " + string.Join(",", foundInvalidChars.ToArray()) + ".");
             }
@@ -95,13 +96,15 @@ namespace Dracoon.Sdk.SdkInternal.Validator {
 
         internal static void MustBeValid(this Uri param, string paramName) {
             param.MustNotNull(paramName);
-            if (String.IsNullOrWhiteSpace(param.Scheme) || !(param.Scheme == Uri.UriSchemeHttp || param.Scheme == Uri.UriSchemeHttps)) {
+            if (string.IsNullOrWhiteSpace(param.Scheme) || !(param.Scheme == Uri.UriSchemeHttp || param.Scheme == Uri.UriSchemeHttps)) {
                 throw new ArgumentException("Server URI can only have protocol http or https.");
             }
-            if (!String.IsNullOrWhiteSpace(param.UserInfo)) {
+
+            if (!string.IsNullOrWhiteSpace(param.UserInfo)) {
                 throw new ArgumentException("Server URI cannot have a user.");
             }
-            if (!String.IsNullOrWhiteSpace(param.Query)) {
+
+            if (!string.IsNullOrWhiteSpace(param.Query)) {
                 throw new ArgumentException("Server URI cannot have a query.");
             }
         }
@@ -136,25 +139,25 @@ namespace Dracoon.Sdk.SdkInternal.Validator {
             }
         }
 
-        internal static void MustPositive(this long? param, string paramName) {
+        internal static void NullableMustPositive(this long? param, string paramName) {
             if (param.HasValue && param.Value <= 0) {
                 throw new ArgumentException(paramName + " cannot be negative or 0.");
             }
         }
 
-        internal static void MustPositive(this int? param, string paramName) {
+        internal static void NullableMustPositive(this int? param, string paramName) {
             if (param.HasValue && param.Value <= 0) {
                 throw new ArgumentException(paramName + " cannot be negative or 0.");
             }
         }
 
-        internal static void MustNotNegative(this long? param, string paramName) {
+        internal static void NullableMustNotNegative(this long? param, string paramName) {
             if (param.HasValue && param.Value < 0) {
                 throw new ArgumentException(paramName + " cannot be negative.");
             }
         }
 
-        internal static void MustNotNegative(this int? param, string paramName) {
+        internal static void NullableMustNotNegative(this int? param, string paramName) {
             if (param.HasValue && param.Value < 0) {
                 throw new ArgumentException(paramName + " cannot be negative.");
             }

@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -67,9 +68,14 @@
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiDeletedNodeSummaryList.cs" />
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiDeletedNodeVersion.cs" />
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiDeletedNodeVersionsList.cs" />
+    <Compile Include="SdkInternal\ApiModel\Nodes\ApiS3Status.cs" />
+    <Compile Include="SdkInternal\ApiModel\Nodes\ApiS3Url.cs" />
+    <Compile Include="SdkInternal\ApiModel\Nodes\ApiS3Urls.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiDeletePreviousVersionsRequest.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiEnableRoomEncryptionRequest.cs" />
+    <Compile Include="SdkInternal\ApiModel\Requests\ApiGetS3Urls.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiRestorePreviousVersionsRequest.cs" />
+    <Compile Include="SdkInternal\ApiModel\Requests\ApiS3FileUploadPart.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiDefaultsSettings.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiInfrastructureSettings.cs" />
     <Compile Include="SdkInternal\ApiModel\Shares\ApiDownloadShare.cs" />
@@ -126,7 +132,7 @@
     <Compile Include="SdkInternal\DracoonErrorParser.cs" />
     <Compile Include="SdkInternal\DracoonNodesImpl.cs" />
     <Compile Include="SdkInternal\DracoonRequestBuilder.cs" />
-    <Compile Include="SdkInternal\DracoonRequestExecuter.cs" />
+    <Compile Include="SdkInternal\DracoonRequestExecutor.cs" />
     <Compile Include="SdkInternal\DracoonServerImpl.cs" />
     <Compile Include="SdkInternal\DracoonSharesImpl.cs" />
     <Compile Include="SdkInternal\DracoonUsersImpl.cs" />
@@ -134,6 +140,9 @@
     <Compile Include="SdkInternal\EncFileUpload.cs" />
     <Compile Include="SdkInternal\FileDownload.cs" />
     <Compile Include="SdkInternal\FileUpload.cs" />
+    <Compile Include="SdkInternal\IInternalDracoonClient.cs" />
+    <Compile Include="SdkInternal\IRequestBuilder.cs" />
+    <Compile Include="SdkInternal\IRequestExecutor.cs" />
     <Compile Include="SdkInternal\Mapper\SettingsMapper.cs" />
     <Compile Include="SdkInternal\Mapper\CryptoErrorMapper.cs" />
     <Compile Include="SdkInternal\Mapper\CustomerMapper.cs" />
@@ -143,6 +152,7 @@
     <Compile Include="SdkInternal\Mapper\RoomMapper.cs" />
     <Compile Include="SdkInternal\Mapper\ShareMapper.cs" />
     <Compile Include="SdkInternal\Mapper\UserMapper.cs" />
+    <Compile Include="SdkInternal\OAuth\IOAuth.cs" />
     <Compile Include="SdkInternal\OAuth\OAuthClient.cs" />
     <Compile Include="SdkInternal\OAuth\OAuthConfig.cs" />
     <Compile Include="SdkInternal\OAuth\OAuthError.cs" />

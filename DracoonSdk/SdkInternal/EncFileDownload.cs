@@ -9,76 +9,81 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class EncFileDownload : FileDownload {
+        private readonly UserPrivateKey _userPrivateKey;
 
-        private static readonly string LOGTAG = typeof(EncFileDownload).Name;
-        private UserPrivateKey userPrivateKey;
+        public EncFileDownload(IInternalDracoonClient client, string actionId, Node nodeToDownload, Stream output, UserPrivateKey privateKey) : base(
+            client, actionId, nodeToDownload, output) {
+            _userPrivateKey = privateKey;
 
-        public EncFileDownload(DracoonClient client, string actionId, Node nodeToDownload, Stream output, UserPrivateKey privateKey) : base(client, actionId, nodeToDownload, output) {
-            userPrivateKey = privateKey;
+            Logtag = nameof(EncFileDownload);
         }
 
         protected override void StartDownload() {
-            NotifyStarted(actionId);
-            RestRequest downloadTokenRequest = dracoonClient.RequestBuilder.PostFileDownload(associatedNode.Id);
-            ApiDownloadToken token = dracoonClient.RequestExecutor.DoSyncApiCall<ApiDownloadToken>(downloadTokenRequest, DracoonRequestExecuter.RequestType.PostDownloadToken);
-            EncryptedFileKey encryptedFileKey = dracoonClient.NodesImpl.GetEncryptedFileKey(associatedNode.Id);
+            NotifyStarted(ActionId);
+            IRestRequest downloadTokenRequest = Client.Builder.PostFileDownload(AssociatedNode.Id);
+            ApiDownloadToken token = Client.Executor.DoSyncApiCall<ApiDownloadToken>(downloadTokenRequest, RequestType.PostDownloadToken);
+            EncryptedFileKey encryptedFileKey = Client.NodesImpl.GetEncryptedFileKey(AssociatedNode.Id);
             EncryptedDownload(new Uri(token.DownloadUrl), DecryptFileKey(encryptedFileKey));
-            NotifyFinished(actionId);
+            NotifyFinished(ActionId);
         }
 
         private PlainFileKey DecryptFileKey(EncryptedFileKey encryptedFileKey) {
             try {
-                return Crypto.Sdk.Crypto.DecryptFileKey(encryptedFileKey, userPrivateKey, dracoonClient.EncryptionPassword);
+                return Crypto.Sdk.Crypto.DecryptFileKey(encryptedFileKey, _userPrivateKey, Client.EncryptionPassword);
             } catch (CryptoException ce) {
-                string message = "Decryption of file key for encrypted download " + actionId + " failed!";
-                dracoonClient.Log.Debug(LOGTAG, message);
+                string message = "Decryption of file key for encrypted download " + ActionId + " failed!";
+                DracoonClient.Log.Debug(Logtag, message);
                 throw new DracoonCryptoException(CryptoErrorMapper.ParseCause(ce), ce);
             }
         }
 
         private void EncryptedDownload(Uri downloadUri, PlainFileKey plainFileKey) {
-            FileDecryptionCipher cipher = null;
+            FileDecryptionCipher cipher;
             try {
                 cipher = Crypto.Sdk.Crypto.CreateFileDecryptionCipher(plainFileKey);
             } catch (CryptoException ce) {
-                string message = "Creation of decryption engine for encrypted download " + actionId + " failed!";
-                dracoonClient.Log.Debug(LOGTAG, message);
+                string message = "Creation of decryption engine for encrypted download " + ActionId + " failed!";
+                DracoonClient.Log.Debug(Logtag, message);
                 throw new DracoonCryptoException(CryptoErrorMapper.ParseCause(ce), ce);
             }
+
             try {
-                progressReportTimer = Stopwatch.StartNew();
+                ProgressReportTimer = Stopwatch.StartNew();
                 long downloadedByteCount = 0;
-                while (downloadedByteCount < associatedNode.Size.GetValueOrDefault(0)) {
-                    byte[] chunk = DownloadChunk(downloadUri, ref downloadedByteCount, associatedNode.Size.GetValueOrDefault(0));
-                    Debug.WriteLine("bytesDownloaded " + downloadedByteCount);
+                while (downloadedByteCount < AssociatedNode.Size.GetValueOrDefault(0)) {
+                    byte[] chunk = DownloadChunk(downloadUri, downloadedByteCount, AssociatedNode.Size.GetValueOrDefault(0));
                     EncryptedDataContainer encryptedContainer = new EncryptedDataContainer(chunk, null);
                     PlainDataContainer plainContainer = cipher.ProcessBytes(encryptedContainer);
-                    outputStream.Write(plainContainer.Content, 0, plainContainer.Content.Length);
+                    OutputStream.Write(plainContainer.Content, 0, plainContainer.Content.Length);
+                    downloadedByteCount += chunk.Length;
                 }
-                Debug.WriteLine("bytesDownloaded after final " + downloadedByteCount);
+
                 byte[] encryptionTag = Convert.FromBase64String(plainFileKey.Tag);
                 EncryptedDataContainer tagContainer = new EncryptedDataContainer(null, encryptionTag);
                 PlainDataContainer finalContainer = cipher.DoFinal(tagContainer);
-                outputStream.Write(finalContainer.Content, 0, finalContainer.Content.Length);
-                if (lastNotifiedProgressValue != downloadedByteCount) { // Notify 100 percent progress
-                    NotifyProgress(actionId, downloadedByteCount, associatedNode.Size.GetValueOrDefault(0));
+                OutputStream.Write(finalContainer.Content, 0, finalContainer.Content.Length);
+                if (LastNotifiedProgressValue != downloadedByteCount) {
+                    // Notify 100 percent progress
+                    NotifyProgress(ActionId, downloadedByteCount, AssociatedNode.Size.GetValueOrDefault(0));
                 }
             } catch (CryptoException ce) {
-                string message = "Decryption of file failed while downloading!";
-                dracoonClient.Log.Debug(LOGTAG, message);
+                const string message = "Decryption of file failed while downloading!";
+                DracoonClient.Log.Debug(Logtag, message);
                 throw new DracoonFileIOException(message, ce);
             } catch (IOException ioe) {
-                if (isInterrupted) {
+                if (IsInterrupted) {
                     throw new ThreadInterruptedException();
                 }
-                string message = "Write to stream failed!";
-                dracoonClient.Log.Debug(LOGTAG, message);
+
+                const string message = "Write to stream failed!";
+                DracoonClient.Log.Debug(Logtag, message);
                 throw new DracoonFileIOException(message, ioe);
             } finally {
-                progressReportTimer.Stop();
+                ProgressReportTimer.Stop();
             }
         }
     }

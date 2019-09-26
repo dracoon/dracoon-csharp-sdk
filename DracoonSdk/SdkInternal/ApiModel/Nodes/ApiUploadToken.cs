@@ -6,5 +6,9 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         public string UploadUrl {
             get; set;
         }
+        [JsonProperty("uploadId", NullValueHandling = NullValueHandling.Ignore)]
+        public string UploadId {
+            get; set;
+        }
     }
 }

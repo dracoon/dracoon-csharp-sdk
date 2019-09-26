@@ -1,7 +1,10 @@
 ﻿
+using System;
+using System.Collections.Generic;
+
 namespace Dracoon.Sdk.Error {
     /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonApiCode"]/DracoonApiCode/*'/>
-    public class DracoonApiCode {
+    public class DracoonApiCode : IEquatable<DracoonApiCode> {
         public static readonly DracoonApiCode API_VERSION_NOT_SUPPORTED = new DracoonApiCode(0, "Server API versions < " + SdkInternal.ApiConfig.MinimumApiVersion + " are not supported.");
 
         #region Error codes '1000' --> AUTH
@@ -49,6 +52,8 @@ namespace Dracoon.Sdk.Error {
         public static readonly DracoonApiCode PRECONDITION_MUST_CHANGE_USER_NAME = new DracoonApiCode(2102, "User must change his user name.");
         // CODES: -10104
         public static readonly DracoonApiCode PRECONDITION_MUST_CHANGE_PASSWORD = new DracoonApiCode(2103, "User must change his password.");
+        // CODES: -90030
+        public static readonly DracoonApiCode PRECONDITION_S3_DISABLED = new DracoonApiCode(2104, "S3 storage is disabled.");
 
         #endregion
 
@@ -135,6 +140,8 @@ namespace Dracoon.Sdk.Error {
         public static readonly DracoonApiCode VALIDATION_ENCRYPTED_FILE_CAN_ONLY_RESTOREED_IN_ORIGINAL_ROOM = new DracoonApiCode(3127, "Encrypted files cannot be restored inside antoher than its original room.");
         // CODES: -80034
         public static readonly DracoonApiCode VALIDATION_KEEPSHARELINKS_ONLY_WITH_OVERWRITE = new DracoonApiCode(3128, "Keep share links is only allowed with resolution strategy 'overwrite'.");
+        // CODES: -80045
+        public static readonly DracoonApiCode VALIDATION_INVALID_ETAG = new DracoonApiCode(3129, "Invalid Etag(s).");
 
         #endregion
         #region SHARES
@@ -232,7 +239,13 @@ namespace Dracoon.Sdk.Error {
         public static readonly DracoonApiCode SERVER_INSUFFICIENT_UL_SHARE_QUOTA = new DracoonApiCode(5110, "Not enough quota for the upload share.");
         // CODES: -41100
         public static readonly DracoonApiCode SERVER_RESTOREVERSION_NOT_FOUND = new DracoonApiCode(5111, "The restore version id was not found.");
-
+        // CODES: -20501
+        public static readonly DracoonApiCode SERVER_UPLOAD_NOT_FOUND = new DracoonApiCode(5112, "The upload with the given id was not found.");
+        // CODES: -90034
+        public static readonly DracoonApiCode SERVER_S3_UPLOAD_ID_NOT_FOUND = new DracoonApiCode(5113, "Corresponding S3 upload ID not found.");
+        public static readonly DracoonApiCode SERVER_S3_UPLOAD_COMPLETION_FAILED = new DracoonApiCode(5114, "Server failed to complete S3 upload.");
+        // CODES: -90027
+        public static readonly DracoonApiCode SERVER_S3_CONNECTION_FAILED = new DracoonApiCode(5115, "S3 connection failed.");
         #endregion
 
         #region SHARES
@@ -276,6 +289,8 @@ namespace Dracoon.Sdk.Error {
         public static readonly DracoonApiCode SERVER_SMS_IS_DISABLED = new DracoonApiCode(5800, "SMS sending is disabled.");
         // CODES: -90090
         public static readonly DracoonApiCode SERVER_SMS_COULD_NOT_BE_SENT = new DracoonApiCode(5801, "SMS could not be sent.");
+        // CODES: -90033
+        public static readonly DracoonApiCode SERVER_S3_IS_ENFORCED = new DracoonApiCode(5802, "S3 direct upload is enforced.");
 
         #endregion
 
@@ -285,14 +300,14 @@ namespace Dracoon.Sdk.Error {
         /// The error message.
         /// </summary>
         public string Text {
-            get; private set;
+            get;
         }
 
         /// <summary>
         /// The error code.
         /// </summary>
         public int Code {
-            get; private set;
+            get;
         }
 
         internal DracoonApiCode(int code, string text) {
@@ -343,6 +358,26 @@ namespace Dracoon.Sdk.Error {
         /// <returns><c>true</c> if error is a server error; <c>false</c> otherwise</returns>
         public bool IsServerError() {
             return Code >= 5000 && Code < 6000;
+        }
+
+        public bool Equals(DracoonApiCode other) {
+            return string.Equals(Text, other.Text) && Code == other.Code;
+        }
+
+        public override bool Equals(object obj) {
+            if (obj is null) {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj)) {
+                return true;
+            }
+
+            if (obj.GetType() != GetType()) {
+                return false;
+            }
+
+            return Equals((DracoonApiCode) obj);
         }
     }
 }

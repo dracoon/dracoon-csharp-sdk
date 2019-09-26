@@ -5,10 +5,8 @@ using System.Collections.Specialized;
 using System.Web;
 
 namespace Dracoon.Sdk {
-
     /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="oAuthHelper"]/OAuthHelper/*'/>
     public static class OAuthHelper {
-
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="oAuthHelper"]/CreateAuthorizationUrl/*'/>
         public static Uri CreateAuthorizationUrl(Uri baseServerUri, string clientId, string state) {
             baseServerUri.MustBeValid(nameof(baseServerUri));
@@ -19,6 +17,7 @@ namespace Dracoon.Sdk {
             if (!baseServerUri.AbsoluteUri.EndsWith("/")) {
                 baseUrl += "/";
             }
+
             baseUrl += OAuthConfig.OAuthPrefix + OAuthConfig.OAuthAuthorizePath;
             string query = "response_type=" + OAuthConfig.OAuthFlow + "&client_id=" + clientId + "&state=" + state;
             return new Uri(baseUrl + "?" + query);
@@ -41,6 +40,7 @@ namespace Dracoon.Sdk {
             if (queryElements["error"] != null) {
                 OAuthErrorParser.ParseError(queryElements["error"]);
             }
+
             return queryElements[requestedType];
         }
     }

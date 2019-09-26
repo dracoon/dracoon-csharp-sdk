@@ -7,7 +7,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             if (apiCustomerAccount == null) {
                 return null;
             }
-            CustomerAccount customerAccount = new CustomerAccount() {
+
+            CustomerAccount customerAccount = new CustomerAccount {
                 Id = apiCustomerAccount.Id,
                 Name = apiCustomerAccount.Name,
                 AccountsUsed = apiCustomerAccount.AccountsUsed,

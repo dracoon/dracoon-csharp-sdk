@@ -4,76 +4,57 @@ using System;
 namespace Dracoon.Sdk.SdkInternal.ApiModel {
     internal class ApiUploadShare {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public long ShareId {
-            get; set;
-        }
+        public long ShareId { get; set; }
+
         [JsonProperty("targetId", NullValueHandling = NullValueHandling.Ignore)]
-        public long NodeId {
-            get; set;
-        }
+        public long NodeId { get; set; }
+
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
-        public string Name {
-            get; set;
-        }
+        public string Name { get; set; }
+
         [JsonProperty("isProtected", NullValueHandling = NullValueHandling.Ignore)]
-        public bool IsProtected {
-            get; set;
-        }
+        public bool IsProtected { get; set; }
+
         [JsonProperty("accessKey", NullValueHandling = NullValueHandling.Ignore)]
-        public string AccessKey {
-            get; set;
-        }
+        public string AccessKey { get; set; }
+
         [JsonProperty("notifyCreator", NullValueHandling = NullValueHandling.Ignore)]
-        public bool NotifyCreator {
-            get; set;
-        }
+        public bool NotifyCreator { get; set; }
+
         [JsonProperty("createdAt", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime CreatedAt {
-            get; set;
-        }
+        public DateTime CreatedAt { get; set; }
+
         [JsonProperty("createdBy", NullValueHandling = NullValueHandling.Ignore)]
-        public ApiUserInfo CreatedBy {
-            get; set;
-        }
+        public ApiUserInfo CreatedBy { get; set; }
+
         [JsonProperty("expireAt", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime? ExpireAt {
-            get; set;
-        }
+        public DateTime? ExpireAt { get; set; }
+
         [JsonProperty("targetPath", NullValueHandling = NullValueHandling.Ignore)]
-        public string NodePath {
-            get; set;
-        }
+        public string NodePath { get; set; }
+
         [JsonProperty("isEncrypted", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? IsEncrypted {
-            get; set;
-        }
+        public bool? IsEncrypted { get; set; }
+
         [JsonProperty("notes", NullValueHandling = NullValueHandling.Ignore)]
-        public string Notes {
-            get; set;
-        }
+        public string Notes { get; set; }
+
         [JsonProperty("filesExpiryPeriod", NullValueHandling = NullValueHandling.Ignore)]
-        public int? UploadedFilesExpirationPeriod {
-            get; set;
-        }
+        public int? UploadedFilesExpirationPeriod { get; set; }
+
         [JsonProperty("cntUploads", NullValueHandling = NullValueHandling.Ignore)]
-        public int? CurrentDoneUploadsCount {
-            get; set;
-        }
+        public int? CurrentDoneUploadsCount { get; set; }
+
         [JsonProperty("cntFiles", NullValueHandling = NullValueHandling.Ignore)]
-        public int? CurrentUploadedFilesCount {
-            get; set;
-        }
+        public int? CurrentUploadedFilesCount { get; set; }
+
         [JsonProperty("showUploadedFiles", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? ShowUploadedFiles {
-            get; set;
-        }
+        public bool? ShowUploadedFiles { get; set; }
+
         [JsonProperty("maxSlots", NullValueHandling = NullValueHandling.Ignore)]
-        public int? MaxAllowedUploads {
-            get; set;
-        }
+        public int? MaxAllowedUploads { get; set; }
+
         [JsonProperty("maxSize", NullValueHandling = NullValueHandling.Ignore)]
-        public long? MaxAllowedTotalSizeOverAllUploadedFiles {
-            get; set;
-        }
+        public long? MaxAllowedTotalSizeOverAllUploadedFiles { get; set; }
     }
 }

@@ -3,12 +3,9 @@
 namespace Dracoon.Sdk.SdkInternal.ApiModel {
     internal class ApiUserKeyPair {
         [JsonProperty("privateKeyContainer", NullValueHandling = NullValueHandling.Ignore)]
-        public ApiUserPrivateKey PrivateKeyContainer {
-            get; set;
-        }
+        public ApiUserPrivateKey PrivateKeyContainer { get; set; }
+
         [JsonProperty("publicKeyContainer", NullValueHandling = NullValueHandling.Ignore)]
-        public ApiUserPublicKey PublicKeyContainer {
-            get; set;
-        }
+        public ApiUserPublicKey PublicKeyContainer { get; set; }
     }
 }

@@ -3,13 +3,9 @@
 namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
     internal class ApiUpdateFolderRequest {
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
-        public string Name {
-            get; set;
-        }
+        public string Name { get; set; }
 
         [JsonProperty("notes", NullValueHandling = NullValueHandling.Ignore)]
-        public string Notes {
-            get; set;
-        }
+        public string Notes { get; set; }
     }
 }

@@ -1,33 +1,32 @@
 ﻿using System;
 
 namespace Dracoon.Sdk.Filter {
-
     /// <include file="FilterDoc.xml" path='docs/members[@name="dracoonFilterType"]/DracoonFilterType/*'/>
     public class DracoonFilterType<T> {
-
-        internal string filterTypeString = "";
-        internal bool operatorSet = false;
+        internal string FilterTypeString = "";
+        internal bool OperatorSet;
 
         private void AddOperator(string op) {
-            if (!operatorSet) {
-                filterTypeString += ":" + op;
-                operatorSet = true;
+            if (!OperatorSet) {
+                FilterTypeString += ":" + op;
+                OperatorSet = true;
             }
         }
 
         private void AddValue(dynamic value) {
-            filterTypeString += ":" + value.ToString().ToLower();
+            FilterTypeString += ":" + value.ToString().ToLower();
         }
 
         /// <include file="FilterDoc.xml" path='docs/members[@name="dracoonFilterType"]/ToString/*'/>
         public override string ToString() {
-            return filterTypeString;
+            return FilterTypeString;
         }
 
         internal void AddOperatorAndValue(dynamic value, string filterOperator, string filterParamName) {
             if (value == null) {
                 throw new ArgumentNullException(filterParamName);
             }
+
             AddOperator(filterOperator);
             AddValue(value);
         }

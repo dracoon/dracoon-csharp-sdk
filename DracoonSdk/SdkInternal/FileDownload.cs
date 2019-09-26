@@ -8,155 +8,154 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading;
-using static Dracoon.Sdk.SdkInternal.DracoonRequestExecuter;
+using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class FileDownload {
+        protected string Logtag = nameof(FileDownload);
 
-        private static readonly string LOGTAG = typeof(FileDownload).Name;
+        protected const long ProgressUpdateInterval = 250;
 
-        protected readonly long PROGRESS_UPDATE_INTERVAL = 250;
+        protected List<IFileDownloadCallback> Callbacks = new List<IFileDownloadCallback>();
+        protected IInternalDracoonClient Client;
+        protected Node AssociatedNode;
+        protected string ActionId;
+        internal Thread RunningThread;
+        protected Stream OutputStream;
+        protected Stopwatch ProgressReportTimer;
+        protected bool IsInterrupted;
+        protected long LastNotifiedProgressValue;
 
-        protected List<IFileDownloadCallback> callbacks = new List<IFileDownloadCallback>();
-        protected DracoonClient dracoonClient;
-        protected Node associatedNode;
-        protected string actionId;
-        protected Thread runningThread = null;
-        protected Stream outputStream;
-        protected Stopwatch progressReportTimer;
-        protected bool isInterrupted = false;
-        protected long lastNotifiedProgressValue = 0;
-
-        public FileDownload(DracoonClient client, string actionId, Node nodeToDownload, Stream output) {
-            dracoonClient = client;
-            outputStream = output;
-            this.actionId = actionId;
-            associatedNode = nodeToDownload;
+        public FileDownload(IInternalDracoonClient client, string actionId, Node nodeToDownload, Stream output) {
+            Client = client;
+            OutputStream = output;
+            ActionId = actionId;
+            AssociatedNode = nodeToDownload;
         }
 
         public void AddFileDownloadCallback(IFileDownloadCallback callback) {
             if (callback != null) {
-                callbacks.Add(callback);
-            }
-        }
-
-        public void RemoveFileDownloadCallback(IFileDownloadCallback callback) {
-            if (callback != null) {
-                callbacks.Remove(callback);
+                Callbacks.Add(callback);
             }
         }
 
         public void RunAsync() {
-            ThreadStart child = new ThreadStart(() => {
+            void Child() {
                 try {
                     StartDownload();
                 } catch (DracoonException de) {
-                    NotifyFailed(actionId, de);
+                    NotifyFailed(ActionId, de);
                 } catch (ThreadAbortException) {
-                    NotifyCanceled(actionId);
+                    NotifyCanceled(ActionId);
                 } catch (ThreadInterruptedException) {
-                    NotifyCanceled(actionId);
+                    NotifyCanceled(ActionId);
                 }
-            });
-            runningThread = new Thread(child);
-            runningThread.Start();
+            }
+
+            RunningThread = new Thread(Child);
+            RunningThread.Start();
         }
 
         public void RunSync() {
             try {
                 StartDownload();
             } catch (DracoonException de) {
-                NotifyFailed(actionId, de);
+                NotifyFailed(ActionId, de);
                 throw de;
             } catch (ThreadAbortException) {
-                NotifyCanceled(actionId);
+                NotifyCanceled(ActionId);
             } catch (ThreadInterruptedException) {
-                NotifyCanceled(actionId);
+                NotifyCanceled(ActionId);
             }
         }
 
         public void CancelDownload() {
-            if (runningThread != null && runningThread.IsAlive) {
-                isInterrupted = true;
-                runningThread.Abort();
+            if (RunningThread != null && RunningThread.IsAlive) {
+                IsInterrupted = true;
+                RunningThread.Abort();
             }
         }
 
         protected virtual void StartDownload() {
-            NotifyStarted(actionId);
-            RestRequest downloadTokenRequest = dracoonClient.RequestBuilder.PostFileDownload(associatedNode.Id);
-            ApiDownloadToken token = dracoonClient.RequestExecutor.DoSyncApiCall<ApiDownloadToken>(downloadTokenRequest, DracoonRequestExecuter.RequestType.PostDownloadToken);
+            NotifyStarted(ActionId);
+            IRestRequest downloadTokenRequest = Client.Builder.PostFileDownload(AssociatedNode.Id);
+            ApiDownloadToken token = Client.Executor.DoSyncApiCall<ApiDownloadToken>(downloadTokenRequest, RequestType.PostDownloadToken);
             Download(new Uri(token.DownloadUrl));
-            NotifyFinished(actionId);
+            NotifyFinished(ActionId);
         }
 
         private void Download(Uri downloadUri) {
             try {
-                progressReportTimer = Stopwatch.StartNew();
+                ProgressReportTimer = Stopwatch.StartNew();
                 long downloadedByteCount = 0;
-                while (downloadedByteCount < associatedNode.Size.GetValueOrDefault(0)) {
-                    byte[] chunk = DownloadChunk(downloadUri, ref downloadedByteCount, associatedNode.Size.GetValueOrDefault(0));
-                    outputStream.Write(chunk, 0, chunk.Length);
+                while (downloadedByteCount < AssociatedNode.Size.GetValueOrDefault(0)) {
+                    byte[] chunk = DownloadChunk(downloadUri, downloadedByteCount, AssociatedNode.Size.GetValueOrDefault(0));
+                    OutputStream.Write(chunk, 0, chunk.Length);
+                    downloadedByteCount += chunk.Length;
                 }
-                if (lastNotifiedProgressValue != downloadedByteCount) { // Notify 100 percent progress
-                    NotifyProgress(actionId, downloadedByteCount, associatedNode.Size.GetValueOrDefault(0));
+
+                if (LastNotifiedProgressValue != downloadedByteCount) {
+                    // Notify 100 percent progress
+                    NotifyProgress(ActionId, downloadedByteCount, AssociatedNode.Size.GetValueOrDefault(0));
                 }
             } catch (IOException ioe) {
-                if (isInterrupted) {
+                if (IsInterrupted) {
                     throw new ThreadInterruptedException();
                 }
-                string message = "Write to stream failed!";
-                dracoonClient.Log.Debug(LOGTAG, message);
+
+                const string message = "Write to stream failed!";
+                DracoonClient.Log.Debug(Logtag, message);
                 throw new DracoonFileIOException(message, ioe);
             } finally {
-                progressReportTimer.Stop();
+                ProgressReportTimer.Stop();
             }
         }
 
-        protected byte[] DownloadChunk(Uri downloadUri, ref long downloadedByteCount, long totalSize) {
+        protected byte[] DownloadChunk(Uri downloadUri, long downloadedByteCount, long totalSize) {
             byte[] chunkDownloadedResultBytes;
             long requestCount = totalSize - downloadedByteCount;
-            if (requestCount > dracoonClient.HttpConfig.ChunkSize) {
-                requestCount = dracoonClient.HttpConfig.ChunkSize;
+            if (requestCount > DracoonClient.HttpConfig.ChunkSize) {
+                requestCount = DracoonClient.HttpConfig.ChunkSize;
             }
 
-            using (WebClient requestClient = dracoonClient.RequestBuilder.ProvideChunkDownloadWebClient(downloadedByteCount, requestCount)) {
+            using (WebClient requestClient = Client.Builder.ProvideChunkDownloadWebClient(downloadedByteCount, requestCount)) {
                 long currentDownloadedByteCount = downloadedByteCount;
-                long previousBytesReceivedValue = 0;
                 requestClient.DownloadProgressChanged += (o, progessEvent) => {
-                    previousBytesReceivedValue = progessEvent.BytesReceived;
-                    if (progressReportTimer.ElapsedMilliseconds > PROGRESS_UPDATE_INTERVAL) {
-                        NotifyProgress(actionId, currentDownloadedByteCount + previousBytesReceivedValue, totalSize);
-                        lastNotifiedProgressValue = currentDownloadedByteCount + previousBytesReceivedValue;
-                        progressReportTimer.Restart();
+                    lock (ProgressReportTimer) {
+                        if (ProgressReportTimer.ElapsedMilliseconds > ProgressUpdateInterval) {
+                            NotifyProgress(ActionId, currentDownloadedByteCount + progessEvent.BytesReceived, totalSize);
+                            LastNotifiedProgressValue = currentDownloadedByteCount + progessEvent.BytesReceived;
+                            ProgressReportTimer.Restart();
+                        }
                     }
                 };
-                chunkDownloadedResultBytes = dracoonClient.RequestExecutor.ExecuteWebClientDownload(requestClient, downloadUri, RequestType.GetDownloadChunk, runningThread);
-                downloadedByteCount += previousBytesReceivedValue;
+                chunkDownloadedResultBytes =
+                    Client.Executor.ExecuteWebClientDownload(requestClient, downloadUri, RequestType.GetDownloadChunk, RunningThread);
             }
+
             return chunkDownloadedResultBytes;
         }
 
         #region Callback helper functions
 
         protected void NotifyStarted(string actionId) {
-            callbacks.ForEach(currentCallback => currentCallback.OnStarted(actionId));
+            Callbacks.ForEach(currentCallback => currentCallback.OnStarted(actionId));
         }
 
         protected void NotifyProgress(string actionId, long bytesDone, long bytesTotal) {
-            callbacks.ForEach(currentCallback => currentCallback.OnRunning(actionId, bytesDone, bytesTotal));
+            Callbacks.ForEach(currentCallback => currentCallback.OnRunning(actionId, bytesDone, bytesTotal));
         }
 
         protected void NotifyFinished(string actionId) {
-            callbacks.ForEach(currentCallback => currentCallback.OnFinished(actionId));
+            Callbacks.ForEach(currentCallback => currentCallback.OnFinished(actionId));
         }
 
         protected void NotifyCanceled(string actionId) {
-            callbacks.ForEach(currentCallback => currentCallback.OnCanceled(actionId));
+            Callbacks.ForEach(currentCallback => currentCallback.OnCanceled(actionId));
         }
 
         protected void NotifyFailed(string id, DracoonException de) {
-            callbacks.ForEach(currentCallback => currentCallback.OnFailed(actionId, de));
+            Callbacks.ForEach(currentCallback => currentCallback.OnFailed(ActionId, de));
         }
 
         #endregion
