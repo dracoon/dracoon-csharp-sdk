@@ -192,6 +192,15 @@
     <Compile Include="SdkPublic\Model\AvatarInfo.cs" />
     <Compile Include="SdkPublic\Model\Classification.cs" />
     <Compile Include="SdkPublic\Model\CustomerAccount.cs" />
+    <Compile Include="SdkPublic\Model\PasswordCharacterPolicies.cs" />
+    <Compile Include="SdkPublic\Model\PasswordCharacterSet.cs" />
+    <Compile Include="SdkPublic\Model\PasswordCharacterSetType.cs" />
+    <Compile Include="SdkPublic\Model\PasswordEncryptionPolicies.cs" />
+    <Compile Include="SdkPublic\Model\PasswordExpiration.cs" />
+    <Compile Include="SdkPublic\Model\PasswordLoginFailurePolicies.cs" />
+    <Compile Include="SdkPublic\Model\PasswordLoginPolicies.cs" />
+    <Compile Include="SdkPublic\Model\PasswordPolicies.cs" />
+    <Compile Include="SdkPublic\Model\PasswordSharePolicies.cs" />
     <Compile Include="SdkPublic\Model\RecycleBinItem.cs" />
     <Compile Include="SdkPublic\Model\RecycleBinItemList.cs" />
     <Compile Include="SdkPublic\Model\PreviousVersion.cs" />

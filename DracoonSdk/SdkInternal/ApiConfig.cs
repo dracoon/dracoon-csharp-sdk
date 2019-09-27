@@ -6,6 +6,24 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string MinimumApiVersion = "4.6.0";
         internal const string ApiPrefix = "api/v4";
         internal const string AuthorizationHeader = "Authorization";
+
+        internal static readonly char[] UPPERCASE_SET = {
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+        };
+
+        internal static readonly char[] LOWERCASE_SET = {
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+        };
+
+        internal static readonly char[] NUMERIC_SET = {
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+        };
+
+        internal static readonly char[] SPECIAL_SET = {
+            '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '=', '?', '@', '[', '\\', ']', '^', '_', '{', '|',
+            '}', '~'
+        };
+
         internal static readonly Encoding ENCODING = Encoding.UTF8;
 
         #region Public-Endpoint
