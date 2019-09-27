@@ -76,8 +76,15 @@
     <Compile Include="SdkInternal\ApiModel\Requests\ApiGetS3Urls.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiRestorePreviousVersionsRequest.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiS3FileUploadPart.cs" />
+    <Compile Include="SdkInternal\ApiModel\Settings\ApiCharacterRules.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiDefaultsSettings.cs" />
+    <Compile Include="SdkInternal\ApiModel\Settings\ApiEncryptionPasswordSettings.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiInfrastructureSettings.cs" />
+    <Compile Include="SdkInternal\ApiModel\Settings\ApiPasswordExpiration.cs" />
+    <Compile Include="SdkInternal\ApiModel\Settings\ApiPasswordSettings.cs" />
+    <Compile Include="SdkInternal\ApiModel\Settings\ApiLoginPasswordSettings.cs" />
+    <Compile Include="SdkInternal\ApiModel\Settings\ApiSharePasswordSettings.cs" />
+    <Compile Include="SdkInternal\ApiModel\Settings\ApiUserLockout.cs" />
     <Compile Include="SdkInternal\ApiModel\Shares\ApiDownloadShare.cs" />
     <Compile Include="SdkInternal\ApiModel\Shares\ApiDownloadShareList.cs" />
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiFileIdFileKey.cs" />
