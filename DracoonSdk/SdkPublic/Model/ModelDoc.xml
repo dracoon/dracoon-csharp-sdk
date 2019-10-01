@@ -1089,12 +1089,13 @@
     <NumberOfArchivedPasswords>
       <summary>
         Defines if the number of archived login password. If > 0 then the last n used password can't be used again.
+        If value = 0 then the archive is disabled.
       </summary>
     </NumberOfArchivedPasswords>
 
     <PasswordExpirationPolicies>
       <summary>
-        The expiration definitions for the login password.
+        The expiration definitions for the login password. Is <c>null</c> if not set.
       </summary>
     </PasswordExpirationPolicies>
 
