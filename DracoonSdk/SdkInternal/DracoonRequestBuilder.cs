@@ -536,6 +536,12 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        public IRestRequest GetPasswordPolicies() {
+            RestRequest request = new RestRequest(ApiConfig.ApiGetPasswordPolicies);
+            SetGeneralRestValues(request, true);
+            return request;
+        }
+
         #endregion
 
         #endregion

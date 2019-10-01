@@ -11,5 +11,7 @@ namespace Dracoon.Sdk {
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServerSettings"]/GetDefault/*'/>
         ServerDefaultSettings GetDefault();
+
+        PasswordPolicies GetPasswordPolicies();
     }
 }
