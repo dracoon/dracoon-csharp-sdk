@@ -73,7 +73,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 MinimumPasswordLength = apiPolicies.MinimumPasswordLength,
                 RejectDictionaryWords = apiPolicies.RejectDictionaryWords,
                 RejectKeyboardPatterns = apiPolicies.RejectKeyboardPatterns,
-                RejectUserInfo = apiPolicies.RejectUserInfo,
+                RejectOwnUserInfo = apiPolicies.RejectUserInfo,
                 UpdatedAt = apiPolicies.UpdatedAt,
                 UpdatedBy = UserMapper.FromApiUserInfo(apiPolicies.UpdatedBy)
             };
@@ -90,7 +90,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 MinimumPasswordLength = apiPolicies.MinimumPasswordLength,
                 RejectDictionaryWords = apiPolicies.RejectDictionaryWords,
                 RejectKeyboardPatterns = apiPolicies.RejectKeyboardPatterns,
-                RejectUserInfo = apiPolicies.RejectUserInfo,
+                RejectOwnUserInfo = apiPolicies.RejectUserInfo,
                 NumberOfArchivedPasswords = apiPolicies.NumberOfArchivedPasswords,
                 UpdatedAt = apiPolicies.UpdatedAt,
                 UpdatedBy = UserMapper.FromApiUserInfo(apiPolicies.UpdatedBy),
