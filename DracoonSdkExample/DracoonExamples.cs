@@ -53,6 +53,13 @@ namespace Dracoon.Sdk.Example {
             //...
         }
 
+        private static void GetPasswordPolicies() {
+            PasswordPolicies policies = dc.Server.ServerSettings.GetPasswordPolicies();
+            Console.WriteLine("Minimum login password length is: " + policies.LoginPolicies.MinimumPasswordLength);
+            Console.WriteLine("Minimum share password length is: " + policies.SharePolicies.MinimumPasswordLength);
+            Console.WriteLine("Minimum encryption password length is: " + policies.EncryptionPolicies.MinimumPasswordLength);
+        }
+
         #endregion
 
         #region DracoonClient.Account
