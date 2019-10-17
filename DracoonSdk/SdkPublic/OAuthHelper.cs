@@ -26,8 +26,8 @@ namespace Dracoon.Sdk {
                 return new Uri(baseUrl + "?" + query);
             }
 
-            string base64DeviceName = Convert.ToBase64String(ApiConfig.ENCODING.GetBytes(userAgentInfo));
-            query += "&user_agent_info=" + HttpUtility.UrlEncode(base64DeviceName);
+            string base64UserAgentInfo = Convert.ToBase64String(ApiConfig.ENCODING.GetBytes(userAgentInfo));
+            query += "&user_agent_info=" + HttpUtility.UrlEncode(base64UserAgentInfo);
 
             return new Uri(baseUrl + "?" + query);
         }
