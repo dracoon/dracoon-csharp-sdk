@@ -9,7 +9,7 @@ namespace Dracoon.Sdk {
     /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="oAuthHelper"]/OAuthHelper/*'/>
     public static class OAuthHelper {
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="oAuthHelper"]/CreateAuthorizationUrl/*'/>
-        public static Uri CreateAuthorizationUrl(Uri baseServerUri, string clientId, string state, string deviceName = null) {
+        public static Uri CreateAuthorizationUrl(Uri baseServerUri, string clientId, string state, string userAgentInfo = null) {
             baseServerUri.MustBeValid(nameof(baseServerUri));
             clientId.MustNotNullOrEmptyOrWhitespace(nameof(clientId));
             state.MustNotNullOrEmptyOrWhitespace(nameof(state));
@@ -22,11 +22,11 @@ namespace Dracoon.Sdk {
             baseUrl += OAuthConfig.OAuthPrefix + OAuthConfig.OAuthAuthorizePath;
             string query = "response_type=" + OAuthConfig.OAuthFlow + "&client_id=" + clientId + "&state=" + state;
 
-            if (string.IsNullOrWhiteSpace(deviceName)) {
+            if (string.IsNullOrWhiteSpace(userAgentInfo)) {
                 return new Uri(baseUrl + "?" + query);
             }
 
-            string base64DeviceName = Convert.ToBase64String(ApiConfig.ENCODING.GetBytes(deviceName));
+            string base64DeviceName = Convert.ToBase64String(ApiConfig.ENCODING.GetBytes(userAgentInfo));
             query += "&user_agent_info=" + HttpUtility.UrlEncode(base64DeviceName);
 
             return new Uri(baseUrl + "?" + query);

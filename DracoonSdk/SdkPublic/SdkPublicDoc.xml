@@ -464,8 +464,8 @@
       <param name="state">
         The state identifier which is used to track running authorizations.
       </param>
-      <param name="deviceName">
-        The deviceName gives the possibility to match corresponding requests on server side.
+      <param name="userAgentInfo">
+        The userAgentInfo can be used to provide information about the application or device.
       </param>
       <returns>
         The authorization URI
