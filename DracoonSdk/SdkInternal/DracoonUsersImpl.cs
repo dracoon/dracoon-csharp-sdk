@@ -18,7 +18,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public Image GetUserAvatar(long userId, string avatarUuid) {
             _client.Executor.CheckApiServerVersion();
-            _client.Executor.CheckApiServerVersion(ApiConfig.ApiAvatarFunctions);
 
             #region Parameter Validation
 

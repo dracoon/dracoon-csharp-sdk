@@ -1135,6 +1135,21 @@
       </exception>
     </GetDefault>
 
+    <GetPasswordPolicies>
+      <summary>
+        Retrieves the configured password policies for the different password types.
+      </summary>
+      <returns>
+        The policies for the different password types.
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+    </GetPasswordPolicies>
+
   </members>
 
   <members name="iShares">

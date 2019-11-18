@@ -117,7 +117,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
         private ApiAvatarInfo GetApiAvatarInfoInternally() {
             _client.Executor.CheckApiServerVersion();
-            _client.Executor.CheckApiServerVersion(ApiConfig.ApiAvatarFunctions);
 
             IRestRequest request = _client.Builder.GetAvatar();
             ApiAvatarInfo apiAvatarInfo = _client.Executor.DoSyncApiCall<ApiAvatarInfo>(request, RequestType.GetUserAvatar);
@@ -126,7 +125,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public AvatarInfo ResetAvatar() {
             _client.Executor.CheckApiServerVersion();
-            _client.Executor.CheckApiServerVersion(ApiConfig.ApiAvatarFunctions);
 
             IRestRequest request = _client.Builder.DeleteAvatar();
             ApiAvatarInfo defaultAvatarInfo = _client.Executor.DoSyncApiCall<ApiAvatarInfo>(request, RequestType.DeleteUserAvatar);
@@ -135,7 +133,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public AvatarInfo UpdateAvatar(Image newAvatar) {
             _client.Executor.CheckApiServerVersion();
-            _client.Executor.CheckApiServerVersion(ApiConfig.ApiAvatarFunctions);
 
             byte[] avatarBytes = null;
             using (MemoryStream ms = new MemoryStream()) {

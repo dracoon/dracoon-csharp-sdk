@@ -78,5 +78,22 @@ namespace Dracoon.Sdk.SdkInternal.Util {
                     return null;
             }
         }
+
+        public static PasswordCharacterSetType ConvertValueToCharacterSetTypeEnum(string value) {
+            switch (value) {
+                case "none":
+                    return PasswordCharacterSetType.None;
+                case "uppercase":
+                    return PasswordCharacterSetType.Uppercase;
+                case "lowercase":
+                    return PasswordCharacterSetType.Lowercase;
+                case "numeric":
+                    return PasswordCharacterSetType.Numeric;
+                case "special":
+                    return PasswordCharacterSetType.Special;
+                default:
+                    return PasswordCharacterSetType.None;
+            }
+        }
     }
 }

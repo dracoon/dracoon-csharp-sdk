@@ -3,9 +3,27 @@ using System.Text;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class ApiConfig {
-        internal const string MinimumApiVersion = "4.6.0";
+        internal const string MinimumApiVersion = "4.11.0";
         internal const string ApiPrefix = "api/v4";
         internal const string AuthorizationHeader = "Authorization";
+
+        internal static readonly char[] UPPERCASE_SET = {
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+        };
+
+        internal static readonly char[] LOWERCASE_SET = {
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+        };
+
+        internal static readonly char[] NUMERIC_SET = {
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+        };
+
+        internal static readonly char[] SPECIAL_SET = {
+            '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '=', '?', '@', '[', '\\', ']', '^', '_', '{', '|',
+            '}', '~'
+        };
+
         internal static readonly Encoding ENCODING = Encoding.UTF8;
 
         #region Public-Endpoint
@@ -20,12 +38,6 @@ namespace Dracoon.Sdk.SdkInternal {
         #endregion
 
         #region User-Endpoint
-
-        #region Minimum version requirements
-
-        internal const string ApiAvatarFunctions = "4.11.0";
-
-        #endregion
 
         #region GET
 
@@ -85,7 +97,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #region Minimum version requirements
 
-        internal const string ApiUseHomeDefaultClassificationMinApiVersion = "4.9.0";
         internal const string ApiS3DirectUploadPossible = "4.15.0";
 
         #endregion
@@ -145,6 +156,13 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiGetGeneralConfig = ApiPrefix + "/config/info/general";
         internal const string ApiGetInfrastructureConfig = ApiPrefix + "/config/info/infrastructure";
         internal const string ApiGetDefaultsConfig = ApiPrefix + "/config/info/defaults";
+        internal const string ApiGetPasswordPolicies = ApiPrefix + "/config/info/policies/passwords";
+
+        #endregion
+
+        #region Minimum version requirements
+
+        internal const string ApiGetPasswordPoliciesMinimumVersion = "4.14.0";
 
         #endregion
 

@@ -1020,6 +1020,339 @@
 
   </members>
 
+  <members name="passwordPolicies">
+
+    <PasswordPolicies>
+      <summary>
+        This model stores the policies for the different password types.
+      </summary>
+    </PasswordPolicies>
+
+    <LoginPolicies>
+      <summary>
+        The policies for the login password.
+      </summary>
+    </LoginPolicies>
+
+    <SharePolicies>
+      <summary>
+        The policies for the share password.
+      </summary>
+    </SharePolicies>
+
+    <EncryptionPolicies>
+      <summary>
+        The policies for the encryption password.
+      </summary>
+    </EncryptionPolicies>
+
+  </members>
+
+  <members name="passwordLoginPolicies">
+
+    <PasswordLoginPolicies>
+      <summary>
+        This model stores the policies for the login password.
+      </summary>
+    </PasswordLoginPolicies>
+
+    <CharacterPolicies>
+      <summary>
+        The password containment definition.
+      </summary>
+    </CharacterPolicies>
+
+    <MinimumPasswordLength>
+      <summary>
+        The minimum password length.
+      </summary>
+    </MinimumPasswordLength>
+
+    <RejectDictionaryWords>
+      <summary>
+        Is <c>true</c> if dictionary words like "Password" are rejected. Otherwise <c>false</c>.
+      </summary>
+    </RejectDictionaryWords>
+
+    <RejectOwnUserInfo>
+      <summary>
+        Is <c>true</c> if own user information like "Firstname" or "Lastname" is rejected. Otherwise <c>false</c>.
+      </summary>
+    </RejectOwnUserInfo>
+
+    <RejectKeyboardPatterns>
+      <summary>
+        Is <c>true</c> if keyboard patterns like "qwer" or "asdf" are rejected. Otherwise <c>false</c>.
+      </summary>
+    </RejectKeyboardPatterns>
+
+    <NumberOfArchivedPasswords>
+      <summary>
+        Defines if the number of archived login password. If > 0 then the last n used password can't be used again.
+        If value = 0 then the archive is disabled.
+      </summary>
+    </NumberOfArchivedPasswords>
+
+    <PasswordExpirationPolicies>
+      <summary>
+        The expiration definitions for the login password. Is <c>null</c> if not set.
+      </summary>
+    </PasswordExpirationPolicies>
+
+    <LoginFailurePolicies>
+      <summary>
+        The retry definitions for entering the login password.
+      </summary>
+    </LoginFailurePolicies>
+
+    <UpdatedAt>
+      <summary>
+        Defines when the login password policies are updated last.
+      </summary>
+    </UpdatedAt>
+
+    <UpdatedBy>
+      <summary>
+        Defines who updated the login password policies last.
+      </summary>
+    </UpdatedBy>
+
+  </members>
+
+  <members name="passwordEncryptionPolicies">
+
+    <PasswordEncryptionPolicies>
+      <summary>
+        This model stores the policies for the encryption password.
+      </summary>
+    </PasswordEncryptionPolicies>
+
+    <CharacterPolicies>
+      <summary>
+        The password containment definition.
+      </summary>
+    </CharacterPolicies>
+
+    <MinimumPasswordLength>
+      <summary>
+        The minimum password length.
+      </summary>
+    </MinimumPasswordLength>
+
+    <RejectOwnUserInfo>
+      <summary>
+        Is <c>true</c> if own user information like "Firstname" or "Lastname" is rejected. Otherwise <c>false</c>.
+      </summary>
+    </RejectOwnUserInfo>
+
+    <RejectKeyboardPatterns>
+      <summary>
+        Is <c>true</c> if keyboard patterns like "qwer" or "asdf" are rejected. Otherwise <c>false</c>.
+      </summary>
+    </RejectKeyboardPatterns>
+
+    <UpdatedAt>
+      <summary>
+        Defines when the encryption password policies are updated last.
+      </summary>
+    </UpdatedAt>
+
+    <UpdatedBy>
+      <summary>
+        Defines who updated the encryption password policies last.
+      </summary>
+    </UpdatedBy>
+
+  </members>
+
+  <members name="passwordSharePolicies">
+
+    <PasswordSharePolicies>
+      <summary>
+        This model stores the policies for the share password.
+      </summary>
+    </PasswordSharePolicies>
+
+    <CharacterPolicies>
+      <summary>
+        The password containment definition.
+      </summary>
+    </CharacterPolicies>
+
+    <MinimumPasswordLength>
+      <summary>
+        The minimum password length.
+      </summary>
+    </MinimumPasswordLength>
+
+    <RejectDictionaryWords>
+      <summary>
+        Is <c>true</c> if dictionary words like "Password" are rejected. Otherwise <c>false</c>.
+      </summary>
+    </RejectDictionaryWords>
+
+    <RejectOwnUserInfo>
+      <summary>
+        Is <c>true</c> if own user information like "Firstname" or "Lastname" is rejected. Otherwise <c>false</c>.
+      </summary>
+    </RejectOwnUserInfo>
+
+    <RejectKeyboardPatterns>
+      <summary>
+        Is <c>true</c> if keyboard patterns like "qwer" or "asdf" are rejected. Otherwise <c>false</c>.
+      </summary>
+    </RejectKeyboardPatterns>
+
+    <UpdatedAt>
+      <summary>
+        Defines when the share password policies are updated last.
+      </summary>
+    </UpdatedAt>
+
+    <UpdatedBy>
+      <summary>
+        Defines who updated the share password policies last.
+      </summary>
+    </UpdatedBy>
+
+  </members>
+
+  <members name="passwordCharacterPolicies">
+
+    <PasswordCharacterPolicies>
+      <summary>
+        This model stores the policy for the character containment.
+      </summary>
+    </PasswordCharacterPolicies>
+
+    <PredefinedCharacterSets>
+      <summary>
+        List of character sets which must be contained.
+      </summary>
+    </PredefinedCharacterSets>
+
+    <NumberOfMustContainCharacteristics>
+      <summary>
+        Defines how much characteristics must be contained. 
+        This means if value is 2 and "PredefinedCharacterSets" hast 3 lists then the password must contain characters of 2 lists of the retrieved 3.
+      </summary>
+    </NumberOfMustContainCharacteristics>
+
+  </members>
+
+  <members name="passwordCharacterSet">
+
+    <PasswordCharacterSet>
+      <summary>
+        This model stores the character set definition.
+      </summary>
+    </PasswordCharacterSet>
+
+    <Set>
+      <summary>
+        A array of the allowed characters of this set.
+      </summary>
+    </Set>
+
+    <Type>
+      <summary>
+        The type of this set.
+      </summary>
+    </Type>
+
+  </members>
+
+  <members name="PasswordCharacterSetType">
+
+    <PasswordCharacterSetType>
+      <summary>
+        Defines the type of a character set.
+      </summary>
+    </PasswordCharacterSetType>
+
+    <None>
+      <summary>
+        Every character set.
+      </summary>
+    </None>
+
+    <Uppercase>
+      <summary>
+        Upper case characters set.
+      </summary>
+    </Uppercase>
+
+    <Lowercase>
+      <summary>
+        Lower case characters set.
+      </summary>
+    </Lowercase>
+
+    <Numeric>
+      <summary>
+        Numeric characters set.
+      </summary>
+    </Numeric>
+
+    <Special>
+      <summary>
+        Special characters set.
+      </summary>
+    </Special>
+
+  </members>
+
+  <members name="passwordExpiration">
+
+    <PasswordExpiration>
+      <summary>
+        This model stores the settings for the password expiration.
+      </summary>
+    </PasswordExpiration>
+
+    <IsEnabled>
+      <summary>
+        Is <c>true</c> if login password will expire. Otherwise <c>false</c>.
+      </summary>
+    </IsEnabled>
+
+    <ExpiresAfterDays>
+      <summary>
+        Defines how old login passwords can be (in Days).
+      </summary>
+    </ExpiresAfterDays>
+
+  </members>
+
+  <members name="passwordLoginFailurePolicies">
+
+    <PasswordLoginFailurePolicies>
+      <summary>
+        This model stores the settings for the retries of login input.
+      </summary>
+    </PasswordLoginFailurePolicies>
+
+    <IsEnabled>
+      <summary>
+        Is <c>true</c> if login tries are limited. Otherwise <c>false</c>.
+      </summary>
+    </IsEnabled>
+
+    <MaximumNumberOfLoginFailures>
+      <summary>
+        Defines how often the login can be tried until the first retry waiting period is started.
+      </summary>
+    </MaximumNumberOfLoginFailures>
+
+    <LoginRetryPeriodMinutes>
+      <summary>
+        Defines how many minutes must be waited until the next login can be tried. 
+        This time period is started after the maximum failed login tries are reached.
+      </summary>
+    </LoginRetryPeriodMinutes>
+
+  </members>
+
   <members name="serverDefaultSettings">
 
     <ServerDefaultSettings>

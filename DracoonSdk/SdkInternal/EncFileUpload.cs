@@ -27,13 +27,6 @@ namespace Dracoon.Sdk.SdkInternal {
         protected override Node StartUpload() {
             NotifyStarted(ActionId);
             ApiCreateFileUpload apiFileUploadRequest = FileMapper.ToApiCreateFileUpload(FileUploadRequest);
-            if (apiFileUploadRequest.Classification == null) {
-                try {
-                    Client.Executor.CheckApiServerVersion(ApiConfig.ApiUseHomeDefaultClassificationMinApiVersion);
-                } catch (DracoonApiException) {
-                    apiFileUploadRequest.Classification = 1;
-                }
-            }
 
             try {
                 apiFileUploadRequest.UseS3 = CheckUseS3();
@@ -117,11 +110,14 @@ namespace Dracoon.Sdk.SdkInternal {
                 byte[] buffer = new byte[DracoonClient.HttpConfig.ChunkSize];
                 int bytesRead = 0;
                 while ((bytesRead = InputStream.Read(buffer, 0, buffer.Length)) > 0) {
-                    ProcessEncryptedChunk(new Uri(UploadToken.UploadUrl), buffer, uploadedByteCount, bytesRead, cipher, false);
-                    uploadedByteCount += bytesRead;
+                    EncryptedDataContainer encryptedContainer = EncryptChunk(cipher, bytesRead, buffer, false);
+                    ProcessEncryptedChunk(new Uri(UploadToken.UploadUrl), encryptedContainer, uploadedByteCount, cipher, false);
+                    uploadedByteCount += encryptedContainer.Content.Length;
                 }
 
-                plainFileKey.Tag = ProcessEncryptedChunk(new Uri(UploadToken.UploadUrl), buffer, uploadedByteCount, bytesRead, cipher, true);
+                EncryptedDataContainer finalEncryptedContainer = EncryptChunk(cipher, bytesRead, buffer, true);
+                plainFileKey.Tag = ProcessEncryptedChunk(new Uri(UploadToken.UploadUrl), finalEncryptedContainer, uploadedByteCount, cipher, true);
+                uploadedByteCount += finalEncryptedContainer.Content.Length;
                 if (LastNotifiedProgressValue != uploadedByteCount) {
                     // Notify 100 percent progress
                     NotifyProgress(ActionId, uploadedByteCount, OptionalFileSize);
@@ -139,14 +135,13 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        private string ProcessEncryptedChunk(Uri uploadUrl, byte[] buffer, long uploadedByteCount, int bytesRead, FileEncryptionCipher cipher,
+        private string ProcessEncryptedChunk(Uri uploadUrl, EncryptedDataContainer encryptedContainer, long uploadedByteCount, FileEncryptionCipher cipher,
             bool isFinalBlock, int sendTry = 1) {
-            EncryptedDataContainer encryptedContainer = EncryptChunk(cipher, bytesRead, buffer, isFinalBlock);
             ApiUploadChunkResult chunkResult =
                 UploadChunkWebClient(uploadUrl, encryptedContainer.Content, uploadedByteCount, encryptedContainer.Content.Length);
             if (!FileHash.CompareFileHashes(chunkResult.Hash, encryptedContainer.Content, encryptedContainer.Content.Length)) {
                 if (sendTry <= 3) {
-                    return ProcessEncryptedChunk(uploadUrl, buffer, uploadedByteCount, bytesRead, cipher, isFinalBlock, sendTry + 1);
+                    return ProcessEncryptedChunk(uploadUrl, encryptedContainer, uploadedByteCount, cipher, isFinalBlock, sendTry + 1);
                 } else {
                     throw new DracoonNetIOException("The uploaded chunk hash and local chunk hash are not equal!");
                 }

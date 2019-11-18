@@ -140,6 +140,8 @@ namespace Dracoon.Sdk.SdkInternal {
 
         IRestRequest GetDefaultsSettings();
 
+        IRestRequest GetPasswordPolicies();
+
         #endregion
 
         #region Resources
