@@ -87,13 +87,6 @@ namespace Dracoon.Sdk.SdkInternal {
         protected virtual Node StartUpload() {
             NotifyStarted(ActionId);
             ApiCreateFileUpload apiFileUploadRequest = FileMapper.ToApiCreateFileUpload(FileUploadRequest);
-            if (apiFileUploadRequest.Classification == null) {
-                try {
-                    Client.Executor.CheckApiServerVersion(ApiConfig.ApiUseHomeDefaultClassificationMinApiVersion);
-                } catch (DracoonApiException) {
-                    apiFileUploadRequest.Classification = 1;
-                }
-            }
 
             try {
                 apiFileUploadRequest.UseS3 = CheckUseS3();

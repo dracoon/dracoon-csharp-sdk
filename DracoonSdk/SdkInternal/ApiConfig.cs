@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class ApiConfig {
-        internal const string MinimumApiVersion = "4.6.0";
+        internal const string MinimumApiVersion = "4.11.0";
         internal const string ApiPrefix = "api/v4";
         internal const string AuthorizationHeader = "Authorization";
 
@@ -38,12 +38,6 @@ namespace Dracoon.Sdk.SdkInternal {
         #endregion
 
         #region User-Endpoint
-
-        #region Minimum version requirements
-
-        internal const string ApiAvatarFunctions = "4.11.0";
-
-        #endregion
 
         #region GET
 
@@ -103,7 +97,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #region Minimum version requirements
 
-        internal const string ApiUseHomeDefaultClassificationMinApiVersion = "4.9.0";
         internal const string ApiS3DirectUploadPossible = "4.15.0";
 
         #endregion
