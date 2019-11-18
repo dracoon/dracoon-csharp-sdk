@@ -12,7 +12,7 @@ A library to access the DRACOON REST API.
 #### Minimum Requirements
 
 .NET version: 4.5.2\
-API version: 4.6.0
+API version: 4.11.0
 
 #### Download
 
