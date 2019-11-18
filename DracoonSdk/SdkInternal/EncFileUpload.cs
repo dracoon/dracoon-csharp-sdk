@@ -117,6 +117,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
                 EncryptedDataContainer finalEncryptedContainer = EncryptChunk(cipher, bytesRead, buffer, true);
                 plainFileKey.Tag = ProcessEncryptedChunk(new Uri(UploadToken.UploadUrl), finalEncryptedContainer, uploadedByteCount, cipher, true);
+                uploadedByteCount += finalEncryptedContainer.Content.Length;
                 if (LastNotifiedProgressValue != uploadedByteCount) {
                     // Notify 100 percent progress
                     NotifyProgress(ActionId, uploadedByteCount, OptionalFileSize);
