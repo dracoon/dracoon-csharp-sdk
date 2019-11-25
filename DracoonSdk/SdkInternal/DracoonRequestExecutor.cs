@@ -13,7 +13,8 @@ namespace Dracoon.Sdk.SdkInternal {
     internal class DracoonRequestExecutor : IRequestExecutor {
         internal enum RequestType {
             GetServerVersion, GetServerTime, SetUserKeyPair, GetCustomerAccount, GetUserAccount,
-            GetUserKeyPair, DeleteUserKeyPair, GetUserAvatar, DeleteUserAvatar, PostUserAvatar,
+            GetUserKeyPair, DeleteUserKeyPair, GetUserAvatar, DeleteUserAvatar, PostUserAvatar, 
+            GetUserProfileAttributes, PutUserProfileAttributes, DeleteUserProfileAttributes,
             GetResourcesAvatar, GetNodes, GetNode, PostRoom, PostFolder,
             PutFolder, PutRoom, PutEnableRoomEncryption, PutFile, DeleteNodes,
             PostDownloadToken, GetFileKey, PostUploadToken, PutCompleteUpload, PutCompleteS3Upload,

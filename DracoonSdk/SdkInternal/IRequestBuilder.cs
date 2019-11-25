@@ -31,6 +31,12 @@ namespace Dracoon.Sdk.SdkInternal {
 
         IRestRequest DeleteUserKeyPair();
 
+        IRestRequest GetUserProfileAttributes();
+
+        IRestRequest PutUserProfileAttributes(ApiAddOrUpdateUserProfileAttributeRequest addOrUpdateParam);
+
+        IRestRequest DeleteUserProfileAttributes(string attributeKey);
+
         IRestRequest DeleteAvatar();
 
         WebClient ProvideAvatarDownloadWebClient();

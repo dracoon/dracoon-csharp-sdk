@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using RestSharp;
@@ -14,6 +15,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using Newtonsoft.Json;
 using System.Text;
+using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class DracoonAccountImpl : IAccount {
@@ -163,6 +165,46 @@ namespace Dracoon.Sdk.SdkInternal {
             }
 
             return UserMapper.FromApiAvatarInfo(resultAvatarInfo);
+        }
+
+        #endregion
+
+        #region Profile-Attributes
+
+        public UserProfileAttributeList GetProfileAttributes() {
+            _client.Executor.CheckApiServerVersion();
+
+            IRestRequest request = _client.Builder.GetUserProfileAttributes();
+            ApiUserProfileAttributeList apiUserProfileAttributes = _client.Executor.DoSyncApiCall<ApiUserProfileAttributeList>(request, RequestType.GetUserProfileAttributes);
+            return UserMapper.FromApiUserProfileAttributeList(apiUserProfileAttributes);
+        }
+
+        public void AddOrUpdateProfileAttributes(List<UserProfileAttribute> attributes) {
+            _client.Executor.CheckApiServerVersion();
+
+            #region Parameter Validation
+
+            List<string> attributeKeys = new List<string>();
+            foreach (UserProfileAttribute currentAttribute in attributes) {
+                if (attributeKeys.Contains(currentAttribute.Key)) {
+                    throw new ArgumentException("List cannot contain attributes with same attribute key.");
+                }
+                attributeKeys.Add(currentAttribute.Key);
+            }
+
+            #endregion
+
+            ApiAddOrUpdateUserProfileAttributeRequest apiAttributes = UserMapper.ToApiAddOrUpdateUserProfileAttributeRequest(attributes);
+            IRestRequest request = _client.Builder.PutUserProfileAttributes(apiAttributes);
+            _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.PutUserProfileAttributes);
+        }
+
+        public void DeleteProfileAttribute(string attributeKey) {
+            _client.Executor.CheckApiServerVersion();
+
+            IRestRequest request = _client.Builder.DeleteUserProfileAttributes(attributeKey);
+            _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.DeleteUserProfileAttributes);
+
         }
 
         #endregion

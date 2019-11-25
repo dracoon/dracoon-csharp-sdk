@@ -1,4 +1,5 @@
-﻿using Dracoon.Sdk.Model;
+﻿using System.Collections.Generic;
+using Dracoon.Sdk.Model;
 using System.Drawing;
 
 namespace Dracoon.Sdk {
@@ -34,5 +35,11 @@ namespace Dracoon.Sdk {
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/UpdateAvatar/*'/>
         AvatarInfo UpdateAvatar(Image newAvatar);
+
+        UserProfileAttributeList GetProfileAttributes();
+
+        void AddOrUpdateProfileAttributes(List<UserProfileAttribute> attributes);
+
+        void DeleteProfileAttribute(string attributeKey);
     }
 }

@@ -47,6 +47,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiGetAuthenticatedPing = ApiPrefix + "/user/ping";
         internal const string ApiGetAvatar = ApiPrefix + "/user/account/avatar";
         internal const string ApiDeleteAvatar = ApiPrefix + "/user/account/avatar";
+        internal const string ApiGetUserProfileAttributes = ApiPrefix + "/user/profileAttributes";
 
         #endregion
 
@@ -57,9 +58,16 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #endregion
 
+        #region PUT
+
+        internal const string ApiPutUserProfileAttributes = ApiPrefix + "/user/profileAttributes";
+
+        #endregion
+
         #region DELETE
 
         internal const string ApiDeleteUserKeyPair = ApiPrefix + "/user/account/keypair";
+        internal const string ApiDeleteUserProfileAttributes = ApiPrefix + "/user/profileAttributes/{key}";
 
         #endregion
 

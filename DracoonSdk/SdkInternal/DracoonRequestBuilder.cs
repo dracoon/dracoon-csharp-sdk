@@ -108,6 +108,12 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        public IRestRequest GetUserProfileAttributes() {
+            RestRequest request = new RestRequest(ApiConfig.ApiGetUserProfileAttributes, Method.GET);
+            SetGeneralRestValues(request, true);
+            return request;
+        }
+
         #endregion
 
         #region POST
@@ -120,11 +126,28 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #endregion
 
+        #region PUT
+
+        public IRestRequest PutUserProfileAttributes(ApiAddOrUpdateUserProfileAttributeRequest addOrUpdateParam) {
+            RestRequest request = new RestRequest(ApiConfig.ApiPutUserProfileAttributes, Method.PUT);
+            SetGeneralRestValues(request, true, addOrUpdateParam);
+            return request;
+        }
+        
+        #endregion
+
         #region DELETE
 
         IRestRequest IRequestBuilder.DeleteUserKeyPair() {
             RestRequest request = new RestRequest(ApiConfig.ApiDeleteUserKeyPair, Method.DELETE);
             SetGeneralRestValues(request, true);
+            return request;
+        }
+
+        public IRestRequest DeleteUserProfileAttributes(string attributeKey) {
+            RestRequest request = new RestRequest(ApiConfig.ApiDeleteUserProfileAttributes, Method.DELETE);
+            SetGeneralRestValues(request, true);
+            request.AddUrlSegment("key", attributeKey);
             return request;
         }
 
