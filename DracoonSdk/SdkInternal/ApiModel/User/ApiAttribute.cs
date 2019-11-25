@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 
 namespace Dracoon.Sdk.SdkInternal.ApiModel {
-    public class ApiUserProfileAttribute {
+    internal class ApiAttribute {
         [JsonProperty("key", NullValueHandling = NullValueHandling.Ignore)]
         public string Key { get; set; }
         [JsonProperty("value", NullValueHandling = NullValueHandling.Ignore)]

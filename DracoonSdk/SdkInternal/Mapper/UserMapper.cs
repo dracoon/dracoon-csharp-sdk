@@ -4,6 +4,7 @@ using Dracoon.Sdk.SdkInternal.ApiModel;
 using System;
 using System.Collections.Generic;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
+using Attribute = Dracoon.Sdk.Model.Attribute;
 
 namespace Dracoon.Sdk.SdkInternal.Mapper {
     internal static class UserMapper {
@@ -121,62 +122,5 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             return info;
         }
 
-        internal static UserProfileAttributeList FromApiUserProfileAttributeList(ApiUserProfileAttributeList apiUserProfileAttributeList) {
-            if (apiUserProfileAttributeList == null) {
-                return null;
-            }
-
-            UserProfileAttributeList userProfileAttributeList = new UserProfileAttributeList() {
-                Offset = apiUserProfileAttributeList.Range.Offset,
-                Limit = apiUserProfileAttributeList.Range.Limit,
-                Total = apiUserProfileAttributeList.Range.Total,
-                Items = new List<UserProfileAttribute>()
-            };
-            foreach (ApiUserProfileAttribute currentAttribute in apiUserProfileAttributeList.Items) {
-                userProfileAttributeList.Items.Add(FromApiUserProfileAttribute(currentAttribute));
-            }
-
-            return userProfileAttributeList;
-        }
-
-        private static UserProfileAttribute FromApiUserProfileAttribute(ApiUserProfileAttribute apiUserProfileAttribute) {
-            if (apiUserProfileAttribute == null) {
-                return null;
-            }
-
-            UserProfileAttribute userProfileAttribute = new UserProfileAttribute() {
-                Key = apiUserProfileAttribute.Key,
-                Value = apiUserProfileAttribute.Value
-            };
-            return userProfileAttribute;
-        }
-
-        internal static ApiAddOrUpdateUserProfileAttributeRequest ToApiAddOrUpdateUserProfileAttributeRequest(List<UserProfileAttribute> attributes) {
-            if (attributes == null) {
-                return null;
-            }
-
-            ApiAddOrUpdateUserProfileAttributeRequest apiRequest = new ApiAddOrUpdateUserProfileAttributeRequest() {
-                Items = new List<ApiUserProfileAttribute>()
-            };
-
-            foreach (UserProfileAttribute currentAttribute in attributes) {
-                apiRequest.Items.Add(ToApiUserProfileAttribute(currentAttribute));
-            }
-
-            return apiRequest;
-        }
-
-        private static ApiUserProfileAttribute ToApiUserProfileAttribute(UserProfileAttribute attribute) {
-            if (attribute == null) {
-                return null;
-            }
-
-            ApiUserProfileAttribute apiAttribute = new ApiUserProfileAttribute() {
-                Key = attribute.Key,
-                Value = attribute.Value
-            };
-            return apiAttribute;
-        }
     }
 }

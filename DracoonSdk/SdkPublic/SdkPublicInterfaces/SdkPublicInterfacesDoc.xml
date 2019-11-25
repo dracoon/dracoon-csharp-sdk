@@ -154,6 +154,74 @@
         <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
       </exception>
     </UpdateAvatar>
+    <GetUserProfileAttributeList>
+      <summary>
+        Get the custom attributes for the current user.
+      </summary>
+      <returns>
+        List of custom attributes. See also <seealso cref="Dracoon.Sdk.Model.AttributeList"/>
+      </returns>
+      <exception cref="Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+    </GetUserProfileAttributeList>
+    <GetUserProfileAttribute>
+      <summary>
+        Get a custom attribute for the current user.
+      </summary>
+      <param name="attributeKey">
+        The key of the attribute. (attributeKey must be not null or empty or whitespace)
+      </param>
+      <returns>
+        The custom attribute for the current user given by the attribute key. See also <seealso cref="Dracoon.Sdk.Model.Attribute"/>
+      </returns>
+      <exception cref="Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </GetUserProfileAttribute>
+    <AddOrUpdateUserProfileAttributes>
+      <summary>
+        Add a new custom attribute for the current user or update an existing attribute with the same key.
+      </summary>
+      <param name="attributes">
+        The attributes which should be added or updated.
+      </param>
+      <exception cref="Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddOrUpdateUserProfileAttributes>
+    <DeleteProfileAttribute>
+      <summary>
+        Delete a custom attribute with the given key.
+      </summary>
+      <param name="attributeKey">
+        The key of the attribute which should be deleted.
+      </param>
+      <exception cref="Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </DeleteProfileAttribute>
   </members>
 
   <members name="iLog">

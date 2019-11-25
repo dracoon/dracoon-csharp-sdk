@@ -56,6 +56,65 @@
 
   </members>
 
+  <member name="attributeList">
+
+    <AttributeList>
+      <summary>
+        This model stores custom defined attributes. The list may be a paginated response.
+        <para>
+          <see cref="Dracoon.Sdk.Model.AttributeList.Offset"/> and <see cref="Dracoon.Sdk.Model.AttributeList.Limit"/> can be used to get the start and length of the page.
+        </para>
+      </summary>
+    </AttributeList>
+
+    <Offset>
+      <summary>
+        The index of the first returned item of the possible total list.
+      </summary>
+    </Offset>
+
+    <Limit>
+      <summary>
+        The number of returned items.
+      </summary>
+    </Limit>
+
+    <Total>
+      <summary>
+        The total number of items which can be requested.
+      </summary>
+    </Total>
+
+    <Items>
+      <summary>
+        The returned upload share items. See also <seealso cref="Dracoon.Sdk.Model.UploadShare"/>
+      </summary>
+    </Items>
+
+  </member>
+
+  <member name="attribute">
+
+    <AttributeList>
+      <summary>
+        This model stores a single custom defined attribute.
+      </summary>
+    </AttributeList>
+
+    <Key>
+      <summary>
+        The attribute key name.
+      </summary>
+    </Key>
+
+    <Value>
+      <summary>
+        The attribute value.
+      </summary>
+    </Value>
+
+  </member>
+
   <members name="customerAccount">
 
     <CustomerAccount>

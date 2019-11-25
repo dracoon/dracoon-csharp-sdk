@@ -71,7 +71,7 @@
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiS3Status.cs" />
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiS3Url.cs" />
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiS3Urls.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiAddOrUpdateUserProfileAttributeRequest.cs" />
+    <Compile Include="SdkInternal\ApiModel\Requests\ApiAddOrUpdateAttributeRequest.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiDeletePreviousVersionsRequest.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiEnableRoomEncryptionRequest.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiGetS3Urls.cs" />
@@ -131,8 +131,8 @@
     <Compile Include="SdkInternal\ApiModel\User\ApiUserInfo.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserKeyPair.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserPrivateKey.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiUserProfileAttribute.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiUserProfileAttributeList.cs" />
+    <Compile Include="SdkInternal\ApiModel\User\ApiAttribute.cs" />
+    <Compile Include="SdkInternal\ApiModel\User\ApiAttributeList.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserPublicKey.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserRole.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserRoleList.cs" />
@@ -153,6 +153,7 @@
     <Compile Include="SdkInternal\IInternalDracoonClient.cs" />
     <Compile Include="SdkInternal\IRequestBuilder.cs" />
     <Compile Include="SdkInternal\IRequestExecutor.cs" />
+    <Compile Include="SdkInternal\Mapper\AttributeMapper.cs" />
     <Compile Include="SdkInternal\Mapper\SettingsMapper.cs" />
     <Compile Include="SdkInternal\Mapper\CryptoErrorMapper.cs" />
     <Compile Include="SdkInternal\Mapper\CustomerMapper.cs" />
@@ -216,8 +217,8 @@
     <Compile Include="SdkPublic\Model\IFileDownloadCallback.cs" />
     <Compile Include="SdkPublic\Model\IFileUploadCallback.cs" />
     <Compile Include="SdkPublic\Model\ServerInfrastructureSettings.cs" />
-    <Compile Include="SdkPublic\Model\UserProfileAttribute.cs" />
-    <Compile Include="SdkPublic\Model\UserProfileAttributeList.cs" />
+    <Compile Include="SdkPublic\Model\Attribute.cs" />
+    <Compile Include="SdkPublic\Model\AttributeList.cs" />
     <Compile Include="SdkPublic\Model\UserRequests\CopyNode.cs" />
     <Compile Include="SdkPublic\Model\UserRequests\DeletePreviousVersionsRequest.cs" />
     <Compile Include="SdkPublic\Model\UserRequests\EnableRoomEncryptionRequest.cs" />

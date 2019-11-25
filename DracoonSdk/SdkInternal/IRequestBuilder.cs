@@ -33,7 +33,9 @@ namespace Dracoon.Sdk.SdkInternal {
 
         IRestRequest GetUserProfileAttributes();
 
-        IRestRequest PutUserProfileAttributes(ApiAddOrUpdateUserProfileAttributeRequest addOrUpdateParam);
+        IRestRequest GetUserProfileAttribute(string attributeKey);
+
+        IRestRequest PutUserProfileAttributes(ApiAddOrUpdateAttributeRequest addOrUpdateParam);
 
         IRestRequest DeleteUserProfileAttributes(string attributeKey);
 

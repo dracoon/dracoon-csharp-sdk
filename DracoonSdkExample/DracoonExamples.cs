@@ -10,6 +10,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
+using Attribute = Dracoon.Sdk.Model.Attribute;
 
 namespace Dracoon.Sdk.Example {
     public static class DracoonExamples {
@@ -110,6 +111,32 @@ namespace Dracoon.Sdk.Example {
         private static void UpdateUserAvatar() {
             Image newAvatar = Image.FromFile("C:\\temp\\avatar.jpg");
             dc.Account.UpdateAvatar(newAvatar);
+        }
+
+        private static void GetUserProfileAttributes() {
+            AttributeList attributes = dc.Account.GetUserProfileAttributeList();
+            foreach (Attribute current in attributes.Items) {
+                Console.WriteLine("Attribute key: " + current.Key + "; Attribute value: " + current.Value);
+            }
+        }
+
+        private static void GetUserProfileAttribute() {
+            Attribute attribute = dc.Account.GetUserProfileAttribute("anyKey");
+            Console.WriteLine("Single attribute key: " + attribute.Key + "; Single attribute value: " + attribute.Value);
+        }
+
+        private static void AddUserProfileAttribute() {
+            List<Attribute> attributes = new List<Attribute>() {
+                new Attribute() {
+                    Key = "anyKey",
+                    Value = "anyValue"
+                }
+            };
+            dc.Account.AddOrUpdateUserProfileAttributes(attributes);
+        }
+
+        private static void DeleteUserProfileAttribute() {
+            dc.Account.DeleteProfileAttribute("anyKey");
         }
 
         #endregion

@@ -36,10 +36,16 @@ namespace Dracoon.Sdk {
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/UpdateAvatar/*'/>
         AvatarInfo UpdateAvatar(Image newAvatar);
 
-        UserProfileAttributeList GetProfileAttributes();
+        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/GetUserProfileAttributeList/*'/>
+        AttributeList GetUserProfileAttributeList();
 
-        void AddOrUpdateProfileAttributes(List<UserProfileAttribute> attributes);
+        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/GetUserProfileAttribute/*'/>
+        Attribute GetUserProfileAttribute(string attributeKey);
 
+        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/AddOrUpdateUserProfileAttributes/*'/>
+        void AddOrUpdateUserProfileAttributes(List<Attribute> attributes);
+
+        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/DeleteProfileAttribute/*'/>
         void DeleteProfileAttribute(string attributeKey);
     }
 }

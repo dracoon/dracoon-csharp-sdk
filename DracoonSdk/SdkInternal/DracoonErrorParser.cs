@@ -314,6 +314,8 @@ namespace Dracoon.Sdk.SdkInternal {
                     return DracoonApiCode.SERVER_USER_AVATAR_NOT_FOUND;
                 case -70501:
                     return DracoonApiCode.SERVER_USER_NOT_FOUND;
+                case -70550:
+                    return DracoonApiCode.SERVER_ATTRIBUTE_NOT_FOUND;
                 case -90034:
                     return DracoonApiCode.SERVER_S3_UPLOAD_ID_NOT_FOUND;
                 default:

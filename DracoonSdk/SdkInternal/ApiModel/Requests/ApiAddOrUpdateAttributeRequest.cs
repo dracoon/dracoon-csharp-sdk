@@ -2,8 +2,8 @@
 using Newtonsoft.Json;
 
 namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
-    public class ApiAddOrUpdateUserProfileAttributeRequest {
+    internal class ApiAddOrUpdateAttributeRequest {
         [JsonProperty("items", NullValueHandling = NullValueHandling.Ignore)]
-        public List<ApiUserProfileAttribute> Items { get; set; }
+        public List<ApiAttribute> Items { get; set; }
     }
 }

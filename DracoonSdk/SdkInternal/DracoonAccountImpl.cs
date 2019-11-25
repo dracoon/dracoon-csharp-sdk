@@ -16,6 +16,8 @@ using System.Linq;
 using Newtonsoft.Json;
 using System.Text;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
+using Dracoon.Sdk.SdkInternal.Validator;
+using Attribute = Dracoon.Sdk.Model.Attribute;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class DracoonAccountImpl : IAccount {
@@ -171,30 +173,45 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #region Profile-Attributes
 
-        public UserProfileAttributeList GetProfileAttributes() {
+        public AttributeList GetUserProfileAttributeList() {
             _client.Executor.CheckApiServerVersion();
 
             IRestRequest request = _client.Builder.GetUserProfileAttributes();
-            ApiUserProfileAttributeList apiUserProfileAttributes = _client.Executor.DoSyncApiCall<ApiUserProfileAttributeList>(request, RequestType.GetUserProfileAttributes);
-            return UserMapper.FromApiUserProfileAttributeList(apiUserProfileAttributes);
+            ApiAttributeList apiAttributeList = _client.Executor.DoSyncApiCall<ApiAttributeList>(request, RequestType.GetUserProfileAttributes);
+            return AttributeMapper.FromApiAttributeList(apiAttributeList);
         }
 
-        public void AddOrUpdateProfileAttributes(List<UserProfileAttribute> attributes) {
+        public Attribute GetUserProfileAttribute(string attributeKey) {
+            _client.Executor.CheckApiServerVersion();
+
+            IRestRequest request = _client.Builder.GetUserProfileAttribute(attributeKey);
+            ApiAttributeList apiAttributeList = _client.Executor.DoSyncApiCall<ApiAttributeList>(request, RequestType.GetUserProfileAttributes);
+            if (apiAttributeList.Range.Total == 0) {
+                throw new DracoonApiException(DracoonApiCode.SERVER_ATTRIBUTE_NOT_FOUND);
+            }
+
+            return AttributeMapper.FromApiAttributeList(apiAttributeList).Items[0];
+        }
+
+        public void AddOrUpdateUserProfileAttributes(List<Attribute> attributes) {
             _client.Executor.CheckApiServerVersion();
 
             #region Parameter Validation
 
             List<string> attributeKeys = new List<string>();
-            foreach (UserProfileAttribute currentAttribute in attributes) {
+            foreach (Attribute currentAttribute in attributes) {
+                currentAttribute.Key.MustNotNullOrEmptyOrWhitespace(nameof(currentAttribute.Key));
+                currentAttribute.Value.MustNotNull(nameof(currentAttribute.Value));
                 if (attributeKeys.Contains(currentAttribute.Key)) {
                     throw new ArgumentException("List cannot contain attributes with same attribute key.");
                 }
+
                 attributeKeys.Add(currentAttribute.Key);
             }
 
             #endregion
 
-            ApiAddOrUpdateUserProfileAttributeRequest apiAttributes = UserMapper.ToApiAddOrUpdateUserProfileAttributeRequest(attributes);
+            ApiAddOrUpdateAttributeRequest apiAttributes = AttributeMapper.ToApiAddOrUpdateAttributeRequest(attributes);
             IRestRequest request = _client.Builder.PutUserProfileAttributes(apiAttributes);
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.PutUserProfileAttributes);
         }
@@ -202,9 +219,14 @@ namespace Dracoon.Sdk.SdkInternal {
         public void DeleteProfileAttribute(string attributeKey) {
             _client.Executor.CheckApiServerVersion();
 
+            #region Parameter Validation
+
+            attributeKey.MustNotNullOrEmptyOrWhitespace(nameof(attributeKey));
+
+            #endregion
+
             IRestRequest request = _client.Builder.DeleteUserProfileAttributes(attributeKey);
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.DeleteUserProfileAttributes);
-
         }
 
         #endregion

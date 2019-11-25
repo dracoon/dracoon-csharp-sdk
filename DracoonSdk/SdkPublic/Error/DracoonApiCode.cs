@@ -277,6 +277,9 @@ namespace Dracoon.Sdk.Error {
         public static readonly DracoonApiCode SERVER_FILE_KEY_NOT_FOUND = new DracoonApiCode(5552, "Encryption file key could not be found.");
         // CODES: -70028
         public static readonly DracoonApiCode SERVER_USER_AVATAR_NOT_FOUND = new DracoonApiCode(5553, "Avatar for this user could not be found.");
+        // CODES: -70550
+        public static readonly DracoonApiCode SERVER_ATTRIBUTE_NOT_FOUND = new DracoonApiCode(5554, "Attribute not found.");
+
         #endregion
 
         #region GROUPS
