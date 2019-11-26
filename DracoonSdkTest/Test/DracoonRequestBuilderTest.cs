@@ -10,6 +10,7 @@ using RestSharp;
 using System;
 using System.Net;
 using System.Text;
+using Telerik.JustMock.AutoMock.Ninject.Activation;
 using Xunit;
 
 namespace Dracoon.Sdk.UnitTest.Test {
@@ -176,6 +177,60 @@ namespace Dracoon.Sdk.UnitTest.Test {
 
             // ASSERT
             Assert.Equal(expected, actual, new WebClientComparer());
+        }
+
+        [Fact]
+        public void User_GetUserProfileAttributes() {
+            // ARRANGE
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.GetUserProfileAttributes();
+
+            // ACT
+            IRestRequest actual = builder.GetUserProfileAttributes();
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void User_GetUserProfileAttribute() {
+            // ARRANGE
+            string attributeKey = FactoryAttribute.AttributeList.Items[0].Key;
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.GetUserProfileAttribute(attributeKey);
+
+            // ACT
+            IRestRequest actual = builder.GetUserProfileAttribute(attributeKey);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void User_AddOrUpdateUserProfileAttributes() {
+            // ARRANGE
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.PutUserProfileAttributes(FactoryAttribute.ApiAddOrUpdateAttributeRequest);
+
+            // ACT
+            IRestRequest actual = builder.PutUserProfileAttributes(FactoryAttribute.ApiAddOrUpdateAttributeRequest);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void User_DeleteUserProfileAttribute() {
+            // ARRANGE
+            string attributeKey = FactoryAttribute.AttributeList.Items[0].Key;
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.DeleteUserProfileAttributes(attributeKey);
+
+            // ACT
+            IRestRequest actual = builder.DeleteUserProfileAttributes(attributeKey);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
         }
 
         #endregion

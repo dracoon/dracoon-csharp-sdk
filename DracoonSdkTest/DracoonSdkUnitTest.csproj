@@ -95,12 +95,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factory\FactoryAttribute.cs" />
     <Compile Include="Factory\FactoryClients.cs" />
     <Compile Include="Factory\FactoryRestSharp.cs" />
     <Compile Include="Factory\FactoryServer.cs" />
     <Compile Include="Factory\FileDownloadCallbackMock.cs" />
     <Compile Include="Factory\FileUploadCallbackMock.cs" />
     <Compile Include="Test\DracoonClientTest.cs" />
+    <Compile Include="Test\Mapper\AttributeMapperTest.cs" />
     <Compile Include="Test\OAuth\OAuthClientTest.cs" />
     <Compile Include="Test\OAuth\OAuthHelperTest.cs" />
     <Compile Include="Test\DracoonAuthTest.cs" />
@@ -138,6 +140,7 @@
     <Compile Include="Test\Util\EnumConverterTest.cs" />
     <Compile Include="Test\Util\FileHashTest.cs" />
     <Compile Include="Test\Validator\ValidatorExtensionsTest.cs" />
+    <Compile Include="XUnitComparer\AttributeComparer.cs" />
     <Compile Include="XUnitComparer\CompareHelper.cs" />
     <Compile Include="XUnitComparer\CustomerComparer.cs" />
     <Compile Include="XUnitComparer\FileComparer.cs" />

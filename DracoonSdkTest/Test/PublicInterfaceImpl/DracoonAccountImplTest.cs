@@ -16,9 +16,12 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Text;
+using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
+using Dracoon.Sdk.SdkInternal.Validator;
 using Telerik.JustMock;
 using Xunit;
 using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
+using Attribute = Dracoon.Sdk.Model.Attribute;
 
 namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
     public class DracoonAccountImplTest {
@@ -414,6 +417,105 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Assert(c.Builder);
             Mock.Assert(c.Executor);
             ms.Close();
+        }
+
+        #endregion
+
+        #region GetUserProfileAttributeList
+
+        [Fact]
+        public void GetUserProfileAttributeList() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl a = new DracoonAccountImpl(c);
+            Mock.Arrange(() => c.Builder.GetUserProfileAttributes()).Returns(FactoryRestSharp.GetUserProfileAttributes()).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiAttributeList>(Arg.IsAny<IRestRequest>(), RequestType.GetUserProfileAttributes, 0))
+                .Returns(FactoryAttribute.ApiAttributeList);
+            Mock.Arrange(() => AttributeMapper.FromApiAttributeList(Arg.IsAny<ApiAttributeList>())).Returns(FactoryAttribute.AttributeList).Occurs(1);
+
+            // ACT
+            AttributeList actual = a.GetUserProfileAttributeList();
+
+            // ASSERT
+            Assert.NotNull(actual);
+            Mock.Assert(() => AttributeMapper.FromApiAttributeList(Arg.IsAny<ApiAttributeList>()));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
+
+        #region GetUserProfileAttribute
+
+        [Fact]
+        public void GetUserProfileAttribute() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl a = new DracoonAccountImpl(c);
+            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Builder.GetUserProfileAttribute(Arg.AnyString)).Returns(FactoryRestSharp.GetUserProfileAttribute(FactoryAttribute.AttributeList.Items[0].Key)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiAttributeList>(Arg.IsAny<IRestRequest>(), RequestType.GetUserProfileAttributes, 0))
+                .Returns(FactoryAttribute.ApiAttributeList);
+            Mock.Arrange(() => AttributeMapper.FromApiAttributeList(Arg.IsAny<ApiAttributeList>())).Returns(FactoryAttribute.AttributeList).Occurs(1);
+
+            // ACT
+            Attribute actual = a.GetUserProfileAttribute(FactoryAttribute.AttributeList.Items[0].Key);
+
+            // ASSERT
+            Assert.NotNull(actual);
+            Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
+            Mock.Assert(() => AttributeMapper.FromApiAttributeList(Arg.IsAny<ApiAttributeList>()));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
+
+        #region AddOrUpdateUserProfileAttributes
+
+        [Fact]
+        public void AddOrUpdateUserProfileAttributes() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl a = new DracoonAccountImpl(c);
+            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().OccursAtLeast(1);
+            Mock.Arrange(() => Arg.AnyString.MustNotNull(Arg.AnyString)).DoNothing().OccursAtLeast(1);
+            Mock.Arrange(() => c.Builder.PutUserProfileAttributes(Arg.IsAny<ApiAddOrUpdateAttributeRequest>()))
+                .Returns(FactoryRestSharp.PutUserProfileAttributes()).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.PutUserProfileAttributes, 0))
+                .DoNothing().Occurs(1);
+
+            // ACT
+            a.AddOrUpdateUserProfileAttributes(FactoryAttribute.AttributeList.Items);
+
+            // ASSERT
+            Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
+            Mock.Assert(() => Arg.AnyString.MustNotNull(Arg.AnyString));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
+
+        #region DeleteProfileAttribute
+
+        [Fact]
+        public void DeleteProfileAttribute() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl a = new DracoonAccountImpl(c);
+            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Builder.DeleteUserProfileAttributes(Arg.AnyString)).Returns(FactoryRestSharp.DeleteUserProfileAttribute(FactoryAttribute.AttributeList.Items[0].Key)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.DeleteUserProfileAttributes, 0))
+                .DoNothing().Occurs(1);
+
+            // ACT
+            a.DeleteProfileAttribute(FactoryAttribute.AttributeList.Items[0].Key);
+
+            // ASSERT
+            Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
         }
 
         #endregion

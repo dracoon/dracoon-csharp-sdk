@@ -184,6 +184,12 @@ namespace Dracoon.Sdk.SdkInternal {
         public Attribute GetUserProfileAttribute(string attributeKey) {
             _client.Executor.CheckApiServerVersion();
 
+            #region Parameter Validation
+
+            attributeKey.MustNotNullOrEmptyOrWhitespace(nameof(attributeKey));
+
+            #endregion
+
             IRestRequest request = _client.Builder.GetUserProfileAttribute(attributeKey);
             ApiAttributeList apiAttributeList = _client.Executor.DoSyncApiCall<ApiAttributeList>(request, RequestType.GetUserProfileAttributes);
             if (apiAttributeList.Range.Total == 0) {

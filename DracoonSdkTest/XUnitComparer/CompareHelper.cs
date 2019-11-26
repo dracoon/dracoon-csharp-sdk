@@ -3,6 +3,7 @@ using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using RestSharp;
 using System.Collections.Generic;
 using System.Net;
+using Dracoon.Sdk.SdkInternal.ApiModel;
 
 namespace Dracoon.Sdk.UnitTest.XUnitComparer {
     internal static class CompareHelper {
@@ -161,6 +162,40 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                     return false;
                 }
             }
+            return true;
+        }
+
+        internal static bool ListIsEqual(List<Attribute> x, List<Attribute> y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if (x.Count != y.Count) {
+                return false;
+            }
+
+            for (int i = 0; i < x.Count; i++) {
+                if (!x[i].Key.Equals(y[i].Key) || !x[i].Value.Equals(y[i].Value)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        internal static bool ListIsEqual(List<ApiAttribute> x, List<ApiAttribute> y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if (x.Count != y.Count) {
+                return false;
+            }
+
+            for (int i = 0; i < x.Count; i++) {
+                if (!x[i].Key.Equals(y[i].Key) || !x[i].Value.Equals(y[i].Value)) {
+                    return false;
+                }
+            }
+
             return true;
         }
 

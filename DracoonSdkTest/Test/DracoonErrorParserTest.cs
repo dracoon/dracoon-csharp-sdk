@@ -96,6 +96,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
         [InlineData(RequestType.GetAuthenticatedPing, -80009, new string[] { }, new string[] { }, 3801)]
         [InlineData(RequestType.GetAuthenticatedPing, -80018, new string[] { }, new string[] { }, 3006)]
         [InlineData(RequestType.GetAuthenticatedPing, -80019, new string[] { }, new string[] { }, 3007)]
+        [InlineData(RequestType.GetAuthenticatedPing, -80023, new string[] { }, new string[] { }, 3009)]
         [InlineData(RequestType.GetAuthenticatedPing, -80024, new string[] { }, new string[] { }, 3008)]
         [InlineData(RequestType.GetAuthenticatedPing, -80030, new string[] { }, new string[] { }, 5800)]
         [InlineData(RequestType.GetAuthenticatedPing, -80034, new string[] { }, new string[] { }, 3128)]
@@ -205,6 +206,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
         [InlineData(RequestType.GetAuthenticatedPing, -70020, new string[] { }, new string[] { }, 5550)]
         [InlineData(RequestType.GetAuthenticatedPing, -70028, new string[] { }, new string[] { }, 5553)]
         [InlineData(RequestType.GetAuthenticatedPing, -70501, new string[] { }, new string[] { }, 5500)]
+        [InlineData(RequestType.GetAuthenticatedPing, -70550, new string[] { }, new string[] { }, 5554)]
         [InlineData(RequestType.GetAuthenticatedPing, -90034, new string[] { }, new string[] { }, 5113)]
         [InlineData(RequestType.GetAuthenticatedPing, 0, new string[] { }, new string[] { }, 5000)]
         internal void TestNotFoundCodes(RequestType type, int apiCode, string[] headerNames, string[] headerValues, int expectedSdkErrorCode) {

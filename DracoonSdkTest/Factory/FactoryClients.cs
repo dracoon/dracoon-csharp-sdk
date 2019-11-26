@@ -69,6 +69,14 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                 Mock.Arrange(() => r.DeleteUserKeyPair())
                     .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteUserKeyPair, Method.DELETE));
                 Mock.Arrange(() => r.DeleteAvatar()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteAvatar, Method.DELETE));
+                Mock.Arrange(() => r.GetUserProfileAttributes())
+                    .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetUserProfileAttributes, Method.GET));
+                Mock.Arrange(() => r.GetUserProfileAttribute(Arg.AnyString)).Returns(FactoryRestSharp
+                    .RestRequestWithAuth(ApiConfig.ApiGetUserProfileAttributes, Method.GET).AddQueryParameter("filter", "key:eq:" + FactoryAttribute.AttributeList.Items[0].Key));
+                Mock.Arrange(() => r.PutUserProfileAttributes(Arg.IsAny<ApiAddOrUpdateAttributeRequest>())).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPutUserProfileAttributes, Method.PUT).AddParameter("application/json",
+                    JsonConvert.SerializeObject(FactoryAttribute.ApiAddOrUpdateAttributeRequest), ParameterType.RequestBody));
+                Mock.Arrange(() => r.DeleteUserProfileAttributes(Arg.AnyString))
+                    .Returns(FactoryRestSharp.DeleteUserProfileAttribute(FactoryAttribute.AttributeList.Items[0].Key));
                 Mock.Arrange(() => r.ProvideAvatarDownloadWebClient()).Returns(() => {
                     DracoonWebClientExtension wc = new DracoonWebClientExtension();
                     wc.Headers.Add(HttpRequestHeader.UserAgent, new DracoonHttpConfig().UserAgent);
