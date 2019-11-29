@@ -32,6 +32,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                 return new UserAccount {
                     Id = 456,
                     LoginName = "JohnSmith123",
+                    UserName = "JohnSmith1234",
                     Title = "M.Sc.",
                     FirstName = "John",
                     LastName = "Smith",

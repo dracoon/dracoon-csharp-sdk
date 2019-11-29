@@ -1726,6 +1726,12 @@
       </summary>
     </LoginName>
 
+    <UserName>
+      <summary>
+        The user name of the user. This equals the value in <see cref="Dracoon.Sdk.Model.UserAccount.LoginName"/> for server version lower than 4.13.
+      </summary>
+    </UserName>
+
     <Title>
       <summary>
         The title of the user.

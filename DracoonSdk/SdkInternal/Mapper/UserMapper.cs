@@ -29,6 +29,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             UserAccount userAccount = new UserAccount {
                 Id = apiUserAccount.Id,
                 LoginName = apiUserAccount.LoginName,
+                UserName = apiUserAccount.UserName ?? apiUserAccount.LoginName,
                 Title = apiUserAccount.Title,
                 FirstName = apiUserAccount.FirstName,
                 LastName = apiUserAccount.LastName,

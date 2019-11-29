@@ -52,6 +52,7 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             }
             return x.Id == y.Id &&
                 string.Equals(x.LoginName, y.LoginName) &&
+                string.Equals(x.UserName, y.UserName) &&
                 string.Equals(x.Title, y.Title) &&
                 string.Equals(x.FirstName, y.FirstName) &&
                 string.Equals(x.LastName, y.LastName) &&
