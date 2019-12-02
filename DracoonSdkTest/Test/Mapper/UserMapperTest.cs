@@ -98,6 +98,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             ApiUserAccount param = new ApiUserAccount {
                 Id = expected.Id,
                 LoginName = expected.LoginName,
+                UserName = expected.UserName,
                 Title = expected.Title,
                 FirstName = expected.FirstName,
                 LastName = expected.LastName,
