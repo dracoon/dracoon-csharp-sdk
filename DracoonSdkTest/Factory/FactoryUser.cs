@@ -12,7 +12,12 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                 return new UserInfo {
                     Id = 12,
                     DisplayName = "User",
-                    AvatarUUID = "HSGF324DSFGJ"
+                    AvatarUUID = "HSGF324DSFGJ",
+                    Email = "test@test.com",
+                    FirstName = "Max",
+                    LastName = "Mustermann",
+                    Title = "B.Sc.",
+                    UserType = UserType.Internal
                 };
             }
         }

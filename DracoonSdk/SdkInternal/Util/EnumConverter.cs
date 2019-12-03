@@ -95,5 +95,18 @@ namespace Dracoon.Sdk.SdkInternal.Util {
                     return PasswordCharacterSetType.None;
             }
         }
+
+        public static Func<string, UserType> ConvertValueToUserTypeEnum = value => {
+            switch (value) {
+                case "internal":
+                    return UserType.Internal;
+                case "external":
+                    return UserType.External;
+                case "deleted":
+                    return UserType.Deleted;
+                default:
+                    return UserType.System;
+            }
+        };
     }
 }

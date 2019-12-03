@@ -9,5 +9,20 @@
 
         /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/AvatarUUID/*'/>
         public string AvatarUUID { get; internal set; }
+
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/FirstName/*'/>
+        public string FirstName { get; internal set; }
+
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/LastName/*'/>
+        public string LastName { get; internal set; }
+
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/Email/*'/>
+        public string Email { get; internal set; }
+
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/Title/*'/>
+        public string Title { get; internal set; }
+
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/UserType/*'/>
+        public UserType UserType { get; internal set; }
     }
 }

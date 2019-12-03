@@ -4,6 +4,7 @@ using Dracoon.Sdk.SdkInternal.ApiModel;
 using System;
 using System.Collections.Generic;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
+using Dracoon.Sdk.SdkInternal.Util;
 using Attribute = Dracoon.Sdk.Model.Attribute;
 
 namespace Dracoon.Sdk.SdkInternal.Mapper {
@@ -16,7 +17,12 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             UserInfo userInfo = new UserInfo {
                 Id = apiUserInfo.Id,
                 DisplayName = apiUserInfo.DisplayName,
-                AvatarUUID = apiUserInfo.AvatarUuid
+                AvatarUUID = apiUserInfo.AvatarUuid,
+                Email = apiUserInfo.Email,
+                FirstName = apiUserInfo.FirstName,
+                LastName = apiUserInfo.LastName,
+                Title = apiUserInfo.Title,
+                UserType = EnumConverter.ConvertValueToUserTypeEnum(apiUserInfo.UserType)
             };
             return userInfo;
         }

@@ -19,7 +19,12 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             ApiUserInfo param = new ApiUserInfo {
                 Id = expected.Id.Value,
                 DisplayName = expected.DisplayName,
-                AvatarUuid = expected.AvatarUUID
+                AvatarUuid = expected.AvatarUUID,
+                Email = expected.Email,
+                FirstName = expected.FirstName,
+                LastName = expected.LastName,
+                Title = expected.Title,
+                UserType = "internal"
             };
 
             // ACT

@@ -15,7 +15,12 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 return false;
             }
             return x.Id == y.Id &&
+                   x.UserType == y.UserType &&
                 string.Equals(x.DisplayName, y.DisplayName) &&
+                string.Equals(x.Email, y.Email) &&
+                string.Equals(x.FirstName, y.FirstName) &&
+                string.Equals(x.LastName, y.LastName) &&
+                string.Equals(x.Title, y.Title) &&
                 string.Equals(x.AvatarUUID, y.AvatarUUID);
         }
 
@@ -34,6 +39,11 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             }
             return x.Id == y.Id &&
                 string.Equals(x.DisplayName, y.DisplayName) &&
+                string.Equals(x.Email, y.Email) &&
+                string.Equals(x.FirstName, y.FirstName) &&
+                string.Equals(x.LastName, y.LastName) &&
+                string.Equals(x.Title, y.Title) &&
+                string.Equals(x.UserType, y.UserType) &&
                 string.Equals(x.AvatarUuid, y.AvatarUuid);
         }
 

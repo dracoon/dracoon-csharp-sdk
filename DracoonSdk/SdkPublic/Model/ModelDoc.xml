@@ -1824,7 +1824,71 @@
         The uuid of the avatar image for this user.
       </summary>
     </AvatarUUID>
+
+    <FirstName>
+      <summary>
+        The first name of the user. (Mandatory if <see cref="Dracoon.Sdk.Model.UserInfo.UserType"/> is internal)
+      </summary>
+    </FirstName>
+
+    <LastName>
+      <summary>
+        The last name of the user. (Mandatory if <see cref="Dracoon.Sdk.Model.UserInfo.UserType"/> is internal)
+      </summary>
+    </LastName>
+
+    <Email>
+      <summary>
+        The email address of the user.
+      </summary>
+    </Email>
+
+    <Title>
+      <summary>
+        The job titles of the user.
+      </summary>
+    </Title>
+
+    <UserType>
+      <summary>
+        The type of the user.
+      </summary>
+    </UserType>
     
+  </members>
+
+  <members name="userType">
+
+    <UserType>
+      <summary>
+        Enumeration of user types.
+      </summary>
+    </UserType>
+
+    <Internal>
+      <summary>
+        The user is a internal user with his own DRACOON account.
+      </summary>
+    </Internal>
+
+    <External>
+      <summary>
+        The user hasn't an own DRACOON account.
+      </summary>
+    </External>
+
+    <System>
+      <summary>
+        The user is a non human user.
+      </summary>
+    </System>
+
+    <Deleted>
+      <summary>
+        The user was a user with his own DRACOON account but is know deleted.
+      </summary>
+    </Deleted>
+
   </members>
 
   <members name="userRole">

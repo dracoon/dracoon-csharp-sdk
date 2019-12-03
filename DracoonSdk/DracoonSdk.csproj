@@ -246,6 +246,7 @@
     <Compile Include="SdkPublic\Model\UserRequests\UpdateFolderRequest.cs" />
     <Compile Include="SdkPublic\Model\UserRequests\UpdateRoomRequest.cs" />
     <Compile Include="SdkPublic\Model\UserRole.cs" />
+    <Compile Include="SdkPublic\Model\UserType.cs" />
     <Compile Include="SdkPublic\OAuthHelper.cs" />
     <Compile Include="SdkPublic\SdkPublicInterfaces\IServerSettings.cs" />
     <Compile Include="SdkPublic\SdkPublicInterfaces\IAccount.cs" />

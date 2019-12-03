@@ -115,5 +115,24 @@ namespace Dracoon.Sdk.UnitTest.Test.Util {
         }
 
         #endregion
+
+        #region ConvertValueToUserTypeEnum
+
+        [Theory]
+        [InlineData("internal", UserType.Internal)]
+        [InlineData("external", UserType.External)]
+        [InlineData("system", UserType.System)]
+        [InlineData("deleted", UserType.Deleted)]
+        public void ConvertValueToUserTypeEnum(string value, UserType expected) {
+            // ARRANGE
+
+            // ACT
+            UserType actual = EnumConverter.ConvertValueToUserTypeEnum(value);
+
+            // ASSERT
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
     }
 }
