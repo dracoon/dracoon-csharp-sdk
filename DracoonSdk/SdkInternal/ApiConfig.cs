@@ -6,6 +6,8 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string MinimumApiVersion = "4.11.0";
         internal const string ApiPrefix = "api/v4";
         internal const string AuthorizationHeader = "Authorization";
+        // mediaserver/image/{mediaToken}/{width}x{height}
+        internal const string MediaTokenTemplate = "mediaserver/image/{0}/{1}x{2}";
 
         internal static readonly char[] UPPERCASE_SET = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'

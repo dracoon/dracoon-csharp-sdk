@@ -1099,6 +1099,30 @@
       </exception>
     </DeletePreviousVersions>
 
+    <BuildMediaUrl>
+      <summary>
+        Builds a media URL. The URL can be used to get a thumbnail or preview image for a node.
+      </summary>
+      <param name="mediaToken">
+        The media token for the node.
+      </param>
+      <param name="width">
+        The width of the image. (Must positive.)
+      </param>
+      <param name="height">
+        The height of the image. (Must positive.)
+      </param>
+      <returns>
+        The media URL.
+      </returns>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </BuildMediaUrl>
+
   </members>
 
   <members name="iServer">

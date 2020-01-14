@@ -281,6 +281,19 @@ namespace Dracoon.Sdk.SdkInternal {
             _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, RequestType.DeletePreviousVersions);
         }
 
+        public Uri BuildMediaUrl(string mediaToken, int width, int height) {
+            #region Parameter Validation
+
+            mediaToken.MustNotNullOrEmptyOrWhitespace(nameof(mediaToken));
+            width.MustPositive(nameof(width));
+            height.MustPositive(nameof(height));
+
+            #endregion
+
+            Uri mediaUrl = new Uri(_client.ServerUri, string.Format(ApiConfig.MediaTokenTemplate, mediaToken, width, height));
+            return mediaUrl;
+        }
+
         #endregion
 
         #region Room services
