@@ -9,6 +9,7 @@
         public static readonly DracoonCryptoCode INTERNAL_ERROR = new DracoonCryptoCode(3, "A internal error occurred.");
         public static readonly DracoonCryptoCode SYSTEM_ERROR = new DracoonCryptoCode(4, "A system error occurred.");
         public static readonly DracoonCryptoCode UNKNOWN_ERROR = new DracoonCryptoCode(5, "A unknown error occurred.");
+        public static readonly DracoonCryptoCode UNKNOWN_ALGORITHM_ERROR = new DracoonCryptoCode(6, "Unknown crypto algorithm.");
 
         /// <summary>
         /// The error message.

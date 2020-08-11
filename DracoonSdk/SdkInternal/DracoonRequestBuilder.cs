@@ -89,9 +89,10 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
-        IRestRequest IRequestBuilder.GetUserKeyPair() {
+        IRestRequest IRequestBuilder.GetUserKeyPair(string algorithm) {
             RestRequest request = new RestRequest(ApiConfig.ApiGetUserKeyPair, Method.GET);
             SetGeneralRestValues(request, true);
+            request.AddQueryParameter("version", algorithm);
             return request;
         }
 
@@ -145,9 +146,10 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #region DELETE
 
-        IRestRequest IRequestBuilder.DeleteUserKeyPair() {
+        IRestRequest IRequestBuilder.DeleteUserKeyPair(string algorithm) {
             RestRequest request = new RestRequest(ApiConfig.ApiDeleteUserKeyPair, Method.DELETE);
             SetGeneralRestValues(request, true);
+            request.AddQueryParameter("version", algorithm);
             return request;
         }
 

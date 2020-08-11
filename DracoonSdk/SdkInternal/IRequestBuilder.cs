@@ -21,7 +21,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         IRestRequest GetCustomerAccount();
 
-        IRestRequest GetUserKeyPair();
+        IRestRequest GetUserKeyPair(string algorithm);
 
         IRestRequest GetAuthenticatedPing();
 
@@ -29,7 +29,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         IRestRequest SetUserKeyPair(ApiUserKeyPair apiUserKeyPair);
 
-        IRestRequest DeleteUserKeyPair();
+        IRestRequest DeleteUserKeyPair(string algorithm);
 
         IRestRequest GetUserProfileAttributes();
 

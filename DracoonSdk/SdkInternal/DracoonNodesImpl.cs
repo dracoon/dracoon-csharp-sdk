@@ -355,15 +355,24 @@ namespace Dracoon.Sdk.SdkInternal {
             #region Parameter Validation
 
             request.MustNotNull(nameof(request));
-            request.DataRoomRescueKeyPassword.MustNotNullOrEmptyOrWhitespace(nameof(request.DataRoomRescueKeyPassword), true);
             request.Id.MustPositive(nameof(request.Id));
+
+            if (request.DataRoomRescueKeyPassword != null) {
+                request.DataRoomRescueKeyPairAlgorithm.MustNotNull(nameof(request.DataRoomRescueKeyPairAlgorithm));
+            }
+
+            if (request.DataRoomRescueKeyPairAlgorithm != null) {
+                request.DataRoomRescueKeyPassword.MustNotNullOrEmptyOrWhitespace(nameof(request.DataRoomRescueKeyPassword));
+            }
+
+            // TODO Check support for specified algorithm
 
             #endregion
 
             ApiUserKeyPair apiDataRoomRescueKey = null;
             if (request.DataRoomRescueKeyPassword != null) {
                 try {
-                    UserKeyPair cryptoPair = Crypto.Sdk.Crypto.GenerateUserKeyPair(request.DataRoomRescueKeyPassword);
+                    UserKeyPair cryptoPair = Crypto.Sdk.Crypto.GenerateUserKeyPair(request.DataRoomRescueKeyPairAlgorithm.Value, request.DataRoomRescueKeyPassword);
                     apiDataRoomRescueKey = UserMapper.ToApiUserKeyPair(cryptoPair);
                 } catch (CryptoException ce) {
                     DracoonClient.Log.Debug(Logtag, $"Generation of user key pair failed with '{ce.Message}'!");
@@ -464,7 +473,11 @@ namespace Dracoon.Sdk.SdkInternal {
 
             FileUpload upload;
             if (IsNodeEncrypted(request.ParentId)) {
-                UserKeyPair keyPair = _client.AccountImpl.GetAndCheckUserKeyPair();
+
+                // TODO determine correct key pair version (if necessary)
+                UserKeyPairAlgorithm keyPairAlgorithm = UserKeyPairAlgorithm.RSA2048;
+
+                UserKeyPair keyPair = _client.AccountImpl.GetAndCheckUserKeyPair(keyPairAlgorithm);
                 upload = new EncFileUpload(_client, actionId, request, input, keyPair.UserPublicKey, fileSize);
             } else {
                 upload = new FileUpload(_client, actionId, request, input, fileSize);
@@ -512,7 +525,11 @@ namespace Dracoon.Sdk.SdkInternal {
             FileDownload download = null;
             Node nodeToDownload = GetNode(nodeId); // Validation will be done in "GetNode"
             if (nodeToDownload.IsEncrypted.GetValueOrDefault(false)) {
-                UserKeyPair keyPair = _client.AccountImpl.GetAndCheckUserKeyPair();
+
+                // TODO determine correct key pair version (if necessary)
+                UserKeyPairAlgorithm keyPairAlgorithm = UserKeyPairAlgorithm.RSA2048;
+
+                UserKeyPair keyPair = _client.AccountImpl.GetAndCheckUserKeyPair(keyPairAlgorithm);
                 download = new EncFileDownload(_client, actionId, nodeToDownload, output, keyPair.UserPrivateKey);
             } else {
                 download = new FileDownload(_client, actionId, nodeToDownload, output);
@@ -560,7 +577,10 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            UserKeyPair userKeyPair = _client.AccountImpl.GetAndCheckUserKeyPair();
+            // TODO determine correct key pair version (if necessary)
+            UserKeyPairAlgorithm keyPairAlgorithm = UserKeyPairAlgorithm.RSA2048;
+
+            UserKeyPair userKeyPair = _client.AccountImpl.GetAndCheckUserKeyPair(keyPairAlgorithm);
             int currentBatchOffset = 0;
             const int batchLimit = 10;
             while (currentBatchOffset < limit) {

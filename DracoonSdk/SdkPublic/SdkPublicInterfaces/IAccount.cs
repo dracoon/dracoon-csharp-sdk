@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Dracoon.Sdk.Model;
 using System.Drawing;
+using Dracoon.Crypto.Sdk;
 
 namespace Dracoon.Sdk {
     /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/IAccount/*'/>
@@ -13,13 +14,13 @@ namespace Dracoon.Sdk {
         CustomerAccount GetCustomerAccount();
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/SetUserKeyPair/*'/>
-        void SetUserKeyPair();
+        void SetUserKeyPair(UserKeyPairAlgorithm algorithm);
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/CheckUserKeyPairPassword/*'/>
-        bool CheckUserKeyPairPassword();
+        bool CheckUserKeyPairPassword(UserKeyPairAlgorithm algorithm);
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/DeleteUserKeyPair/*'/>
-        void DeleteUserKeyPair();
+        void DeleteUserKeyPair(UserKeyPairAlgorithm algorithm);
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/ValidateTokenValidity/*'/>
         void ValidateTokenValidity();

@@ -64,7 +64,11 @@ namespace Dracoon.Sdk.SdkInternal {
 
         private PlainFileKey CreateFileKey() {
             try {
-                return Crypto.Sdk.Crypto.GenerateFileKey(_userPublicKey.Version);
+
+                // TODO determine correct file key version depending on user key pair version
+                PlainFileKeyAlgorithm plainFileKeyAlgorithm = PlainFileKeyAlgorithm.AES256GCM;
+
+                return Crypto.Sdk.Crypto.GenerateFileKey(plainFileKeyAlgorithm);
             } catch (CryptoException ce) {
                 string message = "Creation of file key for upload " + ActionId + " failed!";
                 DracoonClient.Log.Debug(LogTag, message);
