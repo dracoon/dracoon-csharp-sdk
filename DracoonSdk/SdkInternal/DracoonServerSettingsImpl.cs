@@ -1,7 +1,10 @@
 ﻿using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
+using Dracoon.Sdk.SdkInternal.ApiModel.Settings;
 using Dracoon.Sdk.SdkInternal.Mapper;
+using Dracoon.Sdk.SdkPublic.Model;
 using RestSharp;
+using System.Collections.Generic;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class DracoonServerSettingsImpl : IServerSettings {
@@ -42,6 +45,20 @@ namespace Dracoon.Sdk.SdkInternal {
             ApiPasswordSettings apiPasswordPolicies =
                 _client.Executor.DoSyncApiCall<ApiPasswordSettings>(request, DracoonRequestExecutor.RequestType.GetPasswordPolicies);
             return SettingsMapper.FromApiPasswordPolicies(apiPasswordPolicies);
+        }
+
+        public List<UserKeyPairAlgorithm> GetAvailableUserKeyPairAlgorithms() {
+            _client.Executor.CheckApiServerVersion();
+            IRestRequest request = _client.Builder.GetAlgorithms();
+            ApiAlgorithms algorithms = _client.Executor.DoSyncApiCall<ApiAlgorithms>(request, DracoonRequestExecutor.RequestType.GetAlgorithms);
+            return SettingsMapper.FromApiUserKeyPairAlgorithms(algorithms.KeyPairAlgorithms);
+        }
+
+        public List<FileKeyAlgorithm> GetAvailableFileKeyAlgorithms() {
+            _client.Executor.CheckApiServerVersion();
+            IRestRequest request = _client.Builder.GetAlgorithms();
+            ApiAlgorithms algorithms = _client.Executor.DoSyncApiCall<ApiAlgorithms>(request, DracoonRequestExecutor.RequestType.GetAlgorithms);
+            return SettingsMapper.FromApiFileKeyAlgorithms(algorithms.FileKeyAlgorithms);
         }
     }
 }

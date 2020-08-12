@@ -1,4 +1,6 @@
 ﻿using Dracoon.Sdk.Model;
+using Dracoon.Sdk.SdkPublic.Model;
+using System.Collections.Generic;
 
 namespace Dracoon.Sdk {
     /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServerSettings"]/IServerSettings/*'/>
@@ -14,5 +16,9 @@ namespace Dracoon.Sdk {
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServerSettings"]/GetPasswordPolicies/*'/>
         PasswordPolicies GetPasswordPolicies();
+
+        List<UserKeyPairAlgorithm> GetAvailableUserKeyPairAlgorithms();
+
+        List<FileKeyAlgorithm> GetAvailableFileKeyAlgorithms();
     }
 }

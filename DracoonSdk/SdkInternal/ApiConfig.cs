@@ -173,6 +173,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiGetInfrastructureConfig = ApiPrefix + "/config/info/infrastructure";
         internal const string ApiGetDefaultsConfig = ApiPrefix + "/config/info/defaults";
         internal const string ApiGetPasswordPolicies = ApiPrefix + "/config/info/policies/passwords";
+        internal const string ApiGetAlgorithms = ApiPrefix + "/config/info/policies/algorithms";
 
         #endregion
 

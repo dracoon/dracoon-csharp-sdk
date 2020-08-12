@@ -128,18 +128,18 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             return info;
         }
 
-        internal static UserKeyPairAlgorithm FromApiUserKeyPairVersion(string version) {
+        internal static Crypto.Sdk.UserKeyPairAlgorithm FromApiUserKeyPairVersion(string version) {
             switch (version) {
                 case "RSA-4096":
-                    return UserKeyPairAlgorithm.RSA4096;
+                    return Crypto.Sdk.UserKeyPairAlgorithm.RSA4096;
                 default:
-                    return UserKeyPairAlgorithm.RSA2048;
+                    return Crypto.Sdk.UserKeyPairAlgorithm.RSA2048;
             }
         }
 
-        internal static string ToApiUserKeyPairVersion(UserKeyPairAlgorithm algorithm) {
+        internal static string ToApiUserKeyPairVersion(Crypto.Sdk.UserKeyPairAlgorithm algorithm) {
             switch (algorithm) {
-                case UserKeyPairAlgorithm.RSA4096:
+                case Crypto.Sdk.UserKeyPairAlgorithm.RSA4096:
                     return "RSA-4096";
                 default:
                     return "A";

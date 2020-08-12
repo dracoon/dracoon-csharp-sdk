@@ -77,6 +77,8 @@
     <Compile Include="SdkInternal\ApiModel\Requests\ApiGetS3Urls.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiRestorePreviousVersionsRequest.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiS3FileUploadPart.cs" />
+    <Compile Include="SdkInternal\ApiModel\Settings\ApiAlgorithm.cs" />
+    <Compile Include="SdkInternal\ApiModel\Settings\ApiAlgorithms.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiCharacterRules.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiDefaultsSettings.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiEncryptionPasswordSettings.cs" />
@@ -193,9 +195,11 @@
     <Compile Include="SdkPublic\Filter\FilterParam.cs" />
     <Compile Include="SdkPublic\Filter\SpecificFilters\GetUploadSharesFilter.cs" />
     <Compile Include="SdkPublic\Filter\SpecificFilters\SearchNodesFilter.cs" />
+    <Compile Include="SdkPublic\Model\AlgorithmState.cs" />
     <Compile Include="SdkPublic\Model\AvatarInfo.cs" />
     <Compile Include="SdkPublic\Model\Classification.cs" />
     <Compile Include="SdkPublic\Model\CustomerAccount.cs" />
+    <Compile Include="SdkPublic\Model\FileKeyAlgorithm.cs" />
     <Compile Include="SdkPublic\Model\PasswordCharacterPolicies.cs" />
     <Compile Include="SdkPublic\Model\PasswordCharacterSet.cs" />
     <Compile Include="SdkPublic\Model\PasswordCharacterSetType.cs" />
@@ -219,6 +223,7 @@
     <Compile Include="SdkPublic\Model\ServerInfrastructureSettings.cs" />
     <Compile Include="SdkPublic\Model\Attribute.cs" />
     <Compile Include="SdkPublic\Model\AttributeList.cs" />
+    <Compile Include="SdkPublic\Model\UserKeyPairAlgorithm.cs" />
     <Compile Include="SdkPublic\Model\UserRequests\CopyNode.cs" />
     <Compile Include="SdkPublic\Model\UserRequests\DeletePreviousVersionsRequest.cs" />
     <Compile Include="SdkPublic\Model\UserRequests\EnableRoomEncryptionRequest.cs" />

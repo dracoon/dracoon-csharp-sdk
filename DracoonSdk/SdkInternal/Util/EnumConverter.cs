@@ -1,4 +1,5 @@
 ﻿using Dracoon.Sdk.Model;
+using Dracoon.Sdk.SdkPublic.Model;
 using System;
 
 namespace Dracoon.Sdk.SdkInternal.Util {
@@ -108,5 +109,14 @@ namespace Dracoon.Sdk.SdkInternal.Util {
                     return UserType.System;
             }
         };
+
+        public static AlgorithmState ConvertValueToAlgorithmState(string value) {
+            switch (value) {
+                case "REQUIRED":
+                    return AlgorithmState.Required;
+                default:
+                    return AlgorithmState.Discouraged;
+            }
+        }
     }
 }

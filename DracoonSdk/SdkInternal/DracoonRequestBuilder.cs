@@ -569,7 +569,13 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         public IRestRequest GetPasswordPolicies() {
-            RestRequest request = new RestRequest(ApiConfig.ApiGetPasswordPolicies);
+            RestRequest request = new RestRequest(ApiConfig.ApiGetPasswordPolicies, Method.GET);
+            SetGeneralRestValues(request, true);
+            return request;
+        }
+
+        public IRestRequest GetAlgorithms() {
+            RestRequest request = new RestRequest(ApiConfig.ApiGetAlgorithms, Method.GET);
             SetGeneralRestValues(request, true);
             return request;
         }
