@@ -21,7 +21,7 @@
         /// </summary>
         public int Code { get; }
 
-        private DracoonCryptoCode(int code, string text) {
+        internal DracoonCryptoCode(int code, string text) {
             Code = code;
             Text = text;
         }

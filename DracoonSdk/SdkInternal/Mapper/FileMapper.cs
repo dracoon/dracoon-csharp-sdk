@@ -80,7 +80,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 case EncryptedFileKeyAlgorithm.RSA2048_AES256GCM:
                     return "A";
                 default:
-                    throw new DracoonCryptoException(DracoonCryptoCode.UNKNOWN_ALGORITHM_ERROR);
+                    throw new DracoonCryptoException(new DracoonCryptoCode(DracoonCryptoCode.UNKNOWN_ALGORITHM_ERROR.Code, "Unknown algorithm " + algorithm.GetStringValue() + "."));
             }
         }
 
@@ -91,7 +91,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 case "RSA-4096/AES-256-GCM":
                     return EncryptedFileKeyAlgorithm.RSA4096_AES256GCM;
                 default:
-                    throw new DracoonCryptoException(DracoonCryptoCode.UNKNOWN_ALGORITHM_ERROR);
+                    throw new DracoonCryptoException(new DracoonCryptoCode(DracoonCryptoCode.UNKNOWN_ALGORITHM_ERROR.Code, "Unknown algorithm " + algorithm + "."));
             }
         }
 

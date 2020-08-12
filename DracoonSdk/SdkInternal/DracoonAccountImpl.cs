@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Dracoon.Crypto.Sdk;
+using Dracoon.Crypto.Sdk.Model;
+using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
-using RestSharp;
-using Dracoon.Sdk.SdkInternal.Mapper;
-using Dracoon.Crypto.Sdk;
-using Dracoon.Crypto.Sdk.Model;
-using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
-using Dracoon.Sdk.Error;
-using System.Drawing;
-using System.Net;
-using System.IO;
-using System.Drawing.Imaging;
-using System.Linq;
-using Newtonsoft.Json;
-using System.Text;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
+using Dracoon.Sdk.SdkInternal.Mapper;
 using Dracoon.Sdk.SdkInternal.Validator;
+using Newtonsoft.Json;
+using RestSharp;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 using Attribute = Dracoon.Sdk.Model.Attribute;
 
 namespace Dracoon.Sdk.SdkInternal {
@@ -26,6 +26,23 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal DracoonAccountImpl(IInternalDracoonClient client) {
             _client = client;
+        }
+
+        internal void AssertUserKeyPairAlgorithmSupported(UserKeyPairAlgorithm algorithm) {
+            string minAlgorithmVersion = "4.0.0";
+            switch (algorithm) {
+                case UserKeyPairAlgorithm.RSA2048:
+                    return;
+                case UserKeyPairAlgorithm.RSA4096:
+                    minAlgorithmVersion = ApiConfig.ApiVersionMin_Algorithm_UserKeyPair_RSA4096;
+                    break;
+            }
+
+            try {
+                _client.Executor.CheckApiServerVersion(minAlgorithmVersion);
+            } catch (DracoonApiException) {
+                throw new DracoonApiException(new DracoonApiCode(DracoonApiCode.SERVER_CRYPTO_VERSION_NOT_SUPPORTED.Code, "Algorithm " + algorithm.GetStringValue() + " requires minimum api version of " + minAlgorithmVersion + "."));
+            }
         }
 
         public UserAccount GetUserAccount() {
@@ -45,7 +62,7 @@ namespace Dracoon.Sdk.SdkInternal {
         public void SetUserKeyPair(UserKeyPairAlgorithm algorithm) {
             _client.Executor.CheckApiServerVersion();
 
-            // TODO Check support for specified algorithm
+            AssertUserKeyPairAlgorithmSupported(algorithm);
 
             UserKeyPair cryptoPair = GenerateNewUserKeyPair(algorithm, _client.EncryptionPassword);
             ApiUserKeyPair apiUserKeyPair = UserMapper.ToApiUserKeyPair(cryptoPair);
@@ -55,8 +72,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public bool CheckUserKeyPairPassword(UserKeyPairAlgorithm algorithm) {
             _client.Executor.CheckApiServerVersion();
-
-            // TODO Check support for specified algorithm
 
             try {
                 GetAndCheckUserKeyPair(algorithm);
@@ -73,7 +88,7 @@ namespace Dracoon.Sdk.SdkInternal {
         public void DeleteUserKeyPair(UserKeyPairAlgorithm algorithm) {
             _client.Executor.CheckApiServerVersion();
 
-            // TODO check support for specified algorithm
+            AssertUserKeyPairAlgorithmSupported(algorithm);
 
             string algorithmString = UserMapper.ToApiUserKeyPairVersion(algorithm);
             IRestRequest request = _client.Builder.DeleteUserKeyPair(algorithmString);
@@ -90,6 +105,8 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         internal UserKeyPair GetAndCheckUserKeyPair(UserKeyPairAlgorithm algorithm) {
+            AssertUserKeyPairAlgorithmSupported(algorithm);
+
             try {
                 string algorithmString = UserMapper.ToApiUserKeyPairVersion(algorithm);
                 IRestRequest request = _client.Builder.GetUserKeyPair(algorithmString);

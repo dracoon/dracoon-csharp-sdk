@@ -28,6 +28,12 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal static readonly Encoding ENCODING = Encoding.UTF8;
 
+        #region Crypto-Algorithm
+
+        internal const string ApiVersionMin_Algorithm_UserKeyPair_RSA4096 = "4.24.0";
+
+        #endregion
+
         #region Public-Endpoint
 
         #region GET
