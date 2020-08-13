@@ -223,7 +223,7 @@
     <Compile Include="SdkPublic\Model\ServerInfrastructureSettings.cs" />
     <Compile Include="SdkPublic\Model\Attribute.cs" />
     <Compile Include="SdkPublic\Model\AttributeList.cs" />
-    <Compile Include="SdkPublic\Model\UserKeyPairAlgorithm.cs" />
+    <Compile Include="SdkPublic\Model\UserKeyPairAlgorithmData.cs" />
     <Compile Include="SdkPublic\Model\UserRequests\CopyNode.cs" />
     <Compile Include="SdkPublic\Model\UserRequests\DeletePreviousVersionsRequest.cs" />
     <Compile Include="SdkPublic\Model\UserRequests\EnableRoomEncryptionRequest.cs" />

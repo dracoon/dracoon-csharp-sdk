@@ -180,6 +180,7 @@ namespace Dracoon.Sdk.SdkInternal {
         #region Minimum version requirements
 
         internal const string ApiGetPasswordPoliciesMinimumVersion = "4.14.0";
+        internal const string ApiGetAlgorithmsMinimumVersion = "4.24.0";
 
         #endregion
 

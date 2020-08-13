@@ -1,4 +1,5 @@
-﻿using Dracoon.Sdk.Model;
+﻿using Dracoon.Sdk.Error;
+using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Settings;
 using Dracoon.Sdk.SdkInternal.Mapper;
@@ -47,15 +48,33 @@ namespace Dracoon.Sdk.SdkInternal {
             return SettingsMapper.FromApiPasswordPolicies(apiPasswordPolicies);
         }
 
-        public List<UserKeyPairAlgorithm> GetAvailableUserKeyPairAlgorithms() {
-            _client.Executor.CheckApiServerVersion();
+        public List<UserKeyPairAlgorithmData> GetAvailableUserKeyPairAlgorithms() {
+            try {
+                // Check if api supports this api endpoint. If not only provide the algorithm for the "old" crypto.
+                _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetAlgorithmsMinimumVersion);
+            } catch (DracoonApiException) {
+                return new List<UserKeyPairAlgorithmData>() { new UserKeyPairAlgorithmData() {
+                    Algorithm = Crypto.Sdk.UserKeyPairAlgorithm.RSA2048,
+                    State = AlgorithmState.Required
+                }};
+            }
+
             IRestRequest request = _client.Builder.GetAlgorithms();
             ApiAlgorithms algorithms = _client.Executor.DoSyncApiCall<ApiAlgorithms>(request, DracoonRequestExecutor.RequestType.GetAlgorithms);
             return SettingsMapper.FromApiUserKeyPairAlgorithms(algorithms.KeyPairAlgorithms);
         }
 
         public List<FileKeyAlgorithm> GetAvailableFileKeyAlgorithms() {
-            _client.Executor.CheckApiServerVersion();
+            try {
+                // Check if api supports this api endpoint. If not only provide the algorithm for the "old" crypto.
+                _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetAlgorithmsMinimumVersion);
+            } catch (DracoonApiException) {
+                return new List<FileKeyAlgorithm>() { new FileKeyAlgorithm() {
+                    Algorithm = Crypto.Sdk.EncryptedFileKeyAlgorithm.RSA2048_AES256GCM,
+                    State = AlgorithmState.Required
+                }};
+            }
+
             IRestRequest request = _client.Builder.GetAlgorithms();
             ApiAlgorithms algorithms = _client.Executor.DoSyncApiCall<ApiAlgorithms>(request, DracoonRequestExecutor.RequestType.GetAlgorithms);
             return SettingsMapper.FromApiFileKeyAlgorithms(algorithms.FileKeyAlgorithms);

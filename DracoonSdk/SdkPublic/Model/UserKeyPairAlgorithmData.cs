@@ -1,5 +1,5 @@
 ﻿namespace Dracoon.Sdk.SdkPublic.Model {
-    public class UserKeyPairAlgorithm {
+    public class UserKeyPairAlgorithmData {
 
         public Crypto.Sdk.UserKeyPairAlgorithm Algorithm { 
             get; internal set; 

@@ -17,7 +17,7 @@ namespace Dracoon.Sdk {
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServerSettings"]/GetPasswordPolicies/*'/>
         PasswordPolicies GetPasswordPolicies();
 
-        List<UserKeyPairAlgorithm> GetAvailableUserKeyPairAlgorithms();
+        List<UserKeyPairAlgorithmData> GetAvailableUserKeyPairAlgorithms();
 
         List<FileKeyAlgorithm> GetAvailableFileKeyAlgorithms();
     }

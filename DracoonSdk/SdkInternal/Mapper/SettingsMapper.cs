@@ -217,14 +217,14 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             return fileKeyAlgorithms;
         }
 
-        internal static List<UserKeyPairAlgorithm> FromApiUserKeyPairAlgorithms(List<ApiAlgorithm> apiUserKeyPairAlgorithms) {
+        internal static List<UserKeyPairAlgorithmData> FromApiUserKeyPairAlgorithms(List<ApiAlgorithm> apiUserKeyPairAlgorithms) {
             if (apiUserKeyPairAlgorithms == null) {
                 return null;
             }
 
-            List<UserKeyPairAlgorithm> userKeyPairAlgorithms = new List<UserKeyPairAlgorithm>(apiUserKeyPairAlgorithms.Count);
+            List<UserKeyPairAlgorithmData> userKeyPairAlgorithms = new List<UserKeyPairAlgorithmData>(apiUserKeyPairAlgorithms.Count);
             foreach (ApiAlgorithm current in apiUserKeyPairAlgorithms) {
-                userKeyPairAlgorithms.Add(new UserKeyPairAlgorithm() {
+                userKeyPairAlgorithms.Add(new UserKeyPairAlgorithmData() {
                     Algorithm = UserMapper.FromApiUserKeyPairVersion(current.Version),
                     State = EnumConverter.ConvertValueToAlgorithmState(current.Status)
                 });
