@@ -96,6 +96,12 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        public IRestRequest GetUserKeyPairs() {
+            RestRequest request = new RestRequest(ApiConfig.ApiGetUserKeyPairs, Method.GET);
+            SetGeneralRestValues(request, true);
+            return request;
+        }
+
         IRestRequest IRequestBuilder.GetAuthenticatedPing() {
             RestRequest request = new RestRequest(ApiConfig.ApiGetAuthenticatedPing, Method.GET);
             SetGeneralRestValues(request, true);

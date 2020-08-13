@@ -13,7 +13,7 @@ namespace Dracoon.Sdk.SdkInternal {
     internal class DracoonRequestExecutor : IRequestExecutor {
         internal enum RequestType {
             GetServerVersion, GetServerTime, SetUserKeyPair, GetCustomerAccount, GetUserAccount,
-            GetUserKeyPair, DeleteUserKeyPair, GetUserAvatar, DeleteUserAvatar, PostUserAvatar, 
+            GetUserKeyPair, GetUserKeyPairs, DeleteUserKeyPair, GetUserAvatar, DeleteUserAvatar, PostUserAvatar,
             GetUserProfileAttributes, PutUserProfileAttributes, DeleteUserProfileAttributes,
             GetResourcesAvatar, GetNodes, GetNode, PostRoom, PostFolder,
             PutFolder, PutRoom, PutEnableRoomEncryption, PutFile, DeleteNodes,
@@ -72,7 +72,7 @@ namespace Dracoon.Sdk.SdkInternal {
                         throw new DracoonApiException(DracoonApiCode.API_VERSION_NOT_SUPPORTED);
                     }
 
-                    throw new DracoonApiException(new DracoonApiCode(0, "Server API versions < " + minVersionForCheck + " are not supported."));
+                    throw new DracoonApiException(new DracoonApiCode(DracoonApiCode.API_VERSION_NOT_SUPPORTED.Code, "Server API versions < " + minVersionForCheck + " are not supported."));
                 }
             }
 

@@ -6,6 +6,7 @@ using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Mapper;
 using Dracoon.Sdk.SdkInternal.Validator;
+using Dracoon.Sdk.SdkPublic.Model;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -112,11 +113,8 @@ namespace Dracoon.Sdk.SdkInternal {
                 IRestRequest request = _client.Builder.GetUserKeyPair(algorithmString);
                 ApiUserKeyPair result = _client.Executor.DoSyncApiCall<ApiUserKeyPair>(request, RequestType.GetUserKeyPair);
                 UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(result);
-                if (Crypto.Sdk.Crypto.CheckUserKeyPair(userKeyPair, _client.EncryptionPassword)) {
-                    return userKeyPair;
-                }
-
-                throw new DracoonCryptoException(DracoonCryptoCode.INVALID_PASSWORD_ERROR);
+                CheckKeyPair(userKeyPair);
+                return userKeyPair;
             } catch (CryptoException ce) {
                 DracoonClient.Log.Debug(Logtag, $"Check of user key pair failed with '{ce.Message}'!");
                 throw new DracoonCryptoException(CryptoErrorMapper.ParseCause(ce), ce);
@@ -127,6 +125,53 @@ namespace Dracoon.Sdk.SdkInternal {
             _client.Executor.CheckApiServerVersion();
             IRestRequest request = _client.Builder.GetAuthenticatedPing();
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.GetAuthenticatedPing);
+        }
+
+
+        internal UserKeyPair GetPreferredUserKeyPair() {
+            List<UserKeyPairAlgorithmData> algorithms = _client.ServerImpl.ServerSettings.GetAvailableUserKeyPairAlgorithms();
+            // TODO check if sorting is correct
+            algorithms = algorithms.OrderBy(x => x.State).ToList();
+
+            List<UserKeyPair> keyPairs = GetAndCheckUserKeyPairs();
+
+            foreach (UserKeyPairAlgorithmData currentAlgorithm in algorithms) {
+                try {
+                    UserKeyPair found = keyPairs.Single(o => o.UserPublicKey.Version == currentAlgorithm.Algorithm);
+                    if (found != null) {
+                        return found;
+                    }
+                } catch { } // Next Key Pair
+            }
+
+            throw new DracoonApiException(DracoonApiCode.SERVER_USER_KEY_PAIR_NOT_FOUND);
+        }
+
+        private List<UserKeyPair> GetAndCheckUserKeyPairs() {
+            List<UserKeyPair> returnValue = new List<UserKeyPair>();
+            try {
+                // Check if api supports this api endpoint. If not only provide the keypair using the "old" api.
+                _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetUserKeyPairsMinimumVersion);
+
+                IRestRequest request = _client.Builder.GetUserKeyPairs();
+                List<ApiUserKeyPair> result = _client.Executor.DoSyncApiCall<List<ApiUserKeyPair>>(request, RequestType.GetUserKeyPairs);
+
+                foreach (ApiUserKeyPair apiUserKeyPair in result) {
+                    UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(apiUserKeyPair);
+                    CheckKeyPair(userKeyPair);
+                    returnValue.Add(userKeyPair);
+                }
+            } catch (DracoonApiException error) when (error.ErrorCode == DracoonApiCode.API_VERSION_NOT_SUPPORTED) {
+                UserKeyPair keyPair = GetAndCheckUserKeyPair(UserKeyPairAlgorithm.RSA2048);
+                returnValue.Add(keyPair);
+            }
+            return returnValue;
+        }
+
+        private void CheckKeyPair(UserKeyPair keyPair) {
+            if (!Crypto.Sdk.Crypto.CheckUserKeyPair(keyPair, _client.EncryptionPassword)) {
+                throw new DracoonCryptoException(DracoonCryptoCode.INVALID_PASSWORD_ERROR);
+            }
         }
 
         #region Avatar functions

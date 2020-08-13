@@ -23,6 +23,8 @@ namespace Dracoon.Sdk.SdkInternal {
 
         IRestRequest GetUserKeyPair(string algorithm);
 
+        IRestRequest GetUserKeyPairs();
+
         IRestRequest GetAuthenticatedPing();
 
         IRestRequest GetAvatar();

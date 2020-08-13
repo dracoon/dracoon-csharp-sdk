@@ -52,6 +52,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiGetUserAccount = ApiPrefix + "/user/account";
         internal const string ApiGetCustomerAccount = ApiPrefix + "/user/account/customer";
         internal const string ApiGetUserKeyPair = ApiPrefix + "/user/account/keypair";
+        internal const string ApiGetUserKeyPairs = ApiPrefix + "/user/account/keypairs";
         internal const string ApiGetAuthenticatedPing = ApiPrefix + "/user/ping";
         internal const string ApiGetAvatar = ApiPrefix + "/user/account/avatar";
         internal const string ApiDeleteAvatar = ApiPrefix + "/user/account/avatar";
@@ -76,6 +77,12 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal const string ApiDeleteUserKeyPair = ApiPrefix + "/user/account/keypair";
         internal const string ApiDeleteUserProfileAttributes = ApiPrefix + "/user/profileAttributes/{key}";
+
+        #endregion
+
+        #region Minimum version requirements
+
+        internal const string ApiGetUserKeyPairsMinimumVersion = "4.24.0";
 
         #endregion
 

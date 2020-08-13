@@ -473,11 +473,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             FileUpload upload;
             if (IsNodeEncrypted(request.ParentId)) {
-
-                // TODO determine correct key pair version (if necessary)
-                UserKeyPairAlgorithm keyPairAlgorithm = UserKeyPairAlgorithm.RSA2048;
-
-                UserKeyPair keyPair = _client.AccountImpl.GetAndCheckUserKeyPair(keyPairAlgorithm);
+                UserKeyPair keyPair = _client.AccountImpl.GetPreferredUserKeyPair();
                 upload = new EncFileUpload(_client, actionId, request, input, keyPair.UserPublicKey, fileSize);
             } else {
                 upload = new FileUpload(_client, actionId, request, input, fileSize);
