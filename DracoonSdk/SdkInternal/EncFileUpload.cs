@@ -38,7 +38,7 @@ namespace Dracoon.Sdk.SdkInternal {
             UploadToken = Client.Executor.DoSyncApiCall<ApiUploadToken>(uploadTokenRequest, RequestType.PostUploadToken);
 
             Node publicResultNode;
-            PlainFileKey plainFileKey = CreateFileKey();
+            PlainFileKey plainFileKey = CreatePreferredPlainFileKey();
             ApiCompleteFileUpload apiCompleteFileUpload = FileMapper.ToApiCompleteFileUpload(FileUploadRequest);
             if (apiFileUploadRequest.UseS3.HasValue && apiFileUploadRequest.UseS3.Value) {
                 List<ApiS3FileUploadPart> s3Parts = EncryptedS3Upload(ref plainFileKey);
@@ -62,13 +62,9 @@ namespace Dracoon.Sdk.SdkInternal {
             return publicResultNode;
         }
 
-        private PlainFileKey CreateFileKey() {
+        private PlainFileKey CreatePreferredPlainFileKey() {
             try {
-
-                // TODO determine correct file key version depending on user key pair version
-                PlainFileKeyAlgorithm plainFileKeyAlgorithm = PlainFileKeyAlgorithm.AES256GCM;
-
-                return Crypto.Sdk.Crypto.GenerateFileKey(plainFileKeyAlgorithm);
+                return Crypto.Sdk.Crypto.GenerateFileKey(CryptoHelper.DeterminePlainFileKeyVersion(_userPublicKey.Version));
             } catch (CryptoException ce) {
                 string message = "Creation of file key for upload " + ActionId + " failed!";
                 DracoonClient.Log.Debug(LogTag, message);

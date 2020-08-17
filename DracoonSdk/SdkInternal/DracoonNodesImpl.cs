@@ -513,20 +513,14 @@ namespace Dracoon.Sdk.SdkInternal {
             #region Parameter Validation
 
             CheckDownloadActionId(actionId);
-            nodeId.MustPositive(nameof(nodeId));
             output.CheckStreamCanWrite(nameof(output));
 
             #endregion
 
             FileDownload download = null;
-            Node nodeToDownload = GetNode(nodeId); // Validation will be done in "GetNode"
+            Node nodeToDownload = GetNode(nodeId); // Validation for nodeId will be done in "GetNode"
             if (nodeToDownload.IsEncrypted.GetValueOrDefault(false)) {
-
-                // TODO determine correct key pair version (if necessary)
-                UserKeyPairAlgorithm keyPairAlgorithm = UserKeyPairAlgorithm.RSA2048;
-
-                UserKeyPair keyPair = _client.AccountImpl.GetAndCheckUserKeyPair(keyPairAlgorithm);
-                download = new EncFileDownload(_client, actionId, nodeToDownload, output, keyPair.UserPrivateKey);
+                download = new EncFileDownload(_client, actionId, nodeToDownload, output);
             } else {
                 download = new FileDownload(_client, actionId, nodeToDownload, output);
             }

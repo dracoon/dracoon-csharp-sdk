@@ -171,6 +171,7 @@
     <Compile Include="SdkInternal\OAuth\OAuthError.cs" />
     <Compile Include="SdkInternal\OAuth\OAuthErrorParser.cs" />
     <Compile Include="SdkInternal\OAuth\ApiOAuthToken.cs" />
+    <Compile Include="SdkInternal\Util\CryptoHelper.cs" />
     <Compile Include="SdkInternal\Util\EnumConverter.cs" />
     <Compile Include="SdkInternal\Util\FileHash.cs" />
     <Compile Include="SdkInternal\Util\DracoonWebClientExtension.cs">
