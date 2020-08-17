@@ -1,18 +1,18 @@
-﻿using Dracoon.Sdk.Model;
-using RestSharp;
-using Dracoon.Sdk.SdkInternal.ApiModel;
-using Dracoon.Sdk.SdkInternal.Mapper;
-using Dracoon.Sdk.SdkInternal.Validator;
-using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
-using System.IO;
-using System.Collections.Generic;
-using Dracoon.Sdk.Error;
+﻿using Dracoon.Crypto.Sdk;
 using Dracoon.Crypto.Sdk.Model;
-using System;
-using Dracoon.Crypto.Sdk;
+using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Filter;
-using Dracoon.Sdk.Sort;
+using Dracoon.Sdk.Model;
+using Dracoon.Sdk.SdkInternal.ApiModel;
+using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
+using Dracoon.Sdk.SdkInternal.Mapper;
 using Dracoon.Sdk.SdkInternal.Util;
+using Dracoon.Sdk.SdkInternal.Validator;
+using Dracoon.Sdk.Sort;
+using RestSharp;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
 namespace Dracoon.Sdk.SdkInternal {
@@ -363,9 +363,8 @@ namespace Dracoon.Sdk.SdkInternal {
 
             if (request.DataRoomRescueKeyPairAlgorithm != null) {
                 request.DataRoomRescueKeyPassword.MustNotNullOrEmptyOrWhitespace(nameof(request.DataRoomRescueKeyPassword));
+                _client.AccountImpl.AssertUserKeyPairAlgorithmSupported(request.DataRoomRescueKeyPairAlgorithm.Value);
             }
-
-            // TODO Check support for specified algorithm
 
             #endregion
 
