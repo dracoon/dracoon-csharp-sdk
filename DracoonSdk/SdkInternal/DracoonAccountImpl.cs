@@ -137,6 +137,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             foreach (UserKeyPairAlgorithmData currentAlgorithm in algorithms) {
                 try {
+                    // TODO check if function is correct
                     UserKeyPair found = keyPairs.Single(o => o.UserPublicKey.Version == currentAlgorithm.Algorithm);
                     if (found != null) {
                         return found;
@@ -147,7 +148,7 @@ namespace Dracoon.Sdk.SdkInternal {
             throw new DracoonApiException(DracoonApiCode.SERVER_USER_KEY_PAIR_NOT_FOUND);
         }
 
-        private List<UserKeyPair> GetAndCheckUserKeyPairs() {
+        internal List<UserKeyPair> GetAndCheckUserKeyPairs() {
             List<UserKeyPair> returnValue = new List<UserKeyPair>();
             try {
                 // Check if api supports this api endpoint. If not only provide the keypair using the "old" api.

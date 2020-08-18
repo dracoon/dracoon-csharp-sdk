@@ -13,6 +13,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
 namespace Dracoon.Sdk.SdkInternal {
@@ -566,17 +567,14 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            // TODO determine correct key pair version (if necessary)
-            UserKeyPairAlgorithm keyPairAlgorithm = UserKeyPairAlgorithm.RSA2048;
-
-            UserKeyPair userKeyPair = _client.AccountImpl.GetAndCheckUserKeyPair(keyPairAlgorithm);
+            List<UserKeyPair> userKeyPairs = _client.AccountImpl.GetAndCheckUserKeyPairs();
             int currentBatchOffset = 0;
             const int batchLimit = 10;
             while (currentBatchOffset < limit) {
                 IRestRequest currentBatchRequest = _client.Builder.GetMissingFileKeys(nodeId, batchLimit, currentBatchOffset);
                 ApiMissingFileKeys missingFileKeys =
                     _client.Executor.DoSyncApiCall<ApiMissingFileKeys>(currentBatchRequest, RequestType.GetMissingFileKeys);
-                HandlePendingMissingFileKeys(missingFileKeys, userKeyPair.UserPrivateKey);
+                HandlePendingMissingFileKeys(missingFileKeys, userKeyPairs);
                 currentBatchOffset += missingFileKeys.Items.Count;
                 if (missingFileKeys.Items.Count < batchLimit) {
                     break;
@@ -584,13 +582,13 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        private void HandlePendingMissingFileKeys(ApiMissingFileKeys missingFileKeys, UserPrivateKey thisUserPrivateKey) {
+        private void HandlePendingMissingFileKeys(ApiMissingFileKeys missingFileKeys, List<UserKeyPair> userKeyPairs) {
             if (missingFileKeys == null || missingFileKeys.Items.Count == 0) {
                 return;
             }
 
             Dictionary<long, UserPublicKey> userPublicKeys = UserMapper.ConvertApiUserIdPublicKeys(missingFileKeys.UserPublicKey);
-            Dictionary<long, PlainFileKey> plainFileKeys = GeneratePlainFileKeyMap(missingFileKeys.FileKeys, thisUserPrivateKey);
+            Dictionary<long, PlainFileKey> plainFileKeys = GeneratePlainFileKeyMap(missingFileKeys.FileKeys, userKeyPairs);
             ApiSetUserFileKeysRequest setUserFileKeysRequest = new ApiSetUserFileKeysRequest {
                 Items = new List<ApiSetUserFileKey>(missingFileKeys.UserPublicKey.Count)
             };
@@ -613,12 +611,21 @@ namespace Dracoon.Sdk.SdkInternal {
             _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, RequestType.PostMissingFileKeys);
         }
 
-        private Dictionary<long, PlainFileKey> GeneratePlainFileKeyMap(List<ApiFileIdFileKey> fileIdFileKeys, UserPrivateKey thisUserPrivateKey) {
+        private Dictionary<long, PlainFileKey> GeneratePlainFileKeyMap(List<ApiFileIdFileKey> fileIdFileKeys, List<UserKeyPair> userKeyPairs) {
             Dictionary<long, PlainFileKey> plainFileKeys = new Dictionary<long, PlainFileKey>(fileIdFileKeys.Count);
             foreach (ApiFileIdFileKey currentEncryptedFileKey in fileIdFileKeys) {
                 EncryptedFileKey encryptedFileKey = FileMapper.FromApiFileKey(currentEncryptedFileKey.FileKeyContainer);
-                PlainFileKey decryptedFileKey = DecryptFileKey(encryptedFileKey, thisUserPrivateKey, currentEncryptedFileKey.FileId);
-                plainFileKeys.Add(currentEncryptedFileKey.FileId, decryptedFileKey);
+
+                try {
+                    // TODO check if function is correct
+                    UserKeyPair found = userKeyPairs.Single(o => o.UserPublicKey.Version == CryptoHelper.DetermineUserKeyPairVersion(encryptedFileKey.Version));
+                    if (found != null) {
+                        PlainFileKey decryptedFileKey = DecryptFileKey(encryptedFileKey, found.UserPrivateKey, currentEncryptedFileKey.FileId);
+                        plainFileKeys.Add(currentEncryptedFileKey.FileId, decryptedFileKey);
+                    }
+                } catch {
+                    continue; // Next File Key
+                }
             }
 
             return plainFileKeys;
