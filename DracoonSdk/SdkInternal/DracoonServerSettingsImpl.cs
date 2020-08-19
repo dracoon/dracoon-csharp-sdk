@@ -1,4 +1,5 @@
-﻿using Dracoon.Sdk.Error;
+﻿using Dracoon.Crypto.Sdk;
+using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Settings;
@@ -6,6 +7,7 @@ using Dracoon.Sdk.SdkInternal.Mapper;
 using Dracoon.Sdk.SdkPublic.Model;
 using RestSharp;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class DracoonServerSettingsImpl : IServerSettings {
@@ -54,7 +56,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetAlgorithmsMinimumVersion);
             } catch (DracoonApiException) {
                 return new List<UserKeyPairAlgorithmData>() { new UserKeyPairAlgorithmData() {
-                    Algorithm = Crypto.Sdk.UserKeyPairAlgorithm.RSA2048,
+                    Algorithm = UserKeyPairAlgorithm.RSA2048,
                     State = AlgorithmState.Required
                 }};
             }
@@ -70,7 +72,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetAlgorithmsMinimumVersion);
             } catch (DracoonApiException) {
                 return new List<FileKeyAlgorithm>() { new FileKeyAlgorithm() {
-                    Algorithm = Crypto.Sdk.EncryptedFileKeyAlgorithm.RSA2048_AES256GCM,
+                    Algorithm = EncryptedFileKeyAlgorithm.RSA2048_AES256GCM,
                     State = AlgorithmState.Required
                 }};
             }
@@ -79,5 +81,6 @@ namespace Dracoon.Sdk.SdkInternal {
             ApiAlgorithms algorithms = _client.Executor.DoSyncApiCall<ApiAlgorithms>(request, DracoonRequestExecutor.RequestType.GetAlgorithms);
             return SettingsMapper.FromApiFileKeyAlgorithms(algorithms.FileKeyAlgorithms);
         }
+
     }
 }

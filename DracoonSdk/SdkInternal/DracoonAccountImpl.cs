@@ -148,6 +148,18 @@ namespace Dracoon.Sdk.SdkInternal {
             throw new DracoonApiException(DracoonApiCode.SERVER_USER_KEY_PAIR_NOT_FOUND);
         }
 
+        internal UserKeyPairAlgorithm GetPreferredUserKeyPairAlgorithm() {
+            List<UserKeyPairAlgorithmData> algorithms = _client.ServerImpl.ServerSettings.GetAvailableUserKeyPairAlgorithms();
+            // TODO check if sorting is correct
+            algorithms = algorithms.OrderBy(x => x.State).ToList();
+
+            if (algorithms.Count > 0) {
+                return algorithms[0].Algorithm;
+            }
+
+            return UserKeyPairAlgorithm.RSA2048;
+        }
+
         internal List<UserKeyPair> GetAndCheckUserKeyPairs() {
             List<UserKeyPair> returnValue = new List<UserKeyPair>();
             try {
