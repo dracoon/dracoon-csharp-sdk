@@ -1,6 +1,6 @@
 ﻿using Dracoon.Crypto.Sdk;
 
-namespace Dracoon.Sdk.SdkPublic.Model {
+namespace Dracoon.Sdk.Model {
     public class FileKeyAlgorithm {
 
         public EncryptedFileKeyAlgorithm Algorithm {

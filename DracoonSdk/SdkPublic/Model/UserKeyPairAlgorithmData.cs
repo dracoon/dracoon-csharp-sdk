@@ -1,4 +1,4 @@
-﻿namespace Dracoon.Sdk.SdkPublic.Model {
+﻿namespace Dracoon.Sdk.Model {
     public class UserKeyPairAlgorithmData {
 
         public Crypto.Sdk.UserKeyPairAlgorithm Algorithm { 

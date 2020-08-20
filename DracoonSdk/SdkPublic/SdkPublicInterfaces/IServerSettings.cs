@@ -1,5 +1,4 @@
 ﻿using Dracoon.Sdk.Model;
-using Dracoon.Sdk.SdkPublic.Model;
 using System.Collections.Generic;
 
 namespace Dracoon.Sdk {

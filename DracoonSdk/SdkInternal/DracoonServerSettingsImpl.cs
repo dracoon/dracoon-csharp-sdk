@@ -4,7 +4,6 @@ using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Settings;
 using Dracoon.Sdk.SdkInternal.Mapper;
-using Dracoon.Sdk.SdkPublic.Model;
 using RestSharp;
 using System.Collections.Generic;
 using System.Linq;

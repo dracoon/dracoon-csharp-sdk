@@ -6,7 +6,6 @@ using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Mapper;
 using Dracoon.Sdk.SdkInternal.Validator;
-using Dracoon.Sdk.SdkPublic.Model;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -121,6 +120,19 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
+        public List<UserKeyPairAlgorithm> GetUserKeyPairAlgorithms() {
+            _client.Executor.CheckApiServerVersion();
+
+            
+            List<UserKeyPair> userKeyPairs = GetUserKeyPairs();
+            List<UserKeyPairAlgorithm> result = new List<UserKeyPairAlgorithm>(userKeyPairs.Count);
+
+            foreach(UserKeyPair current in userKeyPairs) {
+                result.Add(current.UserPrivateKey.Version);
+            }
+            return result;
+        }
+
         public void ValidateTokenValidity() {
             _client.Executor.CheckApiServerVersion();
             IRestRequest request = _client.Builder.GetAuthenticatedPing();
@@ -160,7 +172,7 @@ namespace Dracoon.Sdk.SdkInternal {
             return UserKeyPairAlgorithm.RSA2048;
         }
 
-        internal List<UserKeyPair> GetAndCheckUserKeyPairs() {
+        private List<UserKeyPair> GetUserKeyPairs() {
             List<UserKeyPair> returnValue = new List<UserKeyPair>();
             try {
                 // Check if api supports this api endpoint. If not only provide the keypair using the "old" api.
@@ -171,7 +183,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
                 foreach (ApiUserKeyPair apiUserKeyPair in result) {
                     UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(apiUserKeyPair);
-                    CheckKeyPair(userKeyPair);
                     returnValue.Add(userKeyPair);
                 }
             } catch (DracoonApiException error) when (error.ErrorCode == DracoonApiCode.API_VERSION_NOT_SUPPORTED) {
@@ -179,6 +190,14 @@ namespace Dracoon.Sdk.SdkInternal {
                 returnValue.Add(keyPair);
             }
             return returnValue;
+        }
+
+        internal List<UserKeyPair> GetAndCheckUserKeyPairs() {
+            List<UserKeyPair> userKeyPairs = GetUserKeyPairs();
+            foreach (UserKeyPair userKeyPair in userKeyPairs) {
+                CheckKeyPair(userKeyPair);
+            }
+            return userKeyPairs;
         }
 
         private void CheckKeyPair(UserKeyPair keyPair) {
