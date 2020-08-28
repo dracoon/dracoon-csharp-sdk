@@ -1,5 +1,6 @@
 ﻿using Dracoon.Crypto.Sdk;
 using Dracoon.Crypto.Sdk.Model;
+using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.Util;
@@ -128,21 +129,25 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             return info;
         }
 
-        internal static Crypto.Sdk.UserKeyPairAlgorithm FromApiUserKeyPairVersion(string version) {
+        internal static UserKeyPairAlgorithm FromApiUserKeyPairVersion(string version) {
             switch (version) {
                 case "RSA-4096":
-                    return Crypto.Sdk.UserKeyPairAlgorithm.RSA4096;
+                    return UserKeyPairAlgorithm.RSA4096;
+                case "A":
+                    return UserKeyPairAlgorithm.RSA2048;
                 default:
-                    return Crypto.Sdk.UserKeyPairAlgorithm.RSA2048;
+                    throw new DracoonCryptoException(new DracoonCryptoCode(DracoonCryptoCode.UNKNOWN_ALGORITHM_ERROR.Code, "Unknown user key pair algorithm: " + version + "."));
             }
         }
 
-        internal static string ToApiUserKeyPairVersion(Crypto.Sdk.UserKeyPairAlgorithm algorithm) {
+        internal static string ToApiUserKeyPairVersion(UserKeyPairAlgorithm algorithm) {
             switch (algorithm) {
-                case Crypto.Sdk.UserKeyPairAlgorithm.RSA4096:
+                case UserKeyPairAlgorithm.RSA4096:
                     return "RSA-4096";
-                default:
+                case UserKeyPairAlgorithm.RSA2048:
                     return "A";
+                default:
+                    throw new DracoonCryptoException(new DracoonCryptoCode(DracoonCryptoCode.UNKNOWN_ALGORITHM_ERROR.Code, "Unknown user key pair algorithm: " + algorithm.GetStringValue() + "."));
             }
         }
 

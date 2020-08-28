@@ -67,7 +67,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
         internal static ApiEnableRoomEncryptionRequest ApiEnableRoomEncryptionRequest {
             get {
                 return new ApiEnableRoomEncryptionRequest {
-                    DataRoomRescueKey = FactoryUser.ApiUserKeyPair,
+                    DataRoomRescueKey = FactoryUser.ApiUserKeyPair_2048,
                     IsEncryptionEnabled = true,
                     UseDataSpaceRescueKey = false
                 };
@@ -78,7 +78,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             get {
                 return new EnableRoomEncryptionRequest(1254, true) {
                     UseDataSpaceRescueKey = false,
-                    DataRoomRescueKeyPassword = "Pass1234!"
+                    DataRoomRescueKeyPassword = "Pass1234!",
+                    DataRoomRescueKeyPairAlgorithm = Crypto.Sdk.UserKeyPairAlgorithm.RSA2048
                 };
             }
         }

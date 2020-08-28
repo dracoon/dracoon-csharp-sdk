@@ -48,7 +48,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     Iv = "PlainIv",
                     Key = "PlainKey",
                     Tag = "PlainTag",
-                    Version = "PlainVersion"
+                    Version = Crypto.Sdk.PlainFileKeyAlgorithm.AES256GCM
                 };
             }
         }
@@ -71,7 +71,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     Iv = fileKey.Iv,
                     Key = fileKey.Key,
                     Tag = fileKey.Tag,
-                    Version = fileKey.Version
+                    Version = Crypto.Sdk.EncryptedFileKeyAlgorithm.RSA2048_AES256GCM
                 };
             }
         }
@@ -160,7 +160,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             get {
                 return new ApiUserIdPublicKey {
                     UserId = 53,
-                    PublicKeyContainer = FactoryUser.ApiUserPublicKey
+                    PublicKeyContainer = FactoryUser.ApiUserPublicKey_2048
                 };
             }
         }
@@ -169,7 +169,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             get {
                 return new Dictionary<long, UserPublicKey> {
                     {
-                        53, FactoryUser.UserPublicKey
+                        53, FactoryUser.UserPublicKey_2048
                     }
                 };
             }

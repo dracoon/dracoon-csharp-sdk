@@ -142,7 +142,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal UserKeyPair GetPreferredUserKeyPair() {
             List<UserKeyPairAlgorithmData> algorithms = _client.ServerImpl.ServerSettings.GetAvailableUserKeyPairAlgorithms();
-            // TODO check if sorting is correct
+
             algorithms = algorithms.OrderBy(x => x.State).ToList();
 
             List<UserKeyPair> keyPairs = GetAndCheckUserKeyPairs();
@@ -162,7 +162,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal UserKeyPairAlgorithm GetPreferredUserKeyPairAlgorithm() {
             List<UserKeyPairAlgorithmData> algorithms = _client.ServerImpl.ServerSettings.GetAvailableUserKeyPairAlgorithms();
-            // TODO check if sorting is correct
             algorithms = algorithms.OrderBy(x => x.State).ToList();
 
             if (algorithms.Count > 0) {

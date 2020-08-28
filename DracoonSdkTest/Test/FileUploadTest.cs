@@ -1,9 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Threading;
-using Dracoon.Crypto.Sdk;
+﻿using Dracoon.Crypto.Sdk;
 using Dracoon.Crypto.Sdk.Model;
 using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Model;
@@ -16,6 +11,10 @@ using Dracoon.Sdk.UnitTest.Factory;
 using Dracoon.Sdk.UnitTest.XUnitComparer;
 using Newtonsoft.Json;
 using RestSharp;
+using System;
+using System.IO;
+using System.Net;
+using System.Threading;
 using Telerik.JustMock;
 using Xunit;
 using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
@@ -295,7 +294,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             FileUploadCallbackMock callback = new FileUploadCallbackMock();
             ApiCreateFileUpload acfu = FactoryFile.ApiCreateFileUpload;
             acfu.Classification = null;
-            EncFileUpload f = new EncFileUpload(c, "id1", FactoryFile.UploadFileRequest, s, FactoryUser.UserPublicKey, fileMock.Length);
+            EncFileUpload f = new EncFileUpload(c, "id1", FactoryFile.UploadFileRequest, s, FactoryUser.UserPublicKey_2048, fileMock.Length);
             f.AddFileUploadCallback(callback);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu).Occurs(1);
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock())
@@ -306,7 +305,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
                 .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(FactoryServerSettings.ApiGeneralSettings).Occurs(1);
-            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.AnyString)).Returns(FactoryFile.PlainFileKey).Occurs(1);
+            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.IsAny<PlainFileKeyAlgorithm>())).Returns(FactoryFile.PlainFileKey).Occurs(1);
             FileEncryptionCipher cipher = Mock.Create<FileEncryptionCipher>();
             Mock.Arrange(() => Crypto.Sdk.Crypto.CreateFileEncryptionCipher(Arg.IsAny<PlainFileKey>())).Returns(cipher).Occurs(1);
             Mock.Arrange(() => cipher.ProcessBytes(Arg.IsAny<PlainDataContainer>())).Returns(new EncryptedDataContainer(fileMock, fileMock))
@@ -337,7 +336,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ASSERT
             Assert.Equal(FactoryNode.Node, actual, new NodeComparer());
             Mock.Assert(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>()));
-            Mock.Assert(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.AnyString));
+            Mock.Assert(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.IsAny<PlainFileKeyAlgorithm>()));
             Mock.Assert(() => Crypto.Sdk.Crypto.CreateFileEncryptionCipher(Arg.IsAny<PlainFileKey>()));
             Mock.Assert(() => FileHash.CompareFileHashes(Arg.AnyString, Arg.IsAny<byte[]>(), Arg.AnyInt));
             Mock.Assert(() => Crypto.Sdk.Crypto.EncryptFileKey(Arg.IsAny<PlainFileKey>(), Arg.IsAny<UserPublicKey>()));
@@ -361,7 +360,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             FileUploadCallbackMock callback = new FileUploadCallbackMock();
             ApiCreateFileUpload acfu = FactoryFile.ApiCreateFileUpload;
             acfu.Classification = null;
-            EncFileUpload f = new EncFileUpload(c, "id1", FactoryFile.UploadFileRequest, s, FactoryUser.UserPublicKey, fileMock.Length);
+            EncFileUpload f = new EncFileUpload(c, "id1", FactoryFile.UploadFileRequest, s, FactoryUser.UserPublicKey_2048, fileMock.Length);
             f.AddFileUploadCallback(callback);
             Mock.Arrange(() => c.Builder.GetGeneralSettings())
                 .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
@@ -371,7 +370,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock());
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostUploadToken, 0))
                 .Returns(FactoryFile.ApiUploadToken);
-            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.AnyString)).Throws(new CryptoException("Error"));
+            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.IsAny<PlainFileKeyAlgorithm>())).Throws(new CryptoException("Error"));
 
             // ACT - ASSERT
             Assert.Throws<DracoonCryptoException>(() => f.RunSync());
@@ -388,7 +387,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             FileUploadCallbackMock callback = new FileUploadCallbackMock();
             ApiCreateFileUpload acfu = FactoryFile.ApiCreateFileUpload;
             acfu.Classification = null;
-            EncFileUpload f = new EncFileUpload(c, "id1", FactoryFile.UploadFileRequest, s, FactoryUser.UserPublicKey, fileMock.Length);
+            EncFileUpload f = new EncFileUpload(c, "id1", FactoryFile.UploadFileRequest, s, FactoryUser.UserPublicKey_2048, fileMock.Length);
             f.AddFileUploadCallback(callback);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu);
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock());
@@ -398,7 +397,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
                 .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(FactoryServerSettings.ApiGeneralSettings).Occurs(1);
-            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.AnyString)).Returns(FactoryFile.PlainFileKey);
+            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.IsAny<PlainFileKeyAlgorithm>())).Returns(FactoryFile.PlainFileKey);
             FileEncryptionCipher cipher = Mock.Create<FileEncryptionCipher>();
             Mock.Arrange(() => Crypto.Sdk.Crypto.CreateFileEncryptionCipher(Arg.IsAny<PlainFileKey>())).Returns(cipher);
             Mock.Arrange(() => cipher.ProcessBytes(Arg.IsAny<PlainDataContainer>())).Returns(new EncryptedDataContainer(fileMock, fileMock));
@@ -424,7 +423,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             FileUploadCallbackMock callback = new FileUploadCallbackMock();
             ApiCreateFileUpload acfu = FactoryFile.ApiCreateFileUpload;
             acfu.Classification = null;
-            EncFileUpload f = new EncFileUpload(c, "id1", FactoryFile.UploadFileRequest, s, FactoryUser.UserPublicKey, fileMock.Length);
+            EncFileUpload f = new EncFileUpload(c, "id1", FactoryFile.UploadFileRequest, s, FactoryUser.UserPublicKey_2048, fileMock.Length);
             f.AddFileUploadCallback(callback);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu);
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock());
@@ -434,7 +433,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
                 .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(FactoryServerSettings.ApiGeneralSettings).Occurs(1);
-            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.AnyString)).Returns(FactoryFile.PlainFileKey);
+            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.IsAny<PlainFileKeyAlgorithm>())).Returns(FactoryFile.PlainFileKey);
             FileEncryptionCipher cipher = Mock.Create<FileEncryptionCipher>();
             Mock.Arrange(() => Crypto.Sdk.Crypto.CreateFileEncryptionCipher(Arg.IsAny<PlainFileKey>())).Throws(new CryptoException("Error"));
 
@@ -453,7 +452,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             FileUploadCallbackMock callback = new FileUploadCallbackMock();
             ApiCreateFileUpload acfu = FactoryFile.ApiCreateFileUpload;
             acfu.Classification = null;
-            EncFileUpload f = new EncFileUpload(c, "id1", FactoryFile.UploadFileRequest, s, FactoryUser.UserPublicKey, fileMock.Length);
+            EncFileUpload f = new EncFileUpload(c, "id1", FactoryFile.UploadFileRequest, s, FactoryUser.UserPublicKey_2048, fileMock.Length);
             f.AddFileUploadCallback(callback);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu);
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock());
@@ -463,7 +462,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
                 .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(FactoryServerSettings.ApiGeneralSettings).Occurs(1);
-            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.AnyString)).Returns(FactoryFile.PlainFileKey);
+            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.IsAny<PlainFileKeyAlgorithm>())).Returns(FactoryFile.PlainFileKey);
             FileEncryptionCipher cipher = Mock.Create<FileEncryptionCipher>();
             Mock.Arrange(() => Crypto.Sdk.Crypto.CreateFileEncryptionCipher(Arg.IsAny<PlainFileKey>())).Returns(cipher);
             Mock.Arrange(() => cipher.ProcessBytes(Arg.IsAny<PlainDataContainer>())).Returns(new EncryptedDataContainer(fileMock, fileMock));
@@ -487,7 +486,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             FileUploadCallbackMock callback = new FileUploadCallbackMock();
             ApiCreateFileUpload acfu = FactoryFile.ApiCreateFileUpload;
             acfu.Classification = null;
-            EncFileUpload f = new EncFileUpload(c, "id1", FactoryFile.UploadFileRequest, s, FactoryUser.UserPublicKey, fileMock.Length);
+            EncFileUpload f = new EncFileUpload(c, "id1", FactoryFile.UploadFileRequest, s, FactoryUser.UserPublicKey_2048, fileMock.Length);
             f.AddFileUploadCallback(callback);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu);
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock());
@@ -497,7 +496,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
                 .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(FactoryServerSettings.ApiGeneralSettings).Occurs(1);
-            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.AnyString)).Returns(FactoryFile.PlainFileKey);
+            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.IsAny<PlainFileKeyAlgorithm>())).Returns(FactoryFile.PlainFileKey);
             FileEncryptionCipher cipher = Mock.Create<FileEncryptionCipher>();
             Mock.Arrange(() => Crypto.Sdk.Crypto.CreateFileEncryptionCipher(Arg.IsAny<PlainFileKey>())).Returns(cipher);
             Mock.Arrange(() => cipher.ProcessBytes(Arg.IsAny<PlainDataContainer>())).Returns(new EncryptedDataContainer(fileMock, fileMock));
@@ -648,7 +647,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Stream s = new MemoryStream(fileMock);
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             FileUploadCallbackMock callback = new FileUploadCallbackMock();
-            EncFileUpload f = new EncFileUpload(c, "id1", FactoryFile.UploadFileRequest, s, FactoryUser.UserPublicKey, fileMock.Length);
+            EncFileUpload f = new EncFileUpload(c, "id1", FactoryFile.UploadFileRequest, s, FactoryUser.UserPublicKey_2048, fileMock.Length);
             f.AddFileUploadCallback(callback);
             ApiGeneralSettings generalSettings = FactoryServerSettings.ApiGeneralSettings;
             generalSettings.UseS3Storage = true;
@@ -684,7 +683,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Mock.Arrange(() => c.Builder.ProvideS3ChunkUploadWebClient()).Returns(wc);
             Mock.Arrange(() => JsonConvert.DeserializeObject<ApiUploadChunkResult>(Arg.AnyString)).Returns(FactoryFile.ApiUploadChunkResult);
 
-            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.AnyString)).Returns(FactoryFile.PlainFileKey).Occurs(1);
+            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.IsAny<PlainFileKeyAlgorithm>())).Returns(FactoryFile.PlainFileKey).Occurs(1);
             FileEncryptionCipher cipher = Mock.Create<FileEncryptionCipher>();
             Mock.Arrange(() => Crypto.Sdk.Crypto.CreateFileEncryptionCipher(Arg.IsAny<PlainFileKey>())).Returns(cipher).Occurs(1);
             Mock.Arrange(() => cipher.ProcessBytes(Arg.IsAny<PlainDataContainer>())).Returns(new EncryptedDataContainer(fileMock, fileMock))

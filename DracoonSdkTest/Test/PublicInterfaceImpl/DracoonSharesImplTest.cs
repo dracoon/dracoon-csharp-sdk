@@ -1,4 +1,5 @@
-﻿using Dracoon.Crypto.Sdk.Model;
+﻿using Dracoon.Crypto.Sdk;
+using Dracoon.Crypto.Sdk.Model;
 using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Filter;
 using Dracoon.Sdk.Model;
@@ -6,6 +7,7 @@ using Dracoon.Sdk.SdkInternal;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Mapper;
+using Dracoon.Sdk.SdkInternal.Util;
 using Dracoon.Sdk.SdkInternal.Validator;
 using Dracoon.Sdk.Sort;
 using Dracoon.Sdk.UnitTest.Factory;
@@ -44,12 +46,14 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.IsAny<IEnumerable<string>>().EnumerableMustNotNullOrEmpty(Arg.AnyString)).DoNothing();
             Mock.Arrange(() => ShareMapper.ToUnencryptedApiCreateDownloadShareRequest(Arg.IsAny<CreateDownloadShareRequest>()))
                 .Returns(FactoryShare.ApiCreateDownloadShareRequest).Occurs(1);
-            Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPair()).Returns(FactoryUser.UserKeyPair).Occurs(1);
+            Mock.Arrange(() => CryptoHelper.DetermineUserKeyPairVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>())).Returns(UserKeyPairAlgorithm.RSA2048).Occurs(1);
+            Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>())).Returns(FactoryUser.UserKeyPair_2048).Occurs(1);
             Mock.Arrange(() => c.NodesImpl.GetEncryptedFileKey(Arg.AnyLong)).Returns(FactoryFile.EncryptedFileKey).Occurs(1);
             Mock.Arrange(() => c.NodesImpl.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.IsAny<long?>())).Returns(FactoryFile.PlainFileKey).Occurs(1);
-            Mock.Arrange(() => c.AccountImpl.GenerateNewUserKeyPair(Arg.AnyString)).Returns(FactoryUser.UserKeyPair);
+            Mock.Arrange(() => c.AccountImpl.GetPreferredUserKeyPairAlgorithm()).Returns(UserKeyPairAlgorithm.RSA4096).Occurs(1);
+            Mock.Arrange(() => c.AccountImpl.GenerateNewUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.AnyString)).Returns(FactoryUser.UserKeyPair_2048);
             Mock.Arrange(() => c.NodesImpl.EncryptFileKey(Arg.IsAny<PlainFileKey>(), Arg.IsAny<UserPublicKey>(), Arg.IsAny<long?>())).Returns(FactoryFile.EncryptedFileKey).Occurs(1);
-            Mock.Arrange(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>())).Returns(FactoryUser.ApiUserKeyPair).Occurs(1);
+            Mock.Arrange(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>())).Returns(FactoryUser.ApiUserKeyPair_2048).Occurs(1);
             Mock.Arrange(() => FileMapper.ToApiFileKey(Arg.IsAny<EncryptedFileKey>())).Returns(FactoryFile.ApiFileKey).Occurs(1);
             Mock.Arrange(() => c.Builder.PostCreateDownloadShare(Arg.IsAny<ApiCreateDownloadShareRequest>())).Returns(FactoryRestSharp.PostCreateDownloadShareMock()).Occurs(1);
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadShare>(Arg.IsAny<IRestRequest>(), RequestType.PostCreateDownloadShare, 0))
@@ -69,6 +73,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Assert(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>()));
             Mock.Assert(() => FileMapper.ToApiFileKey(Arg.IsAny<EncryptedFileKey>()));
             Mock.Assert(() => ShareMapper.FromApiDownloadShare(Arg.IsAny<ApiDownloadShare>()));
+            Mock.Assert(() => CryptoHelper.DetermineUserKeyPairVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>()));
             Mock.Assert(c.NodesImpl);
             Mock.Assert(c.AccountImpl);
             Mock.Assert(c.Builder);
