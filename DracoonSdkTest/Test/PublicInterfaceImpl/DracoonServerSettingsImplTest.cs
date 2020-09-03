@@ -140,7 +140,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
                 .Returns(FactoryServerSettings.FileKeyAlgorithms).Occurs(1);
 
             // ACT
-            List<FileKeyAlgorithm> actual = ss.GetAvailableFileKeyAlgorithms();
+            List<FileKeyAlgorithmData> actual = ss.GetAvailableFileKeyAlgorithms();
 
             // ASSERT
             Assert.NotNull(actual);
@@ -157,7 +157,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => c.Executor.CheckApiServerVersion(Arg.AnyString)).Throws(new DracoonApiException()).Occurs(1);
 
             // ACT
-            List<FileKeyAlgorithm> actual = ss.GetAvailableFileKeyAlgorithms();
+            List<FileKeyAlgorithmData> actual = ss.GetAvailableFileKeyAlgorithms();
 
             // ASSERT
             Assert.NotNull(actual);

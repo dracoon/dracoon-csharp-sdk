@@ -199,14 +199,14 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             }
         }
 
-        internal static List<FileKeyAlgorithm> FromApiFileKeyAlgorithms(List<ApiAlgorithm> apiFileKeyAlgorithms) {
+        internal static List<FileKeyAlgorithmData> FromApiFileKeyAlgorithms(List<ApiAlgorithm> apiFileKeyAlgorithms) {
             if (apiFileKeyAlgorithms == null) {
                 return null;
             }
 
-            List<FileKeyAlgorithm> fileKeyAlgorithms = new List<FileKeyAlgorithm>(apiFileKeyAlgorithms.Count);
+            List<FileKeyAlgorithmData> fileKeyAlgorithms = new List<FileKeyAlgorithmData>(apiFileKeyAlgorithms.Count);
             foreach (ApiAlgorithm current in apiFileKeyAlgorithms) {
-                fileKeyAlgorithms.Add(new FileKeyAlgorithm() {
+                fileKeyAlgorithms.Add(new FileKeyAlgorithmData() {
                     Algorithm = FileMapper.FromApiFileKeyVersion(current.Version),
                     State = EnumConverter.ConvertValueToAlgorithmState(current.Status)
                 });

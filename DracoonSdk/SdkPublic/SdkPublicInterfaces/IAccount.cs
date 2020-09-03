@@ -49,6 +49,7 @@ namespace Dracoon.Sdk {
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/DeleteProfileAttribute/*'/>
         void DeleteProfileAttribute(string attributeKey);
 
+        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iAccount"]/GetUserKeyPairAlgorithms/*'/>
         List<UserKeyPairAlgorithm> GetUserKeyPairAlgorithms();
     }
 }

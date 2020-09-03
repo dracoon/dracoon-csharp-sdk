@@ -65,12 +65,12 @@ namespace Dracoon.Sdk.SdkInternal {
             return SettingsMapper.FromApiUserKeyPairAlgorithms(algorithms.KeyPairAlgorithms);
         }
 
-        public List<FileKeyAlgorithm> GetAvailableFileKeyAlgorithms() {
+        public List<FileKeyAlgorithmData> GetAvailableFileKeyAlgorithms() {
             try {
                 // Check if api supports this api endpoint. If not only provide the algorithm for the "old" crypto.
                 _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetAlgorithmsMinimumVersion);
             } catch (DracoonApiException) {
-                return new List<FileKeyAlgorithm>() { new FileKeyAlgorithm() {
+                return new List<FileKeyAlgorithmData>() { new FileKeyAlgorithmData() {
                     Algorithm = EncryptedFileKeyAlgorithm.RSA2048_AES256GCM,
                     State = AlgorithmState.Required
                 }};

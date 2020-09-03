@@ -200,7 +200,7 @@
     <Compile Include="SdkPublic\Model\AvatarInfo.cs" />
     <Compile Include="SdkPublic\Model\Classification.cs" />
     <Compile Include="SdkPublic\Model\CustomerAccount.cs" />
-    <Compile Include="SdkPublic\Model\FileKeyAlgorithm.cs" />
+    <Compile Include="SdkPublic\Model\FileKeyAlgorithmData.cs" />
     <Compile Include="SdkPublic\Model\PasswordCharacterPolicies.cs" />
     <Compile Include="SdkPublic\Model\PasswordCharacterSet.cs" />
     <Compile Include="SdkPublic\Model\PasswordCharacterSetType.cs" />

@@ -45,14 +45,14 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             }
         }
 
-        internal static List<FileKeyAlgorithm> FileKeyAlgorithms {
+        internal static List<FileKeyAlgorithmData> FileKeyAlgorithms {
             get {
-                return new List<FileKeyAlgorithm> {
-                    new FileKeyAlgorithm {
+                return new List<FileKeyAlgorithmData> {
+                    new FileKeyAlgorithmData {
                         Algorithm = EncryptedFileKeyAlgorithm.RSA2048_AES256GCM,
                         State = AlgorithmState.Discouraged
                     },
-                    new FileKeyAlgorithm {
+                    new FileKeyAlgorithmData {
                         Algorithm = EncryptedFileKeyAlgorithm.RSA4096_AES256GCM,
                         State = AlgorithmState.Required
                     }

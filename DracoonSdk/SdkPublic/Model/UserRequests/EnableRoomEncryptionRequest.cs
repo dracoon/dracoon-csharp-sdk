@@ -15,6 +15,7 @@ namespace Dracoon.Sdk.Model {
         /// <include file="UserRequestsDoc.xml" path='docs/members[@name="enableRoomEncryptionRequest"]/DataRoomRescueKeyPassword/*'/>
         public string DataRoomRescueKeyPassword { get; set; }
 
+        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="enableRoomEncryptionRequest"]/DataRoomRescueKeyPairAlgorithm/*'/>
         public UserKeyPairAlgorithm? DataRoomRescueKeyPairAlgorithm { get; set; }
 
         /// <include file="UserRequestsDoc.xml" path='docs/members[@name="enableRoomEncryptionRequest"]/EnableRoomEncryptionRequestConstructor/*'/>
