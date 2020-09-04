@@ -15,6 +15,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal DracoonServerImpl(IInternalDracoonClient client) {
             _client = client;
             ServerSettings = new DracoonServerSettingsImpl(client);
+            ServerPolicies = new DracoonServerPoliciesImpl(client);
         }
 
         public string GetVersion() {
