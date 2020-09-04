@@ -10,6 +10,8 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public IServerSettings ServerSettings { get; set; }
 
+        public IServerPolicies ServerPolicies { get; set; }
+
         internal DracoonServerImpl(IInternalDracoonClient client) {
             _client = client;
             ServerSettings = new DracoonServerSettingsImpl(client);
@@ -28,5 +30,6 @@ namespace Dracoon.Sdk.SdkInternal {
             ApiServerTime result = _client.Executor.DoSyncApiCall<ApiServerTime>(request, RequestType.GetServerTime);
             return result.Time;
         }
+
     }
 }

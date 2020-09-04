@@ -36,12 +36,5 @@ namespace Dracoon.Sdk.SdkInternal {
             return SettingsMapper.FromApiInfrastructureSettings(apiInfrastructureSettings);
         }
 
-        public PasswordPolicies GetPasswordPolicies() {
-            _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetPasswordPoliciesMinimumVersion);
-            IRestRequest request = _client.Builder.GetPasswordPolicies();
-            ApiPasswordSettings apiPasswordPolicies =
-                _client.Executor.DoSyncApiCall<ApiPasswordSettings>(request, DracoonRequestExecutor.RequestType.GetPasswordPolicies);
-            return SettingsMapper.FromApiPasswordPolicies(apiPasswordPolicies);
-        }
     }
 }

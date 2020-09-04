@@ -9,12 +9,14 @@ namespace Dracoon.Sdk.SdkInternal {
         // mediaserver/image/{mediaToken}/{width}x{height}
         internal const string MediaTokenTemplate = "mediaserver/image/{0}/{1}x{2}";
 
+
+        // Character set based on https://wiki.dracoon.com/display/DevOrga/Password+Policies
         internal static readonly char[] UPPERCASE_SET = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
         };
 
         internal static readonly char[] LOWERCASE_SET = {
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
         };
 
         internal static readonly char[] NUMERIC_SET = {

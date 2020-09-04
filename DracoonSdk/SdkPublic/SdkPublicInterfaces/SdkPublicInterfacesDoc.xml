@@ -1172,6 +1172,55 @@
       </summary>
     </ServerSettings>
 
+    <ServerPolicies>
+      <summary>
+        Handler to query server policy informations.
+        <para>
+          See also <seealso cref="Dracoon.Sdk.IServerPolicies"/>
+        </para>
+      </summary>
+    </ServerPolicies>
+
+  </members>
+
+  <members name="iServerPolicies">
+
+    <IServerPolicies>
+      <summary>
+        Handler to query policy informations.
+      </summary>
+    </IServerPolicies>
+
+    <GetEncryptionPasswordPolicies>
+      <summary>
+        Retrieves the password policies for encryption passwords used for encrypting file keys.
+      </summary>
+      <returns>
+        The encryption password policies.
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+    </GetEncryptionPasswordPolicies>
+
+    <GetSharesPasswordPolicies>
+      <summary>
+        Retrieves the password policies for creating shares.
+      </summary>
+      <returns>
+        The share password policies.
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+    </GetSharesPasswordPolicies>
+    
   </members>
 
   <members name="iServerSettings">
@@ -1226,21 +1275,6 @@
         <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
       </exception>
     </GetDefault>
-
-    <GetPasswordPolicies>
-      <summary>
-        Retrieves the configured password policies for the different password types.
-      </summary>
-      <returns>
-        The policies for the different password types.
-      </returns>
-      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
-      </exception>
-      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
-      </exception>
-    </GetPasswordPolicies>
 
   </members>
 
