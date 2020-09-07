@@ -41,14 +41,6 @@ namespace Dracoon.Sdk.SdkInternal {
             return SettingsMapper.FromApiInfrastructureSettings(apiInfrastructureSettings);
         }
 
-        public PasswordPolicies GetPasswordPolicies() {
-            _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetPasswordPoliciesMinimumVersion);
-            IRestRequest request = _client.Builder.GetPasswordPolicies();
-            ApiPasswordSettings apiPasswordPolicies =
-                _client.Executor.DoSyncApiCall<ApiPasswordSettings>(request, DracoonRequestExecutor.RequestType.GetPasswordPolicies);
-            return SettingsMapper.FromApiPasswordPolicies(apiPasswordPolicies);
-        }
-
         public List<UserKeyPairAlgorithmData> GetAvailableUserKeyPairAlgorithms() {
             try {
                 // Check if api supports this api endpoint. If not only provide the algorithm for the "old" crypto.

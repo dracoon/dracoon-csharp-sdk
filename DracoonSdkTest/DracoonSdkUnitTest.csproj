@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="Factory\FactoryAttribute.cs" />
     <Compile Include="Factory\FactoryClients.cs" />
+    <Compile Include="Factory\FactoryPolicies.cs" />
     <Compile Include="Factory\FactoryRestSharp.cs" />
     <Compile Include="Factory\FactoryServer.cs" />
     <Compile Include="Factory\FileDownloadCallbackMock.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Test\PublicInterfaceImpl\DracoonAccountImplTest.cs" />
     <Compile Include="Test\PublicInterfaceImpl\DracoonNodesImplTest.cs" />
     <Compile Include="Test\PublicInterfaceImpl\DracoonServerImplTest.cs" />
+    <Compile Include="Test\PublicInterfaceImpl\DracoonServerPoliciesImplTest.cs" />
     <Compile Include="Test\PublicInterfaceImpl\DracoonServerSettingsImplTest.cs" />
     <Compile Include="Test\PublicInterfaceImpl\DracoonSharesImplTest.cs" />
     <Compile Include="Test\PublicInterfaceImpl\DracoonUsersImplTest.cs" />

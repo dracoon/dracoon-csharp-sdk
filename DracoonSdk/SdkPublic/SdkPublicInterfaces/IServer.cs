@@ -11,5 +11,8 @@ namespace Dracoon.Sdk {
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServer"]/ServerSettings/*'/>
         IServerSettings ServerSettings { get; }
+
+        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServer"]/ServerPolicies/*'/>
+        IServerPolicies ServerPolicies { get; }
     }
 }

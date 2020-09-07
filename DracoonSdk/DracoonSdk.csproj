@@ -83,11 +83,8 @@
     <Compile Include="SdkInternal\ApiModel\Settings\ApiDefaultsSettings.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiEncryptionPasswordSettings.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiInfrastructureSettings.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiPasswordExpiration.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiPasswordSettings.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiLoginPasswordSettings.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiSharePasswordSettings.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiUserLockout.cs" />
     <Compile Include="SdkInternal\ApiModel\Shares\ApiDownloadShare.cs" />
     <Compile Include="SdkInternal\ApiModel\Shares\ApiDownloadShareList.cs" />
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiFileIdFileKey.cs" />
@@ -140,6 +137,7 @@
     <Compile Include="SdkInternal\ApiModel\User\ApiUserRoleList.cs" />
     <Compile Include="SdkInternal\ApiModel\VoidResponse.cs" />
     <Compile Include="SdkInternal\DracoonAccountImpl.cs" />
+    <Compile Include="SdkInternal\DracoonServerPoliciesImpl.cs" />
     <Compile Include="SdkInternal\DracoonServerSettingsImpl.cs" />
     <Compile Include="SdkInternal\DracoonErrorParser.cs" />
     <Compile Include="SdkInternal\DracoonNodesImpl.cs" />
@@ -206,9 +204,6 @@
     <Compile Include="SdkPublic\Model\PasswordCharacterSetType.cs" />
     <Compile Include="SdkPublic\Model\PasswordEncryptionPolicies.cs" />
     <Compile Include="SdkPublic\Model\PasswordExpiration.cs" />
-    <Compile Include="SdkPublic\Model\PasswordLoginFailurePolicies.cs" />
-    <Compile Include="SdkPublic\Model\PasswordLoginPolicies.cs" />
-    <Compile Include="SdkPublic\Model\PasswordPolicies.cs" />
     <Compile Include="SdkPublic\Model\PasswordSharePolicies.cs" />
     <Compile Include="SdkPublic\Model\RecycleBinItem.cs" />
     <Compile Include="SdkPublic\Model\RecycleBinItemList.cs" />
@@ -254,6 +249,7 @@
     <Compile Include="SdkPublic\Model\UserRole.cs" />
     <Compile Include="SdkPublic\Model\UserType.cs" />
     <Compile Include="SdkPublic\OAuthHelper.cs" />
+    <Compile Include="SdkPublic\SdkPublicInterfaces\IServerPolicies.cs" />
     <Compile Include="SdkPublic\SdkPublicInterfaces\IServerSettings.cs" />
     <Compile Include="SdkPublic\SdkPublicInterfaces\IAccount.cs" />
     <Compile Include="SdkPublic\SdkPublicInterfaces\ILog.cs" />

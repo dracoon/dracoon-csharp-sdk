@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace Dracoon.Sdk {
     /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServerSettings"]/IServerSettings/*'/>
     public interface IServerSettings {
+
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServerSettings"]/GetGeneral/*'/>
         ServerGeneralSettings GetGeneral();
 
@@ -12,9 +13,6 @@ namespace Dracoon.Sdk {
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServerSettings"]/GetDefault/*'/>
         ServerDefaultSettings GetDefault();
-
-        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServerSettings"]/GetPasswordPolicies/*'/>
-        PasswordPolicies GetPasswordPolicies();
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServerSettings"]/GetAvailableUserKeyPairAlgorithms/*'/>
         List<UserKeyPairAlgorithmData> GetAvailableUserKeyPairAlgorithms();

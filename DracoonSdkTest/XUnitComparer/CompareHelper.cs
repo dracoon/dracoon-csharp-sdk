@@ -213,5 +213,22 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             }
             return true;
         }
+
+        internal static bool ListIsEqual(List<PasswordCharacterSet> x, List<PasswordCharacterSet> y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if (x.Count != y.Count) {
+                return false;
+            }
+            PasswordCharacterSetComparer comparer = new PasswordCharacterSetComparer();
+            for (int i = 0; i < x.Count; i++) {
+                if (!comparer.Equals(x[i], y[i])) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
     }
 }

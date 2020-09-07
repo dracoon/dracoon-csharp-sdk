@@ -51,19 +51,6 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             return defaults;
         }
 
-        internal static PasswordPolicies FromApiPasswordPolicies(ApiPasswordSettings apiPolicies) {
-            if (apiPolicies == null) {
-                return null;
-            }
-
-            PasswordPolicies policies = new PasswordPolicies {
-                EncryptionPolicies = FromApiPasswordEncryptionPolicies(apiPolicies.EncryptionPasswordSettings),
-                LoginPolicies = FromApiPasswordLoginPolicies(apiPolicies.LoginPasswordSettings),
-                SharePolicies = FromApiPasswordSharePolicies(apiPolicies.SharePasswordSettings)
-            };
-            return policies;
-        }
-
         internal static PasswordSharePolicies FromApiPasswordSharePolicies(ApiSharePasswordSettings apiPolicies) {
             if (apiPolicies == null) {
                 return null;
@@ -81,26 +68,6 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             return policies;
         }
 
-        internal static PasswordLoginPolicies FromApiPasswordLoginPolicies(ApiLoginPasswordSettings apiPolicies) {
-            if (apiPolicies == null) {
-                return null;
-            }
-
-            PasswordLoginPolicies policies = new PasswordLoginPolicies {
-                CharacterPolicies = FromApiPasswordCharacterPolicies(apiPolicies.CharacterRules),
-                MinimumPasswordLength = apiPolicies.MinimumPasswordLength,
-                RejectDictionaryWords = apiPolicies.RejectDictionaryWords,
-                RejectKeyboardPatterns = apiPolicies.RejectKeyboardPatterns,
-                RejectOwnUserInfo = apiPolicies.RejectUserInfo,
-                NumberOfArchivedPasswords = apiPolicies.NumberOfArchivedPasswords,
-                UpdatedAt = apiPolicies.UpdatedAt,
-                UpdatedBy = UserMapper.FromApiUserInfo(apiPolicies.UpdatedBy),
-                LoginFailurePolicies = FromApiPasswordLoginFailurePolicies(apiPolicies.UserLockoutRules),
-                PasswordExpirationPolicies = FromApiPasswordExpirationPolicies(apiPolicies.PasswordExpirationRules)
-            };
-            return policies;
-        }
-
         internal static PasswordEncryptionPolicies FromApiPasswordEncryptionPolicies(ApiEncryptionPasswordSettings apiPolicies) {
             if (apiPolicies == null) {
                 return null;
@@ -113,31 +80,6 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 RejectOwnUserInfo = apiPolicies.RejectUserInfo,
                 UpdatedAt = apiPolicies.UpdatedAt,
                 UpdatedBy = UserMapper.FromApiUserInfo(apiPolicies.UpdatedBy)
-            };
-            return policies;
-        }
-
-        internal static PasswordExpiration FromApiPasswordExpirationPolicies(ApiPasswordExpiration apiPolicies) {
-            if (apiPolicies == null) {
-                return null;
-            }
-
-            PasswordExpiration policies = new PasswordExpiration {
-                IsEnabled = apiPolicies.ExpirationIsEnabled,
-                ExpiresAfterDays = apiPolicies.MaximumPasswordAgeInDays
-            };
-            return null;
-        }
-
-        internal static PasswordLoginFailurePolicies FromApiPasswordLoginFailurePolicies(ApiUserLockout apiPolicies) {
-            if (apiPolicies == null) {
-                return null;
-            }
-
-            PasswordLoginFailurePolicies policies = new PasswordLoginFailurePolicies {
-                IsEnabled = apiPolicies.Enabled,
-                LoginRetryPeriodMinutes = apiPolicies.MinutesToNextLoginAttempt,
-                MaximumNumberOfLoginFailures = apiPolicies.MaximumLoginFailureAttempts
             };
             return policies;
         }
