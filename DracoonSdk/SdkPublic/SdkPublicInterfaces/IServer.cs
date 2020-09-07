@@ -10,9 +10,9 @@ namespace Dracoon.Sdk {
         DateTime? GetTime();
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServer"]/ServerSettings/*'/>
-        IServerSettings ServerSettings { get; set; }
+        IServerSettings ServerSettings { get; }
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServer"]/ServerPolicies/*'/>
-        IServerPolicies ServerPolicies { get; set; }
+        IServerPolicies ServerPolicies { get; }
     }
 }

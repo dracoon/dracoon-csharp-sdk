@@ -8,9 +8,9 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string Logtag = nameof(DracoonServerImpl);
         private readonly IInternalDracoonClient _client;
 
-        public IServerSettings ServerSettings { get; set; }
+        public IServerSettings ServerSettings { get; }
 
-        public IServerPolicies ServerPolicies { get; set; }
+        public IServerPolicies ServerPolicies { get; }
 
         internal DracoonServerImpl(IInternalDracoonClient client) {
             _client = client;
