@@ -61,12 +61,14 @@ namespace Dracoon.Sdk {
         }
 
         private static void ValidateParameters(string name, string value, bool nullable = false) {
-            if (value == null && !nullable) {
-                throw new ArgumentNullException(name);
-            }
-
             if (string.IsNullOrWhiteSpace(value)) {
-                throw new ArgumentException(name + " cannot be empty or whitespaced.");
+                if(value == null) {
+                    if (!nullable) {
+                        throw new ArgumentNullException(name);
+                    }
+                } else {
+                    throw new ArgumentException(name + " cannot be empty or whitespaced.");
+                }
             }
         }
     }
