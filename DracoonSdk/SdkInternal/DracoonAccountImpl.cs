@@ -108,10 +108,7 @@ namespace Dracoon.Sdk.SdkInternal {
             AssertUserKeyPairAlgorithmSupported(algorithm);
 
             try {
-                string algorithmString = UserMapper.ToApiUserKeyPairVersion(algorithm);
-                IRestRequest request = _client.Builder.GetUserKeyPair(algorithmString);
-                ApiUserKeyPair result = _client.Executor.DoSyncApiCall<ApiUserKeyPair>(request, RequestType.GetUserKeyPair);
-                UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(result);
+                UserKeyPair userKeyPair = GetUserKeyPair(algorithm);
                 CheckKeyPair(userKeyPair);
                 return userKeyPair;
             } catch (CryptoException ce) {
@@ -120,14 +117,22 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
+        private UserKeyPair GetUserKeyPair(UserKeyPairAlgorithm algorithm) {
+            string algorithmString = UserMapper.ToApiUserKeyPairVersion(algorithm);
+            IRestRequest request = _client.Builder.GetUserKeyPair(algorithmString);
+            ApiUserKeyPair result = _client.Executor.DoSyncApiCall<ApiUserKeyPair>(request, RequestType.GetUserKeyPair);
+            UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(result);
+            return userKeyPair;
+        }
+
         public List<UserKeyPairAlgorithm> GetUserKeyPairAlgorithms() {
             _client.Executor.CheckApiServerVersion();
 
-            
+
             List<UserKeyPair> userKeyPairs = GetUserKeyPairs();
             List<UserKeyPairAlgorithm> result = new List<UserKeyPairAlgorithm>(userKeyPairs.Count);
 
-            foreach(UserKeyPair current in userKeyPairs) {
+            foreach (UserKeyPair current in userKeyPairs) {
                 result.Add(current.UserPrivateKey.Version);
             }
             return result;
@@ -149,7 +154,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
             foreach (UserKeyPairAlgorithmData currentAlgorithm in algorithms) {
                 try {
-                    // TODO check if function is correct
                     UserKeyPair found = keyPairs.Single(o => o.UserPublicKey.Version == currentAlgorithm.Algorithm);
                     if (found != null) {
                         return found;
@@ -184,8 +188,8 @@ namespace Dracoon.Sdk.SdkInternal {
                     UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(apiUserKeyPair);
                     returnValue.Add(userKeyPair);
                 }
-            } catch (DracoonApiException error) when (error.ErrorCode == DracoonApiCode.API_VERSION_NOT_SUPPORTED) {
-                UserKeyPair keyPair = GetAndCheckUserKeyPair(UserKeyPairAlgorithm.RSA2048);
+            } catch (DracoonApiException error) when (error.ErrorCode.Code == DracoonApiCode.API_VERSION_NOT_SUPPORTED.Code) {
+                UserKeyPair keyPair = GetUserKeyPair(UserKeyPairAlgorithm.RSA2048);
                 returnValue.Add(keyPair);
             }
             return returnValue;
