@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class ApiConfig {
-        internal const string MinimumApiVersion = "4.11.0";
+        internal const string MinimumApiVersion = "4.12.0";
         internal const string ApiPrefix = "api/v4";
         internal const string AuthorizationHeader = "Authorization";
         // mediaserver/image/{mediaToken}/{width}x{height}
