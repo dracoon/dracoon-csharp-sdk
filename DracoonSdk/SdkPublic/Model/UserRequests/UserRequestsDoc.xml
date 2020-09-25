@@ -549,12 +549,22 @@
         If a room rescue key should be set you have to specify a private key password for the new key pair.
       </summary>
     </DataRoomRescueKeyPassword>
+
+    <DataRoomRescueKeyPairAlgorithm>
+      <summary>
+        The algorithm for the key pair which should be used as rescue key pair.
+      </summary>
+    </DataRoomRescueKeyPairAlgorithm>
+    
     <EnableRoomEncryptionRequestConstructor>
       <summary>
         Constructs a new enable room encryption request.
       </summary>
       <param name="id">
         <include file="UserRequestsDoc.xml" path='docs/members[@name="enableRoomEncryptionRequest"]/Id/*'/>
+      </param>
+      <param name="dataRoomRescueKeyPairAlgorithm">
+        <include file="UserRequestsDoc.xml" path='docs/members[@name="enableRoomEncryptionRequest"]/DataRoomRescueKeyPairAlgorithm/*'/>
       </param>
       <param name="isEncryptionEnabled">
         <include file="UserRequestsDoc.xml" path='docs/members[@name="enableRoomEncryptionRequest"]/IsEncryptionEnabled/*'/>
@@ -566,6 +576,7 @@
         <include file="UserRequestsDoc.xml" path='docs/members[@name="enableRoomEncryptionRequest"]/DataRoomRescueKeyPassword/*'/>
       </param>
     </EnableRoomEncryptionRequestConstructor>
+    
   </members>
 
   <members name="fileUploadRequest">

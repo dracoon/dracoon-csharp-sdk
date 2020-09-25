@@ -16,9 +16,12 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Text;
+using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
+using Dracoon.Sdk.SdkInternal.Validator;
 using Telerik.JustMock;
 using Xunit;
 using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
+using Attribute = Dracoon.Sdk.Model.Attribute;
 
 namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
     public class DracoonAccountImplTest {
@@ -75,17 +78,39 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
         #region SetUserKeyPair
 
         [Fact]
-        public void SetUserKeyPair() {
+        public void SetUserKeyPair_RSA2048() {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonAccountImpl a = new DracoonAccountImpl(c);
-            Mock.Arrange(() => a.GenerateNewUserKeyPair(Arg.AnyString)).Returns(FactoryUser.UserKeyPair).Occurs(1);
-            Mock.Arrange(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>())).Returns(FactoryUser.ApiUserKeyPair).Occurs(1);
-            Mock.Arrange(() => c.Builder.SetUserKeyPair(Arg.IsAny<ApiUserKeyPair>())).Returns(FactoryRestSharp.SetUserKeyPairMock()).Occurs(1);
+            Mock.Arrange(() => a.GenerateNewUserKeyPair(UserKeyPairAlgorithm.RSA2048, Arg.AnyString)).Returns(FactoryUser.UserKeyPair_2048).Occurs(1);
+            Mock.Arrange(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>())).Returns(FactoryUser.ApiUserKeyPair_2048).Occurs(1);
+            Mock.Arrange(() => c.Builder.SetUserKeyPair(Arg.IsAny<ApiUserKeyPair>())).Returns(FactoryRestSharp.SetUserKeyPairMock(FactoryUser.ApiUserKeyPair_2048)).Occurs(1);
             Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.SetUserKeyPair, 0)).DoNothing().Occurs(1);
+            Mock.Arrange(() => a.AssertUserKeyPairAlgorithmSupported(Arg.IsAny<UserKeyPairAlgorithm>())).DoNothing().Occurs(1);
 
             // ACT
-            a.SetUserKeyPair();
+            a.SetUserKeyPair(UserKeyPairAlgorithm.RSA2048);
+
+            // ASSERT
+            Mock.Assert(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>()));
+            Mock.Assert(a);
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        [Fact]
+        public void SetUserKeyPair_RSA4096() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl a = new DracoonAccountImpl(c);
+            Mock.Arrange(() => a.GenerateNewUserKeyPair(UserKeyPairAlgorithm.RSA4096, Arg.AnyString)).Returns(FactoryUser.UserKeyPair_4096).Occurs(1);
+            Mock.Arrange(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>())).Returns(FactoryUser.ApiUserKeyPair_4096).Occurs(1);
+            Mock.Arrange(() => c.Builder.SetUserKeyPair(Arg.IsAny<ApiUserKeyPair>())).Returns(FactoryRestSharp.SetUserKeyPairMock(FactoryUser.ApiUserKeyPair_4096)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.SetUserKeyPair, 0)).DoNothing().Occurs(1);
+            Mock.Arrange(() => a.AssertUserKeyPairAlgorithmSupported(Arg.IsAny<UserKeyPairAlgorithm>())).DoNothing().Occurs(1);
+
+            // ACT
+            a.SetUserKeyPair(UserKeyPairAlgorithm.RSA4096);
 
             // ASSERT
             Mock.Assert(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>()));
@@ -96,71 +121,44 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
 
         #endregion
 
-        #region CheckUserKeyPairPassword
-
-        [Fact]
-        public void CheckUserKeyPairPassword_Success() {
-            // ARRANGE
-            bool expected = true;
-            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
-            DracoonAccountImpl a = new DracoonAccountImpl(c);
-            Mock.Arrange(() => a.GetAndCheckUserKeyPair()).Returns(FactoryUser.UserKeyPair).Occurs(1);
-
-            // ACT
-            bool actual = a.CheckUserKeyPairPassword();
-
-            // ASSERT
-            Assert.Equal(expected, actual);
-            Mock.Assert(a);
-            Mock.Assert(c.Executor);
-        }
-
-        [Fact]
-        public void CheckUserKeyPairPassword_WrongPassword() {
-            // ARRANGE
-            bool expected = false;
-            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
-            DracoonAccountImpl a = new DracoonAccountImpl(c);
-            Mock.Arrange(() => a.GetAndCheckUserKeyPair()).Throws(new DracoonCryptoException(DracoonCryptoCode.INVALID_PASSWORD_ERROR)).Occurs(1);
-
-            // ACT
-            bool actual = a.CheckUserKeyPairPassword();
-
-            // ASSERT
-            Assert.Equal(expected, actual);
-            Mock.Assert(a);
-            Mock.Assert(c.Executor);
-        }
-
-        [Fact]
-        public void CheckUserKeyPairPassword_Fail() {
-            // ARRANGE
-            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
-            DracoonAccountImpl a = new DracoonAccountImpl(c);
-            Mock.Arrange(() => a.GetAndCheckUserKeyPair()).Throws(new DracoonCryptoException()).Occurs(1);
-
-            // ACT - ASSERT
-            Assert.Throws<DracoonCryptoException>(() => a.CheckUserKeyPairPassword());
-            Mock.Assert(a);
-            Mock.Assert(c.Executor);
-        }
-
-        #endregion
-
         #region DeleteUserKeyPair
 
         [Fact]
-        public void DeleteUserKeyPair() {
+        public void DeleteUserKeyPair_2048() {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonAccountImpl a = new DracoonAccountImpl(c);
-            Mock.Arrange(() => c.Builder.DeleteUserKeyPair()).Returns(FactoryRestSharp.DeleteUserKeyPairMock()).Occurs(1);
+            Mock.Arrange(() => c.Builder.DeleteUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048))).Returns(FactoryRestSharp.DeleteUserKeyPairMock()).Occurs(1);
+            Mock.Arrange(() => a.AssertUserKeyPairAlgorithmSupported(UserKeyPairAlgorithm.RSA2048)).DoNothing().Occurs(1);
+            Mock.Arrange(() => UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048)).Returns("A").Occurs(1);
             Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.DeleteUserKeyPair, 0)).DoNothing().Occurs(1);
 
             // ACT
-            a.DeleteUserKeyPair();
+            a.DeleteUserKeyPair(UserKeyPairAlgorithm.RSA2048);
 
             // ASSERT
+            Mock.Assert(() => UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048));
+            Mock.Assert(a);
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        [Fact]
+        public void DeleteUserKeyPair_4096() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl a = new DracoonAccountImpl(c);
+            Mock.Arrange(() => c.Builder.DeleteUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096))).Returns(FactoryRestSharp.DeleteUserKeyPairMock()).Occurs(1);
+            Mock.Arrange(() => a.AssertUserKeyPairAlgorithmSupported(UserKeyPairAlgorithm.RSA4096)).DoNothing().Occurs(1);
+            Mock.Arrange(() => UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096)).Returns("RSA-4096").Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.DeleteUserKeyPair, 0)).DoNothing().Occurs(1);
+
+            // ACT
+            a.DeleteUserKeyPair(UserKeyPairAlgorithm.RSA4096);
+
+            // ASSERT
+            Mock.Assert(() => UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096));
+            Mock.Assert(a);
             Mock.Assert(c.Builder);
             Mock.Assert(c.Executor);
         }
@@ -170,19 +168,35 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
         #region GenerateNewUserKeyPair
 
         [Fact]
-        public void GenerateNewUserKeyPair_Success() {
+        public void GenerateNewUserKeyPair_Success_2048() {
             // ARRANGE
-            UserKeyPair expected = FactoryUser.UserKeyPair;
+            UserKeyPair expected = FactoryUser.UserKeyPair_2048;
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonAccountImpl a = new DracoonAccountImpl(c);
-            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.AnyString)).Returns(FactoryUser.UserKeyPair).Occurs(1);
+            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(UserKeyPairAlgorithm.RSA2048, Arg.AnyString)).Returns(FactoryUser.UserKeyPair_2048).Occurs(1);
 
             // ACT
-            UserKeyPair actual = a.GenerateNewUserKeyPair(c.EncryptionPassword);
+            UserKeyPair actual = a.GenerateNewUserKeyPair(UserKeyPairAlgorithm.RSA2048, c.EncryptionPassword);
 
             // ASSERT
             Assert.Equal(expected, actual, new UserKeyPairComparer());
-            Mock.Assert(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.AnyString));
+            Mock.Assert(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(UserKeyPairAlgorithm.RSA2048, Arg.AnyString));
+        }
+
+        [Fact]
+        public void GenerateNewUserKeyPair_Success_4096() {
+            // ARRANGE
+            UserKeyPair expected = FactoryUser.UserKeyPair_4096;
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl a = new DracoonAccountImpl(c);
+            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(UserKeyPairAlgorithm.RSA4096, Arg.AnyString)).Returns(FactoryUser.UserKeyPair_4096).Occurs(1);
+
+            // ACT
+            UserKeyPair actual = a.GenerateNewUserKeyPair(UserKeyPairAlgorithm.RSA4096, c.EncryptionPassword);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new UserKeyPairComparer());
+            Mock.Assert(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(UserKeyPairAlgorithm.RSA4096, Arg.AnyString));
         }
 
         [Fact]
@@ -190,12 +204,12 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonAccountImpl a = new DracoonAccountImpl(c);
-            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.AnyString)).Throws(new CryptoException()).Occurs(1);
+            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(UserKeyPairAlgorithm.RSA2048, Arg.AnyString)).Throws(new CryptoException()).Occurs(1);
             Mock.Arrange(() => CryptoErrorMapper.ParseCause(Arg.IsAny<Exception>())).Returns(DracoonCryptoCode.UNKNOWN_ERROR).Occurs(1);
 
             // ACT - ASSERT
-            Assert.Throws<DracoonCryptoException>(() => a.GenerateNewUserKeyPair(c.EncryptionPassword));
-            Mock.Assert(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.AnyString));
+            Assert.Throws<DracoonCryptoException>(() => a.GenerateNewUserKeyPair(UserKeyPairAlgorithm.RSA2048, c.EncryptionPassword));
+            Mock.Assert(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(UserKeyPairAlgorithm.RSA2048, Arg.AnyString));
             Mock.Assert(() => CryptoErrorMapper.ParseCause(Arg.IsAny<Exception>()));
         }
 
@@ -204,22 +218,53 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
         #region GetAndCheckUserKeyPair
 
         [Fact]
-        public void GetAndCheckUserKeyPair_Success() {
+        public void GetAndCheckUserKeyPair_Success_2048() {
             // ARRANGE
-            UserKeyPair expected = FactoryUser.UserKeyPair;
+            UserKeyPair expected = FactoryUser.UserKeyPair_2048;
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(false);
             DracoonAccountImpl a = new DracoonAccountImpl(c);
-            Mock.Arrange(() => c.Builder.GetUserKeyPair()).Returns(FactoryRestSharp.GetUserKeyPairMock()).Occurs(1);
+            Mock.Arrange(() => c.Builder.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048))).Returns(FactoryRestSharp.GetUserKeyPairMock(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048))).Occurs(1);
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUserKeyPair>(Arg.IsAny<IRestRequest>(), RequestType.GetUserKeyPair, 0))
-                .Returns(FactoryUser.ApiUserKeyPair).Occurs(1);
-            Mock.Arrange(() => UserMapper.FromApiUserKeyPair(Arg.IsAny<ApiUserKeyPair>())).Returns(FactoryUser.UserKeyPair).Occurs(1);
+                .Returns(FactoryUser.ApiUserKeyPair_2048).Occurs(1);
+            Mock.Arrange(() => UserMapper.FromApiUserKeyPair(Arg.IsAny<ApiUserKeyPair>())).Returns(FactoryUser.UserKeyPair_2048).Occurs(1);
             Mock.Arrange(() => Crypto.Sdk.Crypto.CheckUserKeyPair(Arg.IsAny<UserKeyPair>(), Arg.AnyString)).Returns(true).Occurs(1);
+            Mock.Arrange(() => a.AssertUserKeyPairAlgorithmSupported(UserKeyPairAlgorithm.RSA2048)).DoNothing().Occurs(1);
+            Mock.Arrange(() => UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048)).Returns("A").Occurs(1);
 
             // ACT
-            UserKeyPair actual = a.GetAndCheckUserKeyPair();
+            UserKeyPair actual = a.GetAndCheckUserKeyPair(UserKeyPairAlgorithm.RSA2048);
 
             // ASSERT
             Assert.Equal(expected, actual, new UserKeyPairComparer());
+            Mock.Assert(() => UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048));
+            Mock.Assert(a);
+            Mock.Assert(() => UserMapper.FromApiUserKeyPair(Arg.IsAny<ApiUserKeyPair>()));
+            Mock.Assert(() => Crypto.Sdk.Crypto.CheckUserKeyPair(Arg.IsAny<UserKeyPair>(), Arg.AnyString));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        [Fact]
+        public void GetAndCheckUserKeyPair_Success_4096() {
+            // ARRANGE
+            UserKeyPair expected = FactoryUser.UserKeyPair_4096;
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(false);
+            DracoonAccountImpl a = new DracoonAccountImpl(c);
+            Mock.Arrange(() => c.Builder.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096))).Returns(FactoryRestSharp.GetUserKeyPairMock(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096))).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUserKeyPair>(Arg.IsAny<IRestRequest>(), RequestType.GetUserKeyPair, 0))
+                .Returns(FactoryUser.ApiUserKeyPair_4096).Occurs(1);
+            Mock.Arrange(() => UserMapper.FromApiUserKeyPair(Arg.IsAny<ApiUserKeyPair>())).Returns(FactoryUser.UserKeyPair_4096).Occurs(1);
+            Mock.Arrange(() => Crypto.Sdk.Crypto.CheckUserKeyPair(Arg.IsAny<UserKeyPair>(), Arg.AnyString)).Returns(true).Occurs(1);
+            Mock.Arrange(() => a.AssertUserKeyPairAlgorithmSupported(UserKeyPairAlgorithm.RSA4096)).DoNothing().Occurs(1);
+            Mock.Arrange(() => UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096)).Returns("RSA-4096").Occurs(1);
+
+            // ACT
+            UserKeyPair actual = a.GetAndCheckUserKeyPair(UserKeyPairAlgorithm.RSA4096);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new UserKeyPairComparer());
+            Mock.Assert(() => UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096));
+            Mock.Assert(a);
             Mock.Assert(() => UserMapper.FromApiUserKeyPair(Arg.IsAny<ApiUserKeyPair>()));
             Mock.Assert(() => Crypto.Sdk.Crypto.CheckUserKeyPair(Arg.IsAny<UserKeyPair>(), Arg.AnyString));
             Mock.Assert(c.Builder);
@@ -232,14 +277,16 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             int expected = DracoonCryptoCode.INVALID_PASSWORD_ERROR.Code;
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonAccountImpl a = new DracoonAccountImpl(c);
-            Mock.Arrange(() => c.Builder.GetUserKeyPair()).Returns(FactoryRestSharp.GetUserKeyPairMock());
+            Mock.Arrange(() => c.Builder.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048))).Returns(FactoryRestSharp.GetUserKeyPairMock(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048)));
+            Mock.Arrange(() => a.AssertUserKeyPairAlgorithmSupported(UserKeyPairAlgorithm.RSA2048)).DoNothing();
+            Mock.Arrange(() => UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048)).Returns("A");
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUserKeyPair>(Arg.IsAny<IRestRequest>(), RequestType.GetUserKeyPair, 0))
-                .Returns(FactoryUser.ApiUserKeyPair);
+                .Returns(FactoryUser.ApiUserKeyPair_2048);
             Mock.Arrange(() => Crypto.Sdk.Crypto.CheckUserKeyPair(Arg.IsAny<UserKeyPair>(), Arg.AnyString)).Returns(false);
 
             try {
                 // ACT
-                a.GetAndCheckUserKeyPair();
+                a.GetAndCheckUserKeyPair(UserKeyPairAlgorithm.RSA2048);
             } catch (DracoonCryptoException e) {
                 // ASSERT
                 Assert.Equal(expected, e.ErrorCode.Code);
@@ -251,15 +298,17 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonAccountImpl a = new DracoonAccountImpl(c);
-            Mock.Arrange(() => c.Builder.GetUserKeyPair()).Returns(FactoryRestSharp.GetUserKeyPairMock());
+            Mock.Arrange(() => c.Builder.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048))).Returns(FactoryRestSharp.GetUserKeyPairMock(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048)));
+            Mock.Arrange(() => a.AssertUserKeyPairAlgorithmSupported(UserKeyPairAlgorithm.RSA2048)).DoNothing();
+            Mock.Arrange(() => UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048)).Returns("A");
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUserKeyPair>(Arg.IsAny<IRestRequest>(), RequestType.GetUserKeyPair, 0))
-                .Returns(FactoryUser.ApiUserKeyPair);
+                .Returns(FactoryUser.ApiUserKeyPair_2048);
             Mock.Arrange(() => Crypto.Sdk.Crypto.CheckUserKeyPair(Arg.IsAny<UserKeyPair>(), Arg.AnyString)).Throws(new CryptoException());
             Mock.Arrange(() => CryptoErrorMapper.ParseCause(Arg.IsAny<Exception>())).Returns(DracoonCryptoCode.UNKNOWN_ERROR).Occurs(1);
 
             try {
                 // ACT
-                a.GetAndCheckUserKeyPair();
+                a.GetAndCheckUserKeyPair(UserKeyPairAlgorithm.RSA2048);
             } catch (DracoonCryptoException e) {
                 // ASSERT
                 Assert.NotEqual(DracoonCryptoCode.INVALID_PASSWORD_ERROR.Code, e.ErrorCode.Code);
@@ -414,6 +463,105 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Assert(c.Builder);
             Mock.Assert(c.Executor);
             ms.Close();
+        }
+
+        #endregion
+
+        #region GetUserProfileAttributeList
+
+        [Fact]
+        public void GetUserProfileAttributeList() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl a = new DracoonAccountImpl(c);
+            Mock.Arrange(() => c.Builder.GetUserProfileAttributes()).Returns(FactoryRestSharp.GetUserProfileAttributes()).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiAttributeList>(Arg.IsAny<IRestRequest>(), RequestType.GetUserProfileAttributes, 0))
+                .Returns(FactoryAttribute.ApiAttributeList);
+            Mock.Arrange(() => AttributeMapper.FromApiAttributeList(Arg.IsAny<ApiAttributeList>())).Returns(FactoryAttribute.AttributeList).Occurs(1);
+
+            // ACT
+            AttributeList actual = a.GetUserProfileAttributeList();
+
+            // ASSERT
+            Assert.NotNull(actual);
+            Mock.Assert(() => AttributeMapper.FromApiAttributeList(Arg.IsAny<ApiAttributeList>()));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
+
+        #region GetUserProfileAttribute
+
+        [Fact]
+        public void GetUserProfileAttribute() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl a = new DracoonAccountImpl(c);
+            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Builder.GetUserProfileAttribute(Arg.AnyString)).Returns(FactoryRestSharp.GetUserProfileAttribute(FactoryAttribute.AttributeList.Items[0].Key)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiAttributeList>(Arg.IsAny<IRestRequest>(), RequestType.GetUserProfileAttributes, 0))
+                .Returns(FactoryAttribute.ApiAttributeList);
+            Mock.Arrange(() => AttributeMapper.FromApiAttributeList(Arg.IsAny<ApiAttributeList>())).Returns(FactoryAttribute.AttributeList).Occurs(1);
+
+            // ACT
+            Attribute actual = a.GetUserProfileAttribute(FactoryAttribute.AttributeList.Items[0].Key);
+
+            // ASSERT
+            Assert.NotNull(actual);
+            Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
+            Mock.Assert(() => AttributeMapper.FromApiAttributeList(Arg.IsAny<ApiAttributeList>()));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
+
+        #region AddOrUpdateUserProfileAttributes
+
+        [Fact]
+        public void AddOrUpdateUserProfileAttributes() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl a = new DracoonAccountImpl(c);
+            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().OccursAtLeast(1);
+            Mock.Arrange(() => Arg.AnyString.MustNotNull(Arg.AnyString)).DoNothing().OccursAtLeast(1);
+            Mock.Arrange(() => c.Builder.PutUserProfileAttributes(Arg.IsAny<ApiAddOrUpdateAttributeRequest>()))
+                .Returns(FactoryRestSharp.PutUserProfileAttributes()).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.PutUserProfileAttributes, 0))
+                .DoNothing().Occurs(1);
+
+            // ACT
+            a.AddOrUpdateUserProfileAttributes(FactoryAttribute.AttributeList.Items);
+
+            // ASSERT
+            Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
+            Mock.Assert(() => Arg.AnyString.MustNotNull(Arg.AnyString));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
+
+        #region DeleteProfileAttribute
+
+        [Fact]
+        public void DeleteProfileAttribute() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl a = new DracoonAccountImpl(c);
+            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Builder.DeleteUserProfileAttributes(Arg.AnyString)).Returns(FactoryRestSharp.DeleteUserProfileAttribute(FactoryAttribute.AttributeList.Items[0].Key)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.DeleteUserProfileAttributes, 0))
+                .DoNothing().Occurs(1);
+
+            // ACT
+            a.DeleteProfileAttribute(FactoryAttribute.AttributeList.Items[0].Key);
+
+            // ASSERT
+            Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
         }
 
         #endregion

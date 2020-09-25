@@ -2,8 +2,6 @@
 
 namespace Dracoon.Sdk.SdkInternal.ApiModel {
     internal class ApiPasswordSettings {
-        [JsonProperty("loginPasswordPolicies", NullValueHandling = NullValueHandling.Ignore)]
-        public ApiLoginPasswordSettings LoginPasswordSettings { get; set; }
         [JsonProperty("sharesPasswordPolicies", NullValueHandling = NullValueHandling.Ignore)]
         public ApiSharePasswordSettings SharePasswordSettings { get; set; }
         [JsonProperty("encryptionPasswordPolicies", NullValueHandling = NullValueHandling.Ignore)]

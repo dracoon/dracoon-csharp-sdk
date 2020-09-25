@@ -10,6 +10,9 @@ namespace Dracoon.Sdk.Model {
         /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/LoginName/*'/>
         public string LoginName { get; internal set; }
 
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/UserName/*'/>
+        public string UserName { get; internal set; }
+
         /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/Title/*'/>
         public string Title { get; internal set; }
 

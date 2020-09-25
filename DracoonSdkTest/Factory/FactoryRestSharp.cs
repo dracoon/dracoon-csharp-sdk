@@ -6,7 +6,9 @@ using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Net;
+using Dracoon.Sdk.UnitTest.XUnitComparer;
 using Telerik.JustMock;
+using Dracoon.Sdk.SdkInternal.ApiModel;
 
 namespace Dracoon.Sdk.UnitTest.Factory {
     internal static class FactoryRestSharp {
@@ -224,6 +226,23 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     .AddUrlSegment("uuid", "1HUD743H");
         }
 
+        internal static IRestRequest GetUserProfileAttributes() {
+            return RestRequestWithAuth(ApiConfig.ApiGetUserProfileAttributes, Method.GET);
+        }
+
+        internal static IRestRequest GetUserProfileAttribute(string key) {
+            return RestRequestWithAuth(ApiConfig.ApiGetUserProfileAttributes, Method.GET).AddQueryParameter("filter", "key:eq:" + key);
+        }
+
+        internal static IRestRequest PutUserProfileAttributes() {
+            return RestRequestWithAuth(ApiConfig.ApiPutUserProfileAttributes, Method.PUT).AddParameter("application/json",
+                JsonConvert.SerializeObject(FactoryAttribute.ApiAddOrUpdateAttributeRequest), ParameterType.RequestBody);
+        }
+
+        internal static IRestRequest DeleteUserProfileAttribute(string key) {
+            return RestRequestWithAuth(ApiConfig.ApiDeleteUserProfileAttributes, Method.DELETE).AddUrlSegment("key", key);
+        }
+
         internal static IRestRequest GetUserAccountMock() {
             return RestRequestWithAuth(ApiConfig.ApiGetUserAccount, Method.GET);
         }
@@ -232,17 +251,17 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             return RestRequestWithAuth(ApiConfig.ApiGetCustomerAccount, Method.GET);
         }
 
-        internal static IRestRequest SetUserKeyPairMock() {
+        internal static IRestRequest SetUserKeyPairMock(ApiUserKeyPair pair) {
             return RestRequestWithAuth(ApiConfig.ApiPostUserKeyPair, Method.POST).AddParameter("application/json",
-                        JsonConvert.SerializeObject(FactoryUser.ApiUserKeyPair), ParameterType.RequestBody);
+                        JsonConvert.SerializeObject(pair), ParameterType.RequestBody);
         }
 
         internal static IRestRequest DeleteUserKeyPairMock() {
             return RestRequestWithAuth(ApiConfig.ApiDeleteUserKeyPair, Method.DELETE);
         }
 
-        internal static IRestRequest GetUserKeyPairMock() {
-            return RestRequestWithAuth(ApiConfig.ApiGetUserKeyPair, Method.GET);
+        internal static IRestRequest GetUserKeyPairMock(string version) {
+            return RestRequestWithAuth(ApiConfig.ApiGetUserKeyPair, Method.GET).AddQueryParameter("version", version);
         }
 
         internal static IRestRequest GetAuthenticatedPingMock() {

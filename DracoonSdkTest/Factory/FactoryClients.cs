@@ -59,16 +59,29 @@ namespace Dracoon.Sdk.UnitTest.Factory {
 
                 Mock.Arrange(() => r.GetUserAccount()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetUserAccount, Method.GET));
                 Mock.Arrange(() => r.GetCustomerAccount()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetCustomerAccount, Method.GET));
-                Mock.Arrange(() => r.GetUserKeyPair()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetUserKeyPair, Method.GET));
+                Mock.Arrange(() => r.GetUserKeyPair(Arg.AnyString)).Returns((string x) => {
+                    return FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetUserKeyPair, Method.GET).AddQueryParameter("version", x);
+                });
+                Mock.Arrange(() => r.GetUserKeyPairs()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetUserKeyPairs, Method.GET));
                 Mock.Arrange(() => r.GetAuthenticatedPing())
                     .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetAuthenticatedPing, Method.GET).AddHeader("Accept", "*/*"));
                 Mock.Arrange(() => r.GetAvatar()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetAvatar, Method.GET));
                 Mock.Arrange(() => r.SetUserKeyPair(Arg.IsAny<ApiUserKeyPair>())).Returns(FactoryRestSharp
                     .RestRequestWithAuth(ApiConfig.ApiPostUserKeyPair, Method.POST).AddParameter("application/json",
-                        JsonConvert.SerializeObject(FactoryUser.ApiUserKeyPair), ParameterType.RequestBody));
-                Mock.Arrange(() => r.DeleteUserKeyPair())
-                    .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteUserKeyPair, Method.DELETE));
+                        JsonConvert.SerializeObject(FactoryUser.ApiUserKeyPair_2048), ParameterType.RequestBody));
+                Mock.Arrange(() => r.DeleteUserKeyPair(Arg.AnyString))
+                    .Returns((string x) => {
+                        return FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteUserKeyPair, Method.DELETE).AddQueryParameter("version", x);
+                    });
                 Mock.Arrange(() => r.DeleteAvatar()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteAvatar, Method.DELETE));
+                Mock.Arrange(() => r.GetUserProfileAttributes())
+                    .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetUserProfileAttributes, Method.GET));
+                Mock.Arrange(() => r.GetUserProfileAttribute(Arg.AnyString)).Returns(FactoryRestSharp
+                    .RestRequestWithAuth(ApiConfig.ApiGetUserProfileAttributes, Method.GET).AddQueryParameter("filter", "key:eq:" + FactoryAttribute.AttributeList.Items[0].Key));
+                Mock.Arrange(() => r.PutUserProfileAttributes(Arg.IsAny<ApiAddOrUpdateAttributeRequest>())).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPutUserProfileAttributes, Method.PUT).AddParameter("application/json",
+                    JsonConvert.SerializeObject(FactoryAttribute.ApiAddOrUpdateAttributeRequest), ParameterType.RequestBody));
+                Mock.Arrange(() => r.DeleteUserProfileAttributes(Arg.AnyString))
+                    .Returns(FactoryRestSharp.DeleteUserProfileAttribute(FactoryAttribute.AttributeList.Items[0].Key));
                 Mock.Arrange(() => r.ProvideAvatarDownloadWebClient()).Returns(() => {
                     DracoonWebClientExtension wc = new DracoonWebClientExtension();
                     wc.Headers.Add(HttpRequestHeader.UserAgent, new DracoonHttpConfig().UserAgent);
@@ -357,6 +370,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                 Mock.Arrange(() => r.GetInfrastructureSettings())
                     .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetInfrastructureConfig, Method.GET));
                 Mock.Arrange(() => r.GetDefaultsSettings()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetDefaultsConfig, Method.GET));
+                Mock.Arrange(() => r.GetAlgorithms()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetAlgorithms, Method.GET));
 
                 #endregion
 

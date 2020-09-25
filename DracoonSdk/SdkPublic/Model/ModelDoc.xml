@@ -1,5 +1,27 @@
 ﻿<docs>
-  
+
+  <members name="algorithmState">
+
+    <AlgorithmState>
+      <summary>
+        Enumeration of algorithm states.
+      </summary>
+    </AlgorithmState>
+
+    <Required>
+      <summary>
+        The prefered algorithms.
+      </summary>
+    </Required>
+
+    <Discouraged>
+      <summary>
+        Algorithms flagged with this state shouldn't be used anymore.
+      </summary>
+    </Discouraged>
+
+  </members>
+
   <members name="classification">
 
     <Classification>
@@ -55,6 +77,65 @@
     </IsCustomAvatar>
 
   </members>
+
+  <member name="attributeList">
+
+    <AttributeList>
+      <summary>
+        This model stores custom defined attributes. The list may be a paginated response.
+        <para>
+          <see cref="Dracoon.Sdk.Model.AttributeList.Offset"/> and <see cref="Dracoon.Sdk.Model.AttributeList.Limit"/> can be used to get the start and length of the page.
+        </para>
+      </summary>
+    </AttributeList>
+
+    <Offset>
+      <summary>
+        The index of the first returned item of the possible total list.
+      </summary>
+    </Offset>
+
+    <Limit>
+      <summary>
+        The number of returned items.
+      </summary>
+    </Limit>
+
+    <Total>
+      <summary>
+        The total number of items which can be requested.
+      </summary>
+    </Total>
+
+    <Items>
+      <summary>
+        The returned upload share items. See also <seealso cref="Dracoon.Sdk.Model.UploadShare"/>
+      </summary>
+    </Items>
+
+  </member>
+
+  <member name="attribute">
+
+    <AttributeList>
+      <summary>
+        This model stores a single custom defined attribute.
+      </summary>
+    </AttributeList>
+
+    <Key>
+      <summary>
+        The attribute key name.
+      </summary>
+    </Key>
+
+    <Value>
+      <summary>
+        The attribute value.
+      </summary>
+    </Value>
+
+  </member>
 
   <members name="customerAccount">
 
@@ -361,6 +442,28 @@
         The returned download share items. See also <seealso cref="Dracoon.Sdk.Model.DownloadShare"/>
       </summary>
     </Items>
+
+  </members>
+
+  <members name="fileKeyAlgorithmData">
+
+    <FileKeyAlgorithmData>
+      <summary>
+        This model stores informations about a algorithm for the file keys.
+      </summary>
+    </FileKeyAlgorithmData>
+
+    <Algorithm>
+      <summary>
+        The file key algorithm.
+      </summary>
+    </Algorithm>
+
+    <State>
+      <summary>
+        The state of the file key algorithm.
+      </summary>
+    </State>
 
   </members>
 
@@ -1020,105 +1123,6 @@
 
   </members>
 
-  <members name="passwordPolicies">
-
-    <PasswordPolicies>
-      <summary>
-        This model stores the policies for the different password types.
-      </summary>
-    </PasswordPolicies>
-
-    <LoginPolicies>
-      <summary>
-        The policies for the login password.
-      </summary>
-    </LoginPolicies>
-
-    <SharePolicies>
-      <summary>
-        The policies for the share password.
-      </summary>
-    </SharePolicies>
-
-    <EncryptionPolicies>
-      <summary>
-        The policies for the encryption password.
-      </summary>
-    </EncryptionPolicies>
-
-  </members>
-
-  <members name="passwordLoginPolicies">
-
-    <PasswordLoginPolicies>
-      <summary>
-        This model stores the policies for the login password.
-      </summary>
-    </PasswordLoginPolicies>
-
-    <CharacterPolicies>
-      <summary>
-        The password containment definition.
-      </summary>
-    </CharacterPolicies>
-
-    <MinimumPasswordLength>
-      <summary>
-        The minimum password length.
-      </summary>
-    </MinimumPasswordLength>
-
-    <RejectDictionaryWords>
-      <summary>
-        Is <c>true</c> if dictionary words like "Password" are rejected. Otherwise <c>false</c>.
-      </summary>
-    </RejectDictionaryWords>
-
-    <RejectOwnUserInfo>
-      <summary>
-        Is <c>true</c> if own user information like "Firstname" or "Lastname" is rejected. Otherwise <c>false</c>.
-      </summary>
-    </RejectOwnUserInfo>
-
-    <RejectKeyboardPatterns>
-      <summary>
-        Is <c>true</c> if keyboard patterns like "qwer" or "asdf" are rejected. Otherwise <c>false</c>.
-      </summary>
-    </RejectKeyboardPatterns>
-
-    <NumberOfArchivedPasswords>
-      <summary>
-        Defines if the number of archived login password. If > 0 then the last n used password can't be used again.
-        If value = 0 then the archive is disabled.
-      </summary>
-    </NumberOfArchivedPasswords>
-
-    <PasswordExpirationPolicies>
-      <summary>
-        The expiration definitions for the login password. Is <c>null</c> if not set.
-      </summary>
-    </PasswordExpirationPolicies>
-
-    <LoginFailurePolicies>
-      <summary>
-        The retry definitions for entering the login password.
-      </summary>
-    </LoginFailurePolicies>
-
-    <UpdatedAt>
-      <summary>
-        Defines when the login password policies are updated last.
-      </summary>
-    </UpdatedAt>
-
-    <UpdatedBy>
-      <summary>
-        Defines who updated the login password policies last.
-      </summary>
-    </UpdatedBy>
-
-  </members>
-
   <members name="passwordEncryptionPolicies">
 
     <PasswordEncryptionPolicies>
@@ -1321,35 +1325,6 @@
         Defines how old login passwords can be (in Days).
       </summary>
     </ExpiresAfterDays>
-
-  </members>
-
-  <members name="passwordLoginFailurePolicies">
-
-    <PasswordLoginFailurePolicies>
-      <summary>
-        This model stores the settings for the retries of login input.
-      </summary>
-    </PasswordLoginFailurePolicies>
-
-    <IsEnabled>
-      <summary>
-        Is <c>true</c> if login tries are limited. Otherwise <c>false</c>.
-      </summary>
-    </IsEnabled>
-
-    <MaximumNumberOfLoginFailures>
-      <summary>
-        Defines how often the login can be tried until the first retry waiting period is started.
-      </summary>
-    </MaximumNumberOfLoginFailures>
-
-    <LoginRetryPeriodMinutes>
-      <summary>
-        Defines how many minutes must be waited until the next login can be tried. 
-        This time period is started after the maximum failed login tries are reached.
-      </summary>
-    </LoginRetryPeriodMinutes>
 
   </members>
 
@@ -1667,6 +1642,12 @@
       </summary>
     </LoginName>
 
+    <UserName>
+      <summary>
+        The user name of the user. This equals the value in <see cref="Dracoon.Sdk.Model.UserAccount.LoginName"/> for server version lower than 4.13.
+      </summary>
+    </UserName>
+
     <Title>
       <summary>
         The title of the user.
@@ -1759,7 +1740,93 @@
         The uuid of the avatar image for this user.
       </summary>
     </AvatarUUID>
+
+    <FirstName>
+      <summary>
+        The first name of the user. (Mandatory if <see cref="Dracoon.Sdk.Model.UserInfo.UserType"/> is internal)
+      </summary>
+    </FirstName>
+
+    <LastName>
+      <summary>
+        The last name of the user. (Mandatory if <see cref="Dracoon.Sdk.Model.UserInfo.UserType"/> is internal)
+      </summary>
+    </LastName>
+
+    <Email>
+      <summary>
+        The email address of the user.
+      </summary>
+    </Email>
+
+    <Title>
+      <summary>
+        The job titles of the user.
+      </summary>
+    </Title>
+
+    <UserType>
+      <summary>
+        The type of the user.
+      </summary>
+    </UserType>
     
+  </members>
+
+  <members name="userKeyPairAlgorithmData">
+
+    <UserKeyPairAlgorithmData>
+      <summary>
+        This model stores informations about a algorithm for the user key pair.
+      </summary>
+    </UserKeyPairAlgorithmData>
+
+    <Algorithm>
+      <summary>
+        The user key pair algorithm.
+      </summary>
+    </Algorithm>
+
+    <State>
+      <summary>
+        The state of the user key pair algorithm.
+      </summary>
+    </State>
+
+  </members>
+  
+  <members name="userType">
+
+    <UserType>
+      <summary>
+        Enumeration of user types.
+      </summary>
+    </UserType>
+
+    <Internal>
+      <summary>
+        The user is a internal user with his own DRACOON account.
+      </summary>
+    </Internal>
+
+    <External>
+      <summary>
+        The user hasn't an own DRACOON account.
+      </summary>
+    </External>
+
+    <System>
+      <summary>
+        The user is a non human user.
+      </summary>
+    </System>
+
+    <Deleted>
+      <summary>
+        The user was a user with his own DRACOON account but is know deleted.
+      </summary>
+    </Deleted>
+
   </members>
 
   <members name="userRole">

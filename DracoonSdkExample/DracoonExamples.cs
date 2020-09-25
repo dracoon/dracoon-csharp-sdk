@@ -10,6 +10,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
+using Attribute = Dracoon.Sdk.Model.Attribute;
 
 namespace Dracoon.Sdk.Example {
     public static class DracoonExamples {
@@ -54,10 +55,17 @@ namespace Dracoon.Sdk.Example {
         }
 
         private static void GetPasswordPolicies() {
-            PasswordPolicies policies = dc.Server.ServerSettings.GetPasswordPolicies();
-            Console.WriteLine("Minimum login password length is: " + policies.LoginPolicies.MinimumPasswordLength);
-            Console.WriteLine("Minimum share password length is: " + policies.SharePolicies.MinimumPasswordLength);
-            Console.WriteLine("Minimum encryption password length is: " + policies.EncryptionPolicies.MinimumPasswordLength);
+            PasswordEncryptionPolicies encryptionPolicy = dc.Server.ServerPolicies.GetEncryptionPasswordPolicies();
+            PasswordSharePolicies sharePolicy = dc.Server.ServerPolicies.GetSharesPasswordPolicies();
+            Console.WriteLine("Minimum share password length is: " + sharePolicy.MinimumPasswordLength);
+            Console.WriteLine("Minimum encryption password length is: " + encryptionPolicy.MinimumPasswordLength);
+        }
+
+        private static void GetAvailableUserKeyPairAlgorithms() {
+            List<UserKeyPairAlgorithmData> availableUserKeyPairAlgorithms = dc.Server.ServerSettings.GetAvailableUserKeyPairAlgorithms();
+            foreach (UserKeyPairAlgorithmData current in availableUserKeyPairAlgorithms) {
+                Console.WriteLine("Available User key pair algorithm: " + current.Algorithm + " with its state: " + current.State);
+            }
         }
 
         #endregion
@@ -89,16 +97,16 @@ namespace Dracoon.Sdk.Example {
         }
 
         private static void SetUserKeyPair() {
-            dc.Account.SetUserKeyPair();
+            dc.Account.SetUserKeyPair(Crypto.Sdk.UserKeyPairAlgorithm.RSA2048);
         }
 
         private static void CheckUserKeyPair() {
-            bool encryptionPasswordIsValid = dc.Account.CheckUserKeyPairPassword();
+            bool encryptionPasswordIsValid = dc.Account.CheckUserKeyPairPassword(Crypto.Sdk.UserKeyPairAlgorithm.RSA2048);
             Console.WriteLine("Encryption password is valid: " + encryptionPasswordIsValid);
         }
 
         private static void DeleteUserKeyPair() {
-            dc.Account.DeleteUserKeyPair();
+            dc.Account.DeleteUserKeyPair(Crypto.Sdk.UserKeyPairAlgorithm.RSA2048);
         }
 
         private static void GetUserAvatar() {
@@ -110,6 +118,32 @@ namespace Dracoon.Sdk.Example {
         private static void UpdateUserAvatar() {
             Image newAvatar = Image.FromFile("C:\\temp\\avatar.jpg");
             dc.Account.UpdateAvatar(newAvatar);
+        }
+
+        private static void GetUserProfileAttributes() {
+            AttributeList attributes = dc.Account.GetUserProfileAttributeList();
+            foreach (Attribute current in attributes.Items) {
+                Console.WriteLine("Attribute key: " + current.Key + "; Attribute value: " + current.Value);
+            }
+        }
+
+        private static void GetUserProfileAttribute() {
+            Attribute attribute = dc.Account.GetUserProfileAttribute("anyKey");
+            Console.WriteLine("Single attribute key: " + attribute.Key + "; Single attribute value: " + attribute.Value);
+        }
+
+        private static void AddUserProfileAttribute() {
+            List<Attribute> attributes = new List<Attribute>() {
+                new Attribute() {
+                    Key = "anyKey",
+                    Value = "anyValue"
+                }
+            };
+            dc.Account.AddOrUpdateUserProfileAttributes(attributes);
+        }
+
+        private static void DeleteUserProfileAttribute() {
+            dc.Account.DeleteProfileAttribute("anyKey");
         }
 
         #endregion

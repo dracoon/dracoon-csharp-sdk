@@ -1,10 +1,13 @@
-﻿using Dracoon.Crypto.Sdk.Model;
+﻿using Dracoon.Crypto.Sdk;
+using Dracoon.Crypto.Sdk.Model;
+using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.Mapper;
 using Dracoon.Sdk.UnitTest.Factory;
 using Dracoon.Sdk.UnitTest.XUnitComparer;
 using System.Collections.Generic;
+using Telerik.JustMock;
 using Xunit;
 
 namespace Dracoon.Sdk.UnitTest.Test.Mapper {
@@ -19,7 +22,12 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             ApiUserInfo param = new ApiUserInfo {
                 Id = expected.Id.Value,
                 DisplayName = expected.DisplayName,
-                AvatarUuid = expected.AvatarUUID
+                AvatarUuid = expected.AvatarUUID,
+                Email = expected.Email,
+                FirstName = expected.FirstName,
+                LastName = expected.LastName,
+                Title = expected.Title,
+                UserType = "internal"
             };
 
             // ACT
@@ -59,6 +67,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             ApiUserAccount param = new ApiUserAccount {
                 Id = expected.Id,
                 LoginName = expected.LoginName,
+                UserName = expected.UserName,
                 Title = expected.Title,
                 FirstName = expected.FirstName,
                 LastName = expected.LastName,
@@ -97,6 +106,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             ApiUserAccount param = new ApiUserAccount {
                 Id = expected.Id,
                 LoginName = expected.LoginName,
+                UserName = expected.UserName,
                 Title = expected.Title,
                 FirstName = expected.FirstName,
                 LastName = expected.LastName,
@@ -138,16 +148,17 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
         [Fact]
         public void ToApiUserKeyPair() {
             // ARRANGE
-            ApiUserKeyPair expected = FactoryUser.ApiUserKeyPair;
+            ApiUserKeyPair expected = FactoryUser.ApiUserKeyPair_2048;
+            Mock.Arrange(() => UserMapper.ToApiUserKeyPairVersion(Arg.IsAny<UserKeyPairAlgorithm>())).Returns(expected.PrivateKeyContainer.Version).Occurs(2);
 
             UserKeyPair param = new UserKeyPair {
                 UserPrivateKey = new UserPrivateKey {
                     PrivateKey = expected.PrivateKeyContainer.PrivateKey,
-                    Version = expected.PrivateKeyContainer.Version
+                    Version = UserKeyPairAlgorithm.RSA2048
                 },
                 UserPublicKey = new UserPublicKey {
                     PublicKey = expected.PublicKeyContainer.PublicKey,
-                    Version = expected.PublicKeyContainer.Version
+                    Version = UserKeyPairAlgorithm.RSA2048
                 }
             };
 
@@ -156,6 +167,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
 
             // ASSERT
             Assert.Equal(expected, actual, new ApiUserKeyPairComparer());
+            Mock.Assert(() => UserMapper.ToApiUserKeyPairVersion(Arg.IsAny<UserKeyPairAlgorithm>()));
         }
 
         #endregion
@@ -165,16 +177,17 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
         [Fact]
         public void FromApiUserKeyPair() {
             // ARRANGE
-            UserKeyPair expected = FactoryUser.UserKeyPair;
+            UserKeyPair expected = FactoryUser.UserKeyPair_2048;
+            Mock.Arrange(() => UserMapper.FromApiUserKeyPairVersion(Arg.AnyString)).Returns(expected.UserPrivateKey.Version).Occurs(2);
 
             ApiUserKeyPair param = new ApiUserKeyPair {
                 PrivateKeyContainer = new ApiUserPrivateKey {
                     PrivateKey = expected.UserPrivateKey.PrivateKey,
-                    Version = expected.UserPrivateKey.Version
+                    Version = "A"
                 },
                 PublicKeyContainer = new ApiUserPublicKey {
                     PublicKey = expected.UserPublicKey.PublicKey,
-                    Version = expected.UserPublicKey.Version
+                    Version = "A"
                 }
             };
 
@@ -183,6 +196,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
 
             // ASSERT
             Assert.Equal(expected, actual, new UserKeyPairComparer());
+            Mock.Assert(() => UserMapper.FromApiUserKeyPairVersion(Arg.AnyString));
         }
 
         #endregion
@@ -194,7 +208,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             // ARRANGE
             Dictionary<long, UserPublicKey> expected = new Dictionary<long, UserPublicKey>(1) {
                 {
-                    1, FactoryUser.UserPublicKey
+                    1, FactoryUser.UserPublicKey_2048
                 }
             };
 
@@ -203,7 +217,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     UserId = 1,
                     PublicKeyContainer = new ApiUserPublicKey {
                         PublicKey = expected[1].PublicKey,
-                        Version = expected[1].Version
+                        Version = "A"
                     }
                 }
             };
@@ -243,6 +257,86 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
 
             // ASSERT
             Assert.Equal(expected, actual, new AvatarInfoComparer());
+        }
+
+        #endregion
+
+        #region FromApiUserKeyPairVersion
+
+        [Fact]
+        public void FromApiUserKeyPairVersion_2096() {
+            // ARRANGE
+            UserKeyPairAlgorithm expected = UserKeyPairAlgorithm.RSA2048;
+
+            string param = "A";
+
+            // ACT
+            UserKeyPairAlgorithm actual = UserMapper.FromApiUserKeyPairVersion(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void FromApiUserKeyPairVersion_4096() {
+            // ARRANGE
+            UserKeyPairAlgorithm expected = UserKeyPairAlgorithm.RSA4096;
+
+            string param = "RSA-4096";
+
+            // ACT
+            UserKeyPairAlgorithm actual = UserMapper.FromApiUserKeyPairVersion(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void FromApiUserKeyPairVersion_Fail() {
+            // ARRANGE
+            int expected = DracoonCryptoCode.UNKNOWN_ALGORITHM_ERROR.Code;
+
+            string param = "UnknownAlgorithm";
+
+            try {
+                // ACT
+                UserMapper.FromApiUserKeyPairVersion(param);
+            } catch (DracoonCryptoException e) {
+                // ASSERT
+                Assert.Equal(expected, e.ErrorCode.Code);
+            }
+        }
+
+        #endregion
+
+        #region ToApiUserKeyPairVersion
+
+        [Fact]
+        public void ToApiUserKeyPairVersion_2048() {
+            // ARRANGE
+            string expected = "A";
+
+            UserKeyPairAlgorithm param = UserKeyPairAlgorithm.RSA2048;
+
+            // ACT
+            string actual = UserMapper.ToApiUserKeyPairVersion(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void ToApiUserKeyPairVersion_4096() {
+            // ARRANGE
+            string expected = "RSA-4096";
+
+            UserKeyPairAlgorithm param = UserKeyPairAlgorithm.RSA4096;
+
+            // ACT
+            string actual = UserMapper.ToApiUserKeyPairVersion(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual);
         }
 
         #endregion

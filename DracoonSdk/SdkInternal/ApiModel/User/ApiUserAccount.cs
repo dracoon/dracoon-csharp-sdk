@@ -9,6 +9,9 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         [JsonProperty("login", NullValueHandling = NullValueHandling.Ignore)]
         public string LoginName { get; set; }
 
+        [JsonProperty("userName", NullValueHandling = NullValueHandling.Ignore)]
+        public string UserName { get; set; }
+
         [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
         public string Title { get; set; }
 

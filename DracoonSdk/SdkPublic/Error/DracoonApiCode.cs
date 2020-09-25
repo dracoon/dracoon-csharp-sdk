@@ -63,7 +63,7 @@ namespace Dracoon.Sdk.Error {
 
         public static readonly DracoonApiCode VALIDATION_UNKNOWN_ERROR = new DracoonApiCode(3000, "The server request was invalid.");
         // CODES: -80000
-        public static readonly DracoonApiCode VALIDATION_FIELD_CANNOT_BE_EMPTY = new DracoonApiCode(3001, "Mandatory fields cannnot be empty.");
+        public static readonly DracoonApiCode VALIDATION_FIELD_CANNOT_BE_EMPTY = new DracoonApiCode(3001, "Mandatory fields cannot be empty.");
         // CODES: -80003
         public static readonly DracoonApiCode VALIDATION_FIELD_NOT_ZERO_POSITIVE = new DracoonApiCode(3002, "Field value must be zero or positive.");
         // CODES: -80001
@@ -78,6 +78,8 @@ namespace Dracoon.Sdk.Error {
         public static readonly DracoonApiCode VALIDATION_FIELD_NOT_BETWEEN_1_9999 = new DracoonApiCode(3007, "Field value must be between 1 and 9999.");
         // CODES: -80024
         public static readonly DracoonApiCode VALIDATION_INVALID_OFFSET_OR_LIMIT = new DracoonApiCode(3008, "Invalid offset or limit.");
+        // CODES: -80023
+        public static readonly DracoonApiCode VALIDATION_INVALID_CHARACTERS_CONTAINED = new DracoonApiCode(3009, "Invalid characters contained.");
 
         #endregion
         #region NODES
@@ -137,7 +139,7 @@ namespace Dracoon.Sdk.Error {
         // CODES: -40018
         public static readonly DracoonApiCode VALIDATION_ROOM_CANNOT_DECRYPTED_WITH_RECYCLEBIN = new DracoonApiCode(3126, "Room with not empty recycle bin cannot be decrypted.");
         // CODES: -40013
-        public static readonly DracoonApiCode VALIDATION_ENCRYPTED_FILE_CAN_ONLY_RESTOREED_IN_ORIGINAL_ROOM = new DracoonApiCode(3127, "Encrypted files cannot be restored inside antoher than its original room.");
+        public static readonly DracoonApiCode VALIDATION_ENCRYPTED_FILE_CAN_ONLY_RESTOREED_IN_ORIGINAL_ROOM = new DracoonApiCode(3127, "Encrypted files cannot be restored inside another than its original room.");
         // CODES: -80034
         public static readonly DracoonApiCode VALIDATION_KEEPSHARELINKS_ONLY_WITH_OVERWRITE = new DracoonApiCode(3128, "Keep share links is only allowed with resolution strategy 'overwrite'.");
         // CODES: -80045
@@ -209,6 +211,7 @@ namespace Dracoon.Sdk.Error {
         #region GENERAL
 
         public static readonly DracoonApiCode SERVER_UNKNOWN_ERROR = new DracoonApiCode(5000, "A server error occurred.");
+        public static readonly DracoonApiCode SERVER_CRYPTO_VERSION_NOT_SUPPORTED = new DracoonApiCode(5010, "Crypto version not supported.");
         public static readonly DracoonApiCode SERVER_MALICIOUS_FILE_DETECTED = new DracoonApiCode(5090, "The AV scanner detected that the file could be malicious.");
 
         #endregion
@@ -275,6 +278,9 @@ namespace Dracoon.Sdk.Error {
         public static readonly DracoonApiCode SERVER_FILE_KEY_NOT_FOUND = new DracoonApiCode(5552, "Encryption file key could not be found.");
         // CODES: -70028
         public static readonly DracoonApiCode SERVER_USER_AVATAR_NOT_FOUND = new DracoonApiCode(5553, "Avatar for this user could not be found.");
+        // CODES: -70550
+        public static readonly DracoonApiCode SERVER_ATTRIBUTE_NOT_FOUND = new DracoonApiCode(5554, "Attribute not found.");
+
         #endregion
 
         #region GROUPS

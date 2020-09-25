@@ -1,8 +1,10 @@
 ﻿using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.Mapper;
+using Dracoon.Sdk.SdkInternal.Util;
 using Dracoon.Sdk.UnitTest.Factory;
 using Dracoon.Sdk.UnitTest.XUnitComparer;
+using Telerik.JustMock;
 using Xunit;
 
 namespace Dracoon.Sdk.UnitTest.Test.Mapper {
@@ -114,6 +116,127 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
 
             // ASSERT
             Assert.Equal(expected, actual, new ServerDefaultSettingsComparer());
+        }
+
+        #endregion
+
+        #region FromApiPasswordSharePolicies
+
+        [Fact]
+        public void FromApiPasswordSharePolicies() {
+            // ARRANGE
+            PasswordSharePolicies expected = FactoryPolicies.PasswordSharePolicies;
+
+            ApiSharePasswordSettings param = new ApiSharePasswordSettings {
+                CharacterRules = FactoryPolicies.ApiPasswordCharacterRules,
+                MinimumPasswordLength = expected.MinimumPasswordLength,
+                RejectDictionaryWords = expected.RejectDictionaryWords,
+                RejectKeyboardPatterns = expected.RejectKeyboardPatterns,
+                RejectUserInfo = expected.RejectKeyboardPatterns,
+                UpdatedAt = expected.UpdatedAt,
+                UpdatedBy = FactoryUser.ApiUserInfo
+            };
+
+            Mock.Arrange(() => SettingsMapper.FromApiPasswordCharacterPolicies(param.CharacterRules)).Returns(expected.CharacterPolicies);
+            Mock.Arrange(() => UserMapper.FromApiUserInfo(param.UpdatedBy)).Returns(expected.UpdatedBy);
+
+            // ACT
+            PasswordSharePolicies actual = SettingsMapper.FromApiPasswordSharePolicies(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new PasswordSharePolicyComparer());
+        }
+
+        [Fact]
+        public void FromApiPasswordSharePolicies_Null() {
+            // ARRANGE
+            PasswordSharePolicies expected = null;
+            ApiSharePasswordSettings param = null;
+
+            // ACT
+            PasswordSharePolicies actual = SettingsMapper.FromApiPasswordSharePolicies(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new PasswordSharePolicyComparer());
+        }
+
+        #endregion
+
+        #region FromApiPasswordEncryptionPolicies
+
+        [Fact]
+        public void FromApiPasswordEncryptionPolicies() {
+            // ARRANGE
+            PasswordEncryptionPolicies expected = FactoryPolicies.PasswordEncryptionPolicies;
+
+            ApiEncryptionPasswordSettings param = new ApiEncryptionPasswordSettings {
+                CharacterRules = FactoryPolicies.ApiPasswordCharacterRules,
+                MinimumPasswordLength = expected.MinimumPasswordLength,
+                RejectKeyboardPatterns = expected.RejectKeyboardPatterns,
+                RejectUserInfo = expected.RejectKeyboardPatterns,
+                UpdatedAt = expected.UpdatedAt,
+                UpdatedBy = FactoryUser.ApiUserInfo
+            };
+
+            Mock.Arrange(() => SettingsMapper.FromApiPasswordCharacterPolicies(param.CharacterRules)).Returns(expected.CharacterPolicies);
+            Mock.Arrange(() => UserMapper.FromApiUserInfo(param.UpdatedBy)).Returns(expected.UpdatedBy);
+
+            // ACT
+            PasswordEncryptionPolicies actual = SettingsMapper.FromApiPasswordEncryptionPolicies(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new PasswordEncryptionPolicyComparer());
+        }
+
+        [Fact]
+        public void FromApiPasswordEncryptionPolicies_Null() {
+            // ARRANGE
+            PasswordEncryptionPolicies expected = null;
+            ApiEncryptionPasswordSettings param = null;
+
+            // ACT
+            PasswordEncryptionPolicies actual = SettingsMapper.FromApiPasswordEncryptionPolicies(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new PasswordEncryptionPolicyComparer());
+        }
+
+        #endregion
+
+        #region FromApiPasswordCharacterPolicies
+
+        [Fact]
+        public void FromApiPasswordCharacterPolicies() {
+            // ARRANGE
+            PasswordCharacterPolicies expected = FactoryPolicies.PasswordCharacterPolicies;
+
+            ApiCharacterRules param = new ApiCharacterRules {
+                MustContainCharacters = FactoryPolicies.ApiPasswordCharacterRules.MustContainCharacters,
+                NumberOfCharacteristicsToEnforce = expected.NumberOfMustContainCharacteristics
+            };
+
+            Mock.Arrange(() => EnumConverter.ConvertValueToCharacterSetTypeEnum("upper")).Returns(PasswordCharacterSetType.Uppercase);
+            Mock.Arrange(() => EnumConverter.ConvertValueToCharacterSetTypeEnum("numeric")).Returns(PasswordCharacterSetType.Numeric);
+            Mock.Arrange(() => EnumConverter.ConvertValueToCharacterSetTypeEnum("lower")).Returns(PasswordCharacterSetType.Lowercase);
+
+            // ACT
+            PasswordCharacterPolicies actual = SettingsMapper.FromApiPasswordCharacterPolicies(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new PasswordCharacterPolicyComparer());
+        }
+
+        [Fact]
+        public void FromApiPasswordCharacterPolicies_Null() {
+            // ARRANGE
+            PasswordCharacterPolicies expected = null;
+            ApiCharacterRules param = null;
+
+            // ACT
+            PasswordCharacterPolicies actual = SettingsMapper.FromApiPasswordCharacterPolicies(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new PasswordCharacterPolicyComparer());
         }
 
         #endregion

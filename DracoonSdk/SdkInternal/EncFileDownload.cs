@@ -4,6 +4,7 @@ using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.Mapper;
+using Dracoon.Sdk.SdkInternal.Util;
 using RestSharp;
 using System;
 using System.Diagnostics;
@@ -13,11 +14,9 @@ using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class EncFileDownload : FileDownload {
-        private readonly UserPrivateKey _userPrivateKey;
 
-        public EncFileDownload(IInternalDracoonClient client, string actionId, Node nodeToDownload, Stream output, UserPrivateKey privateKey) : base(
+        public EncFileDownload(IInternalDracoonClient client, string actionId, Node nodeToDownload, Stream output) : base(
             client, actionId, nodeToDownload, output) {
-            _userPrivateKey = privateKey;
 
             Logtag = nameof(EncFileDownload);
         }
@@ -27,13 +26,14 @@ namespace Dracoon.Sdk.SdkInternal {
             IRestRequest downloadTokenRequest = Client.Builder.PostFileDownload(AssociatedNode.Id);
             ApiDownloadToken token = Client.Executor.DoSyncApiCall<ApiDownloadToken>(downloadTokenRequest, RequestType.PostDownloadToken);
             EncryptedFileKey encryptedFileKey = Client.NodesImpl.GetEncryptedFileKey(AssociatedNode.Id);
-            EncryptedDownload(new Uri(token.DownloadUrl), DecryptFileKey(encryptedFileKey));
+            UserKeyPair keyPair = Client.AccountImpl.GetAndCheckUserKeyPair(CryptoHelper.DetermineUserKeyPairVersion(encryptedFileKey.Version));
+            EncryptedDownload(new Uri(token.DownloadUrl), DecryptFileKey(encryptedFileKey, keyPair.UserPrivateKey));
             NotifyFinished(ActionId);
         }
 
-        private PlainFileKey DecryptFileKey(EncryptedFileKey encryptedFileKey) {
+        private PlainFileKey DecryptFileKey(EncryptedFileKey encryptedFileKey, UserPrivateKey userPrivateKey) {
             try {
-                return Crypto.Sdk.Crypto.DecryptFileKey(encryptedFileKey, _userPrivateKey, Client.EncryptionPassword);
+                return Crypto.Sdk.Crypto.DecryptFileKey(encryptedFileKey, userPrivateKey, Client.EncryptionPassword);
             } catch (CryptoException ce) {
                 string message = "Decryption of file key for encrypted download " + ActionId + " failed!";
                 DracoonClient.Log.Debug(Logtag, message);

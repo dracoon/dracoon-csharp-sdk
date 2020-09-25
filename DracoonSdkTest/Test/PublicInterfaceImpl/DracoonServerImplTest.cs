@@ -69,5 +69,21 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
         }
 
         #endregion
+
+        #region ServerPolices
+
+        [Fact]
+        public void ServerPoliciesProperty() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonServerImpl s = new DracoonServerImpl(c);
+
+            // ACT
+
+            // ASSERT
+            Assert.NotNull(s.ServerPolicies);
+        }
+
+        #endregion
     }
 }

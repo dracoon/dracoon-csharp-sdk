@@ -61,4 +61,78 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             throw new NotImplementedException();
         }
     }
+
+    internal class PasswordEncryptionPolicyComparer : IEqualityComparer<PasswordEncryptionPolicies> {
+        public bool Equals(PasswordEncryptionPolicies x, PasswordEncryptionPolicies y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            return x.MinimumPasswordLength == y.MinimumPasswordLength &&
+                x.RejectKeyboardPatterns == y.RejectKeyboardPatterns &&
+                x.RejectOwnUserInfo == y.RejectOwnUserInfo &&
+                x.UpdatedAt == y.UpdatedAt &&
+                x.UpdatedBy.Id == y.UpdatedBy.Id;
+        }
+
+        public int GetHashCode(PasswordEncryptionPolicies obj) {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class PasswordSharePolicyComparer : IEqualityComparer<PasswordSharePolicies> {
+        public bool Equals(PasswordSharePolicies x, PasswordSharePolicies y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            return x.MinimumPasswordLength == y.MinimumPasswordLength &&
+                x.RejectKeyboardPatterns == y.RejectKeyboardPatterns &&
+                x.RejectOwnUserInfo == y.RejectOwnUserInfo &&
+                x.UpdatedAt == y.UpdatedAt &&
+                x.UpdatedBy.Id == y.UpdatedBy.Id;
+        }
+
+        public int GetHashCode(PasswordSharePolicies obj) {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class PasswordCharacterPolicyComparer : IEqualityComparer<PasswordCharacterPolicies> {
+        public bool Equals(PasswordCharacterPolicies x, PasswordCharacterPolicies y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            return x.NumberOfMustContainCharacteristics == y.NumberOfMustContainCharacteristics
+                && CompareHelper.ListIsEqual(x.PredefinedCharacterSets, y.PredefinedCharacterSets);
+        }
+
+        public int GetHashCode(PasswordCharacterPolicies obj) {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class PasswordCharacterSetComparer : IEqualityComparer<PasswordCharacterSet> {
+        public bool Equals(PasswordCharacterSet x, PasswordCharacterSet y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            return Array.Equals(x.Set, y.Set) 
+                && x.Type == y.Type;
+        }
+
+        public int GetHashCode(PasswordCharacterSet obj) {
+            throw new NotImplementedException();
+        }
+    }
 }

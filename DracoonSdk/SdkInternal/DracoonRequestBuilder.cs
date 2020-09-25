@@ -89,8 +89,15 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
-        IRestRequest IRequestBuilder.GetUserKeyPair() {
+        IRestRequest IRequestBuilder.GetUserKeyPair(string algorithm) {
             RestRequest request = new RestRequest(ApiConfig.ApiGetUserKeyPair, Method.GET);
+            SetGeneralRestValues(request, true);
+            request.AddQueryParameter("version", algorithm);
+            return request;
+        }
+
+        public IRestRequest GetUserKeyPairs() {
+            RestRequest request = new RestRequest(ApiConfig.ApiGetUserKeyPairs, Method.GET);
             SetGeneralRestValues(request, true);
             return request;
         }
@@ -108,6 +115,19 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        IRestRequest IRequestBuilder.GetUserProfileAttributes() {
+            RestRequest request = new RestRequest(ApiConfig.ApiGetUserProfileAttributes, Method.GET);
+            SetGeneralRestValues(request, true);
+            return request;
+        }
+
+        IRestRequest IRequestBuilder.GetUserProfileAttribute(string attributeKey) {
+            RestRequest request = new RestRequest(ApiConfig.ApiGetUserProfileAttributes, Method.GET);
+            SetGeneralRestValues(request, true);
+            request.AddQueryParameter("filter", "key:eq:" + attributeKey);
+            return request;
+        }
+
         #endregion
 
         #region POST
@@ -120,11 +140,29 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #endregion
 
+        #region PUT
+
+        IRestRequest IRequestBuilder.PutUserProfileAttributes(ApiAddOrUpdateAttributeRequest addOrUpdateParam) {
+            RestRequest request = new RestRequest(ApiConfig.ApiPutUserProfileAttributes, Method.PUT);
+            SetGeneralRestValues(request, true, addOrUpdateParam);
+            return request;
+        }
+
+        #endregion
+
         #region DELETE
 
-        IRestRequest IRequestBuilder.DeleteUserKeyPair() {
+        IRestRequest IRequestBuilder.DeleteUserKeyPair(string algorithm) {
             RestRequest request = new RestRequest(ApiConfig.ApiDeleteUserKeyPair, Method.DELETE);
             SetGeneralRestValues(request, true);
+            request.AddQueryParameter("version", algorithm);
+            return request;
+        }
+
+        IRestRequest IRequestBuilder.DeleteUserProfileAttributes(string attributeKey) {
+            RestRequest request = new RestRequest(ApiConfig.ApiDeleteUserProfileAttributes, Method.DELETE);
+            SetGeneralRestValues(request, true);
+            request.AddUrlSegment("key", attributeKey);
             return request;
         }
 
@@ -537,7 +575,13 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         public IRestRequest GetPasswordPolicies() {
-            RestRequest request = new RestRequest(ApiConfig.ApiGetPasswordPolicies);
+            RestRequest request = new RestRequest(ApiConfig.ApiGetPasswordPolicies, Method.GET);
+            SetGeneralRestValues(request, true);
+            return request;
+        }
+
+        public IRestRequest GetAlgorithms() {
+            RestRequest request = new RestRequest(ApiConfig.ApiGetAlgorithms, Method.GET);
             SetGeneralRestValues(request, true);
             return request;
         }

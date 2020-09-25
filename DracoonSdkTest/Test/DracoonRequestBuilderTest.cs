@@ -1,5 +1,7 @@
-﻿using Dracoon.Sdk.Filter;
+﻿using Dracoon.Crypto.Sdk;
+using Dracoon.Sdk.Filter;
 using Dracoon.Sdk.SdkInternal;
+using Dracoon.Sdk.SdkInternal.Mapper;
 using Dracoon.Sdk.SdkInternal.OAuth;
 using Dracoon.Sdk.SdkInternal.Util;
 using Dracoon.Sdk.Sort;
@@ -10,6 +12,7 @@ using RestSharp;
 using System;
 using System.Net;
 using System.Text;
+using Telerik.JustMock.AutoMock.Ninject.Activation;
 using Xunit;
 
 namespace Dracoon.Sdk.UnitTest.Test {
@@ -73,13 +76,39 @@ namespace Dracoon.Sdk.UnitTest.Test {
         }
 
         [Fact]
-        public void User_GetUserKeyPair() {
+        public void User_GetUserKeyPair_RSA2048() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetUserKeyPair();
+            IRestRequest expected = FactoryClients.RequestBuilderMock.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048));
 
             // ACT
-            IRestRequest actual = builder.GetUserKeyPair();
+            IRestRequest actual = builder.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048));
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void User_GetUserKeyPair_RSA4096() {
+            // ARRANGE
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096));
+
+            // ACT
+            IRestRequest actual = builder.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096));
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void User_GetUserKeyPairs() {
+            // ARRANGE
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.GetUserKeyPairs();
+
+            // ACT
+            IRestRequest actual = builder.GetUserKeyPairs();
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -115,23 +144,37 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void User_SetUserKeyPair() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.SetUserKeyPair(FactoryUser.ApiUserKeyPair);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.SetUserKeyPair(FactoryUser.ApiUserKeyPair_2048);
 
             // ACT
-            IRestRequest actual = builder.SetUserKeyPair(FactoryUser.ApiUserKeyPair);
+            IRestRequest actual = builder.SetUserKeyPair(FactoryUser.ApiUserKeyPair_2048);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
         }
 
         [Fact]
-        public void User_DeleteUserKeyPair() {
+        public void User_DeleteUserKeyPair_RSA2048() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.DeleteUserKeyPair();
+            IRestRequest expected = FactoryClients.RequestBuilderMock.DeleteUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048));
 
             // ACT
-            IRestRequest actual = builder.DeleteUserKeyPair();
+            IRestRequest actual = builder.DeleteUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048));
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+
+        [Fact]
+        public void User_DeleteUserKeyPair_RSA4096() {
+            // ARRANGE
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.DeleteUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096));
+
+            // ACT
+            IRestRequest actual = builder.DeleteUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096));
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -176,6 +219,60 @@ namespace Dracoon.Sdk.UnitTest.Test {
 
             // ASSERT
             Assert.Equal(expected, actual, new WebClientComparer());
+        }
+
+        [Fact]
+        public void User_GetUserProfileAttributes() {
+            // ARRANGE
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.GetUserProfileAttributes();
+
+            // ACT
+            IRestRequest actual = builder.GetUserProfileAttributes();
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void User_GetUserProfileAttribute() {
+            // ARRANGE
+            string attributeKey = FactoryAttribute.AttributeList.Items[0].Key;
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.GetUserProfileAttribute(attributeKey);
+
+            // ACT
+            IRestRequest actual = builder.GetUserProfileAttribute(attributeKey);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void User_AddOrUpdateUserProfileAttributes() {
+            // ARRANGE
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.PutUserProfileAttributes(FactoryAttribute.ApiAddOrUpdateAttributeRequest);
+
+            // ACT
+            IRestRequest actual = builder.PutUserProfileAttributes(FactoryAttribute.ApiAddOrUpdateAttributeRequest);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void User_DeleteUserProfileAttribute() {
+            // ARRANGE
+            string attributeKey = FactoryAttribute.AttributeList.Items[0].Key;
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.DeleteUserProfileAttributes(attributeKey);
+
+            // ACT
+            IRestRequest actual = builder.DeleteUserProfileAttributes(attributeKey);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
         }
 
         #endregion
@@ -935,6 +1032,19 @@ namespace Dracoon.Sdk.UnitTest.Test {
 
             // ACT
             IRestRequest actual = builder.GetDefaultsSettings();
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void Config_GetAlgorithms() {
+            // ARRANGE
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetAlgorithms, Method.GET);
+
+            // ACT
+            IRestRequest actual = builder.GetAlgorithms();
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());

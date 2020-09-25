@@ -12,7 +12,12 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                 return new UserInfo {
                     Id = 12,
                     DisplayName = "User",
-                    AvatarUUID = "HSGF324DSFGJ"
+                    AvatarUUID = "HSGF324DSFGJ",
+                    Email = "test@test.com",
+                    FirstName = "Max",
+                    LastName = "Mustermann",
+                    Title = "B.Sc.",
+                    UserType = UserType.Internal
                 };
             }
         }
@@ -32,6 +37,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                 return new UserAccount {
                     Id = 456,
                     LoginName = "JohnSmith123",
+                    UserName = "JohnSmith1234",
                     Title = "M.Sc.",
                     FirstName = "John",
                     LastName = "Smith",
@@ -79,34 +85,70 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             }
         }
 
-        internal static UserPrivateKey UserPrivateKey {
+        internal static List<UserKeyPair> UserKeyPairs {
+            get {
+                return new List<UserKeyPair> {
+                    UserKeyPair_2048,
+                    UserKeyPair_4096
+                };
+            }
+        }
+
+        internal static UserPrivateKey UserPrivateKey_2048 {
             get {
                 return new UserPrivateKey {
                     PrivateKey = "KJGSBD34JGFBSDKJSBD34JGFBSKJGSBD34JGFBSD",
-                    Version = "A"
+                    Version = Crypto.Sdk.UserKeyPairAlgorithm.RSA2048
                 };
             }
         }
 
-        internal static UserPublicKey UserPublicKey {
+        internal static UserPublicKey UserPublicKey_2048 {
             get {
                 return new UserPublicKey {
                     PublicKey = "GKSHDGO5324GHBKJSDGKSHDGO5324GHBKJSD",
-                    Version = "B"
+                    Version = Crypto.Sdk.UserKeyPairAlgorithm.RSA2048
                 };
             }
         }
 
-        internal static UserKeyPair UserKeyPair {
+        internal static UserPrivateKey UserPrivateKey_4096 {
+            get {
+                return new UserPrivateKey {
+                    PrivateKey = "KJGSBD34JGFBSDKJSBD34JGFBSKJGSBD34JGFBSDASDFSDFSDF",
+                    Version = Crypto.Sdk.UserKeyPairAlgorithm.RSA4096
+                };
+            }
+        }
+
+        internal static UserPublicKey UserPublicKey_4096 {
+            get {
+                return new UserPublicKey {
+                    PublicKey = "GKSHDGO5324GHBKJSDGKSHDGO5324GHBKJSDSDFSDFDS",
+                    Version = Crypto.Sdk.UserKeyPairAlgorithm.RSA4096
+                };
+            }
+        }
+
+        internal static UserKeyPair UserKeyPair_2048 {
             get {
                 return new UserKeyPair {
-                    UserPrivateKey = UserPrivateKey,
-                    UserPublicKey = UserPublicKey
+                    UserPrivateKey = UserPrivateKey_2048,
+                    UserPublicKey = UserPublicKey_2048
                 };
             }
         }
 
-        internal static ApiUserPrivateKey ApiUserPrivateKey {
+        internal static UserKeyPair UserKeyPair_4096 {
+            get {
+                return new UserKeyPair {
+                    UserPrivateKey = UserPrivateKey_4096,
+                    UserPublicKey = UserPublicKey_4096
+                };
+            }
+        }
+
+        internal static ApiUserPrivateKey ApiUserPrivateKey_2048 {
             get {
                 return new ApiUserPrivateKey {
                     PrivateKey = "KJGSBD34JGFBSKJGSBD34JGFBSDKJSBD34JGFBSD",
@@ -115,20 +157,47 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             }
         }
 
-        internal static ApiUserPublicKey ApiUserPublicKey {
+        internal static ApiUserPublicKey ApiUserPublicKey_2048 {
             get {
                 return new ApiUserPublicKey {
                     PublicKey = "GKSHDGO5324GHBKJSDGKSHDGO5324GHBKJSD",
-                    Version = "B"
+                    Version = "A"
                 };
             }
         }
 
-        internal static ApiUserKeyPair ApiUserKeyPair {
+        internal static ApiUserPrivateKey ApiUserPrivateKey_4096 {
+            get {
+                return new ApiUserPrivateKey {
+                    PrivateKey = "KJGSBD34JGFBSDKJSBD34JGFBSKJGSBD34JGFBSDASDFSDFSDF",
+                    Version = "RSA-4096"
+                };
+            }
+        }
+
+        internal static ApiUserPublicKey ApiUserPublicKey_4096 {
+            get {
+                return new ApiUserPublicKey {
+                    PublicKey = "GKSHDGO5324GHBKJSDGKSHDGO5324GHBKJSDSDFSDFDS",
+                    Version = "RSA-4096"
+                };
+            }
+        }
+
+        internal static ApiUserKeyPair ApiUserKeyPair_2048 {
             get {
                 return new ApiUserKeyPair {
-                    PrivateKeyContainer = ApiUserPrivateKey,
-                    PublicKeyContainer = ApiUserPublicKey
+                    PrivateKeyContainer = ApiUserPrivateKey_2048,
+                    PublicKeyContainer = ApiUserPublicKey_2048
+                };
+            }
+        }
+
+        internal static ApiUserKeyPair ApiUserKeyPair_4096 {
+            get {
+                return new ApiUserKeyPair {
+                    PrivateKeyContainer = ApiUserPrivateKey_4096,
+                    PublicKeyContainer = ApiUserPublicKey_4096
                 };
             }
         }

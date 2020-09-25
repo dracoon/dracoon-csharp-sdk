@@ -1,4 +1,5 @@
-﻿using Dracoon.Sdk.Filter;
+﻿using System;
+using Dracoon.Sdk.Filter;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.Sort;
 using System.IO;
@@ -90,5 +91,8 @@ namespace Dracoon.Sdk {
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/DeletePreviousVersions/*'/>
         void DeletePreviousVersions(DeletePreviousVersionsRequest request);
+
+        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/BuildMediaUrl/*'/>
+        Uri BuildMediaUrl(string mediaToken, int width, int height);
     }
 }

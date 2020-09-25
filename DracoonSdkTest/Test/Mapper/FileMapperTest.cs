@@ -1,5 +1,7 @@
 ﻿using System;
+using Dracoon.Crypto.Sdk;
 using Dracoon.Crypto.Sdk.Model;
+using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
@@ -44,12 +46,13 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
         public void ToApiFileKey() {
             // ARRANGE
             ApiFileKey expected = FactoryFile.ApiFileKey;
+            Mock.Arrange(() => FileMapper.ToApiFileKeyVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>())).Returns(expected.Version).Occurs(1);
 
             EncryptedFileKey param = new EncryptedFileKey {
                 Iv = expected.Iv,
                 Key = expected.Key,
                 Tag = expected.Tag,
-                Version = expected.Version
+                Version = EncryptedFileKeyAlgorithm.RSA2048_AES256GCM
             };
 
             // ACT
@@ -57,6 +60,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
 
             // ASSERT
             Assert.Equal(expected, actual, new ApiFileKeyComparer());
+            Mock.Assert(() => FileMapper.ToApiFileKeyVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>()));
         }
 
         #endregion
@@ -67,12 +71,13 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
         public void FromApiFileKey() {
             // ARRANGE
             EncryptedFileKey expected = FactoryFile.EncryptedFileKey;
+            Mock.Arrange(() => FileMapper.FromApiFileKeyVersion(Arg.AnyString)).Returns(expected.Version).Occurs(1);
 
             ApiFileKey param = new ApiFileKey {
                 Iv = expected.Iv,
                 Key = expected.Key,
                 Tag = expected.Tag,
-                Version = expected.Version
+                Version = "A"
             };
 
             // ACT
@@ -80,6 +85,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
 
             // ASSERT
             Assert.Equal(expected, actual, new EncryptedFileKeyComparer());
+            Mock.Assert(() => FileMapper.FromApiFileKeyVersion(Arg.AnyString));
         }
 
         #endregion
@@ -134,6 +140,86 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
 
             // ASSERT
             Assert.Equal(expected, actual, new ApiCompleteFileUploadComparer());
+        }
+
+        #endregion
+
+        #region ToApiFileKeyVersion
+
+        [Fact]
+        public void ToApiFileKeyVersion_2048() {
+            // ARRANGE
+            string expected = "A";
+
+            EncryptedFileKeyAlgorithm param = EncryptedFileKeyAlgorithm.RSA2048_AES256GCM;
+
+            // ACT
+            string actual = FileMapper.ToApiFileKeyVersion(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void ToApiFileKeyVersion_4096() {
+            // ARRANGE
+            string expected = "RSA-4096/AES-256-GCM";
+
+            EncryptedFileKeyAlgorithm param = EncryptedFileKeyAlgorithm.RSA4096_AES256GCM;
+
+            // ACT
+            string actual = FileMapper.ToApiFileKeyVersion(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
+
+        #region FromApiFileKeyVersion
+
+        [Fact]
+        public void FromApiFileKeyVersion_2048() {
+            // ARRANGE
+            EncryptedFileKeyAlgorithm expected = EncryptedFileKeyAlgorithm.RSA2048_AES256GCM;
+
+            string param = "A";
+
+            // ACT
+            EncryptedFileKeyAlgorithm actual = FileMapper.FromApiFileKeyVersion(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void FromApiFileKeyVersion_4096() {
+            // ARRANGE
+            EncryptedFileKeyAlgorithm expected = EncryptedFileKeyAlgorithm.RSA4096_AES256GCM;
+
+            string param = "RSA-4096/AES-256-GCM";
+
+            // ACT
+            EncryptedFileKeyAlgorithm actual = FileMapper.FromApiFileKeyVersion(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void FromApiFileKeyVersion_Fail() {
+            // ARRANGE
+            int expected = DracoonCryptoCode.UNKNOWN_ALGORITHM_ERROR.Code;
+
+            string param = "UnknownAlgorithm";
+
+            try {
+                // ACT
+                FileMapper.FromApiFileKeyVersion(param);
+            } catch (DracoonCryptoException e) {
+                // ASSERT
+                Assert.Equal(expected, e.ErrorCode.Code);
+            }
         }
 
         #endregion

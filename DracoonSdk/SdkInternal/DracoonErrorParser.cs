@@ -196,6 +196,8 @@ namespace Dracoon.Sdk.SdkInternal {
                     return DracoonApiCode.VALIDATION_FIELD_NOT_BETWEEN_0_9999;
                 case -80019:
                     return DracoonApiCode.VALIDATION_FIELD_NOT_BETWEEN_1_9999;
+                case -80023:
+                    return DracoonApiCode.VALIDATION_INVALID_CHARACTERS_CONTAINED;
                 case -80024:
                     return DracoonApiCode.VALIDATION_INVALID_OFFSET_OR_LIMIT;
                 case -80030:
@@ -312,6 +314,8 @@ namespace Dracoon.Sdk.SdkInternal {
                     return DracoonApiCode.SERVER_USER_AVATAR_NOT_FOUND;
                 case -70501:
                     return DracoonApiCode.SERVER_USER_NOT_FOUND;
+                case -70550:
+                    return DracoonApiCode.SERVER_ATTRIBUTE_NOT_FOUND;
                 case -90034:
                     return DracoonApiCode.SERVER_S3_UPLOAD_ID_NOT_FOUND;
                 default:

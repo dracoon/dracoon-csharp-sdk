@@ -38,17 +38,17 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
-      <HintPath>..\packages\BouncyCastle.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
-    <Reference Include="Dracoon.Crypto.Sdk, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dracoon.Crypto.Sdk.1.0.2\lib\net452\Dracoon.Crypto.Sdk.dll</HintPath>
+    <Reference Include="Dracoon.Crypto.Sdk, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dracoon.Crypto.Sdk.2.0.0\lib\net452\Dracoon.Crypto.Sdk.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp, Version=106.4.2.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.106.4.2\lib\net452\RestSharp.dll</HintPath>
+    <Reference Include="RestSharp, Version=106.8.10.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.11.5\lib\net452\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,20 +71,20 @@
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiS3Status.cs" />
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiS3Url.cs" />
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiS3Urls.cs" />
+    <Compile Include="SdkInternal\ApiModel\Requests\ApiAddOrUpdateAttributeRequest.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiDeletePreviousVersionsRequest.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiEnableRoomEncryptionRequest.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiGetS3Urls.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiRestorePreviousVersionsRequest.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiS3FileUploadPart.cs" />
+    <Compile Include="SdkInternal\ApiModel\Settings\ApiAlgorithm.cs" />
+    <Compile Include="SdkInternal\ApiModel\Settings\ApiAlgorithms.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiCharacterRules.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiDefaultsSettings.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiEncryptionPasswordSettings.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiInfrastructureSettings.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiPasswordExpiration.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiPasswordSettings.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiLoginPasswordSettings.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiSharePasswordSettings.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiUserLockout.cs" />
     <Compile Include="SdkInternal\ApiModel\Shares\ApiDownloadShare.cs" />
     <Compile Include="SdkInternal\ApiModel\Shares\ApiDownloadShareList.cs" />
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiFileIdFileKey.cs" />
@@ -130,11 +130,14 @@
     <Compile Include="SdkInternal\ApiModel\User\ApiUserInfo.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserKeyPair.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserPrivateKey.cs" />
+    <Compile Include="SdkInternal\ApiModel\User\ApiAttribute.cs" />
+    <Compile Include="SdkInternal\ApiModel\User\ApiAttributeList.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserPublicKey.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserRole.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserRoleList.cs" />
     <Compile Include="SdkInternal\ApiModel\VoidResponse.cs" />
     <Compile Include="SdkInternal\DracoonAccountImpl.cs" />
+    <Compile Include="SdkInternal\DracoonServerPoliciesImpl.cs" />
     <Compile Include="SdkInternal\DracoonServerSettingsImpl.cs" />
     <Compile Include="SdkInternal\DracoonErrorParser.cs" />
     <Compile Include="SdkInternal\DracoonNodesImpl.cs" />
@@ -150,6 +153,7 @@
     <Compile Include="SdkInternal\IInternalDracoonClient.cs" />
     <Compile Include="SdkInternal\IRequestBuilder.cs" />
     <Compile Include="SdkInternal\IRequestExecutor.cs" />
+    <Compile Include="SdkInternal\Mapper\AttributeMapper.cs" />
     <Compile Include="SdkInternal\Mapper\SettingsMapper.cs" />
     <Compile Include="SdkInternal\Mapper\CryptoErrorMapper.cs" />
     <Compile Include="SdkInternal\Mapper\CustomerMapper.cs" />
@@ -165,6 +169,7 @@
     <Compile Include="SdkInternal\OAuth\OAuthError.cs" />
     <Compile Include="SdkInternal\OAuth\OAuthErrorParser.cs" />
     <Compile Include="SdkInternal\OAuth\ApiOAuthToken.cs" />
+    <Compile Include="SdkInternal\Util\CryptoHelper.cs" />
     <Compile Include="SdkInternal\Util\EnumConverter.cs" />
     <Compile Include="SdkInternal\Util\FileHash.cs" />
     <Compile Include="SdkInternal\Util\DracoonWebClientExtension.cs">
@@ -189,17 +194,16 @@
     <Compile Include="SdkPublic\Filter\FilterParam.cs" />
     <Compile Include="SdkPublic\Filter\SpecificFilters\GetUploadSharesFilter.cs" />
     <Compile Include="SdkPublic\Filter\SpecificFilters\SearchNodesFilter.cs" />
+    <Compile Include="SdkPublic\Model\AlgorithmState.cs" />
     <Compile Include="SdkPublic\Model\AvatarInfo.cs" />
     <Compile Include="SdkPublic\Model\Classification.cs" />
     <Compile Include="SdkPublic\Model\CustomerAccount.cs" />
+    <Compile Include="SdkPublic\Model\FileKeyAlgorithmData.cs" />
     <Compile Include="SdkPublic\Model\PasswordCharacterPolicies.cs" />
     <Compile Include="SdkPublic\Model\PasswordCharacterSet.cs" />
     <Compile Include="SdkPublic\Model\PasswordCharacterSetType.cs" />
     <Compile Include="SdkPublic\Model\PasswordEncryptionPolicies.cs" />
     <Compile Include="SdkPublic\Model\PasswordExpiration.cs" />
-    <Compile Include="SdkPublic\Model\PasswordLoginFailurePolicies.cs" />
-    <Compile Include="SdkPublic\Model\PasswordLoginPolicies.cs" />
-    <Compile Include="SdkPublic\Model\PasswordPolicies.cs" />
     <Compile Include="SdkPublic\Model\PasswordSharePolicies.cs" />
     <Compile Include="SdkPublic\Model\RecycleBinItem.cs" />
     <Compile Include="SdkPublic\Model\RecycleBinItemList.cs" />
@@ -213,6 +217,9 @@
     <Compile Include="SdkPublic\Model\IFileDownloadCallback.cs" />
     <Compile Include="SdkPublic\Model\IFileUploadCallback.cs" />
     <Compile Include="SdkPublic\Model\ServerInfrastructureSettings.cs" />
+    <Compile Include="SdkPublic\Model\Attribute.cs" />
+    <Compile Include="SdkPublic\Model\AttributeList.cs" />
+    <Compile Include="SdkPublic\Model\UserKeyPairAlgorithmData.cs" />
     <Compile Include="SdkPublic\Model\UserRequests\CopyNode.cs" />
     <Compile Include="SdkPublic\Model\UserRequests\DeletePreviousVersionsRequest.cs" />
     <Compile Include="SdkPublic\Model\UserRequests\EnableRoomEncryptionRequest.cs" />
@@ -240,7 +247,9 @@
     <Compile Include="SdkPublic\Model\UserRequests\UpdateFolderRequest.cs" />
     <Compile Include="SdkPublic\Model\UserRequests\UpdateRoomRequest.cs" />
     <Compile Include="SdkPublic\Model\UserRole.cs" />
+    <Compile Include="SdkPublic\Model\UserType.cs" />
     <Compile Include="SdkPublic\OAuthHelper.cs" />
+    <Compile Include="SdkPublic\SdkPublicInterfaces\IServerPolicies.cs" />
     <Compile Include="SdkPublic\SdkPublicInterfaces\IServerSettings.cs" />
     <Compile Include="SdkPublic\SdkPublicInterfaces\IAccount.cs" />
     <Compile Include="SdkPublic\SdkPublicInterfaces\ILog.cs" />
@@ -257,6 +266,7 @@
     <Compile Include="SdkPublic\Sort\SpecificSort\SharesSort.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
