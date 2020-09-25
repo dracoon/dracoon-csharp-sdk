@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
+using Dracoon.Sdk.SdkInternal.ApiModel.Settings;
 using Dracoon.Sdk.SdkInternal.Util;
 
 namespace Dracoon.Sdk.SdkInternal.Mapper {
@@ -138,6 +139,40 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 default:
                     return new char[0];
             }
+        }
+
+        internal static List<FileKeyAlgorithmData> FromApiFileKeyAlgorithms(List<ApiAlgorithm> apiFileKeyAlgorithms) {
+            if (apiFileKeyAlgorithms == null) {
+                return null;
+            }
+
+            List<FileKeyAlgorithmData> fileKeyAlgorithms = new List<FileKeyAlgorithmData>(apiFileKeyAlgorithms.Count);
+            foreach (ApiAlgorithm current in apiFileKeyAlgorithms) {
+                fileKeyAlgorithms.Add(new FileKeyAlgorithmData() {
+                    Algorithm = FileMapper.FromApiFileKeyVersion(current.Version),
+                    State = EnumConverter.ConvertValueToAlgorithmState(current.Status)
+                });
+                ;
+            }
+
+            return fileKeyAlgorithms;
+        }
+
+        internal static List<UserKeyPairAlgorithmData> FromApiUserKeyPairAlgorithms(List<ApiAlgorithm> apiUserKeyPairAlgorithms) {
+            if (apiUserKeyPairAlgorithms == null) {
+                return null;
+            }
+
+            List<UserKeyPairAlgorithmData> userKeyPairAlgorithms = new List<UserKeyPairAlgorithmData>(apiUserKeyPairAlgorithms.Count);
+            foreach (ApiAlgorithm current in apiUserKeyPairAlgorithms) {
+                userKeyPairAlgorithms.Add(new UserKeyPairAlgorithmData() {
+                    Algorithm = UserMapper.FromApiUserKeyPairVersion(current.Version),
+                    State = EnumConverter.ConvertValueToAlgorithmState(current.Status)
+                });
+                ;
+            }
+
+            return userKeyPairAlgorithms;
         }
     }
 }

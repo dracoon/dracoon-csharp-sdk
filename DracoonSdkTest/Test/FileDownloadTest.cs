@@ -200,12 +200,13 @@ namespace Dracoon.Sdk.UnitTest.Test {
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
             Stream s = new MemoryStream();
             FileDownloadCallbackMock callback = new FileDownloadCallbackMock();
-            EncFileDownload f = new EncFileDownload(c, "id1", node, s, FactoryUser.UserPrivateKey);
+            EncFileDownload f = new EncFileDownload(c, "id1", node, s);
             f.AddFileDownloadCallback(callback);
             Mock.Arrange(() => c.Builder.PostFileDownload(Arg.AnyLong)).Returns(FactoryRestSharp.PostFileDownloadMock(2354)).Occurs(1);
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostDownloadToken, 0))
                     .Returns(FactoryNode.ApiDownloadToken).Occurs(1);
             Mock.Arrange(() => c.NodesImpl.GetEncryptedFileKey(Arg.AnyLong)).Returns(FactoryFile.EncryptedFileKey).Occurs(1);
+            Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>())).Returns(FactoryUser.UserKeyPair_2048).Occurs(1);
             FileDecryptionCipher cipher = Mock.Create<FileDecryptionCipher>();
             Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.AnyString))
                 .Returns(FactoryFile.PlainFileKey).Occurs(1);
@@ -213,6 +214,8 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Mock.NonPublic.Arrange<byte[]>(f, "DownloadChunk", ArgExpr.IsAny<Uri>(), ArgExpr.IsAny<long>(), ArgExpr.IsAny<long>()).Returns(expected);
             Mock.Arrange(() => cipher.ProcessBytes(Arg.IsAny<EncryptedDataContainer>())).Returns(new PlainDataContainer(expected)).OccursAtLeast(1);
             Mock.Arrange(() => cipher.DoFinal(Arg.IsAny<EncryptedDataContainer>())).Returns(new PlainDataContainer(new byte[0])).Occurs(1);
+            Mock.Arrange(() => CryptoHelper.DetermineUserKeyPairVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>())).Returns(UserKeyPairAlgorithm.RSA2048).Occurs(1);
+            Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>())).Returns(FactoryUser.UserKeyPair_2048).Occurs(1);
 
             Mock.Arrange(() => callback.OnStarted(Arg.AnyString)).Occurs(1);
             Mock.Arrange(() => callback.OnRunning(Arg.AnyString, Arg.AnyLong, Arg.AnyLong)).OccursAtLeast(1);
@@ -227,8 +230,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
 
             // ASSERT
             Assert.Equal(expected, actual);
+            Mock.Assert(() => CryptoHelper.DetermineUserKeyPairVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>()));
             Mock.Assert(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.AnyString));
             Mock.Assert(() => Crypto.Sdk.Crypto.CreateFileDecryptionCipher(Arg.IsAny<PlainFileKey>()));
+            Mock.Assert(() => c.AccountImpl);
             Mock.Assert(callback);
             Mock.Assert(cipher);
             Mock.Assert(c.Builder);
@@ -246,7 +251,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
             Stream s = new MemoryStream();
             FileDownloadCallbackMock callback = new FileDownloadCallbackMock();
-            EncFileDownload f = new EncFileDownload(c, "id1", node, s, FactoryUser.UserPrivateKey);
+            EncFileDownload f = new EncFileDownload(c, "id1", node, s);
             f.AddFileDownloadCallback(callback);
             Mock.Arrange(() => c.Builder.PostFileDownload(Arg.AnyLong)).Returns(FactoryRestSharp.PostFileDownloadMock(2354));
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostDownloadToken, 0))
@@ -256,6 +261,8 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.AnyString))
                 .Throws(new CryptoException("Error"));
             Mock.NonPublic.Arrange<byte[]>(f, "DownloadChunk", ArgExpr.IsAny<Uri>(), ArgExpr.IsAny<long>(), ArgExpr.IsAny<long>()).Returns(expected);
+            Mock.Arrange(() => CryptoHelper.DetermineUserKeyPairVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>())).Returns(UserKeyPairAlgorithm.RSA2048);
+            Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>())).Returns(FactoryUser.UserKeyPair_2048);
 
             // ACT
             Assert.Throws<DracoonCryptoException>(() => f.RunSync());
@@ -272,7 +279,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
             Stream s = new MemoryStream();
             FileDownloadCallbackMock callback = new FileDownloadCallbackMock();
-            EncFileDownload f = new EncFileDownload(c, "id1", node, s, FactoryUser.UserPrivateKey);
+            EncFileDownload f = new EncFileDownload(c, "id1", node, s);
             f.AddFileDownloadCallback(callback);
             Mock.Arrange(() => c.Builder.PostFileDownload(Arg.AnyLong)).Returns(FactoryRestSharp.PostFileDownloadMock(2354));
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostDownloadToken, 0))
@@ -283,6 +290,8 @@ namespace Dracoon.Sdk.UnitTest.Test {
                 .Returns(FactoryFile.PlainFileKey);
             Mock.Arrange(() => Crypto.Sdk.Crypto.CreateFileDecryptionCipher(Arg.IsAny<PlainFileKey>())).Throws(new CryptoException("Error"));
             Mock.NonPublic.Arrange<byte[]>(f, "DownloadChunk", ArgExpr.IsAny<Uri>(), ArgExpr.IsAny<long>(), ArgExpr.IsAny<long>()).Returns(expected);
+            Mock.Arrange(() => CryptoHelper.DetermineUserKeyPairVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>())).Returns(UserKeyPairAlgorithm.RSA2048);
+            Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>())).Returns(FactoryUser.UserKeyPair_2048);
 
             // ACT
             Assert.Throws<DracoonCryptoException>(() => f.RunSync());
@@ -299,7 +308,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
             Stream s = new MemoryStream();
             FileDownloadCallbackMock callback = new FileDownloadCallbackMock();
-            EncFileDownload f = new EncFileDownload(c, "id1", node, s, FactoryUser.UserPrivateKey);
+            EncFileDownload f = new EncFileDownload(c, "id1", node, s);
             f.AddFileDownloadCallback(callback);
             Mock.Arrange(() => c.Builder.PostFileDownload(Arg.AnyLong)).Returns(FactoryRestSharp.PostFileDownloadMock(2354));
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostDownloadToken, 0))
@@ -312,6 +321,8 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Mock.NonPublic.Arrange<byte[]>(f, "DownloadChunk", ArgExpr.IsAny<Uri>(), ArgExpr.IsAny<long>(), ArgExpr.IsAny<long>()).Returns(expected);
             Mock.Arrange(() => cipher.ProcessBytes(Arg.IsAny<EncryptedDataContainer>())).Throws(new CryptoException("Error"));
             Mock.Arrange(() => cipher.DoFinal(Arg.IsAny<EncryptedDataContainer>())).Returns(new PlainDataContainer(new byte[0]));
+            Mock.Arrange(() => CryptoHelper.DetermineUserKeyPairVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>())).Returns(UserKeyPairAlgorithm.RSA2048);
+            Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>())).Returns(FactoryUser.UserKeyPair_2048);
 
             // ACT
             Assert.Throws<DracoonFileIOException>(() => f.RunSync());
@@ -328,7 +339,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
             Stream s = new MemoryStream();
             FileDownloadCallbackMock callback = new FileDownloadCallbackMock();
-            EncFileDownload f = new EncFileDownload(c, "id1", node, s, FactoryUser.UserPrivateKey);
+            EncFileDownload f = new EncFileDownload(c, "id1", node, s);
             f.AddFileDownloadCallback(callback);
             Mock.Arrange(() => c.Builder.PostFileDownload(Arg.AnyLong)).Returns(FactoryRestSharp.PostFileDownloadMock(2354));
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostDownloadToken, 0))
@@ -341,6 +352,8 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Mock.NonPublic.Arrange<byte[]>(f, "DownloadChunk", ArgExpr.IsAny<Uri>(), ArgExpr.IsAny<long>(), ArgExpr.IsAny<long>()).Returns(expected);
             Mock.Arrange(() => cipher.ProcessBytes(Arg.IsAny<EncryptedDataContainer>())).Throws(new IOException("Error"));
             Mock.Arrange(() => cipher.DoFinal(Arg.IsAny<EncryptedDataContainer>())).Returns(new PlainDataContainer(new byte[0]));
+            Mock.Arrange(() => CryptoHelper.DetermineUserKeyPairVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>())).Returns(UserKeyPairAlgorithm.RSA2048);
+            Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>())).Returns(FactoryUser.UserKeyPair_2048);
 
             // ACT
             Assert.Throws<DracoonFileIOException>(() => f.RunSync());

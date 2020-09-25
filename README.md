@@ -21,18 +21,18 @@ In nuget, you can find the DRACOON SDK [here](https://www.nuget.org/packages/Dra
 
 If you are using NuGet with package management "Packages.config", then edit your project's "packages.config" and add this to the packages section:
 ```xml
-<package id="Dracoon.Sdk" version="1.0.0-beta5" />
+<package id="Dracoon.Sdk" version="2.0.0-beta1" />
 ```
 If you are using Visual Studio 2017 (or higher) and you are using NuGet with package management "PackageReference" then edit your .csproj file and add this to the package dependency group:
 ```xml
-<PackageReference Include="Dracoon.Sdk" Version="1.0.0-beta5" />
+<PackageReference Include="Dracoon.Sdk" Version="2.0.0-beta1" />
 ```
 
 Note that you also need to include the following dependencies:
-1. Bouncy Castle (= 1.8.1): [nuget](https://www.nuget.org/packages/BouncyCastle/)
-2. Dracoon Crypto SDK (>= 1.0.2): [nuget](https://www.nuget.org/packages/Dracoon.Crypto.Sdk/)
-3. NewtonSoft.Json (>= 11.0.2): [nuget](https://www.nuget.org/packages/Newtonsoft.Json/)
-4. RestSharp (>= 106.4.2): [nuget](https://www.nuget.org/packages/RestSharp/)
+1. Bouncy Castle (= 1.8.6.1): [nuget](https://www.nuget.org/packages/BouncyCastle/)
+2. Dracoon Crypto SDK (= 2.0.0): [nuget](https://www.nuget.org/packages/Dracoon.Crypto.Sdk/)
+3. NewtonSoft.Json (= 12.0.3): [nuget](https://www.nuget.org/packages/Newtonsoft.Json/)
+4. RestSharp (= 106.11.5): [nuget](https://www.nuget.org/packages/RestSharp/)
 
 ## Example
 

@@ -1,10 +1,12 @@
-﻿using Dracoon.Crypto.Sdk.Model;
+﻿using Dracoon.Crypto.Sdk;
+using Dracoon.Crypto.Sdk.Model;
 using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Filter;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Mapper;
+using Dracoon.Sdk.SdkInternal.Util;
 using Dracoon.Sdk.SdkInternal.Validator;
 using Dracoon.Sdk.Sort;
 using RestSharp;
@@ -74,10 +76,12 @@ namespace Dracoon.Sdk.SdkInternal {
 
             ApiCreateDownloadShareRequest apiRequest = ShareMapper.ToUnencryptedApiCreateDownloadShareRequest(request);
             if (targetNode.IsEncrypted.GetValueOrDefault(false)) {
-                UserKeyPair creatorKeyPair = _client.AccountImpl.GetAndCheckUserKeyPair();
+
                 EncryptedFileKey creatorEncryptedFileKey = _client.NodesImpl.GetEncryptedFileKey(request.NodeId);
+                UserKeyPair creatorKeyPair = _client.AccountImpl.GetAndCheckUserKeyPair(CryptoHelper.DetermineUserKeyPairVersion(creatorEncryptedFileKey.Version));
                 PlainFileKey plainFileKey = _client.NodesImpl.DecryptFileKey(creatorEncryptedFileKey, creatorKeyPair.UserPrivateKey, request.NodeId);
-                UserKeyPair newGeneratedKeyPair = _client.AccountImpl.GenerateNewUserKeyPair(request.EncryptionPassword);
+
+                UserKeyPair newGeneratedKeyPair = _client.AccountImpl.GenerateNewUserKeyPair(_client.AccountImpl.GetPreferredUserKeyPairAlgorithm(), request.EncryptionPassword);
                 EncryptedFileKey newEncryptedFileKey =
                     _client.NodesImpl.EncryptFileKey(plainFileKey, newGeneratedKeyPair.UserPublicKey, request.NodeId);
 

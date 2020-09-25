@@ -37,6 +37,9 @@
       <summary>
         Sets the user's encryption key pair.
       </summary>
+      <param name="algorithm">
+        The algorithm for which a key pair should be set.
+      </param>
       <exception cref="Error.DracoonApiException">
         <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
       </exception>
@@ -51,6 +54,9 @@
       <summary>
         Checks if the user's encryption key pair can be unlocked with the provided encryption password.
       </summary>
+      <param name="algorithm">
+        The algorithm for which the password should be checked.
+      </param>
       <returns>
         <c>true</c> if key pair could be unlocked, <c>false</c> otherwise
       </returns>
@@ -68,11 +74,17 @@
       <summary>
         Deletes the user's encryption key pair.
       </summary>
+      <param name="algorithm">
+        The algorithm definition for which the key pair should be deleted.
+      </param>
       <exception cref="Error.DracoonApiException">
         <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
       </exception>
       <exception cref="Error.DracoonNetIOException">
         <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      <exception cref="Error.DracoonCryptoException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/DracoonCryptoException/*'/>
       </exception>
     </DeleteUserKeyPair>
     <ValidateTokenValidity>
@@ -222,6 +234,21 @@
         <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
       </exception>
     </DeleteProfileAttribute>
+
+    <GetUserKeyPairAlgorithms>
+      <summary>
+        Get the used crypto algorithms of the user.
+      </summary>
+      <returns>
+        List of crypto algorithms for the user key pair.
+      </returns>
+      <exception cref="Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+    </GetUserKeyPairAlgorithms>
   </members>
 
   <members name="iLog">
@@ -1276,6 +1303,37 @@
       </exception>
     </GetDefault>
 
+    <GetAvailableUserKeyPairAlgorithms>
+      <summary>
+        Get a list of crypto algorithms for the user key pair which are supported by the server.
+      </summary>
+      <returns>
+        List of key pair algorithm data.
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+    </GetAvailableUserKeyPairAlgorithms>
+
+    <GetAvailableFileKeyAlgorithms>
+      <summary>
+        Get a list of crypto algorithms for the file key which are supported by the server.
+      </summary>
+      <returns>
+        List of file key algorithm data.
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+      
+    </GetAvailableFileKeyAlgorithms>
+    
   </members>
 
   <members name="iShares">

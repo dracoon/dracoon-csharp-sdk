@@ -339,14 +339,8 @@ namespace Dracoon.Sdk.UnitTest.Test {
         internal void TestCustomErrorCodesIRestRequest() {
             // ARRANGE
             IRestResponse response = FactoryRestSharp.RestResponse;
-            response.Headers.Add(new Parameter() {
-                Name = "testHeader",
-                Value = "1234"
-            });
-            response.Headers.Add(new Parameter() {
-                Name = "X-Forbidden",
-                Value = "403"
-            });
+            response.Headers.Add(new Parameter("testHeader", "1234", ParameterType.HttpHeader));
+            response.Headers.Add(new Parameter("X-Forbidden", "403", ParameterType.HttpHeader));
 
             try {
                 // ACT

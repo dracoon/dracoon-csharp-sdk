@@ -1,11 +1,11 @@
-﻿using Dracoon.Crypto.Sdk.Model;
+﻿using Dracoon.Crypto.Sdk;
+using Dracoon.Crypto.Sdk.Model;
+using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
+using Dracoon.Sdk.SdkInternal.Util;
 using System;
 using System.Collections.Generic;
-using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
-using Dracoon.Sdk.SdkInternal.Util;
-using Attribute = Dracoon.Sdk.Model.Attribute;
 
 namespace Dracoon.Sdk.SdkInternal.Mapper {
     internal static class UserMapper {
@@ -74,7 +74,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
 
         private static ApiUserPublicKey ToApiUserPublicKey(UserPublicKey userPublicKey) {
             ApiUserPublicKey apiUserPublicKey = new ApiUserPublicKey {
-                Version = userPublicKey.Version,
+                Version = ToApiUserKeyPairVersion(userPublicKey.Version),
                 PublicKey = userPublicKey.PublicKey
             };
             return apiUserPublicKey;
@@ -82,7 +82,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
 
         private static ApiUserPrivateKey ToApiUserPrivateKey(UserPrivateKey userPrivateKey) {
             ApiUserPrivateKey apiUserPrivateKey = new ApiUserPrivateKey {
-                Version = userPrivateKey.Version,
+                Version = ToApiUserKeyPairVersion(userPrivateKey.Version),
                 PrivateKey = userPrivateKey.PrivateKey
             };
             return apiUserPrivateKey;
@@ -98,7 +98,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
 
         private static UserPublicKey FromApiUserPublicKey(ApiUserPublicKey apiUserPublicKey) {
             UserPublicKey userPublicKey = new UserPublicKey {
-                Version = apiUserPublicKey.Version,
+                Version = FromApiUserKeyPairVersion(apiUserPublicKey.Version),
                 PublicKey = apiUserPublicKey.PublicKey
             };
             return userPublicKey;
@@ -106,7 +106,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
 
         private static UserPrivateKey FromApiUserPrivateKey(ApiUserPrivateKey apiUserPrivateKey) {
             UserPrivateKey userPrivateKey = new UserPrivateKey {
-                Version = apiUserPrivateKey.Version,
+                Version = FromApiUserKeyPairVersion(apiUserPrivateKey.Version),
                 PrivateKey = apiUserPrivateKey.PrivateKey
             };
             return userPrivateKey;
@@ -127,6 +127,28 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 IsCustomAvatar = apiInfo.IsCustomAvatar
             };
             return info;
+        }
+
+        internal static UserKeyPairAlgorithm FromApiUserKeyPairVersion(string version) {
+            switch (version) {
+                case "RSA-4096":
+                    return UserKeyPairAlgorithm.RSA4096;
+                case "A":
+                    return UserKeyPairAlgorithm.RSA2048;
+                default:
+                    throw new DracoonCryptoException(new DracoonCryptoCode(DracoonCryptoCode.UNKNOWN_ALGORITHM_ERROR.Code, "Unknown user key pair algorithm: " + version + "."));
+            }
+        }
+
+        internal static string ToApiUserKeyPairVersion(UserKeyPairAlgorithm algorithm) {
+            switch (algorithm) {
+                case UserKeyPairAlgorithm.RSA4096:
+                    return "RSA-4096";
+                case UserKeyPairAlgorithm.RSA2048:
+                    return "A";
+                default:
+                    throw new DracoonCryptoException(new DracoonCryptoCode(DracoonCryptoCode.UNKNOWN_ALGORITHM_ERROR.Code, "Unknown user key pair algorithm: " + algorithm.GetStringValue() + "."));
+            }
         }
 
     }

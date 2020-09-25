@@ -1,5 +1,27 @@
 ﻿<docs>
-  
+
+  <members name="algorithmState">
+
+    <AlgorithmState>
+      <summary>
+        Enumeration of algorithm states.
+      </summary>
+    </AlgorithmState>
+
+    <Required>
+      <summary>
+        The prefered algorithms.
+      </summary>
+    </Required>
+
+    <Discouraged>
+      <summary>
+        Algorithms flagged with this state shouldn't be used anymore.
+      </summary>
+    </Discouraged>
+
+  </members>
+
   <members name="classification">
 
     <Classification>
@@ -420,6 +442,28 @@
         The returned download share items. See also <seealso cref="Dracoon.Sdk.Model.DownloadShare"/>
       </summary>
     </Items>
+
+  </members>
+
+  <members name="fileKeyAlgorithmData">
+
+    <FileKeyAlgorithmData>
+      <summary>
+        This model stores informations about a algorithm for the file keys.
+      </summary>
+    </FileKeyAlgorithmData>
+
+    <Algorithm>
+      <summary>
+        The file key algorithm.
+      </summary>
+    </Algorithm>
+
+    <State>
+      <summary>
+        The state of the file key algorithm.
+      </summary>
+    </State>
 
   </members>
 
@@ -1729,6 +1773,28 @@
     
   </members>
 
+  <members name="userKeyPairAlgorithmData">
+
+    <UserKeyPairAlgorithmData>
+      <summary>
+        This model stores informations about a algorithm for the user key pair.
+      </summary>
+    </UserKeyPairAlgorithmData>
+
+    <Algorithm>
+      <summary>
+        The user key pair algorithm.
+      </summary>
+    </Algorithm>
+
+    <State>
+      <summary>
+        The state of the user key pair algorithm.
+      </summary>
+    </State>
+
+  </members>
+  
   <members name="userType">
 
     <UserType>

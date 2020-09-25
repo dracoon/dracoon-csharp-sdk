@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Dracoon.Crypto.Sdk;
+using Dracoon.Crypto.Sdk.Model;
+using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
-using RestSharp;
-using Dracoon.Sdk.SdkInternal.Mapper;
-using Dracoon.Crypto.Sdk;
-using Dracoon.Crypto.Sdk.Model;
-using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
-using Dracoon.Sdk.Error;
-using System.Drawing;
-using System.Net;
-using System.IO;
-using System.Drawing.Imaging;
-using System.Linq;
-using Newtonsoft.Json;
-using System.Text;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
+using Dracoon.Sdk.SdkInternal.Mapper;
 using Dracoon.Sdk.SdkInternal.Validator;
+using Newtonsoft.Json;
+using RestSharp;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 using Attribute = Dracoon.Sdk.Model.Attribute;
 
 namespace Dracoon.Sdk.SdkInternal {
@@ -26,6 +26,23 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal DracoonAccountImpl(IInternalDracoonClient client) {
             _client = client;
+        }
+
+        internal void AssertUserKeyPairAlgorithmSupported(UserKeyPairAlgorithm algorithm) {
+            string minAlgorithmVersion = "4.0.0";
+            switch (algorithm) {
+                case UserKeyPairAlgorithm.RSA2048:
+                    return;
+                case UserKeyPairAlgorithm.RSA4096:
+                    minAlgorithmVersion = ApiConfig.ApiVersionMin_Algorithm_UserKeyPair_RSA4096;
+                    break;
+            }
+
+            try {
+                _client.Executor.CheckApiServerVersion(minAlgorithmVersion);
+            } catch (DracoonApiException) {
+                throw new DracoonApiException(new DracoonApiCode(DracoonApiCode.SERVER_CRYPTO_VERSION_NOT_SUPPORTED.Code, "Algorithm " + algorithm.GetStringValue() + " requires minimum api version of " + minAlgorithmVersion + "."));
+            }
         }
 
         public UserAccount GetUserAccount() {
@@ -42,18 +59,22 @@ namespace Dracoon.Sdk.SdkInternal {
             return CustomerMapper.FromApiCustomerAccount(result);
         }
 
-        public void SetUserKeyPair() {
+        public void SetUserKeyPair(UserKeyPairAlgorithm algorithm) {
             _client.Executor.CheckApiServerVersion();
-            UserKeyPair cryptoPair = GenerateNewUserKeyPair(_client.EncryptionPassword);
+
+            AssertUserKeyPairAlgorithmSupported(algorithm);
+
+            UserKeyPair cryptoPair = GenerateNewUserKeyPair(algorithm, _client.EncryptionPassword);
             ApiUserKeyPair apiUserKeyPair = UserMapper.ToApiUserKeyPair(cryptoPair);
             IRestRequest request = _client.Builder.SetUserKeyPair(apiUserKeyPair);
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.SetUserKeyPair);
         }
 
-        public bool CheckUserKeyPairPassword() {
+        public bool CheckUserKeyPairPassword(UserKeyPairAlgorithm algorithm) {
             _client.Executor.CheckApiServerVersion();
+
             try {
-                GetAndCheckUserKeyPair();
+                GetAndCheckUserKeyPair(algorithm);
                 return true;
             } catch (DracoonCryptoException cryptoError) {
                 if (cryptoError.ErrorCode.Code == DracoonCryptoCode.INVALID_PASSWORD_ERROR.Code) {
@@ -64,41 +85,128 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        public void DeleteUserKeyPair() {
+        public void DeleteUserKeyPair(UserKeyPairAlgorithm algorithm) {
             _client.Executor.CheckApiServerVersion();
-            IRestRequest request = _client.Builder.DeleteUserKeyPair();
+
+            AssertUserKeyPairAlgorithmSupported(algorithm);
+
+            string algorithmString = UserMapper.ToApiUserKeyPairVersion(algorithm);
+            IRestRequest request = _client.Builder.DeleteUserKeyPair(algorithmString);
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.DeleteUserKeyPair);
         }
 
-        internal UserKeyPair GenerateNewUserKeyPair(string encryptionPassword) {
+        internal UserKeyPair GenerateNewUserKeyPair(UserKeyPairAlgorithm algorithm, string encryptionPassword) {
             try {
-                return Crypto.Sdk.Crypto.GenerateUserKeyPair(encryptionPassword);
+                return Crypto.Sdk.Crypto.GenerateUserKeyPair(algorithm, encryptionPassword);
             } catch (CryptoException ce) {
                 DracoonClient.Log.Debug(Logtag, "Generation of user key pair failed with " + ce.Message);
                 throw new DracoonCryptoException(CryptoErrorMapper.ParseCause(ce), ce);
             }
         }
 
-        internal UserKeyPair GetAndCheckUserKeyPair() {
-            try {
-                IRestRequest request = _client.Builder.GetUserKeyPair();
-                ApiUserKeyPair result = _client.Executor.DoSyncApiCall<ApiUserKeyPair>(request, RequestType.GetUserKeyPair);
-                UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(result);
-                if (Crypto.Sdk.Crypto.CheckUserKeyPair(userKeyPair, _client.EncryptionPassword)) {
-                    return userKeyPair;
-                }
+        internal UserKeyPair GetAndCheckUserKeyPair(UserKeyPairAlgorithm algorithm) {
+            AssertUserKeyPairAlgorithmSupported(algorithm);
 
-                throw new DracoonCryptoException(DracoonCryptoCode.INVALID_PASSWORD_ERROR);
+            try {
+                UserKeyPair userKeyPair = GetUserKeyPair(algorithm);
+                CheckKeyPair(userKeyPair);
+                return userKeyPair;
             } catch (CryptoException ce) {
                 DracoonClient.Log.Debug(Logtag, $"Check of user key pair failed with '{ce.Message}'!");
                 throw new DracoonCryptoException(CryptoErrorMapper.ParseCause(ce), ce);
             }
         }
 
+        private UserKeyPair GetUserKeyPair(UserKeyPairAlgorithm algorithm) {
+            string algorithmString = UserMapper.ToApiUserKeyPairVersion(algorithm);
+            IRestRequest request = _client.Builder.GetUserKeyPair(algorithmString);
+            ApiUserKeyPair result = _client.Executor.DoSyncApiCall<ApiUserKeyPair>(request, RequestType.GetUserKeyPair);
+            UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(result);
+            return userKeyPair;
+        }
+
+        public List<UserKeyPairAlgorithm> GetUserKeyPairAlgorithms() {
+            _client.Executor.CheckApiServerVersion();
+
+
+            List<UserKeyPair> userKeyPairs = GetUserKeyPairs();
+            List<UserKeyPairAlgorithm> result = new List<UserKeyPairAlgorithm>(userKeyPairs.Count);
+
+            foreach (UserKeyPair current in userKeyPairs) {
+                result.Add(current.UserPrivateKey.Version);
+            }
+            return result;
+        }
+
         public void ValidateTokenValidity() {
             _client.Executor.CheckApiServerVersion();
             IRestRequest request = _client.Builder.GetAuthenticatedPing();
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.GetAuthenticatedPing);
+        }
+
+
+        internal UserKeyPair GetPreferredUserKeyPair() {
+            List<UserKeyPairAlgorithmData> algorithms = _client.ServerImpl.ServerSettings.GetAvailableUserKeyPairAlgorithms();
+
+            algorithms = algorithms.OrderBy(x => x.State).ToList();
+
+            List<UserKeyPair> keyPairs = GetAndCheckUserKeyPairs();
+
+            foreach (UserKeyPairAlgorithmData currentAlgorithm in algorithms) {
+                try {
+                    UserKeyPair found = keyPairs.Single(o => o.UserPublicKey.Version == currentAlgorithm.Algorithm);
+                    if (found != null) {
+                        return found;
+                    }
+                } catch { } // Next Key Pair
+            }
+
+            throw new DracoonApiException(DracoonApiCode.SERVER_USER_KEY_PAIR_NOT_FOUND);
+        }
+
+        internal UserKeyPairAlgorithm GetPreferredUserKeyPairAlgorithm() {
+            List<UserKeyPairAlgorithmData> algorithms = _client.ServerImpl.ServerSettings.GetAvailableUserKeyPairAlgorithms();
+            algorithms = algorithms.OrderBy(x => x.State).ToList();
+
+            if (algorithms.Count > 0) {
+                return algorithms[0].Algorithm;
+            }
+
+            return UserKeyPairAlgorithm.RSA2048;
+        }
+
+        private List<UserKeyPair> GetUserKeyPairs() {
+            List<UserKeyPair> returnValue = new List<UserKeyPair>();
+            try {
+                // Check if api supports this api endpoint. If not only provide the keypair using the "old" api.
+                _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetUserKeyPairsMinimumVersion);
+
+                IRestRequest request = _client.Builder.GetUserKeyPairs();
+                List<ApiUserKeyPair> result = _client.Executor.DoSyncApiCall<List<ApiUserKeyPair>>(request, RequestType.GetUserKeyPairs);
+
+                foreach (ApiUserKeyPair apiUserKeyPair in result) {
+                    UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(apiUserKeyPair);
+                    returnValue.Add(userKeyPair);
+                }
+            } catch (DracoonApiException error) when (error.ErrorCode.Code == DracoonApiCode.API_VERSION_NOT_SUPPORTED.Code) {
+                UserKeyPair keyPair = GetUserKeyPair(UserKeyPairAlgorithm.RSA2048);
+                returnValue.Add(keyPair);
+            }
+            return returnValue;
+        }
+
+        internal List<UserKeyPair> GetAndCheckUserKeyPairs() {
+            List<UserKeyPair> userKeyPairs = GetUserKeyPairs();
+            foreach (UserKeyPair userKeyPair in userKeyPairs) {
+                CheckKeyPair(userKeyPair);
+            }
+            return userKeyPairs;
+        }
+
+        private void CheckKeyPair(UserKeyPair keyPair) {
+            if (!Crypto.Sdk.Crypto.CheckUserKeyPair(keyPair, _client.EncryptionPassword)) {
+                throw new DracoonCryptoException(DracoonCryptoCode.INVALID_PASSWORD_ERROR);
+            }
         }
 
         #region Avatar functions

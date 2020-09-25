@@ -7,6 +7,7 @@ using Dracoon.Sdk.SdkInternal;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Mapper;
+using Dracoon.Sdk.SdkInternal.Util;
 using Dracoon.Sdk.SdkInternal.Validator;
 using Dracoon.Sdk.Sort;
 using Dracoon.Sdk.UnitTest.Factory;
@@ -571,10 +572,12 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonNodesImpl n = new DracoonNodesImpl(c);
             Mock.Arrange(() => Arg.IsAny<EnableRoomEncryptionRequest>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
-            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, true)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.IsAny<UserKeyPairAlgorithm?>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
-            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.AnyString)).Returns(FactoryUser.UserKeyPair).Occurs(1);
-            Mock.Arrange(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>())).Returns(FactoryUser.ApiUserKeyPair).Occurs(1);
+            Mock.Arrange(() => c.AccountImpl.AssertUserKeyPairAlgorithmSupported(Arg.IsAny<UserKeyPairAlgorithm>())).DoNothing().Occurs(1);
+            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.AnyString)).Returns(FactoryUser.UserKeyPair_2048).Occurs(1);
+            Mock.Arrange(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>())).Returns(FactoryUser.ApiUserKeyPair_2048).Occurs(1);
             Mock.Arrange(() => RoomMapper.ToApiEnableRoomEncryptionRequest(Arg.IsAny<EnableRoomEncryptionRequest>(), Arg.IsAny<ApiUserKeyPair>()))
                 .Returns(FactoryRoom.ApiEnableRoomEncryptionRequest).Occurs(1);
             Mock.Arrange(() => c.Builder.PutEnableRoomEncryption(Arg.AnyLong, Arg.IsAny<ApiEnableRoomEncryptionRequest>())).Returns(FactoryRestSharp.PutEnableRoomEncryptionMock(132)).Occurs(1);
@@ -587,14 +590,16 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             // ASSERT
             Assert.Equal(FactoryNode.Node, actual, new NodeComparer());
             Mock.Assert(() => Arg.IsAny<EnableRoomEncryptionRequest>().MustNotNull(Arg.AnyString));
+            Mock.Assert(() => Arg.IsAny<UserKeyPairAlgorithm?>().MustNotNull(Arg.AnyString));
             Mock.Assert(() => Arg.AnyLong.MustPositive(Arg.AnyString));
-            Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, true));
-            Mock.Assert(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.AnyString));
+            Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
+            Mock.Assert(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.AnyString));
             Mock.Assert(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>()));
             Mock.Assert(() => RoomMapper.ToApiEnableRoomEncryptionRequest(Arg.IsAny<EnableRoomEncryptionRequest>(), Arg.IsAny<ApiUserKeyPair>()));
             Mock.Assert(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>()));
             Mock.Assert(c.Builder);
             Mock.Assert(c.Executor);
+            Mock.Assert(c.AccountImpl);
         }
 
         [Fact]
@@ -605,7 +610,8 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.IsAny<EnableRoomEncryptionRequest>().MustNotNull(Arg.AnyString)).DoNothing();
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing();
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing();
-            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.AnyString)).Throws(new CryptoException());
+            Mock.Arrange(() => c.AccountImpl.AssertUserKeyPairAlgorithmSupported(Arg.IsAny<UserKeyPairAlgorithm>())).DoNothing();
+            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.AnyString)).Throws(new CryptoException());
             Mock.Arrange(() => CryptoErrorMapper.ParseCause(Arg.IsAny<Exception>())).Returns(DracoonCryptoCode.INVALID_PASSWORD_ERROR).Occurs(1);
 
             // ACT - ASSERT
@@ -749,7 +755,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().OccursAtLeast(1);
             Mock.Arrange(() => Arg.IsAny<Stream>().CheckStreamCanRead(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => n.IsNodeEncrypted(Arg.AnyLong)).Returns(true).Occurs(1);
-            Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPair()).Returns(FactoryUser.UserKeyPair).Occurs(1);
+            Mock.Arrange(() => c.AccountImpl.GetPreferredUserKeyPair()).Returns(FactoryUser.UserKeyPair_4096).Occurs(1);
             Mock.Arrange(() => Arg.IsAny<FileUpload>().RunSync()).Returns(FactoryNode.Node).Occurs(1);
             Mock.Arrange(() => Arg.IsAny<Dictionary<string, FileUpload>>().Add(Arg.AnyString, Arg.IsAny<FileUpload>())).Occurs(1);
             Mock.Arrange(() => Arg.IsAny<FileUpload>().AddFileUploadCallback(Arg.IsAny<IFileUploadCallback>())).Occurs(2);
@@ -764,7 +770,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
             Mock.Assert(() => Arg.IsAny<Stream>().CheckStreamCanRead(Arg.AnyString));
             Mock.Assert(() => n.IsNodeEncrypted(Arg.AnyLong));
-            Mock.Assert(() => c.AccountImpl.GetAndCheckUserKeyPair());
+            Mock.Assert(() => c.AccountImpl.GetPreferredUserKeyPair());
             Mock.Assert(() => Arg.IsAny<FileUpload>().RunSync());
             Mock.Assert(() => Arg.IsAny<Dictionary<string, FileUpload>>().Add(Arg.AnyString, Arg.IsAny<FileUpload>()));
             Mock.Assert(() => Arg.IsAny<FileUpload>().AddFileUploadCallback(Arg.IsAny<IFileUploadCallback>()));
@@ -853,7 +859,6 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonNodesImpl n = new DracoonNodesImpl(c);
-            Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.IsAny<Stream>().CheckStreamCanWrite(Arg.AnyString)).DoNothing().Occurs(1);
             Node requestedNode = FactoryNode.Node;
@@ -867,7 +872,6 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             n.DownloadFile("id1", 1435, null, null);
 
             // ASSERT
-            Mock.Assert(() => Arg.AnyLong.MustPositive(Arg.AnyString));
             Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
             Mock.Assert(() => Arg.IsAny<Stream>().CheckStreamCanWrite(Arg.AnyString));
             Mock.Assert(() => n.GetNode(Arg.AnyLong));
@@ -881,13 +885,11 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonNodesImpl n = new DracoonNodesImpl(c);
-            Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.IsAny<Stream>().CheckStreamCanWrite(Arg.AnyString)).DoNothing().Occurs(1);
             Node requestedNode = FactoryNode.Node;
             requestedNode.IsEncrypted = true;
             Mock.Arrange(() => n.GetNode(Arg.AnyLong)).Returns(requestedNode).Occurs(1);
-            Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPair()).Returns(FactoryUser.UserKeyPair).Occurs(1);
             Mock.Arrange(() => Arg.IsAny<FileDownload>().RunSync()).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.IsAny<Dictionary<string, FileDownload>>().Add(Arg.AnyString, Arg.IsAny<FileDownload>())).Occurs(1);
             Mock.Arrange(() => Arg.IsAny<FileDownload>().AddFileDownloadCallback(Arg.IsAny<IFileDownloadCallback>())).Occurs(2);
@@ -896,11 +898,9 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             n.DownloadFile("id1", 1435, null, null);
 
             // ASSERT
-            Mock.Assert(() => Arg.AnyLong.MustPositive(Arg.AnyString));
             Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
             Mock.Assert(() => Arg.IsAny<Stream>().CheckStreamCanWrite(Arg.AnyString));
             Mock.Assert(() => n.GetNode(Arg.AnyLong));
-            Mock.Assert(() => c.AccountImpl.GetAndCheckUserKeyPair());
             Mock.Assert(() => Arg.IsAny<FileDownload>().RunSync());
             Mock.Assert(() => Arg.IsAny<Dictionary<string, FileDownload>>().Add(Arg.AnyString, Arg.IsAny<FileDownload>()));
             Mock.Assert(() => Arg.IsAny<FileDownload>().AddFileDownloadCallback(Arg.IsAny<IFileDownloadCallback>()));
@@ -936,7 +936,6 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonNodesImpl n = new DracoonNodesImpl(c);
-            Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.IsAny<Stream>().CheckStreamCanWrite(Arg.AnyString)).DoNothing().Occurs(1);
             Node requestedNode = FactoryNode.Node;
@@ -950,7 +949,6 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             n.StartDownloadFileAsync("id1", 1435, null, null);
 
             // ASSERT
-            Mock.Assert(() => Arg.AnyLong.MustPositive(Arg.AnyString));
             Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
             Mock.Assert(() => Arg.IsAny<Stream>().CheckStreamCanWrite(Arg.AnyString));
             Mock.Assert(() => n.GetNode(Arg.AnyLong));
@@ -992,7 +990,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             DracoonNodesImpl n = new DracoonNodesImpl(c);
             Mock.Arrange(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.AnyInt.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
-            Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPair()).Returns(FactoryUser.UserKeyPair).Occurs(1);
+            Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPairs()).Returns(FactoryUser.UserKeyPairs).Occurs(1);
             Mock.Arrange(() => c.Builder.GetMissingFileKeys(Arg.IsAny<long?>(), Arg.AnyInt, Arg.AnyInt)).Returns(FactoryRestSharp.GetMissingFileKeysMock(10, 0)).OccursAtLeast(1);
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiMissingFileKeys>(Arg.IsAny<IRestRequest>(), RequestType.GetMissingFileKeys, 0))
                     .Returns(FactoryFile.ApiMissingFileKeys).OccursAtLeast(1);
@@ -1005,6 +1003,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
                 .Returns(FactoryFile.PlainFileKey).OccursAtLeast(1);
             Mock.Arrange(() => n.EncryptFileKey(Arg.IsAny<PlainFileKey>(), Arg.IsAny<UserPublicKey>(), Arg.IsAny<long?>()))
                 .Returns(FactoryFile.EncryptedFileKey).OccursAtLeast(1);
+            Mock.Arrange(() => CryptoHelper.DetermineUserKeyPairVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>())).Returns(UserKeyPairAlgorithm.RSA2048).Occurs(FactoryUser.UserKeyPairs.Count);
 
             // ACT
             n.GenerateMissingFileKeys();
@@ -1015,6 +1014,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Assert(() => UserMapper.ConvertApiUserIdPublicKeys(Arg.IsAny<List<ApiUserIdPublicKey>>()));
             Mock.Assert(() => FileMapper.FromApiFileKey(Arg.IsAny<ApiFileKey>()));
             Mock.Assert(() => FileMapper.ToApiFileKey(Arg.IsAny<EncryptedFileKey>()));
+            Mock.Assert(() => CryptoHelper.DetermineUserKeyPairVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>()));
             Mock.Assert(c.AccountImpl);
             Mock.Assert(c.Builder);
             Mock.Assert(c.Executor);
@@ -1028,7 +1028,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             DracoonNodesImpl n = new DracoonNodesImpl(c);
             Mock.Arrange(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString)).DoNothing();
             Mock.Arrange(() => Arg.AnyInt.MustPositive(Arg.AnyString)).DoNothing();
-            Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPair()).Returns(FactoryUser.UserKeyPair);
+            Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPairs()).Returns(FactoryUser.UserKeyPairs).Occurs(1);
             Mock.Arrange(() => c.Builder.GetMissingFileKeys(Arg.IsAny<long?>(), Arg.AnyInt, Arg.AnyInt)).Returns(FactoryRestSharp.GetMissingFileKeysMock(10, 0));
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiMissingFileKeys>(Arg.IsAny<IRestRequest>(), RequestType.GetMissingFileKeys, 0))
                     .Returns(new ApiMissingFileKeys() {
@@ -1043,6 +1043,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
                 .Returns(FactoryFile.PlainFileKey).OccursNever();
             Mock.Arrange(() => n.EncryptFileKey(Arg.IsAny<PlainFileKey>(), Arg.IsAny<UserPublicKey>(), Arg.IsAny<long?>()))
                 .Returns(FactoryFile.EncryptedFileKey).OccursNever();
+            Mock.Arrange(() => CryptoHelper.DetermineUserKeyPairVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>())).Returns(UserKeyPairAlgorithm.RSA2048).Occurs(0);
 
             // ACT
             n.GenerateMissingFileKeys();
@@ -1053,6 +1054,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Assert(() => UserMapper.ConvertApiUserIdPublicKeys(Arg.IsAny<List<ApiUserIdPublicKey>>()));
             Mock.Assert(() => FileMapper.FromApiFileKey(Arg.IsAny<ApiFileKey>()));
             Mock.Assert(() => FileMapper.ToApiFileKey(Arg.IsAny<EncryptedFileKey>()));
+            Mock.Assert(() => CryptoHelper.DetermineUserKeyPairVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>()));
             Mock.Assert(c.AccountImpl);
             Mock.Assert(c.Builder);
             Mock.Assert(c.Executor);
@@ -1073,7 +1075,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
                 .Returns(FactoryFile.EncryptedFileKey).Occurs(1);
 
             // ACT
-            EncryptedFileKey actual = n.EncryptFileKey(FactoryFile.PlainFileKey, FactoryUser.UserPublicKey);
+            EncryptedFileKey actual = n.EncryptFileKey(FactoryFile.PlainFileKey, FactoryUser.UserPublicKey_2048);
 
             // ASSERT
             Assert.Equal(FactoryFile.EncryptedFileKey, actual, new EncryptedFileKeyComparer());
@@ -1089,7 +1091,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => CryptoErrorMapper.ParseCause(Arg.IsAny<Exception>())).Returns(DracoonCryptoCode.INTERNAL_ERROR).Occurs(1);
 
             // ACT - ASSERT
-            Assert.Throws<DracoonCryptoException>(() => n.EncryptFileKey(FactoryFile.PlainFileKey, FactoryUser.UserPublicKey));
+            Assert.Throws<DracoonCryptoException>(() => n.EncryptFileKey(FactoryFile.PlainFileKey, FactoryUser.UserPublicKey_2048));
             Mock.Assert(() => CryptoErrorMapper.ParseCause(Arg.IsAny<Exception>()));
         }
 
@@ -1106,7 +1108,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
                 .Returns(FactoryFile.PlainFileKey).Occurs(1);
 
             // ACT
-            PlainFileKey actual = n.DecryptFileKey(FactoryFile.EncryptedFileKey, FactoryUser.UserPrivateKey);
+            PlainFileKey actual = n.DecryptFileKey(FactoryFile.EncryptedFileKey, FactoryUser.UserPrivateKey_2048);
 
             // ASSERT
             Assert.Equal(FactoryFile.PlainFileKey, actual, new PlainFileKeyComparer());
@@ -1123,7 +1125,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => CryptoErrorMapper.ParseCause(Arg.IsAny<Exception>())).Returns(DracoonCryptoCode.INTERNAL_ERROR).Occurs(1);
 
             // ACT - ASSERT
-            Assert.Throws<DracoonCryptoException>(() => n.DecryptFileKey(FactoryFile.EncryptedFileKey, FactoryUser.UserPrivateKey));
+            Assert.Throws<DracoonCryptoException>(() => n.DecryptFileKey(FactoryFile.EncryptedFileKey, FactoryUser.UserPrivateKey_2048));
             Mock.Arrange(() => CryptoErrorMapper.ParseCause(Arg.IsAny<Exception>()));
         }
 

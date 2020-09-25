@@ -30,6 +30,12 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal static readonly Encoding ENCODING = Encoding.UTF8;
 
+        #region Crypto-Algorithm
+
+        internal const string ApiVersionMin_Algorithm_UserKeyPair_RSA4096 = "4.24.0";
+
+        #endregion
+
         #region Public-Endpoint
 
         #region GET
@@ -48,6 +54,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiGetUserAccount = ApiPrefix + "/user/account";
         internal const string ApiGetCustomerAccount = ApiPrefix + "/user/account/customer";
         internal const string ApiGetUserKeyPair = ApiPrefix + "/user/account/keypair";
+        internal const string ApiGetUserKeyPairs = ApiPrefix + "/user/account/keypairs";
         internal const string ApiGetAuthenticatedPing = ApiPrefix + "/user/ping";
         internal const string ApiGetAvatar = ApiPrefix + "/user/account/avatar";
         internal const string ApiDeleteAvatar = ApiPrefix + "/user/account/avatar";
@@ -72,6 +79,12 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal const string ApiDeleteUserKeyPair = ApiPrefix + "/user/account/keypair";
         internal const string ApiDeleteUserProfileAttributes = ApiPrefix + "/user/profileAttributes/{key}";
+
+        #endregion
+
+        #region Minimum version requirements
+
+        internal const string ApiGetUserKeyPairsMinimumVersion = "4.24.0";
 
         #endregion
 
@@ -169,12 +182,14 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiGetInfrastructureConfig = ApiPrefix + "/config/info/infrastructure";
         internal const string ApiGetDefaultsConfig = ApiPrefix + "/config/info/defaults";
         internal const string ApiGetPasswordPolicies = ApiPrefix + "/config/info/policies/passwords";
+        internal const string ApiGetAlgorithms = ApiPrefix + "/config/info/policies/algorithms";
 
         #endregion
 
         #region Minimum version requirements
 
         internal const string ApiGetPasswordPoliciesMinimumVersion = "4.14.0";
+        internal const string ApiGetAlgorithmsMinimumVersion = "4.24.0";
 
         #endregion
 

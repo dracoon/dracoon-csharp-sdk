@@ -1,4 +1,6 @@
-﻿namespace Dracoon.Sdk.Model {
+﻿using Dracoon.Crypto.Sdk;
+
+namespace Dracoon.Sdk.Model {
     /// <include file="UserRequestsDoc.xml" path='docs/members[@name="enableRoomEncryptionRequest"]/EnableRoomEncryptionRequest/*'/>
     public class EnableRoomEncryptionRequest {
         /// <include file="UserRequestsDoc.xml" path='docs/members[@name="enableRoomEncryptionRequest"]/Id/*'/>
@@ -13,13 +15,17 @@
         /// <include file="UserRequestsDoc.xml" path='docs/members[@name="enableRoomEncryptionRequest"]/DataRoomRescueKeyPassword/*'/>
         public string DataRoomRescueKeyPassword { get; set; }
 
+        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="enableRoomEncryptionRequest"]/DataRoomRescueKeyPairAlgorithm/*'/>
+        public UserKeyPairAlgorithm? DataRoomRescueKeyPairAlgorithm { get; set; }
+
         /// <include file="UserRequestsDoc.xml" path='docs/members[@name="enableRoomEncryptionRequest"]/EnableRoomEncryptionRequestConstructor/*'/>
         public EnableRoomEncryptionRequest(long id, bool isEncryptionEnabled, bool useDataSpaceRescueKey = false,
-            string dataRoomRescueKeyPassword = null) {
+            string dataRoomRescueKeyPassword = null, UserKeyPairAlgorithm? dataRoomRescueKeyPairAlgorithm = null) {
             Id = id;
             IsEncryptionEnabled = isEncryptionEnabled;
             UseDataSpaceRescueKey = useDataSpaceRescueKey;
             DataRoomRescueKeyPassword = dataRoomRescueKeyPassword;
+            DataRoomRescueKeyPairAlgorithm = dataRoomRescueKeyPairAlgorithm;
         }
     }
 }

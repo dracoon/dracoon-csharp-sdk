@@ -211,6 +211,7 @@ namespace Dracoon.Sdk.Error {
         #region GENERAL
 
         public static readonly DracoonApiCode SERVER_UNKNOWN_ERROR = new DracoonApiCode(5000, "A server error occurred.");
+        public static readonly DracoonApiCode SERVER_CRYPTO_VERSION_NOT_SUPPORTED = new DracoonApiCode(5010, "Crypto version not supported.");
         public static readonly DracoonApiCode SERVER_MALICIOUS_FILE_DETECTED = new DracoonApiCode(5090, "The AV scanner detected that the file could be malicious.");
 
         #endregion
