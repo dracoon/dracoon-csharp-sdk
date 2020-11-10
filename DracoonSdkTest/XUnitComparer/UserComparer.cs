@@ -60,8 +60,8 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             if ((x == null && y != null) || (x != null && y == null)) {
                 return false;
             }
+            Assert.Equal(x.AuthData, y.AuthData, new UserAuthDataComparer());
             return x.Id == y.Id &&
-                string.Equals(x.LoginName, y.LoginName) &&
                 string.Equals(x.UserName, y.UserName) &&
                 string.Equals(x.Title, y.Title) &&
                 string.Equals(x.FirstName, y.FirstName) &&
@@ -77,6 +77,27 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
         }
 
         public int GetHashCode(UserAccount obj) {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class UserAuthDataComparer : IEqualityComparer<UserAuthData> {
+        public bool Equals(UserAuthData x, UserAuthData y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            return x.Method == y.Method &&
+                string.Equals(x.Login, y.Login) &&
+                string.Equals(x.Password, y.Password) &&
+                x.MustChangePassword == y.MustChangePassword &&
+                x.ADConfigId == y.ADConfigId &&
+                x.OIDConfigId == y.OIDConfigId;
+        }
+
+        public int GetHashCode(UserAuthData obj) {
             throw new NotImplementedException();
         }
     }

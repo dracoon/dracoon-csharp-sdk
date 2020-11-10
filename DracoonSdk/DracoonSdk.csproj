@@ -100,6 +100,7 @@
     <Compile Include="SdkInternal\ApiModel\Requests\ApiMoveNode.cs" />
     <Compile Include="SdkInternal\ApiModel\Requests\ApiSetUserFileKeysRequest.cs" />
     <Compile Include="SdkInternal\ApiModel\Nodes\ApiUploadChunkResult.cs" />
+    <Compile Include="SdkInternal\ApiModel\User\ApiAuthData.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiAvatarInfo.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserIdFileId.cs" />
     <Compile Include="SdkInternal\ApiModel\User\ApiUserIdPublicKey.cs" />
@@ -219,6 +220,8 @@
     <Compile Include="SdkPublic\Model\ServerInfrastructureSettings.cs" />
     <Compile Include="SdkPublic\Model\Attribute.cs" />
     <Compile Include="SdkPublic\Model\AttributeList.cs" />
+    <Compile Include="SdkPublic\Model\UserAuthData.cs" />
+    <Compile Include="SdkPublic\Model\UserAuthMethod.cs" />
     <Compile Include="SdkPublic\Model\UserKeyPairAlgorithmData.cs" />
     <Compile Include="SdkPublic\Model\UserRequests\CopyNode.cs" />
     <Compile Include="SdkPublic\Model\UserRequests\DeletePreviousVersionsRequest.cs" />

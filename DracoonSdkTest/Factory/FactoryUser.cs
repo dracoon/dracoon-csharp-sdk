@@ -36,7 +36,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             get {
                 return new UserAccount {
                     Id = 456,
-                    LoginName = "JohnSmith123",
+                    AuthData = UserAuthData,
                     UserName = "JohnSmith1234",
                     Title = "M.Sc.",
                     FirstName = "John",
@@ -56,11 +56,24 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             }
         }
 
+        internal static UserAuthData UserAuthData {
+            get {
+                return new UserAuthData {
+                    Method = UserAuthMethod.ActiveDirectory,
+                    Login = "JohnS",
+                    Password = "",
+                    MustChangePassword = false,
+                    ADConfigId = 1234,
+                    OIDConfigId = 0
+                };
+            }
+        }
+
         internal static ApiUserAccount ApiUserAccount {
             get {
                 return new ApiUserAccount {
                     Id = 456,
-                    LoginName = "JohnSmith123",
+                    AuthData = ApiUserAuthData,
                     Title = "M.Sc.",
                     FirstName = "John",
                     LastName = "Smith",
@@ -81,6 +94,19 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                         }
                     },
                     HomeRoomId = 2
+                };
+            }
+        }
+
+        internal static ApiAuthData ApiUserAuthData {
+            get {
+                return new ApiAuthData {
+                    Method = "active_directory",
+                    Login = "JohnS",
+                    Password = "",
+                    MustChangePassword = false,
+                    ADConfigId = 1234,
+                    OIDConfigId = 0
                 };
             }
         }
