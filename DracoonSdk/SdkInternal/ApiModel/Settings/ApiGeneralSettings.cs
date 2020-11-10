@@ -17,9 +17,6 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         [JsonProperty("mediaServerEnabled", NullValueHandling = NullValueHandling.Ignore)]
         public bool MediaServerEnabled { get; set; }
 
-        [JsonProperty("weakPasswordEnabled", NullValueHandling = NullValueHandling.Ignore)]
-        public bool WeakPasswordEnabled { get; set; }
-
         [JsonProperty("useS3Storage", NullValueHandling = NullValueHandling.Ignore)]
         public bool UseS3Storage { get; set; }
     }

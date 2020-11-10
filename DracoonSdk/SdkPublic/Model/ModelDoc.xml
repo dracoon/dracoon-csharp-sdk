@@ -1406,31 +1406,6 @@
       </summary>
     </MediaServerEnabled>
 
-    <WeakPasswordEnabled>
-      <summary>
-        Is <c>true</c> if weak passwords can be used. Otherwise <c>false</c> if strong passwords are required.
-        <para>
-          <list type="bullet">
-            <listheader>
-              <description>
-                A weak password has to fulfill the following criteria:
-              </description>
-            </listheader>
-            <item>
-              <description>
-                Password is at least 8 characters long
-              </description>
-            </item>
-            <item>
-              <description>
-                Password must contain letters and numbers
-              </description>
-            </item>
-          </list>
-        </para>
-      </summary>
-    </WeakPasswordEnabled>
-
     <UseS3Storage>
       <summary>
         Is <c>true</c> if S3 is used as storage backend. Otherwise <c>false</c>.

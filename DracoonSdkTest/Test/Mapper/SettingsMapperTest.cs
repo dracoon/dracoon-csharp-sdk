@@ -22,8 +22,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 EulaEnabled = expected.EulaEnabled,
                 MediaServerEnabled = expected.MediaServerEnabled,
                 SharePasswordSmsEnabled = expected.SharePasswordSmsEnabled,
-                UseS3Storage = expected.UseS3Storage,
-                WeakPasswordEnabled = expected.WeakPasswordEnabled
+                UseS3Storage = expected.UseS3Storage
             };
 
             // ACT

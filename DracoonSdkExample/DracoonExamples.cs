@@ -48,7 +48,6 @@ namespace Dracoon.Sdk.Example {
             Console.WriteLine("Crypto is enabled: " + generalSettings.CryptoEnabled);
             Console.WriteLine("Media server is enabled: " + generalSettings.MediaServerEnabled);
             Console.WriteLine("Share password via SMS is enabled: " + generalSettings.SharePasswordSmsEnabled);
-            Console.WriteLine("Weak passwords are enabled: " + generalSettings.WeakPasswordEnabled);
 
             ServerInfrastructureSettings infrastructureSettings = dc.Server.ServerSettings.GetInfrastructure();
             //...
