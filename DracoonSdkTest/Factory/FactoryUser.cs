@@ -11,7 +11,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             get {
                 return new UserInfo {
                     Id = 12,
-                    DisplayName = "User",
+                    UserName = "User",
                     AvatarUUID = "HSGF324DSFGJ",
                     Email = "test@test.com",
                     FirstName = "Max",
@@ -26,7 +26,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             get {
                 return new ApiUserInfo {
                     Id = 12,
-                    DisplayName = "User",
+                    UserName = "User",
                     AvatarUuid = "HSGF324DSFGJ"
                 };
             }

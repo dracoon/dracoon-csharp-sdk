@@ -1710,11 +1710,11 @@
       </summary>
     </Id>
 
-    <DisplayName>
+    <UserName>
       <summary>
-        The users display name.
+        The user name.
       </summary>
-    </DisplayName>
+    </UserName>
 
     <AvatarUUID>
       <summary>

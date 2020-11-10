@@ -16,8 +16,7 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 x.EulaEnabled == y.EulaEnabled &&
                 x.MediaServerEnabled == y.MediaServerEnabled &&
                 x.SharePasswordSmsEnabled == y.SharePasswordSmsEnabled &&
-                x.UseS3Storage == y.UseS3Storage &&
-                x.WeakPasswordEnabled == y.WeakPasswordEnabled;
+                x.UseS3Storage == y.UseS3Storage;
         }
 
         public int GetHashCode(ServerGeneralSettings obj) {

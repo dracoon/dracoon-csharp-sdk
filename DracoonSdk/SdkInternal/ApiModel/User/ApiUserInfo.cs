@@ -5,8 +5,8 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public long Id { get; set; }
 
-        [JsonProperty("displayName", NullValueHandling = NullValueHandling.Ignore)]
-        public string DisplayName { get; set; }
+        [JsonProperty("userName", NullValueHandling = NullValueHandling.Ignore)]
+        public string UserName { get; set; }
 
         [JsonProperty("avatarUuid", NullValueHandling = NullValueHandling.Ignore)]
         public string AvatarUuid { get; set; }

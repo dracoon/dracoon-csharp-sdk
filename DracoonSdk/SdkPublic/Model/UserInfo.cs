@@ -4,8 +4,8 @@
         /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/Id/*'/>
         public long? Id { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/DisplayName/*'/>
-        public string DisplayName { get; internal set; }
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/UserName/*'/>
+        public string UserName { get; internal set; }
 
         /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/AvatarUUID/*'/>
         public string AvatarUUID { get; internal set; }

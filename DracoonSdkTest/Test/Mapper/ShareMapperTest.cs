@@ -87,7 +87,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 CreatedAt = expected.CreatedAt,
                 CreatedBy = new ApiUserInfo {
                     AvatarUuid = expected.CreatedBy.AvatarUUID,
-                    DisplayName = expected.CreatedBy.DisplayName,
+                    UserName = expected.CreatedBy.UserName,
                     Id = expected.CreatedBy.Id.Value
                 },
                 IsProtected = expected.IsProtected,
@@ -143,7 +143,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     CreatedAt = current.CreatedAt,
                     CreatedBy = new ApiUserInfo {
                         AvatarUuid = current.CreatedBy.AvatarUUID,
-                        DisplayName = current.CreatedBy.DisplayName,
+                        UserName = current.CreatedBy.UserName,
                         Id = current.CreatedBy.Id.Value
                     },
                     IsProtected = current.IsProtected,
@@ -232,7 +232,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 CreatedAt = expected.CreatedAt,
                 CreatedBy = new ApiUserInfo {
                     AvatarUuid = expected.CreatedBy.AvatarUUID,
-                    DisplayName = expected.CreatedBy.DisplayName,
+                    UserName = expected.CreatedBy.UserName,
                     Id = expected.CreatedBy.Id.Value
                 },
                 ExpireAt = expected.ExpireAt,
@@ -286,7 +286,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     CreatedAt = current.CreatedAt,
                     CreatedBy = new ApiUserInfo {
                         AvatarUuid = current.CreatedBy.AvatarUUID,
-                        DisplayName = current.CreatedBy.DisplayName,
+                        UserName = current.CreatedBy.UserName,
                         Id = current.CreatedBy.Id.Value
                     },
                     IsProtected = current.IsProtected,
