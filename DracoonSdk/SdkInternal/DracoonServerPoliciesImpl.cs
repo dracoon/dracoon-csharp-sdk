@@ -14,7 +14,7 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         public PasswordEncryptionPolicies GetEncryptionPasswordPolicies() {
-            _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetPasswordPoliciesMinimumVersion);
+            _client.Executor.CheckApiServerVersion();
             IRestRequest request = _client.Builder.GetPasswordPolicies();
             ApiPasswordSettings apiPasswordPolicies =
                 _client.Executor.DoSyncApiCall<ApiPasswordSettings>(request, DracoonRequestExecutor.RequestType.GetPasswordPolicies);
@@ -22,7 +22,7 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         public PasswordSharePolicies GetSharesPasswordPolicies() {
-            _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetPasswordPoliciesMinimumVersion);
+            _client.Executor.CheckApiServerVersion();
             IRestRequest request = _client.Builder.GetPasswordPolicies();
             ApiPasswordSettings apiPasswordPolicies =
                 _client.Executor.DoSyncApiCall<ApiPasswordSettings>(request, DracoonRequestExecutor.RequestType.GetPasswordPolicies);
