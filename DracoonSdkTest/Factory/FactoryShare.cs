@@ -26,7 +26,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     CreatedAt = new DateTime(2000, 1, 1, 0, 0, 0).AddDays(1),
                     CreatedBy = FactoryUser.UserInfo,
                     IsProtected = true,
-                    IsEncrypted = true
+                    IsEncrypted = true,
+                    Type = NodeType.Folder
                 };
             }
         }
@@ -78,7 +79,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     CreatedAt = new DateTime(2000, 1, 1, 0, 0, 0).AddDays(1),
                     CreatedBy = FactoryUser.ApiUserInfo,
                     IsProtected = true,
-                    IsEncrypted = true
+                    IsEncrypted = true,
+                    Type = "folder"
                 };
             }
         }

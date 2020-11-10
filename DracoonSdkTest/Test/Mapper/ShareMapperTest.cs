@@ -91,7 +91,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     Id = expected.CreatedBy.Id.Value
                 },
                 IsProtected = expected.IsProtected,
-                IsEncrypted = expected.IsEncrypted
+                IsEncrypted = expected.IsEncrypted,
+                Type = "folder"
             };
 
             Mock.Arrange(() => EnumConverter.ConvertClassificationEnumToValue(expected.Classification)).Returns((int) expected.Classification);
@@ -146,7 +147,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                         Id = current.CreatedBy.Id.Value
                     },
                     IsProtected = current.IsProtected,
-                    IsEncrypted = current.IsEncrypted
+                    IsEncrypted = current.IsEncrypted,
+                    Type = "folder"
                 };
                 param.Items.Add(currentApi);
                 Mock.Arrange(() => ShareMapper.FromApiDownloadShare(currentApi)).Returns(current);

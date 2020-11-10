@@ -406,6 +406,12 @@
       </summary>
     </IsEncrypted>
 
+    <Type>
+      <summary>
+        Indicates type of the shared node.
+      </summary>
+    </Type>
+
   </members>
 
   <members name="downloadShareList">
