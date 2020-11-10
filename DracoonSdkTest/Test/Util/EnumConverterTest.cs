@@ -68,7 +68,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Util {
         [InlineData(UserAuthMethod.ActiveDirectory, "active_directory")]
         [InlineData(UserAuthMethod.Radius, "radius")]
         [InlineData(UserAuthMethod.OpenID, "openid")]
-        [InlineData(UserAuthMethod.Unknown, "unkown")]
+        [InlineData(UserAuthMethod.Unknown, "unknown")]
         public void ConvertUserAuthMethodEnumToValue(UserAuthMethod value, string expected) {
             // ARRANGE
 

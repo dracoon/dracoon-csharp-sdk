@@ -71,8 +71,8 @@ namespace Dracoon.Sdk.UnitTest.Test {
             IRequestExecutor exec = new DracoonRequestExecutor(c.OAuth, c);
             Mock.Arrange(() => c.Builder.GetServerVersion()).Returns(FactoryRestSharp.GetServerVersionMock());
             Mock.Arrange(() => exec.DoSyncApiCall<ApiServerVersion>(Arg.IsAny<IRestRequest>(), RequestType.GetServerVersion, 0)).Returns(new ApiServerVersion {
-                ServerVersion = "4.13.0",
-                RestApiVersion = "4.13.0",
+                ServerVersion = "4.99.0",
+                RestApiVersion = "4.99.0",
                 BuildDate = DateTime.Now
             });
 
