@@ -1564,6 +1564,12 @@
       </summary>
     </MaxAllowedTotalSizeOverAllUploadedFiles>
 
+    <Type>
+      <summary>
+        The type of the node which this share references to.
+      </summary>
+    </Type>
+
   </members>
 
   <members name="uploadShareList">

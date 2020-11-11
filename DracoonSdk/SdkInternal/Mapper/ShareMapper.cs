@@ -148,7 +148,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 CurrentUploadedFilesCount = apiUploadShare.CurrentUploadedFilesCount,
                 ShowUploadedFiles = apiUploadShare.ShowUploadedFiles,
                 MaxAllowedUploads = apiUploadShare.MaxAllowedUploads,
-                MaxAllowedTotalSizeOverAllUploadedFiles = apiUploadShare.MaxAllowedTotalSizeOverAllUploadedFiles
+                MaxAllowedTotalSizeOverAllUploadedFiles = apiUploadShare.MaxAllowedTotalSizeOverAllUploadedFiles,
+                Type = EnumConverter.ConvertValueToNodeTypeEnum(apiUploadShare.Type)
             };
             return uploadShare;
         }

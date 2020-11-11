@@ -56,5 +56,8 @@ namespace Dracoon.Sdk.Model {
 
         /// <include file = "ModelDoc.xml" path='docs/members[@name="uploadShare"]/MaxAllowedTotalSizeOverAllUploadedFiles/*'/>
         public long? MaxAllowedTotalSizeOverAllUploadedFiles { get; internal set; }
+
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="uploadShare"]/Type/*'/>
+        public NodeType Type { get; internal set; }
     }
 }
