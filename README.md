@@ -21,11 +21,11 @@ In nuget, you can find the DRACOON SDK [here](https://www.nuget.org/packages/Dra
 
 If you are using NuGet with package management "Packages.config", then edit your project's "packages.config" and add this to the packages section:
 ```xml
-<package id="Dracoon.Sdk" version="2.0.0-beta2-SNAPSHOT" />
+<package id="Dracoon.Sdk" version="2.0.0-beta3-SNAPSHOT" />
 ```
 If you are using Visual Studio 2017 (or higher) and you are using NuGet with package management "PackageReference" then edit your .csproj file and add this to the package dependency group:
 ```xml
-<PackageReference Include="Dracoon.Sdk" Version="2.0.0-beta2-SNAPSHOT" />
+<PackageReference Include="Dracoon.Sdk" Version="2.0.0-beta3-SNAPSHOT" />
 ```
 
 Note that you also need to include the following dependencies:
