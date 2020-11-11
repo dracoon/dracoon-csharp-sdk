@@ -53,5 +53,8 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
 
         [JsonProperty("isEncrypted", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsEncrypted { get; set; }
+
+        [JsonProperty("nodeType", NullValueHandling = NullValueHandling.Ignore)]
+        public string Type { get; set; }
     }
 }

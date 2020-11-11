@@ -16,9 +16,6 @@
         /// <include file = "ModelDoc.xml" path='docs/members[@name="serverGeneralSettings"]/MediaServerEnabled/*'/>
         public bool MediaServerEnabled { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="serverGeneralSettings"]/WeakPasswordEnabled/*'/>
-        public bool WeakPasswordEnabled { get; internal set; }
-
         /// <include file = "ModelDoc.xml" path='docs/members[@name="serverGeneralSettings"]/UseS3Storage/*'/>
         public bool UseS3Storage { get; internal set; }
     }

@@ -1,6 +1,6 @@
 language: csharp
 solution: DracoonSdkSolution.sln
 install:
-  - nuget restore DracoonSdkSolution.sln
+  - nuget restore DracoonSdk/packages.config - PackagesDirectory ..\packages
 script:
   - xbuild /p:Configuration=Release DracoonSdk/DracoonSdk.csproj

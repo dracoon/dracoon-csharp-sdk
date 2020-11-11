@@ -14,8 +14,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     EulaEnabled = true,
                     MediaServerEnabled = false,
                     SharePasswordSmsEnabled = true,
-                    UseS3Storage = false,
-                    WeakPasswordEnabled = true
+                    UseS3Storage = false
                 };
             }
         }
@@ -28,8 +27,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     EulaEnabled = true,
                     MediaServerEnabled = false,
                     SharePasswordSmsEnabled = true,
-                    UseS3Storage = false,
-                    WeakPasswordEnabled = true
+                    UseS3Storage = false
                 };
             }
         }

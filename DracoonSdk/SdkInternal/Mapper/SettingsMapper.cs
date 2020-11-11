@@ -17,8 +17,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 EulaEnabled = apiGeneralConfig.EulaEnabled,
                 MediaServerEnabled = apiGeneralConfig.MediaServerEnabled,
                 SharePasswordSmsEnabled = apiGeneralConfig.SharePasswordSmsEnabled,
-                UseS3Storage = apiGeneralConfig.UseS3Storage,
-                WeakPasswordEnabled = apiGeneralConfig.WeakPasswordEnabled
+                UseS3Storage = apiGeneralConfig.UseS3Storage
             };
             return general;
         }

@@ -7,8 +7,8 @@ namespace Dracoon.Sdk.Model {
         /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/Id/*'/>
         public long Id { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/LoginName/*'/>
-        public string LoginName { get; internal set; }
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/AuthData/*'/>
+        public UserAuthData AuthData { get; internal set; }
 
         /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/UserName/*'/>
         public string UserName { get; internal set; }

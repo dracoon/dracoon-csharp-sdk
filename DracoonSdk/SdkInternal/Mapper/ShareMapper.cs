@@ -66,7 +66,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 CreatedAt = apiDownloadShare.CreatedAt,
                 CreatedBy = UserMapper.FromApiUserInfo(apiDownloadShare.CreatedBy),
                 IsProtected = apiDownloadShare.IsProtected,
-                IsEncrypted = apiDownloadShare.IsEncrypted
+                IsEncrypted = apiDownloadShare.IsEncrypted,
+                Type = EnumConverter.ConvertValueToNodeTypeEnum(apiDownloadShare.Type)
             };
             return downloadShare;
         }

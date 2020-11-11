@@ -25,6 +25,36 @@ namespace Dracoon.Sdk.SdkInternal.Util {
             }
         };
 
+        public static Func<string, UserAuthMethod> ConvertValueToUserAuthMethodEnum = value => {
+            switch (value) {
+                case "basic":
+                    return UserAuthMethod.Basic;
+                case "active_directory":
+                    return UserAuthMethod.ActiveDirectory;
+                case "radius":
+                    return UserAuthMethod.Radius;
+                case "openid":
+                    return UserAuthMethod.OpenID;
+                default:
+                    return UserAuthMethod.Unknown;
+            }
+        };
+
+        public static Func<UserAuthMethod, string> ConvertUserAuthMethodEnumToValue = typeEnum => {
+            switch (typeEnum) {
+                case UserAuthMethod.Basic:
+                    return "basic";
+                case UserAuthMethod.ActiveDirectory:
+                    return "active_directory";
+                case UserAuthMethod.Radius:
+                    return "radius";
+                case UserAuthMethod.OpenID:
+                    return "openid";
+                default:
+                    return "unknown";
+            }
+        };
+
         public static Classification? ConvertValueToClassificationEnum(int? classificationValue) {
             switch (classificationValue) {
                 case 1:

@@ -406,6 +406,12 @@
       </summary>
     </IsEncrypted>
 
+    <Type>
+      <summary>
+        Indicates type of the shared node.
+      </summary>
+    </Type>
+
   </members>
 
   <members name="downloadShareList">
@@ -1400,31 +1406,6 @@
       </summary>
     </MediaServerEnabled>
 
-    <WeakPasswordEnabled>
-      <summary>
-        Is <c>true</c> if weak passwords can be used. Otherwise <c>false</c> if strong passwords are required.
-        <para>
-          <list type="bullet">
-            <listheader>
-              <description>
-                A weak password has to fulfill the following criteria:
-              </description>
-            </listheader>
-            <item>
-              <description>
-                Password is at least 8 characters long
-              </description>
-            </item>
-            <item>
-              <description>
-                Password must contain letters and numbers
-              </description>
-            </item>
-          </list>
-        </para>
-      </summary>
-    </WeakPasswordEnabled>
-
     <UseS3Storage>
       <summary>
         Is <c>true</c> if S3 is used as storage backend. Otherwise <c>false</c>.
@@ -1636,15 +1617,15 @@
       </summary>
     </Id>
 
-    <LoginName>
+    <AuthData>
       <summary>
-        The login name of the user.
+        The login data of the user. <seealso cref="Dracoon.Sdk.Model.UserAuthData"/>
       </summary>
-    </LoginName>
+    </AuthData>
 
     <UserName>
       <summary>
-        The user name of the user. This equals the value in <see cref="Dracoon.Sdk.Model.UserAccount.LoginName"/> for server version lower than 4.13.
+        The user name of the user.
       </summary>
     </UserName>
 
@@ -1715,6 +1696,92 @@
     </HomeRoomId>
   </members>
 
+  <members name="userAuthData">
+
+    <UserAuthData>
+      <summary>
+        This model stores informations about the login data of the user.
+      </summary>
+    </UserAuthData>
+
+    <Method>
+      <summary>
+        The authentication method of the user.
+      </summary>
+    </Method>
+
+    <Login>
+      <summary>
+        The login name of the user.
+      </summary>
+    </Login>
+
+    <Password>
+      <summary>
+        The password of the user. (Only relevant for <see cref="Dracoon.Sdk.Model.UserAuthMethod.Basic"/>)
+      </summary>
+    </Password>
+
+    <MustChangePassword>
+      <summary>
+        Indicates if the user have to change his password.
+      </summary>
+    </MustChangePassword>
+
+    <ADConfigId>
+      <summary>
+        The id of the ad configuration.
+      </summary>
+    </ADConfigId>
+
+    <OIDConfigId>
+      <summary>
+        The id of the open id configuration.
+      </summary>
+    </OIDConfigId>
+    
+  </members>
+
+  <members name="userAuthMethod">
+
+    <UserAuthMethod>
+      <summary>
+        The method which are available for authentication.
+      </summary>
+    </UserAuthMethod>
+
+    <Basic>
+      <summary>
+        The basic authentication.
+      </summary>
+    </Basic>
+
+    <ActiveDirectory>
+      <summary>
+        The active directory authentication.
+      </summary>
+    </ActiveDirectory>
+
+    <Radius>
+      <summary>
+        The radius authentication.
+      </summary>
+    </Radius>
+
+    <OpenID>
+      <summary>
+        The openID authentication.
+      </summary>
+    </OpenID>
+
+    <Unknown>
+      <summary>
+        An authentication method which the sdk currently doesn't knows.
+      </summary>
+    </Unknown>
+    
+  </members>
+
   <members name="userInfo">
 
     <UserInfo>
@@ -1729,11 +1796,11 @@
       </summary>
     </Id>
 
-    <DisplayName>
+    <UserName>
       <summary>
-        The users display name.
+        The user name.
       </summary>
-    </DisplayName>
+    </UserName>
 
     <AvatarUUID>
       <summary>

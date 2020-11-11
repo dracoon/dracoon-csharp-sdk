@@ -53,13 +53,13 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     CreatedBy = new ApiUserInfo {
                         Id = current.CreatedBy.Id.Value,
                         AvatarUuid = current.CreatedBy.AvatarUUID,
-                        DisplayName = current.CreatedBy.DisplayName
+                        UserName = current.CreatedBy.UserName
                     },
                     UpdatedAt = current.UpdatedAt,
                     UpdatedBy = new ApiUserInfo {
                         Id = current.UpdatedBy.Id.Value,
                         AvatarUuid = current.UpdatedBy.AvatarUUID,
-                        DisplayName = current.UpdatedBy.DisplayName
+                        UserName = current.UpdatedBy.UserName
                     },
                     InheritPermissions = current.HasInheritPermissions,
                     Permissions = new ApiNodePermissions {
@@ -145,13 +145,13 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 CreatedBy = new ApiUserInfo {
                     Id = expected.CreatedBy.Id.Value,
                     AvatarUuid = expected.CreatedBy.AvatarUUID,
-                    DisplayName = expected.CreatedBy.DisplayName
+                    UserName = expected.CreatedBy.UserName
                 },
                 UpdatedAt = expected.UpdatedAt,
                 UpdatedBy = new ApiUserInfo {
                     Id = expected.UpdatedBy.Id.Value,
                     AvatarUuid = expected.UpdatedBy.AvatarUUID,
-                    DisplayName = expected.UpdatedBy.DisplayName
+                    UserName = expected.UpdatedBy.UserName
                 },
                 InheritPermissions = expected.HasInheritPermissions,
                 Permissions = new ApiNodePermissions {
@@ -460,13 +460,13 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     CreatedAt = current.CreatedAt,
                     CreatedBy = new ApiUserInfo {
                         Id = current.CreatedBy.Id.Value,
-                        DisplayName = current.CreatedBy.DisplayName,
+                        UserName = current.CreatedBy.UserName,
                         AvatarUuid = current.CreatedBy.AvatarUUID
                     },
                     DeletedAt = current.DeletedAt,
                     DeletedBy = new ApiUserInfo {
                         Id = current.DeletedBy.Id.Value,
-                        DisplayName = current.DeletedBy.DisplayName,
+                        UserName = current.DeletedBy.UserName,
                         AvatarUuid = current.DeletedBy.AvatarUUID
                     },
                     ExpireAt = current.ExpireAt,
@@ -477,7 +477,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     UpdatedAt = current.UpdatedAt,
                     UpdatedBy = new ApiUserInfo {
                         Id = current.UpdatedBy.Id.Value,
-                        DisplayName = current.UpdatedBy.DisplayName,
+                        UserName = current.UpdatedBy.UserName,
                         AvatarUuid = current.UpdatedBy.AvatarUUID
                     }
                 };
@@ -531,13 +531,13 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 CreatedAt = expected.CreatedAt,
                 CreatedBy = new ApiUserInfo {
                     Id = expected.CreatedBy.Id.Value,
-                    DisplayName = expected.CreatedBy.DisplayName,
+                    UserName = expected.CreatedBy.UserName,
                     AvatarUuid = expected.CreatedBy.AvatarUUID
                 },
                 DeletedAt = expected.DeletedAt,
                 DeletedBy = new ApiUserInfo {
                     Id = expected.DeletedBy.Id.Value,
-                    DisplayName = expected.DeletedBy.DisplayName,
+                    UserName = expected.DeletedBy.UserName,
                     AvatarUuid = expected.DeletedBy.AvatarUUID
                 },
                 ExpireAt = expected.ExpireAt,
@@ -548,7 +548,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 UpdatedAt = expected.UpdatedAt,
                 UpdatedBy = new ApiUserInfo {
                     Id = expected.UpdatedBy.Id.Value,
-                    DisplayName = expected.UpdatedBy.DisplayName,
+                    UserName = expected.UpdatedBy.UserName,
                     AvatarUuid = expected.UpdatedBy.AvatarUUID
                 }
             };

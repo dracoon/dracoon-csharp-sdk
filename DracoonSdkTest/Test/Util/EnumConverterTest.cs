@@ -40,6 +40,47 @@ namespace Dracoon.Sdk.UnitTest.Test.Util {
 
         #endregion
 
+
+        #region ConvertValueToUserAuthMethodEnum
+
+        [Theory]
+        [InlineData("basic", UserAuthMethod.Basic)]
+        [InlineData("active_directory", UserAuthMethod.ActiveDirectory)]
+        [InlineData("radius", UserAuthMethod.Radius)]
+        [InlineData("openid", UserAuthMethod.OpenID)]
+        [InlineData("things", UserAuthMethod.Unknown)]
+        public void ConvertValueToUserAuthMethodEnum(string value, UserAuthMethod expected) {
+            // ARRANGE
+
+            // ACT
+            UserAuthMethod actual = EnumConverter.ConvertValueToUserAuthMethodEnum(value);
+
+            // ASSERT
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
+
+        #region ConvertUserAuthMethodEnumToValue
+
+        [Theory]
+        [InlineData(UserAuthMethod.Basic, "basic")]
+        [InlineData(UserAuthMethod.ActiveDirectory, "active_directory")]
+        [InlineData(UserAuthMethod.Radius, "radius")]
+        [InlineData(UserAuthMethod.OpenID, "openid")]
+        [InlineData(UserAuthMethod.Unknown, "unknown")]
+        public void ConvertUserAuthMethodEnumToValue(UserAuthMethod value, string expected) {
+            // ARRANGE
+
+            // ACT
+            string actual = EnumConverter.ConvertUserAuthMethodEnumToValue(value);
+
+            // ASSERT
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
+
         #region ConvertValueToClassificationEnum
 
         [Theory]

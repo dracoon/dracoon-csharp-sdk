@@ -16,7 +16,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
 
             UserInfo userInfo = new UserInfo {
                 Id = apiUserInfo.Id,
-                DisplayName = apiUserInfo.DisplayName,
+                UserName = apiUserInfo.UserName,
                 AvatarUUID = apiUserInfo.AvatarUuid,
                 Email = apiUserInfo.Email,
                 FirstName = apiUserInfo.FirstName,
@@ -34,8 +34,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
 
             UserAccount userAccount = new UserAccount {
                 Id = apiUserAccount.Id,
-                LoginName = apiUserAccount.LoginName,
-                UserName = apiUserAccount.UserName ?? apiUserAccount.LoginName,
+                AuthData = FromApiUserAuthData(apiUserAccount.AuthData),
+                UserName = apiUserAccount.UserName,
                 Title = apiUserAccount.Title,
                 FirstName = apiUserAccount.FirstName,
                 LastName = apiUserAccount.LastName,
@@ -49,6 +49,22 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 HomeRoomId = apiUserAccount.HomeRoomId
             };
             return userAccount;
+        }
+
+        internal static UserAuthData FromApiUserAuthData(ApiAuthData apiUserAuthData) {
+            if (apiUserAuthData == null) {
+                return null;
+            }
+
+            UserAuthData userAuthData = new UserAuthData {
+                Method = EnumConverter.ConvertValueToUserAuthMethodEnum(apiUserAuthData.Method),
+                Login = apiUserAuthData.Login,
+                Password = apiUserAuthData.Password,
+                MustChangePassword = apiUserAuthData.MustChangePassword,
+                ADConfigId = apiUserAuthData.ADConfigId,
+                OIDConfigId = apiUserAuthData.OIDConfigId
+            };
+            return userAuthData;
         }
 
         private static List<UserRole> ConvertApiUserRoles(ApiUserRoleList apiUserRoles) {
