@@ -243,7 +243,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 CurrentUploadedFilesCount = expected.CurrentUploadedFilesCount,
                 ShowUploadedFiles = expected.ShowUploadedFiles,
                 MaxAllowedUploads = expected.MaxAllowedUploads,
-                MaxAllowedTotalSizeOverAllUploadedFiles = expected.MaxAllowedTotalSizeOverAllUploadedFiles
+                MaxAllowedTotalSizeOverAllUploadedFiles = expected.MaxAllowedTotalSizeOverAllUploadedFiles,
+                Type = "folder"
             };
 
             Mock.Arrange(() => UserMapper.FromApiUserInfo(param.CreatedBy)).Returns(expected.CreatedBy);
@@ -296,7 +297,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     MaxAllowedTotalSizeOverAllUploadedFiles = current.MaxAllowedTotalSizeOverAllUploadedFiles,
                     MaxAllowedUploads = current.MaxAllowedUploads,
                     ShowUploadedFiles = current.ShowUploadedFiles,
-                    UploadedFilesExpirationPeriod = current.UploadedFilesExpirationPeriod
+                    UploadedFilesExpirationPeriod = current.UploadedFilesExpirationPeriod,
+                    Type = "folder"
                 };
                 param.Items.Add(currentApi);
                 Mock.Arrange(() => ShareMapper.FromApiUploadShare(currentApi)).Returns(current);

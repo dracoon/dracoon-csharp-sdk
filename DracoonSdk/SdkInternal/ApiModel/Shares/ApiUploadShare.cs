@@ -56,5 +56,8 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
 
         [JsonProperty("maxSize", NullValueHandling = NullValueHandling.Ignore)]
         public long? MaxAllowedTotalSizeOverAllUploadedFiles { get; set; }
+
+        [JsonProperty("targetType", NullValueHandling = NullValueHandling.Ignore)]
+        public string Type { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace Dracoon.Sdk.Example {
 
         [STAThread]
         static void Main() {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             DracoonAuth dracoonAuth = new DracoonAuth(ACCESS_TOKEN);
             IWebProxy wp = WebRequest.GetSystemWebProxy();

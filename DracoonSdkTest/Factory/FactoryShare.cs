@@ -105,7 +105,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     CurrentUploadedFilesCount = 5,
                     ShowUploadedFiles = false,
                     MaxAllowedUploads = 7,
-                    MaxAllowedTotalSizeOverAllUploadedFiles = 51348
+                    MaxAllowedTotalSizeOverAllUploadedFiles = 51348,
+                    Type = NodeType.Folder
                 };
             }
         }
@@ -130,7 +131,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     CurrentUploadedFilesCount = 5,
                     ShowUploadedFiles = false,
                     MaxAllowedUploads = 7,
-                    MaxAllowedTotalSizeOverAllUploadedFiles = 51348
+                    MaxAllowedTotalSizeOverAllUploadedFiles = 51348,
+                    Type = "folder"
                 };
             }
         }
