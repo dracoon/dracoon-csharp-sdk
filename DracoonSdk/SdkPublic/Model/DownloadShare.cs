@@ -30,9 +30,6 @@ namespace Dracoon.Sdk.Model {
         /// <include file = "ModelDoc.xml" path='docs/members[@name="downloadShare"]/Name/*'/>
         public string Name { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="downloadShare"]/Classification/*'/>
-        public Classification? Classification { get; internal set; }
-
         /// <include file = "ModelDoc.xml" path='docs/members[@name="downloadShare"]/Notes/*'/>
         public string Notes { get; internal set; }
 

@@ -181,24 +181,6 @@
       </summary>
     </SpaceLimit>
 
-    <CountRooms>
-      <summary>
-        The number of rooms used by the customer.
-      </summary>
-    </CountRooms>
-
-    <CountFolders>
-      <summary>
-        The number of folders used by the customer.
-      </summary>
-    </CountFolders>
-
-    <CountFiles>
-      <summary>
-        The number of files used by the customer.
-      </summary>
-    </CountFiles>
-
     <HasEncryptionEnabled>
       <summary>
         If <c>true</c> the customer has encryption enabled, otherwise <c>false</c>.
@@ -357,12 +339,6 @@
         The name of this download share.
       </summary>
     </Name>
-
-    <Classification>
-      <summary>
-        The classification of this download share. See also <seealso cref="Dracoon.Sdk.Model.Classification"/>
-      </summary>
-    </Classification>
 
     <Notes>
       <summary>

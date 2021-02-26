@@ -58,8 +58,7 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             }
             Assert.Equal(x.CreatedBy, y.CreatedBy, new ApiUserInfoComparer());
             return string.Equals(x.AccessKey, y.AccessKey) &&
-                x.Classification == y.Classification &&
-                x.CreatedAt == y.CreatedAt &&
+                   x.CreatedAt == y.CreatedAt &&
                 x.CurrentDownloadsCount == y.CurrentDownloadsCount &&
                 x.ExpireAt == y.ExpireAt &&
                 x.IsEncrypted == y.IsEncrypted &&
@@ -90,8 +89,7 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             }
             Assert.Equal(x.CreatedBy, y.CreatedBy, new UserInfoComparer());
             return string.Equals(x.AccessKey, y.AccessKey) &&
-                x.Classification == y.Classification &&
-                x.CreatedAt == y.CreatedAt &&
+                   x.CreatedAt == y.CreatedAt &&
                 x.CurrentDownloadsCount == y.CurrentDownloadsCount &&
                 x.ExpireAt == y.ExpireAt &&
                 x.IsEncrypted == y.IsEncrypted &&
