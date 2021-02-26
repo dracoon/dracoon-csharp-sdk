@@ -18,9 +18,6 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 x.AccountsLimit == y.AccountsLimit &&
                 x.SpaceUsed == y.SpaceUsed &&
                 x.SpaceLimit == y.SpaceLimit &&
-                x.CountRooms == y.CountRooms &&
-                x.CountFolders == y.CountFolders &&
-                x.CountFiles == y.CountFiles &&
                 x.HasEncryptionEnabled == y.HasEncryptionEnabled;
         }
 
@@ -43,9 +40,6 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 x.AccountsLimit == y.AccountsLimit &&
                 x.SpaceUsed == y.SpaceUsed &&
                 x.SpaceLimit == y.SpaceLimit &&
-                x.CountRooms == y.CountRooms &&
-                x.CountFolders == y.CountFolders &&
-                x.CountFiles == y.CountFiles &&
                 x.CustomerEncryptionEnabled == y.CustomerEncryptionEnabled &&
                 x.IsProviderCustomer == y.IsProviderCustomer;
         }

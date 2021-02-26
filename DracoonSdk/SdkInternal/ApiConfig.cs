@@ -57,7 +57,6 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiGetUserKeyPairs = ApiPrefix + "/user/account/keypairs";
         internal const string ApiGetAuthenticatedPing = ApiPrefix + "/user/ping";
         internal const string ApiGetAvatar = ApiPrefix + "/user/account/avatar";
-        internal const string ApiDeleteAvatar = ApiPrefix + "/user/account/avatar";
         internal const string ApiGetUserProfileAttributes = ApiPrefix + "/user/profileAttributes";
 
         #endregion
@@ -79,6 +78,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal const string ApiDeleteUserKeyPair = ApiPrefix + "/user/account/keypair";
         internal const string ApiDeleteUserProfileAttributes = ApiPrefix + "/user/profileAttributes/{key}";
+        internal const string ApiDeleteAvatar = ApiPrefix + "/user/account/avatar";
 
         #endregion
 
@@ -97,7 +97,6 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiGetChildNodes = ApiPrefix + "/nodes";
         internal const string ApiGetNode = ApiPrefix + "/nodes/{nodeId}";
         internal const string ApiGetFileKey = ApiPrefix + "/nodes/files/{fileId}/user_file_key";
-        internal const string ApiGetFileDownload = ApiPrefix + "/downloads";
         internal const string ApiGetSearchNodes = ApiPrefix + "/nodes/search";
         internal const string ApiGetMissingFileKeys = ApiPrefix + "/nodes/missingFileKeys";
         internal const string ApiGetRecycleBin = ApiPrefix + "/nodes/{roomId}/deleted_nodes";

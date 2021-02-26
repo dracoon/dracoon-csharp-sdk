@@ -12,9 +12,6 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     AccountsLimit = 25,
                     SpaceUsed = 364345,
                     SpaceLimit = 3654637324,
-                    CountRooms = 4,
-                    CountFolders = 56,
-                    CountFiles = 567,
                     HasEncryptionEnabled = true
                 };
             }
@@ -29,9 +26,6 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     AccountsLimit = 25,
                     SpaceUsed = 364345,
                     SpaceLimit = 3654637324,
-                    CountRooms = 4,
-                    CountFolders = 56,
-                    CountFiles = 567,
                     IsProviderCustomer = true
                 };
             }

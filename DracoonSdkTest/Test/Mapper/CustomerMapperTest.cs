@@ -21,9 +21,6 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 AccountsLimit = expected.AccountsLimit,
                 SpaceUsed = expected.SpaceUsed,
                 SpaceLimit = expected.SpaceLimit,
-                CountRooms = expected.CountRooms,
-                CountFolders = expected.CountFolders,
-                CountFiles = expected.CountFiles,
                 CustomerEncryptionEnabled = expected.HasEncryptionEnabled
             };
 
