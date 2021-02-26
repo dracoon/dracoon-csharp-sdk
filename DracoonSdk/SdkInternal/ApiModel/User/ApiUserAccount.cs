@@ -30,9 +30,6 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         [JsonProperty("hasManageableRooms", NullValueHandling = NullValueHandling.Ignore)]
         public bool HasManageableRooms { get; set; }
 
-        [JsonProperty("lockStatus", NullValueHandling = NullValueHandling.Ignore)]
-        public int LockStatus { get; set; }
-
         [JsonProperty("expireAt", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? ExpireAt { get; set; }
 
