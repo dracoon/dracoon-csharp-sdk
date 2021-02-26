@@ -30,6 +30,19 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 return null;
             }
 
+            int? countChildrens = 0;
+            if (apiNode.CountFiles.HasValue) {
+                countChildrens += apiNode.CountFiles.Value;
+            }
+
+            if (apiNode.CountFolders.HasValue) {
+                countChildrens += apiNode.CountFolders.Value;
+            }
+
+            if (apiNode.CountRooms.HasValue) {
+                countChildrens += apiNode.CountRooms.Value;
+            }
+
             Node node = new Node {
                 Id = apiNode.Id,
                 Type = EnumConverter.ConvertValueToNodeTypeEnum(apiNode.Type),
@@ -53,7 +66,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 Permissions = FromApiNodePermissions(apiNode.Permissions),
                 IsFavorite = apiNode.IsFavorite,
                 IsEncrypted = apiNode.IsEncrypted,
-                CountChildren = apiNode.CountChildren,
+                CountChildren = countChildrens,
                 CountRooms = apiNode.CountRooms,
                 CountFolders = apiNode.CountFolders,
                 CountFiles = apiNode.CountFiles,

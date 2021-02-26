@@ -69,9 +69,6 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         [JsonProperty("encryptionInfo", NullValueHandling = NullValueHandling.Ignore)]
         public ApiEncryptionInfo EncryptionInfo { get; set; }
 
-        [JsonProperty("cntChildren", NullValueHandling = NullValueHandling.Ignore)]
-        public int? CountChildren { get; set; }
-
         [JsonProperty("cntRooms", NullValueHandling = NullValueHandling.Ignore)]
         public int? CountRooms { get; set; }
 

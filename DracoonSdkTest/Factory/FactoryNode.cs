@@ -115,7 +115,6 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     Permissions = ApiNodePermissions,
                     IsFavorite = false,
                     IsEncrypted = true,
-                    CountChildren = 5,
                     CountFiles = 1,
                     CountRooms = 2,
                     CountFolders = 2,
