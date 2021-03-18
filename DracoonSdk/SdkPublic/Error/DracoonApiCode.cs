@@ -370,6 +370,7 @@ namespace Dracoon.Sdk.Error {
             return string.Equals(Text, other.Text) && Code == other.Code;
         }
 
+        /// <inheritdoc />
         public override bool Equals(object obj) {
             if (obj is null) {
                 return false;
@@ -384,6 +385,11 @@ namespace Dracoon.Sdk.Error {
             }
 
             return Equals((DracoonApiCode) obj);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode() {
+            return Text.GetHashCode() ^ Code.GetHashCode();
         }
     }
 }
