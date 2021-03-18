@@ -158,7 +158,9 @@ namespace Dracoon.Sdk.SdkInternal {
                     if (found != null) {
                         return found;
                     }
-                } catch { } // Next Key Pair
+                } catch {
+                    // No key pair found -> next key pair
+                }
             }
 
             throw new DracoonApiException(DracoonApiCode.SERVER_USER_KEY_PAIR_NOT_FOUND);
