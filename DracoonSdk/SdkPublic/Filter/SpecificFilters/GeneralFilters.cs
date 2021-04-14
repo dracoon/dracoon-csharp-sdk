@@ -138,6 +138,27 @@ namespace Dracoon.Sdk.Filter {
 
     #endregion
 
+    #region UpdatedById-Filter
+
+    /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/UpdatedByIdFilter/*'/>
+    public class UpdatedByIdFilter : DracoonFilterType<UpdatedByIdFilter> {
+        internal UpdatedByIdFilter() {
+            FilterTypeString += "updatedById";
+        }
+    }
+
+    /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/UpdatedByIdFilterExtension/*'/>
+    public static class UpdatedByIdFilterExtension {
+        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="general"]/EqualTo/*'/>
+        public static FilterParam<UpdatedByIdFilter, DracoonFilterType<UpdatedByIdFilter>> EqualTo(this UpdatedByIdFilter ef, long value) {
+            value.MustPositive(nameof(value));
+            ef.AddOperatorAndValue(value, "eq", nameof(value));
+            return new FilterParam<UpdatedByIdFilter, DracoonFilterType<UpdatedByIdFilter>>(ef, ef);
+        }
+    }
+
+    #endregion
+
     #region ParentPath-Filter
 
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/ParentPathFilter/*'/>
@@ -231,6 +252,27 @@ namespace Dracoon.Sdk.Filter {
             value.MustNotNullOrEmptyOrWhitespace(nameof(value));
             ef.AddOperatorAndValue(value, "cn", nameof(value));
             return new FilterParam<CreatedByFilter, DracoonFilterType<CreatedByFilter>>(ef, ef);
+        }
+    }
+
+    #endregion
+
+    #region CreatedById-Filter
+
+    /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/CreatedByIdFilter/*'/>
+    public class CreatedByIdFilter : DracoonFilterType<CreatedByIdFilter> {
+        internal CreatedByIdFilter() {
+            FilterTypeString += "createdById";
+        }
+    }
+
+    /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/CreatedByIdFilterExtension/*'/>
+    public static class CreatedByIdFilterExtension {
+        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="general"]/Contains/*'/>
+        public static FilterParam<CreatedByIdFilter, DracoonFilterType<CreatedByIdFilter>> EqualTo(this CreatedByIdFilter ef, long value) {
+            value.MustPositive(nameof(value));
+            ef.AddOperatorAndValue(value, "eq", nameof(value));
+            return new FilterParam<CreatedByIdFilter, DracoonFilterType<CreatedByIdFilter>>(ef, ef);
         }
     }
 

@@ -29,10 +29,24 @@
             }
         }
 
+        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/UpdatedById/*'/>
+        public static UpdatedByIdFilter UpdatedById {
+            get {
+                return new UpdatedByIdFilter();
+            }
+        }
+
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/CreatedBy/*'/>
         public static CreatedByFilter CreatedBy {
             get {
                 return new CreatedByFilter();
+            }
+        }
+
+        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/CreatedById/*'/>
+        public static CreatedByIdFilter CreatedById {
+            get {
+                return new CreatedByIdFilter();
             }
         }
 
@@ -74,6 +88,12 @@
             FiltersList.Add(updatedByFilter);
         }
 
+        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/AddUpdatedByIdFilter/*'/>
+        public void AddUpdatedByIdFilter(DracoonFilterType<UpdatedByIdFilter> updatedByIdFilter) {
+            CheckFilter(updatedByIdFilter, nameof(updatedByIdFilter));
+            FiltersList.Add(updatedByIdFilter);
+        }
+
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/AddFileTypeFilter/*'/>
         public void AddFileTypeFilter(DracoonFilterType<FileTypeFilter> fileTypeFilter) {
             CheckFilter(fileTypeFilter, nameof(fileTypeFilter));
@@ -90,6 +110,12 @@
         public void AddCreatedByFilter(DracoonFilterType<CreatedByFilter> createdByFilter) {
             CheckFilter(createdByFilter, nameof(createdByFilter));
             FiltersList.Add(createdByFilter);
+        }
+
+        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/AddCreatedByIdFilter/*'/>
+        public void AddCreatedByIdFilter(DracoonFilterType<CreatedByIdFilter> createdByIdFilter) {
+            CheckFilter(createdByIdFilter, nameof(createdByIdFilter));
+            FiltersList.Add(createdByIdFilter);
         }
     }
 }

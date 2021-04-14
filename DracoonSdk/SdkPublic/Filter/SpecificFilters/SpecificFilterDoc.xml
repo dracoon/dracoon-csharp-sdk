@@ -120,6 +120,18 @@
       </summary>
     </UpdatedByFilterExtension>
 
+    <UpdatedByIdFilter>
+      <summary>
+        Filter for a specific user id which updated a e.g. node.
+      </summary>
+    </UpdatedByIdFilter>
+
+    <UpdatedByIdFilterExtension>
+      <summary>
+        Extends the functions for <see cref="Dracoon.Sdk.Filter.UpdatedByIdFilter"/>.
+      </summary>
+    </UpdatedByIdFilterExtension>
+
     <ParentPathFilter>
       <summary>
         Filter to get only results where the parent path field matches the requested.
@@ -167,6 +179,18 @@
         Extends the functions for <see cref="Dracoon.Sdk.Filter.CreatedByFilter"/>.
       </summary>
     </CreatedByFilterExtension>
+
+    <CreatedByIdFilter>
+      <summary>
+        Filter to get only results where the creator id equals the specified value.
+      </summary>
+    </CreatedByIdFilter>
+
+    <CreatedByIdFilterExtension>
+      <summary>
+        Extends the functions for <see cref="Dracoon.Sdk.Filter.CreatedByIdFilter"/>.
+      </summary>
+    </CreatedByIdFilterExtension>
 
     <TargetIdFilter>
       <summary>
@@ -478,12 +502,21 @@
 
     <UpdatedBy>
       <summary>
-        Gets a new filter for the UpdatedBy field of a node  of a node (<see cref="Dracoon.Sdk.Model.Node"/>).
+        Gets a new filter for the UpdatedBy field of a node (<see cref="Dracoon.Sdk.Model.Node"/>).
         <para>
           See also <seealso cref="Dracoon.Sdk.Filter.UpdatedByFilter"/>
         </para>
       </summary>
     </UpdatedBy>
+
+    <UpdatedById>
+      <summary>
+        Gets a new filter for the UpdatedById field of a node (<see cref="Dracoon.Sdk.Model.Node"/>).
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.UpdatedByIdFilter"/>
+        </para>
+      </summary>
+    </UpdatedById>
 
     <CreatedBy>
       <summary>
@@ -493,6 +526,15 @@
         </para>
       </summary>
     </CreatedBy>
+
+    <CreatedById>
+      <summary>
+        Gets a new filter for created by id.
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.CreatedByIdFilter"/>
+        </para>
+      </summary>
+    </CreatedById>
 
     <FileType>
       <summary>
@@ -560,6 +602,18 @@
       </exception>
     </AddUpdatedByFilter>
 
+    <AddUpdatedByIdFilter>
+      <summary>
+        Adds a updated by user id filter to the search nodes filter.
+      </summary>
+      <param name="updatedByIdFilter">
+        The defined updated by id filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddUpdatedByIdFilter>
+
     <AddFileTypeFilter>
       <summary>
         Adds a file type filter to the search nodes filter.
@@ -595,6 +649,18 @@
         <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
       </exception>
     </AddCreatedByFilter>
+
+    <AddCreatedByIdFilter>
+      <summary>
+        Adds a created by id filter to the search nodes filter.
+      </summary>
+      <param name="createdByIdFilter">
+        The defined created by id filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddCreatedByIdFilter>
 
   </members>
 
