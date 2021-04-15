@@ -19,15 +19,6 @@
         /// <include file = "ModelDoc.xml" path='docs/members[@name="customerAccount"]/SpaceLimit/*'/>
         public long SpaceLimit { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="customerAccount"]/CountRooms/*'/>
-        public long? CountRooms { get; internal set; }
-
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="customerAccount"]/CountFolders/*'/>
-        public long? CountFolders { get; internal set; }
-
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="customerAccount"]/CountFiles/*'/>
-        public long? CountFiles { get; internal set; }
-
         /// <include file = "ModelDoc.xml" path='docs/members[@name="customerAccount"]/HasEncryptionEnabled/*'/>
         public bool HasEncryptionEnabled { get; internal set; }
     }

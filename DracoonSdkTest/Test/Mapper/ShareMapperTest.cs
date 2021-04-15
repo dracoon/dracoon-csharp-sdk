@@ -68,7 +68,6 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
         public void FromApiDownloadShare() {
             // ARRANGE
             DownloadShare expected = FactoryShare.DownloadShare;
-            expected.Classification = Classification.Confidential;
 
             ApiDownloadShare param = new ApiDownloadShare {
                 ShareId = expected.ShareId,
@@ -76,7 +75,6 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 NodePath = expected.NodePath,
                 Name = expected.Name,
                 Notes = expected.Notes,
-                Classification = (int) expected.Classification,
                 ExpireAt = expected.ExpireAt,
                 AccessKey = expected.AccessKey,
                 ShowCreatorName = expected.ShowCreatorName,
@@ -95,7 +93,6 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 Type = "folder"
             };
 
-            Mock.Arrange(() => EnumConverter.ConvertClassificationEnumToValue(expected.Classification)).Returns((int) expected.Classification);
             Mock.Arrange(() => UserMapper.FromApiUserInfo(param.CreatedBy)).Returns(expected.CreatedBy);
 
             // ACT
@@ -125,14 +122,12 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             };
 
             foreach (DownloadShare current in expected.Items) {
-                current.Classification = expectedClassification;
                 ApiDownloadShare currentApi = new ApiDownloadShare {
                     ShareId = current.ShareId,
                     NodeId = current.NodeId,
                     NodePath = current.NodePath,
                     Name = current.Name,
                     Notes = current.Notes,
-                    Classification = (int) current.Classification,
                     ExpireAt = current.ExpireAt,
                     AccessKey = current.AccessKey,
                     ShowCreatorName = current.ShowCreatorName,

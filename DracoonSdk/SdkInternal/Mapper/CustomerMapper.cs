@@ -15,9 +15,6 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 AccountsLimit = apiCustomerAccount.AccountsLimit,
                 SpaceUsed = apiCustomerAccount.SpaceUsed,
                 SpaceLimit = apiCustomerAccount.SpaceLimit,
-                CountRooms = apiCustomerAccount.CountRooms,
-                CountFolders = apiCustomerAccount.CountFolders,
-                CountFiles = apiCustomerAccount.CountFiles,
                 HasEncryptionEnabled = apiCustomerAccount.CustomerEncryptionEnabled
             };
             return customerAccount;

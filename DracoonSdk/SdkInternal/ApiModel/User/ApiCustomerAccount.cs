@@ -20,15 +20,6 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         [JsonProperty("spaceLimit", NullValueHandling = NullValueHandling.Ignore)]
         public long SpaceLimit { get; set; }
 
-        [JsonProperty("cntRooms", NullValueHandling = NullValueHandling.Ignore)]
-        public long? CountRooms { get; set; }
-
-        [JsonProperty("cntFolders", NullValueHandling = NullValueHandling.Ignore)]
-        public long? CountFolders { get; set; }
-
-        [JsonProperty("cntFiles", NullValueHandling = NullValueHandling.Ignore)]
-        public long? CountFiles { get; set; }
-
         [JsonProperty("customerEncryptionEnabled", NullValueHandling = NullValueHandling.Ignore)]
         public bool CustomerEncryptionEnabled { get; set; }
 

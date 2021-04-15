@@ -55,7 +55,6 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 NodePath = apiDownloadShare.NodePath,
                 Name = apiDownloadShare.Name,
                 Notes = apiDownloadShare.Notes,
-                Classification = EnumConverter.ConvertValueToClassificationEnum(apiDownloadShare.Classification),
                 ExpireAt = apiDownloadShare.ExpireAt,
                 AccessKey = apiDownloadShare.AccessKey,
                 ShowCreatorName = apiDownloadShare.ShowCreatorName,

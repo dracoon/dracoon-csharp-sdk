@@ -30,9 +30,6 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
 
-        [JsonProperty("classification", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Classification { get; set; }
-
         [JsonProperty("notes", NullValueHandling = NullValueHandling.Ignore)]
         public string Notes { get; set; }
 
