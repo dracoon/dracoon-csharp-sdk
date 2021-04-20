@@ -16,7 +16,9 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                         EnableExpiration = true
                     },
                     Name = "NewFile1",
-                    Notes = "Some new "
+                    Notes = "Some new ",
+                    CreationTime = new DateTime(2020, 1, 1, 5, 10, 15),
+                    ModificationTime = new DateTime(2020, 1, 1, 10, 10, 15)
                 };
             }
         }
@@ -27,7 +29,9 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     Classification = Classification.Internal,
                     Expiration = new DateTime(2000, 1, 1, 0, 0, 0),
                     Name = "NewFile1",
-                    Notes = "Some new"
+                    Notes = "Some new",
+                    CreationTime = new DateTime(2020, 1, 1, 5, 10, 15),
+                    ModificationTime = new DateTime(2020, 1, 1, 10, 10, 15)
                 };
             }
         }
@@ -87,7 +91,9 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     Name = "FileName1",
                     Notes = "Some notes!",
                     ParentId = 436897,
-                    UseS3 = false
+                    UseS3 = false,
+                    CreationTime = new DateTime(2020,1,1,5,10,15),
+                    ModificationTime = new DateTime(2020,1,1,10,10,15)
                 };
             }
         }

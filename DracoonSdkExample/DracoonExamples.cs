@@ -262,8 +262,13 @@ namespace Dracoon.Sdk.Example {
         }
 
         private static void UploadFile() {
+            string localFilePath = "C:\\temp\\test.txt";
+            FileInfo fileInfo = new FileInfo(localFilePath);
             FileUploadRequest request = new FileUploadRequest(1, "test.txt");
-            FileStream stream = File.Open("C:\\temp\\test.txt", FileMode.Open);
+            request.CreationTime = fileInfo.CreationTimeUtc;
+            request.ModificationTime = fileInfo.LastWriteTimeUtc;
+
+            FileStream stream = File.Open(localFilePath, FileMode.Open);
             Node uploadedNode = dc.Nodes.UploadFile(Guid.NewGuid().ToString(), request, stream, callback: new ULCallback());
         }
 

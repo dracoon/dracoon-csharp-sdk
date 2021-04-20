@@ -615,6 +615,16 @@
         The expiration date of the new file.
       </summary>
     </ExpirationDate>
+    <CreationTime>
+      <summary>
+        The real creation time of the file.
+      </summary>
+    </CreationTime>
+    <ModificationTime>
+      <summary>
+        The last modification time of the file.
+      </summary>
+    </ModificationTime>
     <FileUploadRequestConstructor>
       <summary>
         Constructs a new file upload request.
@@ -636,6 +646,12 @@
       </param>
       <param name="expirationDate">
         <include file="UserRequestsDoc.xml" path='docs/members[@name="fileUploadRequest"]/ExpirationDate/*'/>
+      </param>
+      <param name="creationTime">
+        <include file="UserRequestsDoc.xml" path='docs/members[@name="fileUploadRequest"]/CreationTime/*'/>
+      </param>
+      <param name="modificationTime">
+        <include file="UserRequestsDoc.xml" path='docs/members[@name="fileUploadRequest"]/ModificationTime/*'/>
       </param>
     </FileUploadRequestConstructor>
   </members>
@@ -801,6 +817,16 @@
         The new expiration date of the file.
       </summary>
     </Expiration>
+    <CreationTime>
+      <summary>
+        The real creation time of the file.
+      </summary>
+    </CreationTime>
+    <ModificationTime>
+      <summary>
+        The last modification time of the file.
+      </summary>
+    </ModificationTime>
     <UpdateFileRequestConstructor>
       <summary>
         Constructs a new update file request.
@@ -819,6 +845,12 @@
       </param>
       <param name="expiration">
         <include file="UserRequestsDoc.xml" path='docs/members[@name="updateFileRequest"]/Expiration/*'/>
+      </param>
+      <param name="creationTime">
+        <include file="UserRequestsDoc.xml" path='docs/members[@name="updateFileRequest"]/CreationTime/*'/>
+      </param>
+      <param name="modificationTime">
+        <include file="UserRequestsDoc.xml" path='docs/members[@name="updateFileRequest"]/ModificationTime/*'/>
       </param>
     </UpdateFileRequestConstructor>
   </members>
