@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
     internal class ApiCreateFileUpload {
@@ -20,6 +21,14 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
         }
         [JsonProperty("directS3Upload", NullValueHandling = NullValueHandling.Ignore)]
         public bool? UseS3 {
+            get; set;
+        }
+        [JsonProperty("timestampCreation", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? CreationTime {
+            get; set;
+        }
+        [JsonProperty("timestampModification", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? ModificationTime {
             get; set;
         }
     }

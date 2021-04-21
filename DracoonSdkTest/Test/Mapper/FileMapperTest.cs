@@ -26,7 +26,9 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 Classification = (Classification) Enum.ToObject(typeof(Classification), expected.Classification),
                 Expiration = expected.Expiration.ExpireAt,
                 Name = expected.Name,
-                Notes = expected.Notes
+                Notes = expected.Notes,
+                CreationTime = expected.CreationTime,
+                ModificationTime = expected.ModificationTime
             };
 
             Mock.Arrange(() => EnumConverter.ConvertClassificationEnumToValue(param.Classification)).Returns(expected.Classification);
@@ -103,7 +105,9 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 (Classification) Enum.ToObject(typeof(Classification), expected.Classification)) {
                 ExpirationDate = expected.Expiration.ExpireAt,
                 Notes = expected.Notes,
-                ResolutionStrategy = ResolutionStrategy.Overwrite
+                ResolutionStrategy = ResolutionStrategy.Overwrite,
+                CreationTime = expected.CreationTime,
+                ModificationTime = expected.ModificationTime
             };
 
             Mock.Arrange(() => EnumConverter.ConvertClassificationEnumToValue(param.Classification)).Returns(expected.Classification);

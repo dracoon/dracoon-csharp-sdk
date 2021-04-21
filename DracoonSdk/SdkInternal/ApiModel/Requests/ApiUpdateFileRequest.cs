@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
     internal class ApiUpdateFileRequest {
@@ -13,5 +14,13 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
 
         [JsonProperty("expiration", NullValueHandling = NullValueHandling.Ignore)]
         public ApiExpiration Expiration { get; set; }
+        [JsonProperty("timestampCreation", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? CreationTime {
+            get; set;
+        }
+        [JsonProperty("timestampModification", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? ModificationTime {
+            get; set;
+        }
     }
 }

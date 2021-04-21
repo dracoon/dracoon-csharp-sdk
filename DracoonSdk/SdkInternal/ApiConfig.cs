@@ -101,7 +101,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiGetMissingFileKeys = ApiPrefix + "/nodes/missingFileKeys";
         internal const string ApiGetRecycleBin = ApiPrefix + "/nodes/{roomId}/deleted_nodes";
         internal const string ApiGetPreviousVersions = ApiPrefix + "/nodes/{nodeId}/deleted_nodes/versions";
-        internal const string ApiGetPreviousVersion = ApiPrefix + "/nodes/deleted_nodes/{previoudNodeId}";
+        internal const string ApiGetPreviousVersion = ApiPrefix + "/nodes/deleted_nodes/{previousNodeId}";
         internal const string ApiGetS3Status = ApiPrefix + "/nodes/files/uploads/{uploadId}";
 
         #endregion
