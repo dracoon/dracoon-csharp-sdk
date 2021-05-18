@@ -703,7 +703,7 @@
 
     <UpdatedAt>
       <summary>
-        The update date of the node.
+        The update date of the node. Note: This date is also updated on meta data changes like node name or others.
       </summary>
     </UpdatedAt>
 
@@ -712,6 +712,18 @@
         The user which updated the node. See also <seealso cref="Dracoon.Sdk.Model.UserInfo"/>
       </summary>
     </UpdatedBy>
+
+    <CreationTimestamp>
+      <summary>
+        The creation date of the physical file.
+      </summary>
+    </CreationTimestamp>
+
+    <ModificationTimestamp>
+      <summary>
+        The modification date of hte physical file. Note: This date is NOT changed on meta data changes.
+      </summary>
+    </ModificationTimestamp>
 
     <HasInheritPermissions>
       <summary>

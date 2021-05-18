@@ -2,7 +2,6 @@
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Util;
-using System;
 using System.Collections.Generic;
 
 namespace Dracoon.Sdk.SdkInternal.Mapper {
@@ -62,6 +61,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 CreatedBy = UserMapper.FromApiUserInfo(apiNode.CreatedBy),
                 UpdatedAt = apiNode.UpdatedAt,
                 UpdatedBy = UserMapper.FromApiUserInfo(apiNode.UpdatedBy),
+                CreationTimestamp = apiNode.CreationTimestamp,
+                ModificationTimestamp = apiNode.ModificationTimestamp,
                 HasInheritPermissions = apiNode.InheritPermissions,
                 Permissions = FromApiNodePermissions(apiNode.Permissions),
                 IsFavorite = apiNode.IsFavorite,
