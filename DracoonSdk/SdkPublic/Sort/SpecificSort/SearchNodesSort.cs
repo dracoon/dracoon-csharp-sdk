@@ -18,7 +18,7 @@
         /// <include file = "SpecificSort.xml" path='docs/members[@name="searchNodesSort"]/CreatedAt/*'/>
         public static SortField<SearchNodesSort> CreatedAt {
             get {
-                return new SortField<SearchNodesSort>(new SearchNodesSort(), "createdAd");
+                return new SortField<SearchNodesSort>(new SearchNodesSort(), "createdAt");
             }
         }
 
