@@ -64,6 +64,20 @@
             }
         }
 
+        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/ModificationTimestamp/*'/>
+        public static TimestampFilter ModificationTimestamp {
+            get {
+                return new TimestampFilter("timestampModification");
+            }
+        }
+
+        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/CreationTimestamp/*'/>
+        public static TimestampFilter CreationTimestamp {
+            get {
+                return new TimestampFilter("timestampCreation");
+            }
+        }
+
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/AddNodeTypeFilter/*'/>
         public void AddNodeTypeFilter(DracoonFilterType<NodeTypeFilter> typeFilter) {
             CheckFilter(typeFilter, nameof(typeFilter));
@@ -116,6 +130,12 @@
         public void AddCreatedByIdFilter(DracoonFilterType<CreatedByIdFilter> createdByIdFilter) {
             CheckFilter(createdByIdFilter, nameof(createdByIdFilter));
             FiltersList.Add(createdByIdFilter);
+        }
+
+        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/AddTimestampFilter/*'/>
+        public void AddTimestampFilter(DracoonFilterType<TimestampFilter> timestampFilter) {
+            CheckFilter(timestampFilter, nameof(timestampFilter));
+            FiltersList.Add(timestampFilter);
         }
     }
 }

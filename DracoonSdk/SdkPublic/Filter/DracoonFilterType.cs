@@ -3,6 +3,7 @@
 namespace Dracoon.Sdk.Filter {
     /// <include file="FilterDoc.xml" path='docs/members[@name="dracoonFilterType"]/DracoonFilterType/*'/>
     public class DracoonFilterType<T> {
+        internal string FilterName = "";
         internal string FilterTypeString = "";
         internal bool OperatorSet;
 
@@ -14,7 +15,11 @@ namespace Dracoon.Sdk.Filter {
         }
 
         private void AddValue(dynamic value) {
-            FilterTypeString += ":" + value.ToString().ToLower();
+            if (value is DateTime dt) {
+                FilterTypeString += ":" + dt.ToString("o");
+            } else {
+                FilterTypeString += ":" + value.ToString().ToLower();
+            }
         }
 
         /// <include file="FilterDoc.xml" path='docs/members[@name="dracoonFilterType"]/ToString/*'/>
@@ -29,6 +34,11 @@ namespace Dracoon.Sdk.Filter {
 
             AddOperator(filterOperator);
             AddValue(value);
+        }
+
+        internal void AddAnd() {
+            FilterTypeString += "|" + FilterName;
+            OperatorSet = false;
         }
     }
 }
