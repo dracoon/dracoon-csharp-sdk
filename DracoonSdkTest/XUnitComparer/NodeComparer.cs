@@ -33,6 +33,8 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 x.ExpireAt == y.ExpireAt &&
                 x.CreatedAt == y.CreatedAt &&
                 x.UpdatedAt == y.UpdatedAt &&
+                x.CreationTimestamp == y.CreationTimestamp &&
+                x.ModificationTimestamp == y.ModificationTimestamp &&
                 x.HasInheritPermissions == y.HasInheritPermissions &&
                 x.IsFavorite == y.IsFavorite &&
                 x.IsEncrypted == y.IsEncrypted &&

@@ -2,23 +2,23 @@
     /// <include file = "SpecificSort.xml" path='docs/members[@name="sharesSort"]/SharesSort/*'/>
     public class SharesSort : DracoonSort {
         /// <include file = "SpecificSort.xml" path='docs/members[@name="sharesSort"]/CreatedAt/*'/>
-        public static CreatedAtSort<SharesSort> CreatedAt {
+        public static SortField<SharesSort> CreatedAt {
             get {
-                return new CreatedAtSort<SharesSort>(new SharesSort());
+                return new SortField<SharesSort>(new SharesSort(), "createdAt");
             }
         }
 
         /// <include file = "SpecificSort.xml" path='docs/members[@name="sharesSort"]/ExpireAt/*'/>
-        public static ExpireAtSort<SharesSort> ExpireAt {
+        public static SortField<SharesSort> ExpireAt {
             get {
-                return new ExpireAtSort<SharesSort>(new SharesSort());
+                return new SortField<SharesSort>(new SharesSort(), "expireAt");
             }
         }
 
         /// <include file = "SpecificSort.xml" path='docs/members[@name="sharesSort"]/Name/*'/>
-        public static NameSort<SharesSort> Name {
+        public static SortField<SharesSort> Name {
             get {
-                return new NameSort<SharesSort>(new SharesSort());
+                return new SortField<SharesSort>(new SharesSort(), "name");
             }
         }
     }

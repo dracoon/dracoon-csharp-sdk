@@ -61,6 +61,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                         AvatarUuid = current.UpdatedBy.AvatarUUID,
                         UserName = current.UpdatedBy.UserName
                     },
+                    CreationTimestamp = current.CreationTimestamp,
+                    ModificationTimestamp = current.ModificationTimestamp,
                     InheritPermissions = current.HasInheritPermissions,
                     Permissions = new ApiNodePermissions {
                         Manage = current.Permissions.Manage,
@@ -152,6 +154,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     AvatarUuid = expected.UpdatedBy.AvatarUUID,
                     UserName = expected.UpdatedBy.UserName
                 },
+                CreationTimestamp = expected.CreationTimestamp,
+                ModificationTimestamp = expected.ModificationTimestamp,
                 InheritPermissions = expected.HasInheritPermissions,
                 Permissions = new ApiNodePermissions {
                     Manage = expected.Permissions.Manage,

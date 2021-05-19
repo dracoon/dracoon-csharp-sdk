@@ -57,6 +57,12 @@ namespace Dracoon.Sdk.Model {
         /// <include file = "ModelDoc.xml" path='docs/members[@name="node"]/UpdatedBy/*'/>
         public UserInfo UpdatedBy { get; internal set; }
 
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="node"]/CreationTimestamp/*'/>
+        public DateTime? CreationTimestamp { get; internal set; }
+
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="node"]/ModificationTimestamp/*'/>
+        public DateTime? ModificationTimestamp { get; internal set; }
+
         /// <include file = "ModelDoc.xml" path='docs/members[@name="node"]/HasInheritPermissions/*'/>
         public bool? HasInheritPermissions { get; internal set; }
 

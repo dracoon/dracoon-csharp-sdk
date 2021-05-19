@@ -204,6 +204,17 @@
       </summary>
     </TargetIdFilterExtension>
 
+    <TimestampFilter>
+      <summary>
+        Filter to restrict the period of time.
+      </summary>
+    </TimestampFilter>
+
+    <TimestampFilterExtension>
+      <summary>
+        Extends the functions for <see cref="Dracoon.Sdk.Filter.TimestampFilter"/>.
+      </summary>
+    </TimestampFilterExtension>
   </members>
 
   <members name="getDownloadSharesFilter">
@@ -554,6 +565,24 @@
       </summary>
     </Classification>
 
+    <ModificationTimestamp>
+      <summary>
+        Gets a new timestamp filter for the time of modification of the file.
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.TimestampFilter"/>
+        </para>
+      </summary>
+    </ModificationTimestamp>
+
+    <CreationTimestamp>
+      <summary>
+        Gets a new timestamp filter for the time of creation of the file.
+        <para>
+          See also <seealso cref="Dracoon.Sdk.Filter.TimestampFilter"/>
+        </para>
+      </summary>
+    </CreationTimestamp>
+
     <AddNodeTypeFilter>
       <summary>
         Adds a type filter to the search nodes filter.
@@ -661,6 +690,18 @@
         <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
       </exception>
     </AddCreatedByIdFilter>
+
+    <AddTimestampFilter>
+      <summary>
+        Adds a timestamp filter to the search nodes filter.
+      </summary>
+      <param name="timestampFilter">
+        The defined timestamp filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddTimestampFilter>
 
   </members>
 

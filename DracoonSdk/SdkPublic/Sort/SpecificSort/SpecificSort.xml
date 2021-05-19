@@ -2,95 +2,26 @@
 
   <members name="generalSort">
 
-    <UpdatedAtSort>
+    <SortField>
       <summary>
-        Sort for the field 'UpdatedAt'. For example usable on a <see cref="Dracoon.Sdk.Model.Node"/>.
-      </summary>
-      <typeparam name="T">
-        Is the specific definition for a request like <see cref="Dracoon.Sdk.Sort.SearchNodesSort"/>.
-      </typeparam>
-    </UpdatedAtSort>
-
-    <UpdatedAtSortConstructor>
-      <summary>
-        Constructs a new updated at sort.
-      </summary>
-      <param name="p">
-        The parent instance like <see cref="Dracoon.Sdk.Sort.SearchNodesSort"/>.
-      </param>
-    </UpdatedAtSortConstructor>
-
-    <SizeSort>
-      <summary>
-        Sort for the field 'Size'. For example usable on a <see cref="Dracoon.Sdk.Model.Node"/>.
-      </summary>
-      <typeparam name="T">
-        Is the specific definition for a request like <see cref="Dracoon.Sdk.Sort.SearchNodesSort"/>.
-      </typeparam>
-    </SizeSort>
-
-    <SizeSortConstructor>
-      <summary>
-        Constructs a new size sort.
-      </summary>
-      <param name="p">
-        The parent instance like <see cref="Dracoon.Sdk.Sort.SearchNodesSort"/>.
-      </param>
-    </SizeSortConstructor>
-
-    <ExpireAtSort>
-      <summary>
-        Sort for the field 'ExpireAt'. For example usable on a <see cref="Dracoon.Sdk.Model.DownloadShare"/>.
-      </summary>
-      <typeparam name="T">
-        Is the specific definition for a request like <see cref="Dracoon.Sdk.Sort.SharesSort"/>.
-      </typeparam>
-    </ExpireAtSort>
-
-    <ExpireAtSortConstructor>
-      <summary>
-        Constructs a new expire at sort.
-      </summary>
-      <param name="p">
-        The parent instance like <see cref="Dracoon.Sdk.Sort.SharesSort"/>
-      </param>
-    </ExpireAtSortConstructor>
-
-    <CreatedAtSort>
-      <summary>
-        Sort for the field 'CreatedAt'. For example usable on a <see cref="Dracoon.Sdk.Model.DownloadShare"/>.
-      </summary>
-      <typeparam name="T">
-        Is the specific definition for a request like <see cref="Dracoon.Sdk.Sort.SharesSort"/>.
-      </typeparam>
-    </CreatedAtSort>
-
-    <CreatedAtSortConstructor>
-      <summary>
-        Constructs a new created at sort.
-      </summary>
-      <param name="p">
-        The parent instance like <see cref="Dracoon.Sdk.Sort.SharesSort"/>.
-      </param>
-    </CreatedAtSortConstructor>
-
-    <NameSort>
-      <summary>
-        Sort for the field 'Name'. For example usable on a <see cref="Dracoon.Sdk.Model.DownloadShare"/>.
+        Sort for a given field.
       </summary>
       <typeparam name="T">
         Is the specific definition for a request like <see cref="Dracoon.Sdk.Sort.SharesSort"/>
       </typeparam>
-    </NameSort>
+    </SortField>
 
-    <NameSortConstructor>
+    <SortFieldConstructor>
       <summary>
-        Constructs a new name sort.
+        Constructs a new sort for the given field.
       </summary>
       <param name="p">
         The parent instance like <see cref="Dracoon.Sdk.Sort.SharesSort"/>
       </param>
-    </NameSortConstructor>
+      <param name="sortField">
+        The field name which should be used for the sort. E.g. 'createdAt' or 'updatedAt'.
+      </param>
+    </SortFieldConstructor>
 
   </members>
 
@@ -125,6 +56,18 @@
         Gets a new sort for the field 'Name' of a <see cref="Dracoon.Sdk.Model.Node"/>.
       </summary>
     </Name>
+
+    <ModificationTimestamp>
+      <summary>
+        Gets a new sort for the field 'timestampModification'.
+      </summary>
+    </ModificationTimestamp>
+
+    <CreationTimestamp>
+      <summary>
+        Gets a new sort for the field 'timestampCreation'.
+      </summary>
+    </CreationTimestamp>
 
   </members>
 
