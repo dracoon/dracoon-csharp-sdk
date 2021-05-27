@@ -30,6 +30,22 @@ namespace Dracoon.Sdk.SdkInternal {
             return false;
         }
 
+        public static string GetResponseHeaderValue(dynamic response, string headerName) {
+            if (response is IRestResponse restResponse && restResponse.Headers != null) {
+                foreach (Parameter current in restResponse.Headers) {
+                    if (headerName.Equals(current.Name)) {
+                        return current.Value.ToString();
+                    }
+                }
+            }
+
+            if (response is HttpWebResponse webResponse && webResponse.Headers != null) {
+                return webResponse.Headers.Get(headerName);
+            }
+
+            return null;
+        }
+
         private static ApiErrorResponse GetApiErrorResponse(string errorResponseBody) {
             try {
                 ApiErrorResponse apiError = JsonConvert.DeserializeObject<ApiErrorResponse>(errorResponseBody);
@@ -95,6 +111,8 @@ namespace Dracoon.Sdk.SdkInternal {
             switch (httpStatusCode) {
                 case (int) HttpStatusCode.BadRequest:
                     return ParseBadRequest(apiErrorCode, response, requestType);
+                case 429: // too many requests
+                    return ParseTooManyRequests(apiErrorCode, response, requestType);
                 case (int) HttpStatusCode.Unauthorized:
                     return ParseUnauthorized(apiErrorCode, response, requestType);
                 case (int) HttpStatusCode.Forbidden:
@@ -109,7 +127,7 @@ namespace Dracoon.Sdk.SdkInternal {
                     return ParseBadGateway(apiErrorCode, response, requestType);
                 case (int) HttpStatusCode.GatewayTimeout:
                     return ParseGatewayTimeout(apiErrorCode, response, requestType);
-                case 507:
+                case 507: // insufficient storage
                     return ParseInsufficientStorage(apiErrorCode, response, requestType);
                 case 901:
                     return ParseCustomError(apiErrorCode, response, requestType);
@@ -162,15 +180,15 @@ namespace Dracoon.Sdk.SdkInternal {
                     return DracoonApiCode.VALIDATION_NODE_IS_NO_FAVORITE;
                 case -41302:
                 case -41303: {
-                    switch (requestType) {
-                        case RequestType.PostCopyNodes:
-                            return DracoonApiCode.VALIDATION_CANNOT_COPY_NODE_TO_OWN_PLACE_WITHOUT_RENAME;
-                        case RequestType.PostMoveNodes:
-                            return DracoonApiCode.VALIDATION_CANNOT_MOVE_NODE_TO_OWN_PLACE;
-                        default:
-                            return DracoonApiCode.VALIDATION_UNKNOWN_ERROR;
+                        switch (requestType) {
+                            case RequestType.PostCopyNodes:
+                                return DracoonApiCode.VALIDATION_CANNOT_COPY_NODE_TO_OWN_PLACE_WITHOUT_RENAME;
+                            case RequestType.PostMoveNodes:
+                                return DracoonApiCode.VALIDATION_CANNOT_MOVE_NODE_TO_OWN_PLACE;
+                            default:
+                                return DracoonApiCode.VALIDATION_UNKNOWN_ERROR;
+                        }
                     }
-                }
 
                 case -70020:
                     return DracoonApiCode.VALIDATION_USER_HAS_NO_KEY_PAIR;
@@ -215,6 +233,14 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
+        private static DracoonApiCode ParseTooManyRequests(int? apiErrorCode, dynamic response, RequestType requestType) {
+            string waitTime = GetResponseHeaderValue(response, "Retry-After");
+            if (string.IsNullOrWhiteSpace(waitTime)) {
+                waitTime = "1";
+            }
+            return new DracoonApiCode(DracoonApiCode.SERVER_TOO_MANY_REQUESTS.Code, string.Format(DracoonApiCode.SERVER_TOO_MANY_REQUESTS.Text, waitTime));
+        }
+
         private static DracoonApiCode ParseUnauthorized(int? apiErrorCode, dynamic response, RequestType requestType) {
             switch (apiErrorCode) {
                 case -10006:
@@ -242,35 +268,35 @@ namespace Dracoon.Sdk.SdkInternal {
                 case -40761:
                     return DracoonApiCode.SERVER_FILE_KEY_NOT_FOUND;
                 default: {
-                    switch (requestType) {
-                        case RequestType.DeleteNodes:
-                            return DracoonApiCode.PERMISSION_DELETE_ERROR;
-                        case RequestType.PutRoom:
-                        case RequestType.PutFolder:
-                        case RequestType.PutFile:
-                        case RequestType.PostMoveNodes:
-                            return DracoonApiCode.PERMISSION_UPDATE_ERROR;
-                        case RequestType.GetNode:
-                        case RequestType.GetNodes:
-                        case RequestType.GetSearchNodes:
-                        case RequestType.PostDownloadToken:
-                        case RequestType.PostFavorite:
-                        case RequestType.DeleteFavorite:
-                            return DracoonApiCode.PERMISSION_READ_ERROR;
-                        case RequestType.PostRoom:
-                        case RequestType.PostFolder:
-                        case RequestType.PostCopyNodes:
-                            return DracoonApiCode.PERMISSION_CREATE_ERROR;
-                        case RequestType.PostCreateDownloadShare:
-                        case RequestType.DeleteDownloadShare:
-                            return DracoonApiCode.PERMISSION_MANAGE_DL_SHARES_ERROR;
-                        case RequestType.PostCreateUploadShare:
-                        case RequestType.DeleteUploadShare:
-                            return DracoonApiCode.PERMISSION_MANAGE_UL_SHARES_ERROR;
-                    }
+                        switch (requestType) {
+                            case RequestType.DeleteNodes:
+                                return DracoonApiCode.PERMISSION_DELETE_ERROR;
+                            case RequestType.PutRoom:
+                            case RequestType.PutFolder:
+                            case RequestType.PutFile:
+                            case RequestType.PostMoveNodes:
+                                return DracoonApiCode.PERMISSION_UPDATE_ERROR;
+                            case RequestType.GetNode:
+                            case RequestType.GetNodes:
+                            case RequestType.GetSearchNodes:
+                            case RequestType.PostDownloadToken:
+                            case RequestType.PostFavorite:
+                            case RequestType.DeleteFavorite:
+                                return DracoonApiCode.PERMISSION_READ_ERROR;
+                            case RequestType.PostRoom:
+                            case RequestType.PostFolder:
+                            case RequestType.PostCopyNodes:
+                                return DracoonApiCode.PERMISSION_CREATE_ERROR;
+                            case RequestType.PostCreateDownloadShare:
+                            case RequestType.DeleteDownloadShare:
+                                return DracoonApiCode.PERMISSION_MANAGE_DL_SHARES_ERROR;
+                            case RequestType.PostCreateUploadShare:
+                            case RequestType.DeleteUploadShare:
+                                return DracoonApiCode.PERMISSION_MANAGE_UL_SHARES_ERROR;
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
 
             return DracoonApiCode.PERMISSION_UNKNOWN_ERROR;
@@ -283,20 +309,20 @@ namespace Dracoon.Sdk.SdkInternal {
                     return DracoonApiCode.SERVER_FILE_NOT_FOUND;
                 case -41000:
                 case -40000: {
-                    switch (requestType) {
-                        case RequestType.PostRoom:
-                            return DracoonApiCode.SERVER_TARGET_ROOM_NOT_FOUND;
-                        case RequestType.PostFolder:
-                            return DracoonApiCode.SERVER_TARGET_NODE_NOT_FOUND;
-                        case RequestType.PutFolder:
-                            return DracoonApiCode.SERVER_FOLDER_NOT_FOUND;
-                        case RequestType.PutRoom:
-                        case RequestType.GetMissingFileKeys:
-                            return DracoonApiCode.SERVER_ROOM_NOT_FOUND;
-                        default:
-                            return DracoonApiCode.SERVER_NODE_NOT_FOUND;
+                        switch (requestType) {
+                            case RequestType.PostRoom:
+                                return DracoonApiCode.SERVER_TARGET_ROOM_NOT_FOUND;
+                            case RequestType.PostFolder:
+                                return DracoonApiCode.SERVER_TARGET_NODE_NOT_FOUND;
+                            case RequestType.PutFolder:
+                                return DracoonApiCode.SERVER_FOLDER_NOT_FOUND;
+                            case RequestType.PutRoom:
+                            case RequestType.GetMissingFileKeys:
+                                return DracoonApiCode.SERVER_ROOM_NOT_FOUND;
+                            default:
+                                return DracoonApiCode.SERVER_NODE_NOT_FOUND;
+                        }
                     }
-                }
 
                 case -41050:
                     return DracoonApiCode.SERVER_SOURCE_NODE_NOT_FOUND;
@@ -334,29 +360,29 @@ namespace Dracoon.Sdk.SdkInternal {
                 case -70021:
                     return DracoonApiCode.SERVER_USER_KEY_PAIR_ALREADY_SET;
                 default: {
-                    switch (requestType) {
-                        case RequestType.PostRoom:
-                            return DracoonApiCode.VALIDATION_ROOM_ALREADY_EXISTS;
-                        case RequestType.PostFolder:
-                        case RequestType.PutFolder:
-                            return DracoonApiCode.VALIDATION_FOLDER_ALREADY_EXISTS;
-                        case RequestType.PutRoom:
-                            return DracoonApiCode.VALIDATION_ROOM_ALREADY_EXISTS;
-                        case RequestType.PutFile:
-                            return DracoonApiCode.VALIDATION_FILE_ALREADY_EXISTS;
-                        default: {
-                            if (apiErrorCode == -40010) {
-                                return DracoonApiCode.VALIDATION_ROOM_FOLDER_CAN_NOT_BE_OVERWRITTEN;
-                            }
+                        switch (requestType) {
+                            case RequestType.PostRoom:
+                                return DracoonApiCode.VALIDATION_ROOM_ALREADY_EXISTS;
+                            case RequestType.PostFolder:
+                            case RequestType.PutFolder:
+                                return DracoonApiCode.VALIDATION_FOLDER_ALREADY_EXISTS;
+                            case RequestType.PutRoom:
+                                return DracoonApiCode.VALIDATION_ROOM_ALREADY_EXISTS;
+                            case RequestType.PutFile:
+                                return DracoonApiCode.VALIDATION_FILE_ALREADY_EXISTS;
+                            default: {
+                                    if (apiErrorCode == -40010) {
+                                        return DracoonApiCode.VALIDATION_ROOM_FOLDER_CAN_NOT_BE_OVERWRITTEN;
+                                    }
 
-                            if (requestType == RequestType.PostCreateUploadShare) {
-                                return DracoonApiCode.VALIDATION_UL_SHARE_NAME_ALREADY_EXISTS;
-                            }
+                                    if (requestType == RequestType.PostCreateUploadShare) {
+                                        return DracoonApiCode.VALIDATION_UL_SHARE_NAME_ALREADY_EXISTS;
+                                    }
 
-                            return DracoonApiCode.SERVER_UNKNOWN_ERROR;
+                                    return DracoonApiCode.SERVER_UNKNOWN_ERROR;
+                                }
                         }
                     }
-                }
             }
         }
 
