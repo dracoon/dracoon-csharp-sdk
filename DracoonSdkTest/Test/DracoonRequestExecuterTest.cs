@@ -230,6 +230,25 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Assert.Throws<DracoonApiException>(() => exec.DoSyncApiCall<VoidResponse>(request, RequestType.GetAuthenticatedPing));
         }
 
+        [Fact]
+        public void DoSyncApiCall_TooManyRequestsFail_Retry() {
+            // ARRANGE
+            RestResponse response = FactoryRestSharp.RestResponse;
+            IRestRequest request = FactoryRestSharp.GetAuthenticatedPingMock();
+            Mock.Arrange(() => DracoonClient.HttpConfig).Returns(new DracoonHttpConfig());
+            Mock.Arrange(() => new RestClient().Execute(request)).IgnoreInstance().Returns(response);
+            Mock.Arrange(() => FactoryClients.OAuthMock.RefreshAccessToken()).IgnoreInstance().DoNothing();
+            Mock.Arrange(() => FactoryClients.OAuthMock.BuildAuthString()).IgnoreInstance().Returns("AuthTest");
+            Mock.Arrange(() => DracoonErrorParser.ParseError(response, RequestType.GetAuthenticatedPing))
+                .Throws(new DracoonApiException(DracoonApiCode.SERVER_TOO_MANY_REQUESTS));
+
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
+            IRequestExecutor exec = new DracoonRequestExecutor(FactoryClients.OAuthMock, c);
+
+            // ACT - ASSERT
+            Assert.Throws<DracoonApiException>(() => exec.DoSyncApiCall<VoidResponse>(request, RequestType.GetAuthenticatedPing));
+        }
+
         #endregion
 
         #region ExecuteWebClientDownload
@@ -288,6 +307,22 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Mock.Arrange(() => Mock.Create<Task<byte[]>>().Result).IgnoreInstance().Throws(new AggregateException(we));
             Mock.Arrange(() => DracoonErrorParser.ParseError(we, RequestType.GetDownloadChunk))
                 .Throws(new DracoonApiException(DracoonApiCode.SERVER_UNKNOWN_ERROR));
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
+            IRequestExecutor exec = new DracoonRequestExecutor(FactoryClients.OAuthMock, c);
+
+            // ACT - ASSERT
+            Assert.Throws<DracoonApiException>(() => exec.ExecuteWebClientDownload(new WebClient(), uri, RequestType.GetDownloadChunk));
+        }
+
+        [Fact]
+        public void ExecuteWebClientDownload_ProtocolError_TooManyRequests_Fail() {
+            // ARRANGE
+            Uri uri = new Uri("https://dracoon.team");
+            WebException we = new WebException("Test", WebExceptionStatus.ProtocolError);
+            Mock.Arrange(() => new WebClient().DownloadDataTaskAsync(uri)).IgnoreInstance().Returns(Mock.Create<Task<byte[]>>());
+            Mock.Arrange(() => Mock.Create<Task<byte[]>>().Result).IgnoreInstance().Throws(new AggregateException(we));
+            Mock.Arrange(() => DracoonErrorParser.ParseError(we, RequestType.GetDownloadChunk))
+                .Throws(new DracoonApiException(DracoonApiCode.SERVER_TOO_MANY_REQUESTS));
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
             IRequestExecutor exec = new DracoonRequestExecutor(FactoryClients.OAuthMock, c);
 
@@ -392,6 +427,23 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Mock.Arrange(() => Mock.Create<Task<byte[]>>().Result).IgnoreInstance().Throws(new AggregateException(we));
             Mock.Arrange(() => DracoonErrorParser.ParseError(we, RequestType.GetDownloadChunk))
                 .Throws(new DracoonApiException(DracoonApiCode.SERVER_UNKNOWN_ERROR));
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
+            IRequestExecutor exec = new DracoonRequestExecutor(FactoryClients.OAuthMock, c);
+
+            // ACT - ASSERT
+            Assert.Throws<DracoonApiException>(() => exec.ExecuteWebClientChunkUpload(new WebClient(), uri, chunk, RequestType.PostUploadChunk));
+        }
+
+        [Fact]
+        public void ExecuteWebClientChunkUpload_ProtocolError_TooManyRequests_Fail() {
+            // ARRANGE
+            byte[] chunk = Encoding.UTF8.GetBytes("OK");
+            Uri uri = new Uri("https://dracoon.team");
+            WebException we = new WebException("Test", WebExceptionStatus.ProtocolError);
+            Mock.Arrange(() => new WebClient().UploadDataTaskAsync(uri, "POST", chunk)).IgnoreInstance().Returns(Mock.Create<Task<byte[]>>());
+            Mock.Arrange(() => Mock.Create<Task<byte[]>>().Result).IgnoreInstance().Throws(new AggregateException(we));
+            Mock.Arrange(() => DracoonErrorParser.ParseError(we, RequestType.GetDownloadChunk))
+                .Throws(new DracoonApiException(DracoonApiCode.SERVER_TOO_MANY_REQUESTS));
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
             IRequestExecutor exec = new DracoonRequestExecutor(FactoryClients.OAuthMock, c);
 

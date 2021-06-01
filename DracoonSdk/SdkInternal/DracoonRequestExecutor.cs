@@ -81,7 +81,7 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        T IRequestExecutor.DoSyncApiCall<T>(IRestRequest request, RequestType requestType, int authTry = 0) {
+        T IRequestExecutor.DoSyncApiCall<T>(IRestRequest request, RequestType requestType, int sendTry = 0) {
             IRestClient client = new RestClient(_client.ServerUri) {
                 UserAgent = DracoonClient.HttpConfig.UserAgent,
             };
@@ -90,35 +90,43 @@ namespace Dracoon.Sdk.SdkInternal {
             }
 
             IRestResponse response = client.Execute(request);
-            if (response.ErrorException is WebException we) {
-                // It's an HTTP exception
-                DracoonErrorParser.ParseError(we, requestType);
-            }
-
-            if (!response.IsSuccessful) {
-                // It's an API exception
-                if (RequestIsOAuthRequest(requestType)) {
-                    OAuthErrorParser.ParseError(response, requestType);
+            try {
+                if (response.ErrorException is WebException we) {
+                    // It's an HTTP exception
+                    DracoonErrorParser.ParseError(we, requestType);
                 }
 
-                try {
-                    DracoonErrorParser.ParseError(response, requestType);
-                } catch (DracoonApiException apiError) {
-                    if (apiError.ErrorCode == DracoonApiCode.AUTH_UNAUTHORIZED && authTry < 3) {
-                        DracoonClient.Log.Debug(Logtag, "Retry the refresh of the access token in " + authTry * 1000 + " millis again.");
-                        Thread.Sleep(1000 * authTry);
-                        _auth.RefreshAccessToken();
-                        foreach (Parameter cur in request.Parameters) {
-                            if (cur.Name == ApiConfig.AuthorizationHeader) {
-                                cur.Value = _auth.BuildAuthString();
-                            }
-                        }
-
-                        return ((IRequestExecutor) this).DoSyncApiCall<T>(request, requestType, authTry + 1);
+                if (!response.IsSuccessful) {
+                    // It's an API exception
+                    if (RequestIsOAuthRequest(requestType)) {
+                        OAuthErrorParser.ParseError(response, requestType);
                     }
 
-                    throw apiError;
+                    try {
+                        DracoonErrorParser.ParseError(response, requestType);
+                    } catch (DracoonApiException apiError) {
+                        if (apiError.ErrorCode.Code == DracoonApiCode.AUTH_UNAUTHORIZED.Code && sendTry < 3) {
+                            DracoonClient.Log.Debug(Logtag, "Retry the refresh of the access token in " + sendTry * 1000 + " millis again.");
+                            Thread.Sleep(1000 * sendTry);
+                            _auth.RefreshAccessToken();
+                            foreach (Parameter cur in request.Parameters) {
+                                if (cur.Name == ApiConfig.AuthorizationHeader) {
+                                    cur.Value = _auth.BuildAuthString();
+                                }
+                            }
+
+                            return ((IRequestExecutor) this).DoSyncApiCall<T>(request, requestType, sendTry + 1);
+                        }
+
+                        throw;
+                    }
                 }
+            } catch (DracoonApiException dae) {
+                if (sendTry < 3 && CheckTooManyRequestsResult(dae, response)) {
+                    return ((IRequestExecutor) this).DoSyncApiCall<T>(request, requestType, sendTry + 1);
+                }
+
+                throw;
             }
 
             if (typeof(T) == typeof(VoidResponse)) {
@@ -146,23 +154,32 @@ namespace Dracoon.Sdk.SdkInternal {
                         throw new ThreadInterruptedException();
                     }
 
-                    if (we.Status == WebExceptionStatus.ProtocolError) {
-                        DracoonErrorParser.ParseError(we, type);
-                    } else {
-                        string message = "Server communication failed!";
-                        DracoonClient.Log.Debug(Logtag, message);
-                        if (DracoonClient.HttpConfig.RetryEnabled && sendTry < 3) {
-                            DracoonClient.Log.Debug(Logtag, "Retry the request in " + sendTry * 1000 + " millis again.");
-                            Thread.Sleep(1000 * sendTry);
-                            return ((IRequestExecutor) this).ExecuteWebClientDownload(requestClient, target, type, asyncThread, sendTry + 1);
-                        } else {
-                            if (asyncThread != null && asyncThread.ThreadState == ThreadState.Aborted) {
-                                throw new ThreadInterruptedException();
-                            }
-
+                    try {
+                        if (we.Status == WebExceptionStatus.ProtocolError) {
                             DracoonErrorParser.ParseError(we, type);
+                        } else {
+                            string message = "Server communication failed!";
+                            DracoonClient.Log.Debug(Logtag, message);
+                            if (DracoonClient.HttpConfig.RetryEnabled && sendTry < 3) {
+                                DracoonClient.Log.Debug(Logtag, "Retry the request in " + sendTry * 1000 + " millis again.");
+                                Thread.Sleep(1000 * sendTry);
+                                return ((IRequestExecutor) this).ExecuteWebClientDownload(requestClient, target, type, asyncThread, sendTry + 1);
+                            } else {
+                                if (asyncThread != null && asyncThread.ThreadState == ThreadState.Aborted) {
+                                    throw new ThreadInterruptedException();
+                                }
+
+                                DracoonErrorParser.ParseError(we, type);
+                            }
                         }
+                    } catch (DracoonApiException dae) {
+                        if (sendTry < 3 && CheckTooManyRequestsResult(dae, we.Response)) {
+                            return ((IRequestExecutor) this).ExecuteWebClientDownload(requestClient, target, type, asyncThread, sendTry + 1);
+                        }
+
+                        throw;
                     }
+
                 }
             }
 
@@ -203,27 +220,52 @@ namespace Dracoon.Sdk.SdkInternal {
                         throw new ThreadInterruptedException();
                     }
 
-                    if (we.Status == WebExceptionStatus.ProtocolError) {
-                        DracoonErrorParser.ParseError(we, type);
-                    } else {
-                        string message = "Server communication failed!";
-                        DracoonClient.Log.Debug(Logtag, message);
-                        if (DracoonClient.HttpConfig.RetryEnabled && sendTry < 3) {
-                            DracoonClient.Log.Debug(Logtag, "Retry the request in " + sendTry * 1000 + " millis again.");
-                            Thread.Sleep(1000 * sendTry);
-                            return ((IRequestExecutor) this).ExecuteWebClientChunkUpload(requestClient, target, data, type, asyncThread, sendTry + 1);
-                        } else {
-                            if (asyncThread != null && asyncThread.ThreadState == ThreadState.Aborted) {
-                                throw new ThreadInterruptedException();
-                            }
-
+                    try {
+                        if (we.Status == WebExceptionStatus.ProtocolError) {
                             DracoonErrorParser.ParseError(we, type);
+                        } else {
+                            string message = "Server communication failed!";
+                            DracoonClient.Log.Debug(Logtag, message);
+                            if (DracoonClient.HttpConfig.RetryEnabled && sendTry < 3) {
+                                DracoonClient.Log.Debug(Logtag, "Retry the request in " + sendTry * 1000 + " millis again.");
+                                Thread.Sleep(1000 * sendTry);
+                                return ((IRequestExecutor) this).ExecuteWebClientChunkUpload(requestClient, target, data, type, asyncThread, sendTry + 1);
+                            } else {
+                                if (asyncThread != null && asyncThread.ThreadState == ThreadState.Aborted) {
+                                    throw new ThreadInterruptedException();
+                                }
+
+                                DracoonErrorParser.ParseError(we, type);
+                            }
                         }
+                    } catch (DracoonApiException dae) {
+                        if (sendTry < 3 && CheckTooManyRequestsResult(dae, we.Response)) {
+                            return ((IRequestExecutor) this).ExecuteWebClientChunkUpload(requestClient, target, data, type, asyncThread, sendTry + 1);
+                        }
+
+                        throw;
                     }
                 }
             }
 
             return response;
+        }
+
+        private bool CheckTooManyRequestsResult(DracoonApiException error, object response) {
+            if (error.ErrorCode.Code == DracoonApiCode.SERVER_TOO_MANY_REQUESTS.Code) {
+                int retryAfter;
+                if (!int.TryParse(DracoonErrorParser.GetResponseHeaderValue(response, "Retry-After"), out retryAfter)) {
+                    retryAfter = 1;// retryAfter is given in seconds and if no header is given use fallback time of 1 second
+                }
+
+                int waitingTime = retryAfter * 1000 + new Random().Next(0, 500);
+                DracoonClient.Log.Debug(Logtag, $"Http status code 429 was given. Retry the request in { waitingTime } millis again.");
+                Thread.Sleep(waitingTime);
+
+                return true;
+            }
+
+            return false;
         }
     }
 }
