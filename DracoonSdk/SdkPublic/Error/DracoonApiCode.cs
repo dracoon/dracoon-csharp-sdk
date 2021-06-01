@@ -54,6 +54,8 @@ namespace Dracoon.Sdk.Error {
         public static readonly DracoonApiCode PRECONDITION_MUST_CHANGE_PASSWORD = new DracoonApiCode(2103, "User must change his password.");
         // CODES: -90030
         public static readonly DracoonApiCode PRECONDITION_S3_DISABLED = new DracoonApiCode(2104, "S3 storage is disabled.");
+        // CODES:
+        public static readonly DracoonApiCode PRECONDITION_PAYMENT_REQUIRED = new DracoonApiCode(2105, "You are not allowed to call this method because further payment is required.");
 
         #endregion
 

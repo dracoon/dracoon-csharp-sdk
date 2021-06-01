@@ -111,6 +111,8 @@ namespace Dracoon.Sdk.SdkInternal {
             switch (httpStatusCode) {
                 case (int) HttpStatusCode.BadRequest:
                     return ParseBadRequest(apiErrorCode, response, requestType);
+                case (int) HttpStatusCode.PaymentRequired:
+                    return ParsePaymentRequired(apiErrorCode, response, requestType);
                 case 429: // too many requests
                     return ParseTooManyRequests(apiErrorCode, response, requestType);
                 case (int) HttpStatusCode.Unauthorized:
@@ -231,6 +233,10 @@ namespace Dracoon.Sdk.SdkInternal {
                 default:
                     return DracoonApiCode.VALIDATION_UNKNOWN_ERROR;
             }
+        }
+
+        private static DracoonApiCode ParsePaymentRequired(int? apiErrorCode, dynamic response, RequestType requestType) {
+            return DracoonApiCode.PRECONDITION_PAYMENT_REQUIRED;
         }
 
         private static DracoonApiCode ParseTooManyRequests(int? apiErrorCode, dynamic response, RequestType requestType) {
