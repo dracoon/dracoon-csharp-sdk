@@ -3,7 +3,7 @@ using System;
 
 namespace Dracoon.Sdk.SdkInternal.Util {
     internal static class EnumConverter {
-        public static Func<string, NodeType> ConvertValueToNodeTypeEnum = value => {
+        public static readonly Func<string, NodeType> ConvertValueToNodeTypeEnum = value => {
             switch (value) {
                 case "room":
                     return NodeType.Room;
@@ -14,7 +14,7 @@ namespace Dracoon.Sdk.SdkInternal.Util {
             }
         };
 
-        public static Func<NodeType, string> ConvertNodeTypeEnumToValue = typeEnum => {
+        public static readonly Func<NodeType, string> ConvertNodeTypeEnumToValue = typeEnum => {
             switch (typeEnum) {
                 case NodeType.Room:
                     return "room";
@@ -25,7 +25,7 @@ namespace Dracoon.Sdk.SdkInternal.Util {
             }
         };
 
-        public static Func<string, UserAuthMethod> ConvertValueToUserAuthMethodEnum = value => {
+        public static readonly Func<string, UserAuthMethod> ConvertValueToUserAuthMethodEnum = value => {
             switch (value) {
                 case "basic":
                     return UserAuthMethod.Basic;
@@ -40,7 +40,7 @@ namespace Dracoon.Sdk.SdkInternal.Util {
             }
         };
 
-        public static Func<UserAuthMethod, string> ConvertUserAuthMethodEnumToValue = typeEnum => {
+        public static readonly Func<UserAuthMethod, string> ConvertUserAuthMethodEnumToValue = typeEnum => {
             switch (typeEnum) {
                 case UserAuthMethod.Basic:
                     return "basic";
@@ -126,7 +126,7 @@ namespace Dracoon.Sdk.SdkInternal.Util {
             }
         }
 
-        public static Func<string, UserType> ConvertValueToUserTypeEnum = value => {
+        public static readonly Func<string, UserType> ConvertValueToUserTypeEnum = value => {
             switch (value) {
                 case "internal":
                     return UserType.Internal;

@@ -3,7 +3,7 @@ using Dracoon.Sdk.Error;
 using System;
 
 namespace Dracoon.Sdk.SdkInternal.Mapper {
-    internal class CryptoErrorMapper {
+    internal static class CryptoErrorMapper {
         internal static DracoonCryptoCode ParseCause(Exception e) {
             if (e.GetType() == typeof(InvalidPasswordException)) {
                 return DracoonCryptoCode.INVALID_PASSWORD_ERROR;

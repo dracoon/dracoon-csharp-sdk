@@ -18,7 +18,7 @@ namespace Dracoon.Sdk.SdkInternal {
         public EncFileDownload(IInternalDracoonClient client, string actionId, Node nodeToDownload, Stream output) : base(
             client, actionId, nodeToDownload, output) {
 
-            Logtag = nameof(EncFileDownload);
+            LogTag = nameof(EncFileDownload);
         }
 
         protected override void StartDownload() {
@@ -36,7 +36,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 return Crypto.Sdk.Crypto.DecryptFileKey(encryptedFileKey, userPrivateKey, Client.EncryptionPassword);
             } catch (CryptoException ce) {
                 string message = "Decryption of file key for encrypted download " + ActionId + " failed!";
-                DracoonClient.Log.Debug(Logtag, message);
+                DracoonClient.Log.Debug(LogTag, message);
                 throw new DracoonCryptoException(CryptoErrorMapper.ParseCause(ce), ce);
             }
         }
@@ -47,7 +47,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 cipher = Crypto.Sdk.Crypto.CreateFileDecryptionCipher(plainFileKey);
             } catch (CryptoException ce) {
                 string message = "Creation of decryption engine for encrypted download " + ActionId + " failed!";
-                DracoonClient.Log.Debug(Logtag, message);
+                DracoonClient.Log.Debug(LogTag, message);
                 throw new DracoonCryptoException(CryptoErrorMapper.ParseCause(ce), ce);
             }
 
@@ -72,7 +72,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 }
             } catch (CryptoException ce) {
                 const string message = "Decryption of file failed while downloading!";
-                DracoonClient.Log.Debug(Logtag, message);
+                DracoonClient.Log.Debug(LogTag, message);
                 throw new DracoonFileIOException(message, ce);
             } catch (IOException ioe) {
                 if (IsInterrupted) {
@@ -80,7 +80,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 }
 
                 const string message = "Write to stream failed!";
-                DracoonClient.Log.Debug(Logtag, message);
+                DracoonClient.Log.Debug(LogTag, message);
                 throw new DracoonFileIOException(message, ioe);
             } finally {
                 ProgressReportTimer.Stop();

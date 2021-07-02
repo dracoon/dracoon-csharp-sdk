@@ -1505,7 +1505,7 @@
       <param name="userId">
         The ID of the user for which the avatar should be returned.
       </param>
-      <param name="avatarUUID">
+      <param name="avatarUuid">
         The corresponding uuid of the current avatar image for the given user.
       </param>
       <returns>

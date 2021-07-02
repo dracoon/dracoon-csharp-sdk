@@ -12,7 +12,7 @@ using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class FileDownload {
-        protected string Logtag = nameof(FileDownload);
+        protected string LogTag = nameof(FileDownload);
 
         protected const long ProgressUpdateInterval = 250;
 
@@ -61,7 +61,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 StartDownload();
             } catch (DracoonException de) {
                 NotifyFailed(ActionId, de);
-                throw de;
+                throw;
             } catch (ThreadAbortException) {
                 NotifyCanceled(ActionId);
             } catch (ThreadInterruptedException) {
@@ -104,7 +104,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 }
 
                 const string message = "Write to stream failed!";
-                DracoonClient.Log.Debug(Logtag, message);
+                DracoonClient.Log.Debug(LogTag, message);
                 throw new DracoonFileIOException(message, ioe);
             } finally {
                 ProgressReportTimer.Stop();

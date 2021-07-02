@@ -2,11 +2,11 @@
 using System.Text;
 
 namespace Dracoon.Sdk.SdkInternal {
-    internal class ApiConfig {
+    internal static class ApiConfig {
         internal const string MinimumApiVersion = "4.23.0";
         internal const string ApiPrefix = "api/v4";
         internal const string AuthorizationHeader = "Authorization";
-        // mediaserver/image/{mediaToken}/{width}x{height}
+        // token template: mediaserver/image/{mediaToken}/{width}x{height}
         internal const string MediaTokenTemplate = "mediaserver/image/{0}/{1}x{2}";
 
 
@@ -218,11 +218,13 @@ namespace Dracoon.Sdk.SdkInternal {
         #endregion
 
         internal static Uri BuildApiUrl(Uri baseUrl, params string[] pathSegments) {
-            UriBuilder uriBuilder = new UriBuilder(baseUrl);
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < pathSegments.Length; i++) {
-                uriBuilder.Path += i != 0 ? "/" + pathSegments[i] : pathSegments[i];
+                sb.Append(i != 0 ? "/" + pathSegments[i] : pathSegments[i]);
             }
 
+            UriBuilder uriBuilder = new UriBuilder(baseUrl);
+            uriBuilder.Path = sb.ToString();
             return uriBuilder.Uri;
         }
     }

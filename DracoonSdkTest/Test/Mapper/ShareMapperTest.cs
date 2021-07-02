@@ -109,7 +109,6 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
         [Fact]
         public void FromApiDownloadShareList() {
             // ARRANGE
-            Classification expectedClassification = Classification.StrictlyConfidential;
             DownloadShareList expected = FactoryShare.DownloadShareList;
 
             ApiDownloadShareList param = new ApiDownloadShareList {

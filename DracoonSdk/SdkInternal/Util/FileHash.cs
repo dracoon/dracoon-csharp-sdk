@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 
 namespace Dracoon.Sdk.SdkInternal.Util {
-    internal class FileHash {
+    internal static class FileHash {
         public static bool CompareFileHashes(string serverHash, byte[] chunkBytes, int chunkValidByteCount) {
             using (MD5 md5Creator = MD5.Create()) {
                 string localCalculatedHash =
