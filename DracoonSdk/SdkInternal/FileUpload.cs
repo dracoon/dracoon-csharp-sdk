@@ -43,8 +43,6 @@ namespace Dracoon.Sdk.SdkInternal {
             InputStream = input;
             FileUploadRequest = request;
             OptionalFileSize = fileSize;
-
-            LogTag = nameof(FileUpload);
         }
 
         public void AddFileUploadCallback(IFileUploadCallback callback) {
@@ -67,7 +65,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 return StartUpload();
             } catch (DracoonException de) {
                 NotifyFailed(ActionId, de);
-                throw de;
+                throw;
             } catch (ThreadAbortException) {
                 NotifyCanceled(ActionId);
                 return null;
@@ -226,7 +224,7 @@ namespace Dracoon.Sdk.SdkInternal {
                         case "error":
                             s3Polling.Stop();
                             DracoonErrorParser.ParseError(status.ErrorInfo, RequestType.GetS3Status);
-                            goto default;
+                            throw new DracoonApiException(DracoonApiCode.SERVER_S3_UPLOAD_COMPLETION_FAILED);
                         default:
                             s3Polling.Stop();
                             throw new DracoonApiException(DracoonApiCode.SERVER_S3_UPLOAD_COMPLETION_FAILED);

@@ -239,5 +239,34 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
         }
 
         #endregion
+
+        #region FromApiClassificationPolicies
+
+        [Fact]
+        public void FromApiClassificationPolicies() {
+            // ARRANGE
+            ClassificationPolicies expected = FactoryPolicies.ClassificationPolices;
+
+            // ACT
+            ClassificationPolicies actual = SettingsMapper.FromApiClassificationPolicies(FactoryPolicies.ApiClassificationPolices);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new ClassificationPoliciesComparer());
+        }
+
+        [Fact]
+        public void FromApiClassificationPolicies_Null() {
+            // ARRANGE
+            ClassificationPolicies expected = null;
+            ApiClassificationPolicies param = null;
+
+            // ACT
+            ClassificationPolicies actual = SettingsMapper.FromApiClassificationPolicies(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new ClassificationPoliciesComparer());
+        }
+
+        #endregion
     }
 }

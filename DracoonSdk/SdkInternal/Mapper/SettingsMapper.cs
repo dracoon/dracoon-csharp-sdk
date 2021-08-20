@@ -142,7 +142,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
 
         internal static List<FileKeyAlgorithmData> FromApiFileKeyAlgorithms(List<ApiAlgorithm> apiFileKeyAlgorithms) {
             if (apiFileKeyAlgorithms == null) {
-                return null;
+                return new List<FileKeyAlgorithmData>(0);
             }
 
             List<FileKeyAlgorithmData> fileKeyAlgorithms = new List<FileKeyAlgorithmData>(apiFileKeyAlgorithms.Count);
@@ -151,7 +151,6 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                     Algorithm = FileMapper.FromApiFileKeyVersion(current.Version),
                     State = EnumConverter.ConvertValueToAlgorithmState(current.Status)
                 });
-                ;
             }
 
             return fileKeyAlgorithms;
@@ -159,7 +158,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
 
         internal static List<UserKeyPairAlgorithmData> FromApiUserKeyPairAlgorithms(List<ApiAlgorithm> apiUserKeyPairAlgorithms) {
             if (apiUserKeyPairAlgorithms == null) {
-                return null;
+                return new List<UserKeyPairAlgorithmData>(0);
             }
 
             List<UserKeyPairAlgorithmData> userKeyPairAlgorithms = new List<UserKeyPairAlgorithmData>(apiUserKeyPairAlgorithms.Count);
@@ -168,10 +167,33 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                     Algorithm = UserMapper.FromApiUserKeyPairVersion(current.Version),
                     State = EnumConverter.ConvertValueToAlgorithmState(current.Status)
                 });
-                ;
             }
 
             return userKeyPairAlgorithms;
+        }
+
+        internal static ClassificationPolicies FromApiClassificationPolicies(ApiClassificationPolicies apiClassificationPolicies) {
+            if (apiClassificationPolicies == null) {
+                return null;
+            }
+
+            ClassificationPolicies classificationPolicies = new ClassificationPolicies {
+                ShareClassificationPolicy = FromApiShareClassificationPolicy(apiClassificationPolicies.SharePolicy)
+            };
+
+            return classificationPolicies;
+        }
+
+        internal static ShareClassificationPolicy FromApiShareClassificationPolicy(ApiShareClassificationPolicy apiShareClassificationPolicy) {
+            if (apiShareClassificationPolicy == null) {
+                return null;
+            }
+
+            ShareClassificationPolicy shareClassificationPolicy = new ShareClassificationPolicy {
+                ClassificationMinimumForSharePasswort = EnumConverter.ConvertValueToClassificationEnum(apiShareClassificationPolicy.PasswordRequirementMinimumClassification)
+            };
+
+            return shareClassificationPolicy;
         }
     }
 }

@@ -6,16 +6,28 @@ using System.Net;
 using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
 namespace Dracoon.Sdk.SdkInternal.OAuth {
-    internal class OAuthErrorParser {
+    internal static class OAuthErrorParser {
         private const string Logtag = nameof(OAuthErrorParser);
 
-        private const string ErrInvalidRequest = "invalid_request";
         private const string ErrUnsupportedResponseType = "unsupported_response_type";
         private const string ErrUnsupportedGrantType = "unsupported_grant_type";
         private const string ErrInvalidClient = "invalid_client";
         private const string ErrInvalidGrant = "invalid_grant";
         private const string ErrInvalidScope = "invalid_scope";
         private const string ErrAccessDenied = "access_denied";
+
+        private static OAuthError GetOAuthError(string errorResponseBody) {
+            try {
+                OAuthError apiError = JsonConvert.DeserializeObject<OAuthError>(errorResponseBody);
+                if (apiError != null) {
+                    DracoonClient.Log.Debug(Logtag, apiError.ToString());
+                }
+
+                return apiError;
+            } catch (Exception) {
+                return null;
+            }
+        }
 
         internal static void ParseError(string error) {
             switch (error) {
@@ -34,19 +46,6 @@ namespace Dracoon.Sdk.SdkInternal.OAuth {
             }
         }
 
-        private static OAuthError GetOAuthError(string errorResponseBody) {
-            try {
-                OAuthError apiError = JsonConvert.DeserializeObject<OAuthError>(errorResponseBody);
-                if (apiError != null) {
-                    DracoonClient.Log.Debug(Logtag, apiError.ToString());
-                }
-
-                return apiError;
-            } catch (Exception) {
-                return null;
-            }
-        }
-
         internal static void ParseError(IRestResponse response, RequestType requestType) {
             OAuthError oauthError = GetOAuthError(response.Content);
             DracoonApiCode resultCode = Parse(response.StatusCode, oauthError, requestType);
@@ -60,7 +59,7 @@ namespace Dracoon.Sdk.SdkInternal.OAuth {
                 case (int) HttpStatusCode.BadRequest:
                     return ParseBadRequest(oAuthError, requestType);
                 case (int) HttpStatusCode.Unauthorized:
-                    return ParseUnauthorized(oAuthError, requestType);
+                    return ParseUnauthorized();
                 default:
                     return DracoonApiCode.AUTH_UNKNOWN_ERROR;
             }
@@ -95,7 +94,7 @@ namespace Dracoon.Sdk.SdkInternal.OAuth {
             }
         }
 
-        private static DracoonApiCode ParseUnauthorized(OAuthError oAuthError, RequestType requestType) {
+        private static DracoonApiCode ParseUnauthorized() {
             return DracoonApiCode.AUTH_OAUTH_CLIENT_UNAUTHORIZED;
         }
     }

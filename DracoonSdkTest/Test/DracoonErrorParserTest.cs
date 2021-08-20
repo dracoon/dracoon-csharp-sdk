@@ -102,6 +102,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
         [InlineData(RequestType.GetAuthenticatedPing, -80034, new string[] { }, new string[] { }, 3128)]
         [InlineData(RequestType.GetAuthenticatedPing, -80035, new string[] { }, new string[] { }, 3005)]
         [InlineData(RequestType.GetAuthenticatedPing, -80045, new string[] { }, new string[] { }, 3129)]
+        [InlineData(RequestType.GetAuthenticatedPing, -80064, new string[] { }, new string[] { }, 3750)]
         [InlineData(RequestType.GetAuthenticatedPing, -90033, new string[] { }, new string[] { }, 5802)]
         [InlineData(RequestType.GetAuthenticatedPing, 0, new string[] { }, new string[] { }, 3000)]
         internal void TestBadRequestCodes(RequestType type, int apiCode, string[] headerNames, string[] headerValues, int expectedSdkErrorCode) {

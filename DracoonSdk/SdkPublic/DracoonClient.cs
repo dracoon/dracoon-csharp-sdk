@@ -32,6 +32,9 @@ namespace Dracoon.Sdk {
             get {
                 return _httpConfig ?? (_httpConfig = new DracoonHttpConfig());
             }
+            set {
+                _httpConfig = value;
+            }
         }
 
 
@@ -40,6 +43,9 @@ namespace Dracoon.Sdk {
         internal static ILog Log {
             get {
                 return _logger ?? (_logger = new EmptyLog());
+            }
+            set {
+                _logger = value;
             }
         }
 
@@ -153,8 +159,8 @@ namespace Dracoon.Sdk {
 
             ServerUri = serverUri;
             EncryptionPassword = encryptionPassword;
-            _logger = logger;
-            _httpConfig = httpConfig;
+            DracoonClient.Log = logger;
+            DracoonClient.HttpConfig = httpConfig;
 
             #region init internal
 

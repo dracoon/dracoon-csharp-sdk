@@ -35,6 +35,12 @@ namespace Dracoon.Sdk.SdkInternal {
             requestClient.SetHttpConfigParams(DracoonClient.HttpConfig);
         }
 
+        private DracoonWebClientExtension CreateDefaultWebClient() {
+            DracoonWebClientExtension requestClient = new DracoonWebClientExtension();
+            SetGeneralWebClientValues(requestClient);
+            return requestClient;
+        }
+
         private void AddFilters<T>(T filter, IRestRequest requestForFilterAdding) where T : DracoonFilter {
             if (filter == null)
                 return;
@@ -177,9 +183,7 @@ namespace Dracoon.Sdk.SdkInternal {
         #region HTTP-Request
 
         WebClient IRequestBuilder.ProvideAvatarDownloadWebClient() {
-            DracoonWebClientExtension requestClient = new DracoonWebClientExtension();
-            SetGeneralWebClientValues(requestClient);
-            return requestClient;
+            return CreateDefaultWebClient();
         }
 
         WebClient IRequestBuilder.ProvideAvatarUploadWebClient(string formDataBoundary) {
@@ -198,7 +202,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #region GET
 
-        IRestRequest IRequestBuilder.GetNodes(long parentNodeId, long? offset = null, long? limit = null, GetNodesFilter filter = null) {
+        IRestRequest IRequestBuilder.GetNodes(long parentNodeId, long? offset, long? limit, GetNodesFilter filter) {
             RestRequest request = new RestRequest(ApiConfig.ApiGetChildNodes, Method.GET);
             SetGeneralRestValues(request, true);
             AddFilters(filter, request);
@@ -224,8 +228,8 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
-        IRestRequest IRequestBuilder.GetSearchNodes(long parentNodeId, string searchString, long offset, long limit, int depthLevel = -1,
-            SearchNodesFilter filter = null, SearchNodesSort sort = null) {
+        IRestRequest IRequestBuilder.GetSearchNodes(long parentNodeId, string searchString, long offset, long limit, int depthLevel,
+            SearchNodesFilter filter, SearchNodesSort sort) {
             RestRequest request = new RestRequest(ApiConfig.ApiGetSearchNodes, Method.GET);
             SetGeneralRestValues(request, true);
             AddFilters(filter, request);
@@ -238,7 +242,7 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
-        IRestRequest IRequestBuilder.GetMissingFileKeys(long? fileId, int limit = 10, int offset = 0) {
+        IRestRequest IRequestBuilder.GetMissingFileKeys(long? fileId, int limit, int offset) {
             RestRequest request = new RestRequest(ApiConfig.ApiGetMissingFileKeys, Method.GET);
             SetGeneralRestValues(request, true);
             if (fileId.HasValue) {
@@ -250,7 +254,7 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
-        IRestRequest IRequestBuilder.GetRecycleBin(long parentRoomId, long? offset = null, long? limit = null) {
+        IRestRequest IRequestBuilder.GetRecycleBin(long parentRoomId, long? offset, long? limit) {
             RestRequest request = new RestRequest(ApiConfig.ApiGetRecycleBin, Method.GET);
             SetGeneralRestValues(request, true);
             request.AddUrlSegment("roomId", parentRoomId);
@@ -261,7 +265,7 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
-        IRestRequest IRequestBuilder.GetPreviousVersions(long nodeId, string type, string nodeName, long? offset = null, long? limit = null) {
+        IRestRequest IRequestBuilder.GetPreviousVersions(long nodeId, string type, string nodeName, long? offset, long? limit) {
             RestRequest request = new RestRequest(ApiConfig.ApiGetPreviousVersions, Method.GET);
             SetGeneralRestValues(request, true);
             request.AddUrlSegment("nodeId", nodeId);
@@ -451,9 +455,7 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         WebClient IRequestBuilder.ProvideS3ChunkUploadWebClient() {
-            DracoonWebClientExtension requestClient = new DracoonWebClientExtension();
-            SetGeneralWebClientValues(requestClient);
-            return requestClient;
+            return CreateDefaultWebClient();
         }
 
         #endregion
@@ -464,7 +466,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #region GET
 
-        IRestRequest IRequestBuilder.GetDownloadShares(long? offset, long? limit, GetDownloadSharesFilter filter = null, SharesSort sort = null) {
+        IRestRequest IRequestBuilder.GetDownloadShares(long? offset, long? limit, GetDownloadSharesFilter filter, SharesSort sort) {
             RestRequest request = new RestRequest(ApiConfig.ApiGetDownloadShares, Method.GET);
             SetGeneralRestValues(request, true);
             AddFilters(filter, request);
@@ -476,7 +478,7 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
-        IRestRequest IRequestBuilder.GetUploadShares(long? offset, long? limit, GetUploadSharesFilter filter = null, SharesSort sort = null) {
+        IRestRequest IRequestBuilder.GetUploadShares(long? offset, long? limit, GetUploadSharesFilter filter, SharesSort sort) {
             RestRequest request = new RestRequest(ApiConfig.ApiGetUploadShares, Method.GET);
             SetGeneralRestValues(request, true);
             AddFilters(filter, request);
@@ -582,6 +584,12 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public IRestRequest GetAlgorithms() {
             RestRequest request = new RestRequest(ApiConfig.ApiGetAlgorithms, Method.GET);
+            SetGeneralRestValues(request, true);
+            return request;
+        }
+
+        public IRestRequest GetClassificationPolicies() {
+            RestRequest request = new RestRequest(ApiConfig.ApiGetClassificationPolicies, Method.GET);
             SetGeneralRestValues(request, true);
             return request;
         }

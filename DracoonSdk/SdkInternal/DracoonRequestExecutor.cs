@@ -24,7 +24,7 @@ namespace Dracoon.Sdk.SdkInternal {
             DeleteFavorite, GetAuthenticatedPing, PostOAuthToken, PostOAuthRefresh, GetGeneralSettings,
             GetInfrastructureSettings, GetDefaultsSettings, GetRecycleBin, DeleteRecycleBin, GetPreviousVersions,
             GetPreviousVersion, PostRestoreNodeVersion, DeletePreviousVersions, PostGetS3Urls, GetS3Status, GetPasswordPolicies,
-            GetAlgorithms
+            GetAlgorithms, GetClassificationPolicies
         }
 
         private const string Logtag = nameof(DracoonRequestExecutor);
@@ -43,7 +43,7 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
 
-        void IRequestExecutor.CheckApiServerVersion(string minVersionForCheck = ApiConfig.MinimumApiVersion) {
+        void IRequestExecutor.CheckApiServerVersion(string minVersionForCheck) {
             if (_isServerVersionCompatible && minVersionForCheck == ApiConfig.MinimumApiVersion) {
                 return;
             }
@@ -81,7 +81,7 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        T IRequestExecutor.DoSyncApiCall<T>(IRestRequest request, RequestType requestType, int sendTry = 0) {
+        T IRequestExecutor.DoSyncApiCall<T>(IRestRequest request, RequestType requestType, int sendTry) {
             IRestClient client = new RestClient(_client.ServerUri) {
                 UserAgent = DracoonClient.HttpConfig.UserAgent,
             };
@@ -109,7 +109,7 @@ namespace Dracoon.Sdk.SdkInternal {
                             DracoonClient.Log.Debug(Logtag, "Retry the refresh of the access token in " + sendTry * 1000 + " millis again.");
                             Thread.Sleep(1000 * sendTry);
                             _auth.RefreshAccessToken();
-                            foreach (Parameter cur in request.Parameters) {
+                            foreach (var cur in request.Parameters) {
                                 if (cur.Name == ApiConfig.AuthorizationHeader) {
                                     cur.Value = _auth.BuildAuthString();
                                 }
@@ -136,8 +136,8 @@ namespace Dracoon.Sdk.SdkInternal {
             return JsonConvert.DeserializeObject<T>(response.Content);
         }
 
-        byte[] IRequestExecutor.ExecuteWebClientDownload(WebClient requestClient, Uri target, RequestType type, Thread asyncThread = null,
-            int sendTry = 0) {
+        byte[] IRequestExecutor.ExecuteWebClientDownload(WebClient requestClient, Uri target, RequestType type, Thread asyncThread,
+            int sendTry) {
             byte[] response = null;
             try {
                 Task<byte[]> responseTask = requestClient.DownloadDataTaskAsync(target);

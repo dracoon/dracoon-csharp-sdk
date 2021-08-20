@@ -256,8 +256,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #region Build multipart
 
-            ImageCodecInfo info = ImageCodecInfo.GetImageDecoders().First(c => c.FormatID == newAvatar.RawFormat.Guid);
-
             string formDataBoundary = "---------------------------" + Guid.NewGuid();
             byte[] packageHeader = ApiConfig.ENCODING.GetBytes(
                 $"--{formDataBoundary}\r\nContent-Disposition: form-data; name=\"{"file"}\"; filename=\"{"avatarImage"}\"\r\n\r\n");

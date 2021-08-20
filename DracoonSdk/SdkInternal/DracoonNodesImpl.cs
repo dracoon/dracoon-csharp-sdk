@@ -497,12 +497,12 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        public void DownloadFile(string actionId, long nodeId, Stream output, IFileDownloadCallback callback) {
+        public void DownloadFile(string actionId, long nodeId, Stream output, IFileDownloadCallback callback = null) {
             FileDownload download = CreateFileDownloadInternally(actionId, nodeId, output, callback);
             download.RunSync();
         }
 
-        public void StartDownloadFileAsync(string actionId, long nodeId, Stream output, IFileDownloadCallback callback) {
+        public void StartDownloadFileAsync(string actionId, long nodeId, Stream output, IFileDownloadCallback callback = null) {
             FileDownload download = CreateFileDownloadInternally(actionId, nodeId, output, callback);
             download.RunAsync();
         }
@@ -617,14 +617,13 @@ namespace Dracoon.Sdk.SdkInternal {
                 EncryptedFileKey encryptedFileKey = FileMapper.FromApiFileKey(currentEncryptedFileKey.FileKeyContainer);
 
                 try {
-                    // TODO check if function is correct
                     UserKeyPair found = userKeyPairs.Single(o => o.UserPublicKey.Version == CryptoHelper.DetermineUserKeyPairVersion(encryptedFileKey.Version));
                     if (found != null) {
                         PlainFileKey decryptedFileKey = DecryptFileKey(encryptedFileKey, found.UserPrivateKey, currentEncryptedFileKey.FileId);
                         plainFileKeys.Add(currentEncryptedFileKey.FileId, decryptedFileKey);
                     }
                 } catch {
-                    continue; // Next File Key
+                    // Next File Key
                 }
             }
 
@@ -661,9 +660,13 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #region IFileDownloadCallback / IFileUploadCallback implementation
 
-        public void OnStarted(string actionId) { }
+        public void OnStarted(string actionId) {
+            // Nothing to do on this point
+        }
 
-        public void OnRunning(string actionId, long bytesDownloaded, long bytesTotal) { }
+        public void OnRunning(string actionId, long bytesDownloaded, long bytesTotal) {
+            // Nothing to do on this point
+        }
 
         public void OnFinished(string actionId) {
             _runningDownloads.Remove(actionId);

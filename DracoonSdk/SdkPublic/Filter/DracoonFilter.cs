@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Dracoon.Sdk.Filter {
     /// <include file="FilterDoc.xml" path='docs/members[@name="dracoonFilter"]/DracoonFilter/*'/>
@@ -21,14 +22,14 @@ namespace Dracoon.Sdk.Filter {
 
         /// <include file="FilterDoc.xml" path='docs/members[@name="dracoonFilter"]/ToString/*'/>
         public override string ToString() {
-            string filterEndString = "";
+            StringBuilder sb = new StringBuilder();
             foreach (dynamic currentFilter in FiltersList) {
-                if (filterEndString.Length != 0) {
-                    filterEndString += "|";
+                if (sb.Length != 0) {
+                    sb.Append("|");
                 }
-                filterEndString += currentFilter.ToString();
+                sb.Append(currentFilter.ToString());
             }
-            return filterEndString;
+            return sb.ToString();
         }
     }
 }

@@ -3,9 +3,10 @@ using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Util;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Dracoon.Sdk.SdkInternal.Mapper {
-    internal class ShareMapper {
+    internal static class ShareMapper {
         internal static ApiCreateDownloadShareRequest ToUnencryptedApiCreateDownloadShareRequest(CreateDownloadShareRequest request) {
             ApiExpiration apiExpiration = null;
             if (request.Expiration.HasValue) {
@@ -168,16 +169,16 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
         }
 
         private static string GenerateRecipientString(IReadOnlyList<string> recipientList) {
-            string recipientsString = "";
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < recipientList.Count; i++) {
                 if (i == recipientList.Count - 1) {
-                    recipientsString += recipientList[i];
+                    sb.Append(recipientList[i]);
                 } else {
-                    recipientsString += recipientList[i] + ",";
+                    sb.Append(recipientList[i] + ",");
                 }
             }
 
-            return recipientsString;
+            return sb.ToString();
         }
     }
 }

@@ -154,6 +154,8 @@ namespace Dracoon.Sdk.SdkInternal {
 
         IRestRequest GetAlgorithms();
 
+        IRestRequest GetClassificationPolicies();
+
         #endregion
 
         #region Resources
