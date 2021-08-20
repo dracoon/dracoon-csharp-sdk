@@ -171,5 +171,29 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
 
             return userKeyPairAlgorithms;
         }
+
+        internal static ClassificationPolicies FromApiClassificationPolicies(ApiClassificationPolicies apiClassificationPolicies) {
+            if (apiClassificationPolicies == null) {
+                return null;
+            }
+
+            ClassificationPolicies classificationPolicies = new ClassificationPolicies {
+                ShareClassificationPolicy = FromApiShareClassificationPolicy(apiClassificationPolicies.SharePolicy)
+            };
+
+            return classificationPolicies;
+        }
+
+        internal static ShareClassificationPolicy FromApiShareClassificationPolicy(ApiShareClassificationPolicy apiShareClassificationPolicy) {
+            if (apiShareClassificationPolicy == null) {
+                return null;
+            }
+
+            ShareClassificationPolicy shareClassificationPolicy = new ShareClassificationPolicy {
+                ClassificationMinimumForSharePasswort = EnumConverter.ConvertValueToClassificationEnum(apiShareClassificationPolicy.PasswordRequirementMinimumClassification)
+            };
+
+            return shareClassificationPolicy;
+        }
     }
 }

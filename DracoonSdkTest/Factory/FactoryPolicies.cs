@@ -83,5 +83,25 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                 };
             }
         }
+
+        internal static ApiClassificationPolicies ApiClassificationPolices {
+            get {
+                return new ApiClassificationPolicies {
+                    SharePolicy = new ApiShareClassificationPolicy {
+                        PasswordRequirementMinimumClassification = 2
+                    }
+                };
+            }
+        }
+
+        internal static ClassificationPolicies ClassificationPolices {
+            get {
+                return new ClassificationPolicies {
+                    ShareClassificationPolicy = new ShareClassificationPolicy {
+                        ClassificationMinimumForSharePasswort = Classification.Internal
+                    }
+                };
+            }
+        }
     }
 }

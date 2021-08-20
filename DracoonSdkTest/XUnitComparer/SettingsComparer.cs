@@ -1,6 +1,7 @@
 ﻿using Dracoon.Sdk.Model;
 using System;
 using System.Collections.Generic;
+using Xunit;
 
 namespace Dracoon.Sdk.UnitTest.XUnitComparer {
     internal class ServerGeneralSettingsComparer : IEqualityComparer<ServerGeneralSettings> {
@@ -131,6 +132,39 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
         }
 
         public int GetHashCode(PasswordCharacterSet obj) {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class ClassificationPoliciesComparer : IEqualityComparer<ClassificationPolicies> {
+        public bool Equals(ClassificationPolicies x, ClassificationPolicies y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            Assert.Equal(x.ShareClassificationPolicy, y.ShareClassificationPolicy, new ShareClassificationPolicyComparer());
+            return true;
+        }
+
+        public int GetHashCode(ClassificationPolicies obj) {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class ShareClassificationPolicyComparer : IEqualityComparer<ShareClassificationPolicy> {
+        public bool Equals(ShareClassificationPolicy x, ShareClassificationPolicy y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            return x.ClassificationMinimumForSharePasswort == y.ClassificationMinimumForSharePasswort;
+        }
+
+        public int GetHashCode(ShareClassificationPolicy obj) {
             throw new NotImplementedException();
         }
     }

@@ -80,10 +80,12 @@
     <Compile Include="SdkInternal\ApiModel\Settings\ApiAlgorithm.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiAlgorithms.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiCharacterRules.cs" />
+    <Compile Include="SdkInternal\ApiModel\Settings\ApiClassificationPolicies.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiDefaultsSettings.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiEncryptionPasswordSettings.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiInfrastructureSettings.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiPasswordSettings.cs" />
+    <Compile Include="SdkInternal\ApiModel\Settings\ApiShareClassificationPolicy.cs" />
     <Compile Include="SdkInternal\ApiModel\Settings\ApiSharePasswordSettings.cs" />
     <Compile Include="SdkInternal\ApiModel\Shares\ApiDownloadShare.cs" />
     <Compile Include="SdkInternal\ApiModel\Shares\ApiDownloadShareList.cs" />
@@ -198,6 +200,7 @@
     <Compile Include="SdkPublic\Model\AlgorithmState.cs" />
     <Compile Include="SdkPublic\Model\AvatarInfo.cs" />
     <Compile Include="SdkPublic\Model\Classification.cs" />
+    <Compile Include="SdkPublic\Model\ClassificationPolicies.cs" />
     <Compile Include="SdkPublic\Model\CustomerAccount.cs" />
     <Compile Include="SdkPublic\Model\FileKeyAlgorithmData.cs" />
     <Compile Include="SdkPublic\Model\PasswordCharacterPolicies.cs" />
@@ -220,6 +223,7 @@
     <Compile Include="SdkPublic\Model\ServerInfrastructureSettings.cs" />
     <Compile Include="SdkPublic\Model\Attribute.cs" />
     <Compile Include="SdkPublic\Model\AttributeList.cs" />
+    <Compile Include="SdkPublic\Model\ShareClassificationPolicy.cs" />
     <Compile Include="SdkPublic\Model\UserAuthData.cs" />
     <Compile Include="SdkPublic\Model\UserAuthMethod.cs" />
     <Compile Include="SdkPublic\Model\UserKeyPairAlgorithmData.cs" />

@@ -182,12 +182,14 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiGetDefaultsConfig = ApiPrefix + "/config/info/defaults";
         internal const string ApiGetPasswordPolicies = ApiPrefix + "/config/info/policies/passwords";
         internal const string ApiGetAlgorithms = ApiPrefix + "/config/info/policies/algorithms";
+        internal const string ApiGetClassificationPolicies = ApiPrefix + "/config/info/policies/classifications";
 
         #endregion
 
         #region Minimum version requirements
 
         internal const string ApiGetAlgorithmsMinimumVersion = "4.24.0";
+        internal const string ApiGetClassificationPoliciesMinimumVersion = "4.30.0";
 
         #endregion
 

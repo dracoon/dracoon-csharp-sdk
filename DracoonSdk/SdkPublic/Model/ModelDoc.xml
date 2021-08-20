@@ -1322,6 +1322,38 @@
 
   </members>
 
+  <members name="classificationPolicies">
+
+    <ClassificationPolicies>
+      <summary>
+        This model stores informations about policies for the classifications.
+      </summary>
+    </ClassificationPolicies>
+
+    <ShareClassificationPolicy>
+      <summary>
+        The policies for classifications if sharing nodes.
+      </summary>
+    </ShareClassificationPolicy>
+    
+  </members>
+
+  <members name="shareClassificationPolicy">
+
+    <ShareClassificationPolicy>
+      <summary>
+        This model stores informations about policies for the classifications if sharing nodes.
+      </summary>
+    </ShareClassificationPolicy>
+
+    <ClassificationMinimumForSharePasswort>
+      <summary>
+        For nodes which have this classification minimum a password is required (and higher classifications).
+      </summary>
+    </ClassificationMinimumForSharePasswort>
+
+  </members>
+  
   <members name="serverDefaultSettings">
 
     <ServerDefaultSettings>

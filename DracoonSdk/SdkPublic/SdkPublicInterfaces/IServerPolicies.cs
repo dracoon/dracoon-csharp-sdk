@@ -9,5 +9,8 @@ namespace Dracoon.Sdk {
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServerPolicies"]/GetSharesPasswordPolicies/*'/>
         PasswordSharePolicies GetSharesPasswordPolicies();
+
+        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServerPolicies"]/GetClassificationPolicies/*'/>
+        ClassificationPolicies GetClassificationPolicies();
     }
 }

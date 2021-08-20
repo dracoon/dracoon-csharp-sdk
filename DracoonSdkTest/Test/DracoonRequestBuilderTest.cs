@@ -1050,6 +1050,19 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Assert.Equal(expected, actual, new RestRequestComparer());
         }
 
+        [Fact]
+        public void Config_GetClassificationPolicies() {
+            // ARRANGE
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetClassificationPolicies, Method.GET);
+
+            // ACT
+            IRestRequest actual = builder.GetClassificationPolicies();
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
         #endregion
 
         #region Resources-Endpoint

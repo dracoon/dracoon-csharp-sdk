@@ -1247,7 +1247,22 @@
         <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
       </exception>
     </GetSharesPasswordPolicies>
-    
+
+    <GetClassificationPolicies>
+      <summary>
+        Retrieves the classification policies.
+      </summary>
+      <returns>
+        The classification policies.
+      </returns>
+      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+      </exception>
+      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+      </exception>
+    </GetClassificationPolicies>
+
   </members>
 
   <members name="iServerSettings">

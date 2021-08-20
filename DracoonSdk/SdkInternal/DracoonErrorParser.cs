@@ -238,6 +238,8 @@ namespace Dracoon.Sdk.SdkInternal {
                     return DracoonApiCode.VALIDATION_FIELD_NOT_BETWEEN_0_10;
                 case -80045:
                     return DracoonApiCode.VALIDATION_INVALID_ETAG;
+                case -80064:
+                    return DracoonApiCode.VALIDATION_CLASSIFICATION_POLICY_VIOLATION;
                 case -90033:
                     return DracoonApiCode.SERVER_S3_IS_ENFORCED;
                 default:

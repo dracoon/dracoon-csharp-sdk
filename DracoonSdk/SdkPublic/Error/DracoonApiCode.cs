@@ -516,6 +516,14 @@ namespace Dracoon.Sdk.Error {
         public static readonly DracoonApiCode PLACEHOLDER_GROUPS = new DracoonApiCode(3600, "");
 
         #endregion
+        #region Policies
+
+        /// <summary>
+        /// Groups error.
+        /// </summary>
+        public static readonly DracoonApiCode VALIDATION_CLASSIFICATION_POLICY_VIOLATION = new DracoonApiCode(3750, "A classification policy is violated.");
+
+        #endregion
         #region OTHERS
 
         /// <summary>

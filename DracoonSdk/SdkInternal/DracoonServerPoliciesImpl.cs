@@ -28,5 +28,12 @@ namespace Dracoon.Sdk.SdkInternal {
                 _client.Executor.DoSyncApiCall<ApiPasswordSettings>(request, DracoonRequestExecutor.RequestType.GetPasswordPolicies);
             return SettingsMapper.FromApiPasswordSharePolicies(apiPasswordPolicies.SharePasswordSettings);
         }
+
+        public ClassificationPolicies GetClassificationPolicies() {
+            _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetClassificationPoliciesMinimumVersion);
+            IRestRequest request = _client.Builder.GetClassificationPolicies();
+            ApiClassificationPolicies apiClassificationPolicies = _client.Executor.DoSyncApiCall<ApiClassificationPolicies>(request, DracoonRequestExecutor.RequestType.GetClassificationPolicies);
+            return SettingsMapper.FromApiClassificationPolicies(apiClassificationPolicies);
+        }
     }
 }

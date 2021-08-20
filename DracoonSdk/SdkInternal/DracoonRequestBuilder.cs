@@ -588,6 +588,12 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        public IRestRequest GetClassificationPolicies() {
+            RestRequest request = new RestRequest(ApiConfig.ApiGetClassificationPolicies, Method.GET);
+            SetGeneralRestValues(request, true);
+            return request;
+        }
+
         #endregion
 
         #endregion
