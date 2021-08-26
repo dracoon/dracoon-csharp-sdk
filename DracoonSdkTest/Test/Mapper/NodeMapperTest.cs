@@ -2,11 +2,10 @@
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Mapper;
+using Dracoon.Sdk.SdkInternal.Util;
 using Dracoon.Sdk.UnitTest.Factory;
 using Dracoon.Sdk.UnitTest.XUnitComparer;
 using System.Collections.Generic;
-using Dracoon.Sdk.SdkInternal.Util;
-using Dracoon.Sdk.UnitTest.Test.Util;
 using Telerik.JustMock;
 using Xunit;
 
@@ -86,7 +85,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     CountDownloadShares = current.CountDownloadShares,
                     CountUploadShares = current.CountUploadShares,
                     BranchVersion = current.BranchVersion,
-                    FileType = current.Extension
+                    FileType = current.Extension,
+                    ConfigParentRoomId = current.ConfigParentRoomId
                 };
                 param.Items.Add(currentApi);
                 Mock.Arrange(() => NodeMapper.FromApiNode(currentApi)).Returns(current);
@@ -179,7 +179,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 CountDownloadShares = expected.CountDownloadShares,
                 CountUploadShares = expected.CountUploadShares,
                 BranchVersion = expected.BranchVersion,
-                FileType = expected.Extension
+                FileType = expected.Extension,
+                ConfigParentRoomId = expected.ConfigParentRoomId
             };
 
             Mock.Arrange(() => EnumConverter.ConvertValueToNodeTypeEnum(expectedTypeValue)).Returns(expectedType);

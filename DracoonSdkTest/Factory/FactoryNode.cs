@@ -75,7 +75,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     RecycleBinRetentionPeriod = 15,
                     CountDownloadShares = 6,
                     CountUploadShares = 4,
-                    BranchVersion = 12358239758
+                    BranchVersion = 12358239758,
+                    ConfigParentRoomId = 8
                 };
             }
         }
@@ -127,7 +128,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     CountDownloadShares = 6,
                     CountUploadShares = 4,
                     BranchVersion = 12358239758,
-                    FileType = ".txt"
+                    FileType = ".txt",
+                    ConfigParentRoomId = 8
                 };
             }
         }

@@ -102,5 +102,8 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
 
         [JsonProperty("mediaToken", NullValueHandling = NullValueHandling.Ignore)]
         public string MediaToken { get; set; }
+
+        [JsonProperty("authParentId", NullValueHandling = NullValueHandling.Ignore)]
+        public long? ConfigParentRoomId { get; set; }
     }
 }
