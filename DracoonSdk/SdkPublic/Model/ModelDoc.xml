@@ -803,6 +803,12 @@
       </summary>
     </BranchVersion>
 
+    <ConfigParentRoomId>
+      <summary>
+        The room id which spezifies the config for this node. This can be the same id as this current node.
+      </summary>
+    </ConfigParentRoomId>
+
   </members>
 
   <members name="nodeList">
