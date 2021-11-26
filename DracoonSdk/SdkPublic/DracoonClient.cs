@@ -13,12 +13,8 @@ namespace Dracoon.Sdk {
 
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonClient"]/Auth/*'/>
         public DracoonAuth Auth {
-            get {
-                return _oAuth.Auth;
-            }
-            set {
-                _oAuth.Auth = value;
-            }
+            get => _oAuth.Auth;
+            set => _oAuth.Auth = value;
         }
 
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonClient"]/EncryptionPassword/*'/>
@@ -29,49 +25,29 @@ namespace Dracoon.Sdk {
         private static DracoonHttpConfig _httpConfig;
 
         internal static DracoonHttpConfig HttpConfig {
-            get {
-                return _httpConfig ?? (_httpConfig = new DracoonHttpConfig());
-            }
-            set {
-                _httpConfig = value;
-            }
+            get => _httpConfig ?? (_httpConfig = new DracoonHttpConfig());
+            set => _httpConfig = value;
         }
 
 
         private static ILog _logger;
 
         internal static ILog Log {
-            get {
-                return _logger ?? (_logger = new EmptyLog());
-            }
-            set {
-                _logger = value;
-            }
+            get => _logger ?? (_logger = new EmptyLog());
+            set => _logger = value;
         }
 
         private readonly IRequestBuilder _builder;
 
-        IRequestBuilder IInternalDracoonClient.Builder {
-            get {
-                return _builder;
-            }
-        }
+        IRequestBuilder IInternalDracoonClient.Builder => _builder;
 
         private readonly IRequestExecutor _executor;
 
-        IRequestExecutor IInternalDracoonClient.Executor {
-            get {
-                return _executor;
-            }
-        }
+        IRequestExecutor IInternalDracoonClient.Executor => _executor;
 
         private readonly IOAuth _oAuth;
 
-        IOAuth IInternalDracoonClient.OAuth {
-            get {
-                return _oAuth;
-            }
-        }
+        IOAuth IInternalDracoonClient.OAuth => _oAuth;
 
         #endregion
 
@@ -83,70 +59,30 @@ namespace Dracoon.Sdk {
         private readonly DracoonServerImpl _server;
         private readonly DracoonUsersImpl _users;
 
-        DracoonAccountImpl IInternalDracoonClient.AccountImpl {
-            get {
-                return _account;
-            }
-        }
+        DracoonAccountImpl IInternalDracoonClient.AccountImpl => _account;
 
-        DracoonNodesImpl IInternalDracoonClient.NodesImpl {
-            get {
-                return _nodes;
-            }
-        }
+        DracoonNodesImpl IInternalDracoonClient.NodesImpl => _nodes;
 
-        DracoonSharesImpl IInternalDracoonClient.SharesImpl {
-            get {
-                return _shares;
-            }
-        }
+        DracoonSharesImpl IInternalDracoonClient.SharesImpl => _shares;
 
-        DracoonServerImpl IInternalDracoonClient.ServerImpl {
-            get {
-                return _server;
-            }
-        }
+        DracoonServerImpl IInternalDracoonClient.ServerImpl => _server;
 
-        DracoonUsersImpl IInternalDracoonClient.UsersImpl {
-            get {
-                return _users;
-            }
-        }
+        DracoonUsersImpl IInternalDracoonClient.UsersImpl => _users;
 
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonClient"]/Account/*'/>
-        public IAccount Account {
-            get {
-                return _account;
-            }
-        }
+        public IAccount Account => _account;
 
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonClient"]/Server/*'/>
-        public IServer Server {
-            get {
-                return _server;
-            }
-        }
+        public IServer Server => _server;
 
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonClient"]/Nodes/*'/>
-        public INodes Nodes {
-            get {
-                return _nodes;
-            }
-        }
+        public INodes Nodes => _nodes;
 
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonClient"]/Shares/*'/>
-        public IShares Shares {
-            get {
-                return _shares;
-            }
-        }
+        public IShares Shares => _shares;
 
         /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonClient"]/Users/*'/>
-        public IUsers Users {
-            get {
-                return _users;
-            }
-        }
+        public IUsers Users => _users;
 
         #endregion
 

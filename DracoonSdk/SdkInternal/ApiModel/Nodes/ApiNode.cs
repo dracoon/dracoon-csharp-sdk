@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
 using Newtonsoft.Json.Serialization;
+using System;
 
 namespace Dracoon.Sdk.SdkInternal.ApiModel {
     internal class ApiNode {

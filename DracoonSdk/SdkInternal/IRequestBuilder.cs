@@ -1,9 +1,9 @@
-﻿using System.Net;
-using Dracoon.Sdk.Filter;
+﻿using Dracoon.Sdk.Filter;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.Sort;
 using RestSharp;
+using System.Net;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal interface IRequestBuilder {

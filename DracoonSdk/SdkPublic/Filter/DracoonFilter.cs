@@ -8,12 +8,12 @@ namespace Dracoon.Sdk.Filter {
 
         internal List<dynamic> FiltersList = new List<dynamic>();
 
-        internal void CheckFilter(dynamic filter, string filterParamName) {
+        internal void CheckFilter(object filter, string filterParamName) {
             if (filter == null) {
                 throw new ArgumentNullException(filterParamName);
             }
 
-            foreach (dynamic currentFilter in FiltersList) {
+            foreach (object currentFilter in FiltersList) {
                 if (currentFilter.GetType() == filter.GetType()) {
                     throw new ArgumentException("Filter already set.");
                 }
@@ -23,7 +23,7 @@ namespace Dracoon.Sdk.Filter {
         /// <include file="FilterDoc.xml" path='docs/members[@name="dracoonFilter"]/ToString/*'/>
         public override string ToString() {
             StringBuilder sb = new StringBuilder();
-            foreach (dynamic currentFilter in FiltersList) {
+            foreach (object currentFilter in FiltersList) {
                 if (sb.Length != 0) {
                     sb.Append("|");
                 }

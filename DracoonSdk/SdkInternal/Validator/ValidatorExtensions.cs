@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Dracoon.Sdk.SdkInternal.Validator {
     internal static class ValidatorExtensions {
-        private static readonly string[] InvalidPathChars = {"<", ">", ":", "\"", "|", "?", "*"};
+        private static readonly string[] InvalidPathChars = { "<", ">", ":", "\"", "|", "?", "*" };
 
         internal static void MustNotNull<T>(this T param, string paramName) {
             if (param == null) {

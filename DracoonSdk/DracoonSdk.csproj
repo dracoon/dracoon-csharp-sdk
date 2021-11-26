@@ -1,297 +1,50 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{15401F27-F721-4C7E-AB20-5EB509AC298B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Dracoon.Sdk</RootNamespace>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Company>DRACOON GmbH</Company>
+    <PackageId>Dracoon.Sdk</PackageId>
+    <Title>Dracoon SDK</Title>
+    <Product>Dracoon Sdk for .NET Standard</Product>
+    <Copyright>Copyright ©2021 Dracoon GmbH</Copyright>
     <AssemblyName>Dracoon.Sdk</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
+    <RootNamespace>Dracoon.Sdk</RootNamespace>
+    <PackageTags>dracoon, sdk, rest, api</PackageTags>
+    <Authors>DRACOON Developers</Authors>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageIcon>DracoonSdk_NugetImage.png</PackageIcon>
+    <PackageIconUrl />
+    <PackageProjectUrl>https://github.com/dracoon/dracoon-csharp-sdk</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Version>2.1.0-beta3</Version>
+    <OutDir></OutDir>
+    <Description>The DRACOON SDK for .NET Standard.</Description>
+    <Copyright>Copyright ©2021 DRACOON GmbH</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Dracoon.Sdk.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Dracoon.Sdk.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
-      <HintPath>..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
-    </Reference>
-    <Reference Include="Dracoon.Crypto.Sdk, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dracoon.Crypto.Sdk.2.1.0\lib\net452\Dracoon.Crypto.Sdk.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="RestSharp, Version=106.8.10.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.106.11.5\lib\net452\RestSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http.WebRequest" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>Dracoon.Sdk.UnitTest</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="SdkInternal\ApiConfig.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiDeletedNodeSummary.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiDeletedNodeSummaryList.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiDeletedNodeVersion.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiDeletedNodeVersionsList.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiS3Status.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiS3Url.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiS3Urls.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiAddOrUpdateAttributeRequest.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiDeletePreviousVersionsRequest.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiEnableRoomEncryptionRequest.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiGetS3Urls.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiRestorePreviousVersionsRequest.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiS3FileUploadPart.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiAlgorithm.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiAlgorithms.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiCharacterRules.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiClassificationPolicies.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiDefaultsSettings.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiEncryptionPasswordSettings.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiInfrastructureSettings.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiPasswordSettings.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiShareClassificationPolicy.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiSharePasswordSettings.cs" />
-    <Compile Include="SdkInternal\ApiModel\Shares\ApiDownloadShare.cs" />
-    <Compile Include="SdkInternal\ApiModel\Shares\ApiDownloadShareList.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiFileIdFileKey.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiFileKeyList.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiMissingFileKeys.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiSetUserFileKey.cs" />
-    <Compile Include="SdkInternal\ApiModel\Shares\ApiUploadShare.cs" />
-    <Compile Include="SdkInternal\ApiModel\Shares\ApiUploadShareList.cs" />
-    <Compile Include="SdkInternal\ApiModel\Settings\ApiGeneralSettings.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiCopyNode.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiCreateDownloadShareRequest.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiCreateUploadShareRequest.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiMoveNode.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiSetUserFileKeysRequest.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiUploadChunkResult.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiAuthData.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiAvatarInfo.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiUserIdFileId.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiUserIdPublicKey.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiCompleteFileUpload.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiDownloadToken.cs" />
-    <Compile Include="SdkInternal\ApiModel\ApiExpiration.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiFileKey.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiUploadToken.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiCopyNodesRequest.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiCreateFileUpload.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiCreateFolderRequest.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiCreateRoomRequest.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiCustomerAccount.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiDeleteNodesRequest.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiEncryptionInfo.cs" />
-    <Compile Include="SdkInternal\ApiModel\ApiErrorResponse.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiNode.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiNodeList.cs" />
-    <Compile Include="SdkInternal\ApiModel\Nodes\ApiNodePermissions.cs" />
-    <Compile Include="SdkInternal\ApiModel\ApiRange.cs" />
-    <Compile Include="SdkInternal\ApiModel\Server\ApiServerTime.cs" />
-    <Compile Include="SdkInternal\ApiModel\Server\ApiServerVersion.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiMoveNodesRequest.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiUpdateFileRequest.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiUpdateFolderRequest.cs" />
-    <Compile Include="SdkInternal\ApiModel\Requests\ApiUpdateRoomRequest.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiUserAccount.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiUserInfo.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiUserKeyPair.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiUserPrivateKey.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiAttribute.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiAttributeList.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiUserPublicKey.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiUserRole.cs" />
-    <Compile Include="SdkInternal\ApiModel\User\ApiUserRoleList.cs" />
-    <Compile Include="SdkInternal\ApiModel\VoidResponse.cs" />
-    <Compile Include="SdkInternal\DracoonAccountImpl.cs" />
-    <Compile Include="SdkInternal\DracoonServerPoliciesImpl.cs" />
-    <Compile Include="SdkInternal\DracoonServerSettingsImpl.cs" />
-    <Compile Include="SdkInternal\DracoonErrorParser.cs" />
-    <Compile Include="SdkInternal\DracoonNodesImpl.cs" />
-    <Compile Include="SdkInternal\DracoonRequestBuilder.cs" />
-    <Compile Include="SdkInternal\DracoonRequestExecutor.cs" />
-    <Compile Include="SdkInternal\DracoonServerImpl.cs" />
-    <Compile Include="SdkInternal\DracoonSharesImpl.cs" />
-    <Compile Include="SdkInternal\DracoonUsersImpl.cs" />
-    <Compile Include="SdkInternal\EncFileDownload.cs" />
-    <Compile Include="SdkInternal\EncFileUpload.cs" />
-    <Compile Include="SdkInternal\FileDownload.cs" />
-    <Compile Include="SdkInternal\FileUpload.cs" />
-    <Compile Include="SdkInternal\IInternalDracoonClient.cs" />
-    <Compile Include="SdkInternal\IRequestBuilder.cs" />
-    <Compile Include="SdkInternal\IRequestExecutor.cs" />
-    <Compile Include="SdkInternal\Mapper\AttributeMapper.cs" />
-    <Compile Include="SdkInternal\Mapper\SettingsMapper.cs" />
-    <Compile Include="SdkInternal\Mapper\CryptoErrorMapper.cs" />
-    <Compile Include="SdkInternal\Mapper\CustomerMapper.cs" />
-    <Compile Include="SdkInternal\Mapper\FileMapper.cs" />
-    <Compile Include="SdkInternal\Mapper\FolderMapper.cs" />
-    <Compile Include="SdkInternal\Mapper\NodeMapper.cs" />
-    <Compile Include="SdkInternal\Mapper\RoomMapper.cs" />
-    <Compile Include="SdkInternal\Mapper\ShareMapper.cs" />
-    <Compile Include="SdkInternal\Mapper\UserMapper.cs" />
-    <Compile Include="SdkInternal\OAuth\IOAuth.cs" />
-    <Compile Include="SdkInternal\OAuth\OAuthClient.cs" />
-    <Compile Include="SdkInternal\OAuth\OAuthConfig.cs" />
-    <Compile Include="SdkInternal\OAuth\OAuthError.cs" />
-    <Compile Include="SdkInternal\OAuth\OAuthErrorParser.cs" />
-    <Compile Include="SdkInternal\OAuth\ApiOAuthToken.cs" />
-    <Compile Include="SdkInternal\Util\CryptoHelper.cs" />
-    <Compile Include="SdkInternal\Util\EnumConverter.cs" />
-    <Compile Include="SdkInternal\Util\FileHash.cs" />
-    <Compile Include="SdkInternal\Util\DracoonWebClientExtension.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="SdkInternal\Validator\ValidatorExtensions.cs" />
-    <Compile Include="SdkPublic\DracoonAuth.cs" />
-    <Compile Include="SdkPublic\DracoonClient.cs" />
-    <Compile Include="SdkPublic\Error\DracoonApiCode.cs" />
-    <Compile Include="SdkPublic\Error\DracoonApiException.cs" />
-    <Compile Include="SdkPublic\Error\DracoonCryptoCode.cs" />
-    <Compile Include="SdkPublic\Error\DracoonCryptoException.cs" />
-    <Compile Include="SdkPublic\Error\DracoonException.cs" />
-    <Compile Include="SdkPublic\Error\DracoonFileIOException.cs" />
-    <Compile Include="SdkPublic\Error\DracoonNetInsecureException.cs" />
-    <Compile Include="SdkPublic\Error\DracoonNetIOException.cs" />
-    <Compile Include="SdkPublic\Filter\DracoonFilter.cs" />
-    <Compile Include="SdkPublic\Filter\DracoonFilterType.cs" />
-    <Compile Include="SdkPublic\Filter\SpecificFilters\GeneralFilters.cs" />
-    <Compile Include="SdkPublic\Filter\SpecificFilters\GetDownloadSharesFilter.cs" />
-    <Compile Include="SdkPublic\Filter\SpecificFilters\GetNodesFilter.cs" />
-    <Compile Include="SdkPublic\Filter\FilterParam.cs" />
-    <Compile Include="SdkPublic\Filter\SpecificFilters\GetUploadSharesFilter.cs" />
-    <Compile Include="SdkPublic\Filter\SpecificFilters\SearchNodesFilter.cs" />
-    <Compile Include="SdkPublic\Model\AlgorithmState.cs" />
-    <Compile Include="SdkPublic\Model\AvatarInfo.cs" />
-    <Compile Include="SdkPublic\Model\Classification.cs" />
-    <Compile Include="SdkPublic\Model\ClassificationPolicies.cs" />
-    <Compile Include="SdkPublic\Model\CustomerAccount.cs" />
-    <Compile Include="SdkPublic\Model\FileKeyAlgorithmData.cs" />
-    <Compile Include="SdkPublic\Model\PasswordCharacterPolicies.cs" />
-    <Compile Include="SdkPublic\Model\PasswordCharacterSet.cs" />
-    <Compile Include="SdkPublic\Model\PasswordCharacterSetType.cs" />
-    <Compile Include="SdkPublic\Model\PasswordEncryptionPolicies.cs" />
-    <Compile Include="SdkPublic\Model\PasswordExpiration.cs" />
-    <Compile Include="SdkPublic\Model\PasswordSharePolicies.cs" />
-    <Compile Include="SdkPublic\Model\RecycleBinItem.cs" />
-    <Compile Include="SdkPublic\Model\RecycleBinItemList.cs" />
-    <Compile Include="SdkPublic\Model\PreviousVersion.cs" />
-    <Compile Include="SdkPublic\Model\PreviousVersionList.cs" />
-    <Compile Include="SdkPublic\Model\ServerDefaultsSettings.cs" />
-    <Compile Include="SdkPublic\Model\DownloadShare.cs" />
-    <Compile Include="SdkPublic\Model\DownloadShareList.cs" />
-    <Compile Include="SdkPublic\Model\ServerGeneralSettings.cs" />
-    <Compile Include="SdkPublic\DracoonHttpConfig.cs" />
-    <Compile Include="SdkPublic\Model\IFileDownloadCallback.cs" />
-    <Compile Include="SdkPublic\Model\IFileUploadCallback.cs" />
-    <Compile Include="SdkPublic\Model\ServerInfrastructureSettings.cs" />
-    <Compile Include="SdkPublic\Model\Attribute.cs" />
-    <Compile Include="SdkPublic\Model\AttributeList.cs" />
-    <Compile Include="SdkPublic\Model\ShareClassificationPolicy.cs" />
-    <Compile Include="SdkPublic\Model\UserAuthData.cs" />
-    <Compile Include="SdkPublic\Model\UserAuthMethod.cs" />
-    <Compile Include="SdkPublic\Model\UserKeyPairAlgorithmData.cs" />
-    <Compile Include="SdkPublic\Model\UserRequests\CopyNode.cs" />
-    <Compile Include="SdkPublic\Model\UserRequests\DeletePreviousVersionsRequest.cs" />
-    <Compile Include="SdkPublic\Model\UserRequests\EnableRoomEncryptionRequest.cs" />
-    <Compile Include="SdkPublic\Model\UserRequests\MoveNode.cs" />
-    <Compile Include="SdkPublic\Model\Node.cs" />
-    <Compile Include="SdkPublic\Model\NodeList.cs" />
-    <Compile Include="SdkPublic\Model\NodePermissions.cs" />
-    <Compile Include="SdkPublic\Model\NodeType.cs" />
-    <Compile Include="SdkPublic\Model\ResolutionStrategy.cs" />
-    <Compile Include="SdkPublic\Model\UploadShare.cs" />
-    <Compile Include="SdkPublic\Model\UploadShareList.cs" />
-    <Compile Include="SdkPublic\Model\UserAccount.cs" />
-    <Compile Include="SdkPublic\Model\UserInfo.cs" />
-    <Compile Include="SdkPublic\Model\UserRequests\CopyNodesRequest.cs" />
-    <Compile Include="SdkPublic\Model\UserRequests\CreateDownloadShareRequest.cs" />
-    <Compile Include="SdkPublic\Model\UserRequests\CreateFolderRequest.cs" />
-    <Compile Include="SdkPublic\Model\UserRequests\CreateRoomRequest.cs" />
-    <Compile Include="SdkPublic\Model\UserRequests\CreateUploadShareRequest.cs" />
-    <Compile Include="SdkPublic\Model\UserRequests\DeleteNodesRequest.cs" />
-    <Compile Include="SdkPublic\Model\GroupMemberAcceptance.cs" />
-    <Compile Include="SdkPublic\Model\UserRequests\FileUploadRequest.cs" />
-    <Compile Include="SdkPublic\Model\UserRequests\MoveNodesRequest.cs" />
-    <Compile Include="SdkPublic\Model\UserRequests\RestorePreviousVersionsRequest.cs" />
-    <Compile Include="SdkPublic\Model\UserRequests\UpdateFileRequest.cs" />
-    <Compile Include="SdkPublic\Model\UserRequests\UpdateFolderRequest.cs" />
-    <Compile Include="SdkPublic\Model\UserRequests\UpdateRoomRequest.cs" />
-    <Compile Include="SdkPublic\Model\UserRole.cs" />
-    <Compile Include="SdkPublic\Model\UserType.cs" />
-    <Compile Include="SdkPublic\OAuthHelper.cs" />
-    <Compile Include="SdkPublic\SdkPublicInterfaces\IServerPolicies.cs" />
-    <Compile Include="SdkPublic\SdkPublicInterfaces\IServerSettings.cs" />
-    <Compile Include="SdkPublic\SdkPublicInterfaces\IAccount.cs" />
-    <Compile Include="SdkPublic\SdkPublicInterfaces\ILog.cs" />
-    <Compile Include="SdkInternal\EmptyLog.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SdkPublic\SdkPublicInterfaces\INodes.cs" />
-    <Compile Include="SdkPublic\SdkPublicInterfaces\IServer.cs" />
-    <Compile Include="SdkPublic\SdkPublicInterfaces\IShares.cs" />
-    <Compile Include="SdkPublic\SdkPublicInterfaces\IUsers.cs" />
-    <Compile Include="SdkPublic\Sort\DracoonSort.cs" />
-    <Compile Include="SdkPublic\Sort\DracoonSortOrder.cs" />
-    <Compile Include="SdkPublic\Sort\SpecificSort\GeneralSort.cs" />
-    <Compile Include="SdkPublic\Sort\SpecificSort\SearchNodesSort.cs" />
-    <Compile Include="SdkPublic\Sort\SpecificSort\SharesSort.cs" />
+    <PackageReference Include="Dracoon.Crypto.Sdk" Version="3.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
+    <PackageReference Include="RestSharp" Version="106.13.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="SdkPublic\Error\ErrorDoc.xml" />
-    <None Include="SdkPublic\Filter\FilterDoc.xml" />
-    <None Include="SdkPublic\Filter\SpecificFilters\SpecificFilterDoc.xml">
-      <SubType>Designer</SubType>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
     </None>
-    <None Include="SdkPublic\Model\ModelDoc.xml">
-      <SubType>Designer</SubType>
+    <None Include="DracoonSdk_NugetImage.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
     </None>
-    <None Include="SdkPublic\Model\UserRequests\UserRequestsDoc.xml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="SdkPublic\SdkPublicDoc.xml" />
-    <None Include="SdkPublic\SdkPublicInterfaces\SdkPublicInterfacesDoc.xml" />
-    <None Include="SdkPublic\Sort\Sort.xml" />
-    <None Include="SdkPublic\Sort\SpecificSort\SpecificSort.xml" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

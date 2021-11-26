@@ -13,7 +13,7 @@ namespace Dracoon.Sdk.Example {
         private static readonly int REDIRECT_PORT = 10000;
 
         [STAThread]
-        static void Main() {
+        private static void Main() {
             // Authorize client
             string authCode = AuthorizeClient();
 

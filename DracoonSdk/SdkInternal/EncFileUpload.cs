@@ -203,7 +203,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
                     if (nextByte != -1) {
                         // Do it every time if the current block isn't the last
-                        Buffer.SetByte(buffer, 0, (byte) nextByte);
+                        Buffer.SetByte(buffer, 0, (byte)nextByte);
                         offset = 1;
                     } else {
                         break;

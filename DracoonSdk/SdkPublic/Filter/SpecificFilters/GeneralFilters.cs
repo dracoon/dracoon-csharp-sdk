@@ -1,6 +1,6 @@
-﻿using System;
-using Dracoon.Sdk.Model;
+﻿using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.Validator;
+using System;
 
 namespace Dracoon.Sdk.Filter {
     #region NodeType-Filter
@@ -240,7 +240,7 @@ namespace Dracoon.Sdk.Filter {
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="general"]/EqualTo/*'/>
         public static FilterParam<ClassificationFilter, DracoonFilterType<ClassificationFilter>> EqualTo(this ClassificationFilter ef,
             Classification value) {
-            ef.AddOperatorAndValue((int) value, "eq", nameof(value));
+            ef.AddOperatorAndValue((int)value, "eq", nameof(value));
             return new FilterParam<ClassificationFilter, DracoonFilterType<ClassificationFilter>>(ef, ef);
         }
     }

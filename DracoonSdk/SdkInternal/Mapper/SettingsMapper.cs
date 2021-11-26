@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Dracoon.Sdk.Model;
+﻿using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Settings;
 using Dracoon.Sdk.SdkInternal.Util;
+using System.Collections.Generic;
 
 namespace Dracoon.Sdk.SdkInternal.Mapper {
     internal static class SettingsMapper {

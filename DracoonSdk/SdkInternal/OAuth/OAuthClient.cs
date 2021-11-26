@@ -8,12 +8,8 @@ namespace Dracoon.Sdk.SdkInternal.OAuth {
         private DracoonAuth _auth;
 
         DracoonAuth IOAuth.Auth {
-            get {
-                return _auth;
-            }
-            set {
-                _auth = value;
-            }
+            get => _auth;
+            set => _auth = value;
         }
 
         internal OAuthClient(IInternalDracoonClient client, DracoonAuth auth) {

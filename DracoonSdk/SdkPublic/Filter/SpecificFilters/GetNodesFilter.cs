@@ -2,25 +2,13 @@
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getNodesFilter"]/GetNodesFilter/*'/>
     public class GetNodesFilter : DracoonFilter {
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getNodesFilter"]/Type/*'/>
-        public static NodeTypeFilter Type {
-            get {
-                return new NodeTypeFilter();
-            }
-        }
+        public static NodeTypeFilter Type => new NodeTypeFilter();
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getNodesFilter"]/Name/*'/>
-        public static NameFilter Name {
-            get {
-                return new NameFilter();
-            }
-        }
+        public static NameFilter Name => new NameFilter();
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getNodesFilter"]/IsEncrypted/*'/>
-        public static NodeIsEncryptedFilter IsEncrypted {
-            get {
-                return new NodeIsEncryptedFilter();
-            }
-        }
+        public static NodeIsEncryptedFilter IsEncrypted => new NodeIsEncryptedFilter();
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getNodesFilter"]/AddNodeTypeFilter/*'/>
         public void AddNodeTypeFilter(DracoonFilterType<NodeTypeFilter> typeFilter) {

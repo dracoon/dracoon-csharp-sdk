@@ -145,7 +145,7 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         private void ProcessChunk(Uri uploadUrl, byte[] buffer, long uploadedByteCount, int bytesRead, int sendTry = 1) {
-            
+
             ApiUploadChunkResult chunkResult = UploadChunkWebClient(uploadUrl, buffer, uploadedByteCount, bytesRead);
             if (!FileHash.CompareFileHashes(chunkResult.Hash, buffer, bytesRead)) {
                 if (sendTry <= 3) {
@@ -244,9 +244,9 @@ namespace Dracoon.Sdk.SdkInternal {
                 return S3_URL_BATCH;
             }
 
-            double divided = (double) OptionalFileSize / chunkSize;
+            double divided = (double)OptionalFileSize / chunkSize;
             double floored = Math.Floor(divided);
-            int fileDependentBatchSize = (int) floored;
+            int fileDependentBatchSize = (int)floored;
 
             return fileDependentBatchSize < S3_URL_BATCH ? fileDependentBatchSize : S3_URL_BATCH;
         }

@@ -6,7 +6,6 @@ using Dracoon.Sdk.SdkInternal.ApiModel.Settings;
 using Dracoon.Sdk.SdkInternal.Mapper;
 using RestSharp;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class DracoonServerSettingsImpl : IServerSettings {

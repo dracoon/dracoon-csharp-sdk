@@ -55,10 +55,10 @@ namespace Dracoon.Sdk.SdkInternal.OAuth {
         }
 
         private static DracoonApiCode Parse(HttpStatusCode statusCode, OAuthError oAuthError, RequestType requestType) {
-            switch ((int) statusCode) {
-                case (int) HttpStatusCode.BadRequest:
+            switch ((int)statusCode) {
+                case (int)HttpStatusCode.BadRequest:
                     return ParseBadRequest(oAuthError, requestType);
-                case (int) HttpStatusCode.Unauthorized:
+                case (int)HttpStatusCode.Unauthorized:
                     return ParseUnauthorized();
                 default:
                     return DracoonApiCode.AUTH_UNKNOWN_ERROR;
