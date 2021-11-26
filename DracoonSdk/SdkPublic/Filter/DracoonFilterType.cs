@@ -14,7 +14,7 @@ namespace Dracoon.Sdk.Filter {
             }
         }
 
-        private void AddValue(dynamic value) {
+        private void AddValue(object value) {
             if (value is DateTime dt) {
                 FilterTypeString += ":" + dt.ToString("o");
             } else {
@@ -27,7 +27,7 @@ namespace Dracoon.Sdk.Filter {
             return FilterTypeString;
         }
 
-        internal void AddOperatorAndValue(dynamic value, string filterOperator, string filterParamName) {
+        internal void AddOperatorAndValue(object value, string filterOperator, string filterParamName) {
             if (value == null) {
                 throw new ArgumentNullException(filterParamName);
             }

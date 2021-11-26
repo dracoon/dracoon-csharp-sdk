@@ -3,7 +3,6 @@ using Dracoon.Sdk.SdkInternal.ApiModel;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
@@ -12,9 +11,9 @@ namespace Dracoon.Sdk.SdkInternal {
     internal static class DracoonErrorParser {
         private const string LogTag = nameof(DracoonErrorParser);
 
-        private static bool CheckResponseHasHeader(dynamic response, string headerName, string headerValue) {
+        private static bool CheckResponseHasHeader(object response, string headerName, string headerValue) {
             if (response is IRestResponse restResponse && restResponse.Headers != null) {
-                foreach (var current in restResponse.Headers) {
+                foreach (Parameter current in restResponse.Headers) {
                     if (headerName.Equals(current.Name) && headerValue.Equals(current.Value)) {
                         return true;
                     }
@@ -31,9 +30,9 @@ namespace Dracoon.Sdk.SdkInternal {
             return false;
         }
 
-        public static string GetResponseHeaderValue(dynamic response, string headerName) {
+        public static string GetResponseHeaderValue(object response, string headerName) {
             if (response is IRestResponse restResponse && restResponse.Headers != null) {
-                foreach (var current in restResponse.Headers) {
+                foreach (Parameter current in restResponse.Headers) {
                     if (headerName.Equals(current.Name)) {
                         return current.Value.ToString();
                     }
@@ -81,7 +80,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal static void ParseError(IRestResponse response, RequestType requestType) {
             ApiErrorResponse apiError = GetApiErrorResponse(response.Content);
-            DracoonApiCode resultCode = Parse((int) response.StatusCode, response, apiError, requestType);
+            DracoonApiCode resultCode = Parse((int)response.StatusCode, response, apiError, requestType);
             DracoonClient.Log.Debug(LogTag, $"Query for '{requestType.ToString()}' failed with '{resultCode.Text}'");
 
             throw new DracoonApiException(resultCode);
@@ -91,7 +90,7 @@ namespace Dracoon.Sdk.SdkInternal {
             if (exception.Status == WebExceptionStatus.ProtocolError) {
                 ApiErrorResponse apiError = GetApiErrorResponse(ReadErrorResponseFromWebException(exception));
                 if (exception.Response is HttpWebResponse response) {
-                    DracoonApiCode resultCode = Parse((int) response.StatusCode, response, apiError, requestType);
+                    DracoonApiCode resultCode = Parse((int)response.StatusCode, response, apiError, requestType);
                     DracoonClient.Log.Debug(LogTag, $"Query for '{requestType.ToString()}' failed with '{resultCode.Text}'");
                     throw new DracoonApiException(resultCode);
                 }
@@ -112,32 +111,32 @@ namespace Dracoon.Sdk.SdkInternal {
             throw new DracoonApiException(resultCode);
         }
 
-        private static DracoonApiCode Parse(int httpStatusCode, dynamic response, ApiErrorResponse apiError, RequestType requestType) {
+        private static DracoonApiCode Parse(int httpStatusCode, object response, ApiErrorResponse apiError, RequestType requestType) {
             int? apiErrorCode = null;
             if (apiError != null) {
                 apiErrorCode = apiError.ErrorCode;
             }
 
             switch (httpStatusCode) {
-                case (int) HttpStatusCode.BadRequest:
+                case (int)HttpStatusCode.BadRequest:
                     return ParseBadRequest(apiErrorCode, requestType);
-                case (int) HttpStatusCode.PaymentRequired:
+                case (int)HttpStatusCode.PaymentRequired:
                     return ParsePaymentRequired();
                 case 429: // too many requests
                     return ParseTooManyRequests(response);
-                case (int) HttpStatusCode.Unauthorized:
+                case (int)HttpStatusCode.Unauthorized:
                     return ParseUnauthorized(apiErrorCode);
-                case (int) HttpStatusCode.Forbidden:
+                case (int)HttpStatusCode.Forbidden:
                     return ParseForbidden(apiErrorCode, response, requestType);
-                case (int) HttpStatusCode.NotFound:
+                case (int)HttpStatusCode.NotFound:
                     return ParseNotFound(apiErrorCode, requestType);
-                case (int) HttpStatusCode.Conflict:
+                case (int)HttpStatusCode.Conflict:
                     return ParseConflict(apiErrorCode, requestType);
-                case (int) HttpStatusCode.PreconditionFailed:
+                case (int)HttpStatusCode.PreconditionFailed:
                     return ParsePreconditionFailed(apiErrorCode);
-                case (int) HttpStatusCode.BadGateway:
+                case (int)HttpStatusCode.BadGateway:
                     return ParseBadGateway(apiErrorCode, requestType);
-                case (int) HttpStatusCode.GatewayTimeout:
+                case (int)HttpStatusCode.GatewayTimeout:
                     return ParseGatewayTimeout(apiErrorCode);
                 case 507: // insufficient storage
                     return ParseInsufficientStorage(apiErrorCode);
@@ -251,7 +250,7 @@ namespace Dracoon.Sdk.SdkInternal {
             return DracoonApiCode.PRECONDITION_PAYMENT_REQUIRED;
         }
 
-        private static DracoonApiCode ParseTooManyRequests(dynamic response) {
+        private static DracoonApiCode ParseTooManyRequests(object response) {
             string waitTime = GetResponseHeaderValue(response, "Retry-After");
             if (string.IsNullOrWhiteSpace(waitTime)) {
                 waitTime = "1";
@@ -268,7 +267,7 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        private static DracoonApiCode ParseForbidden(int? apiErrorCode, dynamic response, RequestType requestType) {
+        private static DracoonApiCode ParseForbidden(int? apiErrorCode, object response, RequestType requestType) {
             if (CheckResponseHasHeader(response, "X-Forbidden", "403")) {
                 return DracoonApiCode.SERVER_MALICIOUS_FILE_DETECTED;
             }

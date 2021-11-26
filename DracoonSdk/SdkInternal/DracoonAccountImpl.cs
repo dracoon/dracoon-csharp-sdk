@@ -10,9 +10,6 @@ using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -213,14 +210,13 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #region Avatar functions
 
-        public Image GetAvatar() {
+        public byte[] GetAvatar() {
             ApiAvatarInfo apiAvatarInfo = GetApiAvatarInfoInternally();
 
             using (WebClient avatarClient = _client.Builder.ProvideAvatarDownloadWebClient()) {
                 byte[] avatarImageBytes =
                     _client.Executor.ExecuteWebClientDownload(avatarClient, new Uri(apiAvatarInfo.AvatarUri), RequestType.GetUserAvatar);
-                MemoryStream ms = new MemoryStream(avatarImageBytes);
-                return Image.FromStream(ms);
+                return avatarImageBytes;
             }
         }
 
@@ -245,14 +241,8 @@ namespace Dracoon.Sdk.SdkInternal {
             return UserMapper.FromApiAvatarInfo(defaultAvatarInfo);
         }
 
-        public AvatarInfo UpdateAvatar(Image newAvatar) {
+        public AvatarInfo UpdateAvatar(byte[] newAvatar) {
             _client.Executor.CheckApiServerVersion();
-
-            byte[] avatarBytes = null;
-            using (MemoryStream ms = new MemoryStream()) {
-                newAvatar.Save(ms, newAvatar.RawFormat);
-                avatarBytes = ms.ToArray();
-            }
 
             #region Build multipart
 
@@ -260,10 +250,10 @@ namespace Dracoon.Sdk.SdkInternal {
             byte[] packageHeader = ApiConfig.ENCODING.GetBytes(
                 $"--{formDataBoundary}\r\nContent-Disposition: form-data; name=\"{"file"}\"; filename=\"{"avatarImage"}\"\r\n\r\n");
             byte[] packageFooter = ApiConfig.ENCODING.GetBytes(string.Format("\r\n--" + formDataBoundary + "--"));
-            byte[] multipartFormatedChunkData = new byte[packageHeader.Length + packageFooter.Length + avatarBytes.Length];
+            byte[] multipartFormatedChunkData = new byte[packageHeader.Length + packageFooter.Length + newAvatar.Length];
             Buffer.BlockCopy(packageHeader, 0, multipartFormatedChunkData, 0, packageHeader.Length);
-            Buffer.BlockCopy(avatarBytes, 0, multipartFormatedChunkData, packageHeader.Length, avatarBytes.Length);
-            Buffer.BlockCopy(packageFooter, 0, multipartFormatedChunkData, packageHeader.Length + avatarBytes.Length, packageFooter.Length);
+            Buffer.BlockCopy(newAvatar, 0, multipartFormatedChunkData, packageHeader.Length, newAvatar.Length);
+            Buffer.BlockCopy(packageFooter, 0, multipartFormatedChunkData, packageHeader.Length + newAvatar.Length, packageFooter.Length);
 
             #endregion
 

@@ -1,5 +1,5 @@
-﻿using System;
-using Dracoon.Sdk.SdkInternal.OAuth;
+﻿using Dracoon.Sdk.SdkInternal.OAuth;
+using System;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal interface IInternalDracoonClient {

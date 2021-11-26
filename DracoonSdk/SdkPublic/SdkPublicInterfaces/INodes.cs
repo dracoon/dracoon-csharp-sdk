@@ -1,7 +1,7 @@
-﻿using System;
-using Dracoon.Sdk.Filter;
+﻿using Dracoon.Sdk.Filter;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.Sort;
+using System;
 using System.IO;
 
 namespace Dracoon.Sdk {

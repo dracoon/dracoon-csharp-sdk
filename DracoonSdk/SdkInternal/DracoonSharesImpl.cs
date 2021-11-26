@@ -1,5 +1,4 @@
-﻿using Dracoon.Crypto.Sdk;
-using Dracoon.Crypto.Sdk.Model;
+﻿using Dracoon.Crypto.Sdk.Model;
 using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Filter;
 using Dracoon.Sdk.Model;

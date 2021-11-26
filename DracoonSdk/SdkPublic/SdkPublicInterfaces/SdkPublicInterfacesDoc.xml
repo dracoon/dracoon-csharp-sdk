@@ -100,7 +100,7 @@
     </ValidateTokenValidity>
     <GetAvatar>
       <summary>
-        Get the downloaded avatar image for the current user.
+        Get the avatar image for the current user.
       </summary>
       <returns>
         The avatar image.

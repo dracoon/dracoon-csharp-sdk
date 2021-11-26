@@ -1,7 +1,7 @@
-﻿using System;
+﻿using RestSharp;
+using System;
 using System.Net;
 using System.Threading;
-using RestSharp;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal interface IRequestExecutor {

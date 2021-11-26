@@ -11,8 +11,8 @@ A library to access the DRACOON REST API.
 
 #### Minimum Requirements
 
-.NET version: 4.5.2\
-API version: 4.11.0
+.NET Standard 2.0
+API version: 4.23.0
 
 #### Download
 
@@ -21,18 +21,18 @@ In nuget, you can find the DRACOON SDK [here](https://www.nuget.org/packages/Dra
 
 If you are using NuGet with package management "Packages.config", then edit your project's "packages.config" and add this to the packages section:
 ```xml
-<package id="Dracoon.Sdk" version="2.1.0-beta3-SNAPSHOT" />
+<package id="Dracoon.Sdk" version="3.0.0-beta1" />
 ```
 If you are using Visual Studio 2017 (or higher) and you are using NuGet with package management "PackageReference" then edit your .csproj file and add this to the package dependency group:
 ```xml
-<PackageReference Include="Dracoon.Sdk" Version="2.1.0-beta3-SNAPSHOT" />
+<PackageReference Include="Dracoon.Sdk" Version="3.0.0-beta1" />
 ```
 
 Note that you also need to include the following dependencies:
-1. Bouncy Castle (= 1.8.6.1): [nuget](https://www.nuget.org/packages/BouncyCastle/)
-2. Dracoon Crypto SDK (= 2.1.0): [nuget](https://www.nuget.org/packages/Dracoon.Crypto.Sdk/)
-3. NewtonSoft.Json (= 12.0.3): [nuget](https://www.nuget.org/packages/Newtonsoft.Json/)
-4. RestSharp (= 106.11.5): [nuget](https://www.nuget.org/packages/RestSharp/)
+1. Bouncy Castle Provider Portable (v1.9.0): https://www.nuget.org/packages/Portable.BouncyCastle/
+2. Dracoon Crypto SDK (v3.0.0): https://www.nuget.org/packages/Dracoon.Crypto.Sdk/
+3. NewtonSoft.Json (v13.0.1): https://www.nuget.org/packages/Newtonsoft.Json/
+4. RestSharp (v106.13.0): https://www.nuget.org/packages/RestSharp/
 
 ## Example
 
@@ -63,7 +63,7 @@ If you would like to contribute code, fork the repository and send a pull reques
 
 ## Copyright and License
 
-Copyright DRACOON GmbH. All rights reserved.
+Copyright ©2021 Dracoon GmbH. All rights reserved.
 
 Licensed under the Apache License, verison 2.0 (the "License"); you may not use this file except in compliance with the License. You may optain a copy of the License at
 

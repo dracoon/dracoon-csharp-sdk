@@ -1,10 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System.ComponentModel;
 
-namespace Dracoon.Sdk.SdkInternal.ApiModel
-{
-    internal class ApiInfrastructureSettings
-    {
+namespace Dracoon.Sdk.SdkInternal.ApiModel {
+    internal class ApiInfrastructureSettings {
         [JsonProperty("smsConfigEnabled", NullValueHandling = NullValueHandling.Ignore)]
         public bool SmsConfigEnabled {
             get; set;
