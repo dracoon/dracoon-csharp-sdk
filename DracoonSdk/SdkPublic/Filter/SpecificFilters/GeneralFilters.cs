@@ -313,6 +313,25 @@ namespace Dracoon.Sdk.Filter {
 
     #endregion
 
+    #region AccessKey-Filter
+
+    public class AccessKeyFilter : DracoonFilterType<AccessKeyFilter> {
+        internal AccessKeyFilter() {
+            FilterName = "accessKey";
+            FilterTypeString += FilterName;
+        }
+    }
+
+    public static class AccessKeyFilterExtension {
+        public static FilterParam<AccessKeyFilter, DracoonFilterType<AccessKeyFilter>> Contains(this AccessKeyFilter akf, string value) {
+            value.MustNotNullOrEmptyOrWhitespace(nameof(value));
+            akf.AddOperatorAndValue(value, "cn", nameof(value));
+            return new FilterParam<AccessKeyFilter, DracoonFilterType<AccessKeyFilter>>(akf, akf);
+        }
+    }
+
+    #endregion
+
     #region timestampCreation
 
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="generalFilters"]/TimestampFilter/*'/>

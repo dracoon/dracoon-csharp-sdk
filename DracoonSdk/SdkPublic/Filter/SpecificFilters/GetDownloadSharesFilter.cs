@@ -13,6 +13,9 @@
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getDownloadSharesFilter"]/NodeId/*'/>
         public static NodeIdFilter NodeId => new NodeIdFilter("nodeId");
 
+        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getDownloadSharesFilter"]/AccessKey/*'/>
+        public static AccessKeyFilter AccessKey => new AccessKeyFilter();
+
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getDownloadSharesFilter"]/AddUserIdFilter/*'/>
         public void AddUserIdFilter(DracoonFilterType<UserIdFilter> userIdFilter) {
             CheckFilter(userIdFilter, nameof(userIdFilter));
@@ -35,6 +38,12 @@
         public void AddNodeIdFilter(DracoonFilterType<NodeIdFilter> nodeIdFilter) {
             CheckFilter(nodeIdFilter, nameof(nodeIdFilter));
             FiltersList.Add(nodeIdFilter);
+        }
+
+        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getDownloadSharesFilter"]/AddAccessKeyFilter/*'/>
+        public void AddAccessKeyFilter(DracoonFilterType<AccessKeyFilter> accessKeyFilter) {
+            CheckFilter(accessKeyFilter, nameof(accessKeyFilter));
+            FiltersList.Add(accessKeyFilter);
         }
     }
 }
