@@ -292,6 +292,13 @@ namespace Dracoon.Sdk.Example {
             DownloadShareList res = dc.Shares.GetDownloadShares(filter: filter, sort: SharesSort.CreatedAt.Descending());
         }
 
+        public static void GetUploadShares() {
+            GetUploadSharesFilter filter = new GetUploadSharesFilter();
+            filter.AddAccessKeyFilter(GetUploadSharesFilter.AccessKey.Contains("ACCESSKEY").Build());
+
+            UploadShareList res = dc.Shares.GetUploadShares(filter: filter, sort: SharesSort.CreatedAt.Ascending());
+        }
+
         #endregion
 
         #region RecycleBin / Versioning
