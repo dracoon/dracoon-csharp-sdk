@@ -12,6 +12,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             NodePath = "/Root/SubRoot",
             Name = "ShareName",
             Notes = "Some notes!",
+            InternalNotes = "Some internal notes.",
             ExpireAt = new DateTime(2000, 1, 1, 0, 0, 0),
             AccessKey = "LFD98725GVD!",
             ShowCreatorName = true,
@@ -52,6 +53,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             NodePath = "/Root/SubRoot",
             Name = "ShareName",
             Notes = "Some notes!",
+            InternalNotes = "Some internal notes.",
             ExpireAt = new DateTime(2000, 1, 1, 0, 0, 0),
             AccessKey = "LFD98725GVD!",
             ShowCreatorName = true,
@@ -79,6 +81,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             ExpireAt = new DateTime(2000, 1, 1, 0, 0, 0).AddDays(1),
             IsEncrypted = true,
             Notes = "Some notes.",
+            InternalNotes = "Some internal notes.",
             UploadedFilesExpirationPeriod = 10,
             CurrentDoneUploadsCount = 3,
             CurrentUploadedFilesCount = 5,
@@ -101,6 +104,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             ExpireAt = new DateTime(2000, 1, 1, 0, 0, 0).AddDays(1),
             IsEncrypted = true,
             Notes = "Some notes.",
+            InternalNotes = "Some internal notes.",
             UploadedFilesExpirationPeriod = 10,
             CurrentDoneUploadsCount = 3,
             CurrentUploadedFilesCount = 5,
@@ -134,6 +138,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             NodeId = 567986,
             Name = "Share",
             Notes = "Some notes.",
+            InternalNotes = "Only for internal view.",
             Expiration = new ApiExpiration {
                 ExpireAt = new DateTime(2000, 1, 1, 0, 0, 0),
                 EnableExpiration = true
@@ -154,6 +159,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
         internal static CreateDownloadShareRequest CreateDownloadShareRequest => new CreateDownloadShareRequest(567986) {
             Name = "Share",
             Notes = "Some notes.",
+            InternalNotes = "Only for internal view.",
             Expiration = new DateTime(2000, 1, 1, 0, 0, 0),
             ShowCreatorName = true,
             ShowCreatorUserName = false,
@@ -171,6 +177,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             NodeId = 45638,
             Name = "Share",
             Notes = "Some notes.",
+            InternalNotes = "Some internal notes.",
             Expiration = new ApiExpiration {
                 ExpireAt = new DateTime(2000, 1, 1, 0, 0, 0),
                 EnableExpiration = true
@@ -191,6 +198,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
 
         internal static CreateUploadShareRequest CreateUploadShareRequest => new CreateUploadShareRequest(45638, "Share") {
             Notes = "Some notes.",
+            InternalNotes = "Some internal notes.",
             Expiration = new DateTime(2000, 1, 1, 0, 0, 0),
             ShowUploadedFiles = true,
             NotifyCreator = false,

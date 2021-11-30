@@ -46,7 +46,8 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 x.RecycleBinRetentionPeriod == y.RecycleBinRetentionPeriod &&
                 x.CountDownloadShares == y.CountDownloadShares &&
                 x.CountUploadShares == y.CountUploadShares &&
-                x.BranchVersion == y.BranchVersion;
+                x.BranchVersion == y.BranchVersion &&
+                x.IsBrowsable == y.IsBrowsable;
         }
 
         public int GetHashCode(Node obj) {

@@ -39,6 +39,9 @@ namespace Dracoon.Sdk.Model {
         /// <include file = "ModelDoc.xml" path='docs/members[@name="uploadShare"]/Notes/*'/>
         public string Notes { get; internal set; }
 
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="uploadShare"]/InternalNotes/*'/>
+        public string InternalNotes { get; internal set; }
+
         /// <include file = "ModelDoc.xml" path='docs/members[@name="uploadShare"]/UploadedFilesExpirationPeriod/*'/>
         public int? UploadedFilesExpirationPeriod { get; internal set; }
 

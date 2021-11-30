@@ -33,6 +33,9 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         [JsonProperty("notes", NullValueHandling = NullValueHandling.Ignore)]
         public string Notes { get; set; }
 
+        [JsonProperty("internalNotes", NullValueHandling = NullValueHandling.Ignore)]
+        public string InternalNotes { get; set; }
+
         [JsonProperty("showCreatorName", NullValueHandling = NullValueHandling.Ignore)]
         public bool? ShowCreatorName { get; set; }
 

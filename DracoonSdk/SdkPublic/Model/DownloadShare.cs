@@ -33,6 +33,9 @@ namespace Dracoon.Sdk.Model {
         /// <include file = "ModelDoc.xml" path='docs/members[@name="downloadShare"]/Notes/*'/>
         public string Notes { get; internal set; }
 
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="downloadShare"]/InternalNotes/*'/>
+        public string InternalNotes { get; internal set; }
+
         /// <include file = "ModelDoc.xml" path='docs/members[@name="downloadShare"]/ShowCreatorName/*'/>
         public bool? ShowCreatorName { get; internal set; }
 

@@ -31,6 +31,7 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 string.Equals(x.MailSubject, y.MailSubject) &&
                 string.Equals(x.Name, y.Name) &&
                 string.Equals(x.Notes, y.Notes) &&
+                string.Equals(x.InternalNotes, y.InternalNotes) &&
                 string.Equals(x.Password, y.Password) &&
                 string.Equals(x.SmsRecipients, y.SmsRecipients) &&
                 x.MaxAllowedDownloads == y.MaxAllowedDownloads &&
@@ -68,6 +69,7 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 string.Equals(x.Name, y.Name) &&
                 string.Equals(x.NodePath, y.NodePath) &&
                 string.Equals(x.Notes, y.Notes) &&
+                string.Equals(x.InternalNotes, y.InternalNotes) &&
                 x.NotifyCreator == y.NotifyCreator &&
                 x.ShareId == y.ShareId &&
                 x.ShowCreatorName == y.ShowCreatorName &&
@@ -99,6 +101,7 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 string.Equals(x.Name, y.Name) &&
                 string.Equals(x.NodePath, y.NodePath) &&
                 string.Equals(x.Notes, y.Notes) &&
+                string.Equals(x.InternalNotes, y.InternalNotes) &&
                 x.NotifyCreator == y.NotifyCreator &&
                 x.ShareId == y.ShareId &&
                 x.ShowCreatorName == y.ShowCreatorName &&
@@ -152,6 +155,7 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 string.Equals(x.MailSubject, y.MailSubject) &&
                 string.Equals(x.Name, y.Name) &&
                 string.Equals(x.Notes, y.Notes) &&
+                string.Equals(x.InternalNotes, y.InternalNotes) &&
                 string.Equals(x.SmsRecipients, y.SmsRecipients) &&
                 x.NodeId == y.NodeId &&
                 x.NotifyCreator == y.NotifyCreator &&
@@ -188,6 +192,7 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 string.Equals(x.Name, y.Name) &&
                 string.Equals(x.NodePath, y.NodePath) &&
                 string.Equals(x.Notes, y.Notes) &&
+                string.Equals(x.InternalNotes, y.InternalNotes) &&
                 x.NotifyCreator == y.NotifyCreator &&
                 x.ShareId == y.ShareId &&
                 x.CurrentDoneUploadsCount == y.CurrentDoneUploadsCount &&

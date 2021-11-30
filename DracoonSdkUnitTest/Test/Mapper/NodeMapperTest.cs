@@ -86,7 +86,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     CountUploadShares = current.CountUploadShares,
                     BranchVersion = current.BranchVersion,
                     FileType = current.Extension,
-                    ConfigParentRoomId = current.ConfigParentRoomId
+                    ConfigParentRoomId = current.ConfigParentRoomId,
+                    IsBrowsable = current.IsBrowsable
                 };
                 param.Items.Add(currentApi);
                 Mock.Arrange(() => NodeMapper.FromApiNode(currentApi)).Returns(current);
@@ -180,7 +181,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 CountUploadShares = expected.CountUploadShares,
                 BranchVersion = expected.BranchVersion,
                 FileType = expected.Extension,
-                ConfigParentRoomId = expected.ConfigParentRoomId
+                ConfigParentRoomId = expected.ConfigParentRoomId,
+                IsBrowsable = expected.IsBrowsable
             };
 
             Mock.Arrange(() => EnumConverter.ConvertValueToNodeTypeEnum(expectedTypeValue)).Returns(expectedType);

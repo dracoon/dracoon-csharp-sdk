@@ -20,6 +20,9 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
         [JsonProperty("notes", NullValueHandling = NullValueHandling.Ignore)]
         public string Notes { get; set; }
 
+        [JsonProperty("internalNotes", NullValueHandling = NullValueHandling.Ignore)]
+        public string InternalNotes { get; set; }
+
         [JsonProperty("notifyCreator", NullValueHandling = NullValueHandling.Ignore)]
         public bool NotifyCreator { get; set; }
 

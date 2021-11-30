@@ -22,6 +22,9 @@ namespace Dracoon.Sdk.Model {
         /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createDownloadShareRequest"]/Notes/*'/>
         public string Notes { get; set; }
 
+        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createDownloadShareRequest"]/InternalNotesNotes/*'/>
+        public string InternalNotes { get; set; }
+
         /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createDownloadShareRequest"]/ShowCreatorName/*'/>
         public bool ShowCreatorName { get; set; }
 
@@ -49,7 +52,7 @@ namespace Dracoon.Sdk.Model {
         /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createDownloadShareRequest"]/CreateDownloadShareRequestConstructor/*'/>
         public CreateDownloadShareRequest(long nodeId, bool showCreatorName = false, bool showCreatorUserName = false, bool notifyCreator = false,
             string name = null, string accessPassword = null, string encryptionPassword = null, DateTime? expiration = null, string notes = null,
-            int? maxAllowedDownloads = null, List<string> emailRecipients = null, string emailSubject = null, string emailBody = null,
+            string internalNotes = null, int? maxAllowedDownloads = null, List<string> emailRecipients = null, string emailSubject = null, string emailBody = null,
             List<string> smsRecipients = null) {
             NodeId = nodeId;
             Name = name;
@@ -57,6 +60,7 @@ namespace Dracoon.Sdk.Model {
             EncryptionPassword = encryptionPassword;
             Expiration = expiration;
             Notes = notes;
+            InternalNotes = internalNotes;
             ShowCreatorName = showCreatorName;
             ShowCreatorUserName = showCreatorUserName;
             NotifyCreator = notifyCreator;

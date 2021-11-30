@@ -11,6 +11,9 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
         [JsonProperty("notes", NullValueHandling = NullValueHandling.Ignore)]
         public string Notes { get; set; }
 
+        [JsonProperty("internalNotes", NullValueHandling = NullValueHandling.Ignore)]
+        public string InternalNotes { get; set; }
+
         [JsonProperty("expiration", NullValueHandling = NullValueHandling.Ignore)]
         public ApiExpiration Expiration { get; set; }
 

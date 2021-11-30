@@ -104,5 +104,8 @@ namespace Dracoon.Sdk.Model {
 
         /// <include file = "ModelDoc.xml" path='docs/members[@name="node"]/ConfigParentRoomId/*'/>
         public long? ConfigParentRoomId { get; internal set; }
+
+        /// <include file = "ModelDoc.xml" path='docs/members[@name="node"]/IsBrowsable/*'/>
+        public bool? IsBrowsable { get; internal set; }
     }
 }

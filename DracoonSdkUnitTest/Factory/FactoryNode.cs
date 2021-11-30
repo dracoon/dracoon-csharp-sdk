@@ -66,7 +66,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             CountDownloadShares = 6,
             CountUploadShares = 4,
             BranchVersion = 12358239758,
-            ConfigParentRoomId = 8
+            ConfigParentRoomId = 8,
+            IsBrowsable = true
         };
 
         internal static NodeList NodeList => new NodeList {
@@ -111,7 +112,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             CountUploadShares = 4,
             BranchVersion = 12358239758,
             FileType = ".txt",
-            ConfigParentRoomId = 8
+            ConfigParentRoomId = 8,
+            IsBrowsable = true
         };
 
         internal static ApiNodeList ApiNodeList => new ApiNodeList {

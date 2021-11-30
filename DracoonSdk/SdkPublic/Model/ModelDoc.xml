@@ -346,6 +346,12 @@
       </summary>
     </Notes>
 
+    <InternalNotes>
+      <summary>
+        The internal notes for this download share.
+      </summary>
+    </InternalNotes>
+
     <ShowCreatorName>
       <summary>
         Indicates if the name of the creator is shown by using this download share.
@@ -808,6 +814,12 @@
         The room id which spezifies the config for this node. This can be the same id as this current node.
       </summary>
     </ConfigParentRoomId>
+
+    <IsBrowsable>
+      <summary>
+        Determines whether node is browsable by client (for rooms only).
+      </summary>
+    </IsBrowsable>
 
   </members>
 
@@ -1554,6 +1566,12 @@
       </summary>
     </Notes>
 
+    <Notes>
+      <summary>
+        The internal notes for this upload share.
+      </summary>
+    </Notes>
+    
     <UploadedFilesExpirationPeriod>
       <summary>
         The days after which every uploaded file (over this upload share) expires after upload date.

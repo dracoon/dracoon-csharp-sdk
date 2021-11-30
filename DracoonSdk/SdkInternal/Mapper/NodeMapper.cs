@@ -76,7 +76,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 CountDownloadShares = apiNode.CountDownloadShares,
                 CountUploadShares = apiNode.CountUploadShares,
                 BranchVersion = apiNode.BranchVersion,
-                ConfigParentRoomId = apiNode.ConfigParentRoomId
+                ConfigParentRoomId = apiNode.ConfigParentRoomId,
+                IsBrowsable = apiNode.IsBrowsable
             };
             return node;
         }

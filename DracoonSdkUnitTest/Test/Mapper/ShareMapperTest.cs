@@ -40,6 +40,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             CreateDownloadShareRequest param = new CreateDownloadShareRequest(expected.NodeId) {
                 Name = expected.Name,
                 Notes = expected.Notes,
+                InternalNotes = expected.InternalNotes,
                 Expiration = expected.Expiration.ExpireAt,
                 ShowCreatorName = expected.ShowCreatorName,
                 ShowCreatorUserName = expected.ShowCreatorUserName,
@@ -74,6 +75,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 NodePath = expected.NodePath,
                 Name = expected.Name,
                 Notes = expected.Notes,
+                InternalNotes = expected.InternalNotes,
                 ExpireAt = expected.ExpireAt,
                 AccessKey = expected.AccessKey,
                 ShowCreatorName = expected.ShowCreatorName,
@@ -185,6 +187,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
 
             CreateUploadShareRequest param = new CreateUploadShareRequest(expected.NodeId, expected.Name) {
                 Notes = expected.Notes,
+                InternalNotes = expected.InternalNotes,
                 Expiration = expected.Expiration.ExpireAt,
                 ShowUploadedFiles = expected.ShowUploadedFiles,
                 NotifyCreator = expected.NotifyCreator,
@@ -231,6 +234,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 ExpireAt = expected.ExpireAt,
                 IsEncrypted = expected.IsEncrypted,
                 Notes = expected.Notes,
+                InternalNotes = expected.InternalNotes,
                 UploadedFilesExpirationPeriod = expected.UploadedFilesExpirationPeriod,
                 CurrentDoneUploadsCount = expected.CurrentDoneUploadsCount,
                 CurrentUploadedFilesCount = expected.CurrentUploadedFilesCount,

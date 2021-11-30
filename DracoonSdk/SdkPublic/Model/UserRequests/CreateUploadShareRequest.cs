@@ -22,6 +22,9 @@ namespace Dracoon.Sdk.Model {
         /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/Notes/*'/>
         public string Notes { get; set; }
 
+        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/InternalNotes/*'/>
+        public String InternalNotes { get; set; }
+
         /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/NotifyCreator/*'/>
         public bool NotifyCreator { get; set; }
 

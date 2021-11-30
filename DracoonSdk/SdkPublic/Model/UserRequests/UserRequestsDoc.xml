@@ -142,6 +142,11 @@
         The notes of the new share.
       </summary>
     </Notes>
+    <InternalNotes>
+      <summary>
+        The internal notes of the new share.
+      </summary>
+    </InternalNotes>
     <ShowCreatorName>
       <summary>
         If set to <c>true</c> the creators name for the new share will be shown.
@@ -407,6 +412,11 @@
         The notes of the new share.
       </summary>
     </Notes>
+    <InternalNotes>
+      <summary>
+        The internal notes of the new share.
+      </summary>
+    </InternalNotes>
     <NotifyCreator>
       <summary>
         If set to <c>true</c> the creator will receive a email notification if a file is uploaded with the new upload share.
