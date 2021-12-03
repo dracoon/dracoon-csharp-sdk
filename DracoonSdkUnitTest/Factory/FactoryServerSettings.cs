@@ -10,18 +10,24 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             CryptoEnabled = true,
             EmailNotificationButtonEnabled = false,
             EulaEnabled = true,
-            MediaServerEnabled = false,
             SharePasswordSmsEnabled = true,
-            UseS3Storage = false
+            UseS3Storage = false,
+            S3TagsEnabled = true,
+            HomeRoomsActive = true,
+            HomeRoomParentId = 123,
+            SubscriptionPlan = SubscriptionPlan.Premium
         };
 
         internal static ApiGeneralSettings ApiGeneralSettings => new ApiGeneralSettings {
             CryptoEnabled = true,
             EmailNotificationButtonEnabled = false,
             EulaEnabled = true,
-            MediaServerEnabled = false,
             SharePasswordSmsEnabled = true,
-            UseS3Storage = false
+            UseS3Storage = false,
+            S3TagsEnabled = true,
+            HomeRoomsActive = true,
+            HomeRoomParentId = 123,
+            SubscriptionPlan = 1
         };
 
         internal static ServerInfrastructureSettings ServerInfrastructureSettings => new ServerInfrastructureSettings {

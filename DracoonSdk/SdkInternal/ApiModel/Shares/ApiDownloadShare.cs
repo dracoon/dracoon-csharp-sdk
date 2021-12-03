@@ -6,6 +6,9 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public long ShareId { get; set; }
 
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
+        public string Name { get; set; }
+
         [JsonProperty("nodeId", NullValueHandling = NullValueHandling.Ignore)]
         public long NodeId { get; set; }
 
@@ -14,9 +17,6 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
 
         [JsonProperty("accessKey", NullValueHandling = NullValueHandling.Ignore)]
         public string AccessKey { get; set; }
-
-        [JsonProperty("notifyCreator", NullValueHandling = NullValueHandling.Ignore)]
-        public bool NotifyCreator { get; set; }
 
         [JsonProperty("cntDownloads", NullValueHandling = NullValueHandling.Ignore)]
         public int CurrentDownloadsCount { get; set; }
@@ -27,9 +27,6 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         [JsonProperty("createdBy", NullValueHandling = NullValueHandling.Ignore)]
         public ApiUserInfo CreatedBy { get; set; }
 
-        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
-        public string Name { get; set; }
-
         [JsonProperty("notes", NullValueHandling = NullValueHandling.Ignore)]
         public string Notes { get; set; }
 
@@ -37,13 +34,13 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         public string InternalNotes { get; set; }
 
         [JsonProperty("showCreatorName", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? ShowCreatorName { get; set; }
+        public bool ShowCreatorName { get; set; }
 
         [JsonProperty("ShowCreatorUsername", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? ShowCreatorUserName { get; set; }
+        public bool ShowCreatorUserName { get; set; }
 
         [JsonProperty("isProtected", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? IsProtected { get; set; }
+        public bool IsProtected { get; set; }
 
         [JsonProperty("expireAt", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? ExpireAt { get; set; }
@@ -56,5 +53,14 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
 
         [JsonProperty("nodeType", NullValueHandling = NullValueHandling.Ignore)]
         public string Type { get; set; }
+
+        [JsonProperty("dataUrl", NullValueHandling = NullValueHandling.Ignore)]
+        public string DataUrl { get; set; }
+
+        [JsonProperty("updatedAt", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? UpdatedAt { get; set; }
+
+        [JsonProperty("updatedBy", NullValueHandling = NullValueHandling.Ignore)]
+        public ApiUserInfo UpdatedBy { get; set; }
     }
 }

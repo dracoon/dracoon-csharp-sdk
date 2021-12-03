@@ -14,7 +14,6 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             Email = "test@test.com",
             FirstName = "Max",
             LastName = "Mustermann",
-            Title = "B.Sc.",
             UserType = UserType.Internal
         };
 
@@ -28,7 +27,6 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             Id = 456,
             AuthData = UserAuthData,
             UserName = "JohnSmith1234",
-            Title = "M.Sc.",
             FirstName = "John",
             LastName = "Smith",
             Email = "JohnSmith@js.com",
@@ -41,7 +39,19 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                         UserRole.ConfigManager,
                         UserRole.GroupManager
                     },
-            HomeRoomId = 2
+            HomeRoomId = 2,
+            IsLocked = false,
+            Language = "de",
+            MustSetEmail = false,
+            NeedsToAcceptEULA = false,
+            Phone = null,
+            UserGroups = new List<UserGroup> { 
+                new UserGroup { 
+                    Id = 12345, 
+                    IsMember = true, 
+                    Name = "Admin"
+                } 
+            }
         };
 
         internal static UserAuthData UserAuthData => new UserAuthData {
@@ -56,7 +66,6 @@ namespace Dracoon.Sdk.UnitTest.Factory {
         internal static ApiUserAccount ApiUserAccount => new ApiUserAccount {
             Id = 456,
             AuthData = ApiUserAuthData,
-            Title = "M.Sc.",
             FirstName = "John",
             LastName = "Smith",
             Email = "JohnSmith@js.com",
@@ -75,7 +84,13 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                             }
                         }
             },
-            HomeRoomId = 2
+            HomeRoomId = 2,
+            IsLocked = false,
+            Language = "de",
+            MustSetEmail = false,
+            NeedsToAcceptEULA = false,
+            Phone = null,
+            UserGroups = new List<ApiUserGroup> { new ApiUserGroup { Id = 12345, IsMember = true, Name = "Admin"} }
         };
 
         internal static ApiAuthData ApiUserAuthData => new ApiAuthData {

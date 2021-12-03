@@ -20,9 +20,12 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 CryptoEnabled = expected.CryptoEnabled,
                 EmailNotificationButtonEnabled = expected.EmailNotificationButtonEnabled,
                 EulaEnabled = expected.EulaEnabled,
-                MediaServerEnabled = expected.MediaServerEnabled,
                 SharePasswordSmsEnabled = expected.SharePasswordSmsEnabled,
-                UseS3Storage = expected.UseS3Storage
+                UseS3Storage = expected.UseS3Storage,
+                S3TagsEnabled = expected.S3TagsEnabled,
+                HomeRoomsActive = expected.HomeRoomsActive,
+                HomeRoomParentId = expected.HomeRoomParentId,
+                SubscriptionPlan = 1
             };
 
             // ACT

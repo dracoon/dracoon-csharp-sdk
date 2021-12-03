@@ -20,13 +20,12 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             UserInfo expected = FactoryUser.UserInfo;
 
             ApiUserInfo param = new ApiUserInfo {
-                Id = expected.Id.Value,
+                Id = expected.Id,
                 UserName = expected.UserName,
                 AvatarUuid = expected.AvatarUUID,
                 Email = expected.Email,
                 FirstName = expected.FirstName,
                 LastName = expected.LastName,
-                Title = expected.Title,
                 UserType = "internal"
             };
 
@@ -68,7 +67,6 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 Id = expected.Id,
                 AuthData = FactoryUser.ApiUserAuthData,
                 UserName = expected.UserName,
-                Title = expected.Title,
                 FirstName = expected.FirstName,
                 LastName = expected.LastName,
                 Email = expected.Email,
@@ -80,8 +78,23 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 UserRoles = new ApiUserRoleList {
                     Items = new List<ApiUserRole>(expected.UserRoles.Count)
                 },
-                HomeRoomId = 2
+                HomeRoomId = expected.HomeRoomId,
+                IsLocked = expected.IsLocked,
+                Language = expected.Language,
+                MustSetEmail = expected.MustSetEmail,
+                NeedsToAcceptEULA = expected.NeedsToAcceptEULA,
+                Phone = expected.Phone,
+                UserGroups = new List<ApiUserGroup>(expected.UserGroups.Count)
             };
+
+            foreach(UserGroup current in expected.UserGroups) {
+                ApiUserGroup currentGroup = new ApiUserGroup {
+                    Id = current.Id,
+                    IsMember = current.IsMember,
+                    Name = current.Name
+                };
+                param.UserGroups.Add(currentGroup);
+            }
 
             foreach (UserRole current in expected.UserRoles) {
                 ApiUserRole currentApi = new ApiUserRole {
@@ -107,7 +120,6 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 Id = expected.Id,
                 AuthData = FactoryUser.ApiUserAuthData,
                 UserName = expected.UserName,
-                Title = expected.Title,
                 FirstName = expected.FirstName,
                 LastName = expected.LastName,
                 Email = expected.Email,
@@ -117,8 +129,67 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 LastLoginSuccessAt = expected.LastLoginSuccessAt,
                 LastLoginFailAt = expected.LastLoginFailAt,
                 UserRoles = null,
-                HomeRoomId = 2
+                HomeRoomId = expected.HomeRoomId,
+                IsLocked = expected.IsLocked,
+                Language = expected.Language,
+                MustSetEmail = expected.MustSetEmail,
+                NeedsToAcceptEULA = expected.NeedsToAcceptEULA,
+                Phone = expected.Phone,
+                UserGroups = new List<ApiUserGroup>(expected.UserGroups.Count)
             };
+
+            foreach (UserGroup current in expected.UserGroups) {
+                ApiUserGroup currentGroup = new ApiUserGroup {
+                    Id = current.Id,
+                    IsMember = current.IsMember,
+                    Name = current.Name
+                };
+                param.UserGroups.Add(currentGroup);
+            }
+
+            // ACT
+            UserAccount actual = UserMapper.FromApiUserAccount(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new UserAccountComparer());
+        }
+
+        [Fact]
+        public void FromApiUserAccount_NullGroups() {
+            // ARRANGE
+            UserAccount expected = FactoryUser.UserAccount;
+            expected.UserGroups = new List<UserGroup>();
+
+            ApiUserAccount param = new ApiUserAccount {
+                Id = expected.Id,
+                AuthData = FactoryUser.ApiUserAuthData,
+                UserName = expected.UserName,
+                FirstName = expected.FirstName,
+                LastName = expected.LastName,
+                Email = expected.Email,
+                IsEncryptionEnabled = expected.HasEncryptionEnabled,
+                HasManageableRooms = expected.HasManageableRooms,
+                ExpireAt = expected.ExpireAt,
+                LastLoginSuccessAt = expected.LastLoginSuccessAt,
+                LastLoginFailAt = expected.LastLoginFailAt,
+                UserRoles = new ApiUserRoleList {
+                    Items = new List<ApiUserRole>(expected.UserRoles.Count)
+                },
+                HomeRoomId = expected.HomeRoomId,
+                IsLocked = expected.IsLocked,
+                Language = expected.Language,
+                MustSetEmail = expected.MustSetEmail,
+                NeedsToAcceptEULA = expected.NeedsToAcceptEULA,
+                Phone = expected.Phone,
+                UserGroups = null
+            };
+
+            foreach (UserRole current in expected.UserRoles) {
+                ApiUserRole currentApi = new ApiUserRole {
+                    Id = (int)current
+                };
+                param.UserRoles.Items.Add(currentApi);
+            }
 
             // ACT
             UserAccount actual = UserMapper.FromApiUserAccount(param);

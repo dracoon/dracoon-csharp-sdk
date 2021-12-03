@@ -17,14 +17,16 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             AccessKey = "LFD98725GVD!",
             ShowCreatorName = true,
             ShowCreatorUserName = false,
-            NotifyCreator = true,
             MaxAllowedDownloads = 5,
             CurrentDownloadsCount = 3,
             CreatedAt = new DateTime(2000, 1, 1, 0, 0, 0).AddDays(1),
             CreatedBy = FactoryUser.UserInfo,
             IsProtected = true,
             IsEncrypted = true,
-            Type = NodeType.Folder
+            Type = NodeType.Folder,
+            DataUrl = null,
+            UpdatedAt = new DateTime(2001, 1, 1, 0, 0, 0),
+            UpdatedBy = FactoryUser.UserInfo
         };
 
         internal static DownloadShareList DownloadShareList => new DownloadShareList {
@@ -58,14 +60,16 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             AccessKey = "LFD98725GVD!",
             ShowCreatorName = true,
             ShowCreatorUserName = false,
-            NotifyCreator = true,
             MaxAllowedDownloads = 5,
             CurrentDownloadsCount = 3,
             CreatedAt = new DateTime(2000, 1, 1, 0, 0, 0).AddDays(1),
             CreatedBy = FactoryUser.ApiUserInfo,
             IsProtected = true,
             IsEncrypted = true,
-            Type = "folder"
+            Type = "folder",
+            DataUrl = null,
+            UpdatedAt = new DateTime(2001, 1, 1, 0, 0, 0),
+            UpdatedBy = FactoryUser.ApiUserInfo
         };
 
         internal static UploadShare UploadShare => new UploadShare {
@@ -75,7 +79,6 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             Name = "ShareName",
             IsProtected = true,
             AccessKey = "SKHGF34GDHJK",
-            NotifyCreator = false,
             CreatedAt = new DateTime(2000, 1, 1, 0, 0, 0),
             CreatedBy = FactoryUser.UserInfo,
             ExpireAt = new DateTime(2000, 1, 1, 0, 0, 0).AddDays(1),
@@ -88,7 +91,12 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             ShowUploadedFiles = false,
             MaxAllowedUploads = 7,
             MaxAllowedTotalSizeOverAllUploadedFiles = 51348,
-            Type = NodeType.Folder
+            Type = NodeType.Folder,
+            DataUrl = null,
+            ShowCreatorName = true,
+            ShowCreatorUsername = false,
+            UpdatedAt = new DateTime(2001, 1, 1, 0, 0, 0),
+            UpdatedBy = FactoryUser.UserInfo
         };
 
         internal static ApiUploadShare ApiUploadShare => new ApiUploadShare {
@@ -98,7 +106,6 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             Name = "ShareName",
             IsProtected = true,
             AccessKey = "SKHGF34GDHJK",
-            NotifyCreator = false,
             CreatedAt = new DateTime(2000, 1, 1, 0, 0, 0),
             CreatedBy = FactoryUser.ApiUserInfo,
             ExpireAt = new DateTime(2000, 1, 1, 0, 0, 0).AddDays(1),
@@ -111,7 +118,12 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             ShowUploadedFiles = false,
             MaxAllowedUploads = 7,
             MaxAllowedTotalSizeOverAllUploadedFiles = 51348,
-            Type = "folder"
+            Type = "folder",
+            DataUrl = null,
+            ShowCreatorName = true,
+            ShowCreatorUsername = false,
+            UpdatedAt = new DateTime(2001, 1, 1, 0, 0, 0),
+            UpdatedBy = FactoryUser.ApiUserInfo
         };
 
         internal static UploadShareList UploadShareList => new UploadShareList {

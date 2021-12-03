@@ -12,6 +12,40 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             if (x == null && y == null) {
                 return true;
             }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
+            }
+
+            if (x.Count != y.Count) {
+                return false;
+            }
+
+            for (int i = 0; i < x.Count; i++) {
+                if (x[i] != y[i]) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        internal static bool ListIsEqual(List<UserRole> x, List<UserRole> y) {
+            if (x == null && y == null) {
+                return true;
+            }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
+            }
             if (x.Count != y.Count) {
                 return false;
             }
@@ -23,15 +57,24 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             return true;
         }
 
-        internal static bool ListIsEqual(List<UserRole> x, List<UserRole> y) {
+        internal static bool ListIsEqual(List<UserGroup> x, List<UserGroup> y) {
             if (x == null && y == null) {
                 return true;
+            }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
             }
             if (x.Count != y.Count) {
                 return false;
             }
+            UserGroupComparer comparer = new UserGroupComparer();
             for (int i = 0; i < x.Count; i++) {
-                if (x[i] != y[i]) {
+                if (!comparer.Equals(x[i], y[i])) {
                     return false;
                 }
             }
@@ -41,6 +84,14 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
         internal static bool ListIsEqual(List<Node> x, List<Node> y) {
             if (x == null && y == null) {
                 return true;
+            }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
             }
             if (x.Count != y.Count) {
                 return false;
@@ -58,6 +109,14 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             if (x == null && y == null) {
                 return true;
             }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
+            }
             if (x.Count != y.Count) {
                 return false;
             }
@@ -73,6 +132,14 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
         internal static bool ListIsEqual(List<ApiMoveNode> x, List<ApiMoveNode> y) {
             if (x == null && y == null) {
                 return true;
+            }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
             }
             if (x.Count != y.Count) {
                 return false;
@@ -90,6 +157,14 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             if (x == null && y == null) {
                 return true;
             }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
+            }
             if (x.Count != y.Count) {
                 return false;
             }
@@ -105,6 +180,14 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
         internal static bool ListIsEqual(List<PreviousVersion> x, List<PreviousVersion> y) {
             if (x == null && y == null) {
                 return true;
+            }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
             }
             if (x.Count != y.Count) {
                 return false;
@@ -122,6 +205,14 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             if (x == null && y == null) {
                 return true;
             }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
+            }
             if (x.Count != y.Count) {
                 return false;
             }
@@ -137,6 +228,14 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
         internal static bool ListIsEqual(List<UploadShare> x, List<UploadShare> y) {
             if (x == null && y == null) {
                 return true;
+            }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
             }
             if (x.Count != y.Count) {
                 return false;
@@ -154,6 +253,14 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             if (x == null && y == null) {
                 return true;
             }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
+            }
             if (x.Count != y.Count) {
                 return false;
             }
@@ -168,6 +275,14 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
         internal static bool ListIsEqual(List<Attribute> x, List<Attribute> y) {
             if (x == null && y == null) {
                 return true;
+            }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
             }
             if (x.Count != y.Count) {
                 return false;
@@ -186,6 +301,14 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             if (x == null && y == null) {
                 return true;
             }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
+            }
             if (x.Count != y.Count) {
                 return false;
             }
@@ -203,6 +326,14 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             if (x == null && y == null) {
                 return true;
             }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
+            }
             if (x.Count != y.Count) {
                 return false;
             }
@@ -217,6 +348,14 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
         internal static bool ListIsEqual(List<PasswordCharacterSet> x, List<PasswordCharacterSet> y) {
             if (x == null && y == null) {
                 return true;
+            }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
             }
             if (x.Count != y.Count) {
                 return false;

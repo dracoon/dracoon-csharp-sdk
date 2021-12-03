@@ -50,15 +50,23 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     ExpireAt = current.ExpireAt,
                     CreatedAt = current.CreatedAt,
                     CreatedBy = new ApiUserInfo {
-                        Id = current.CreatedBy.Id.Value,
+                        Id = current.CreatedBy.Id,
                         AvatarUuid = current.CreatedBy.AvatarUUID,
-                        UserName = current.CreatedBy.UserName
+                        UserName = current.CreatedBy.UserName,
+                        Email = current.CreatedBy.Email,
+                        FirstName = current.CreatedBy.FirstName,
+                        LastName = current.CreatedBy.LastName,
+                        UserType = "internal"
                     },
                     UpdatedAt = current.UpdatedAt,
                     UpdatedBy = new ApiUserInfo {
-                        Id = current.UpdatedBy.Id.Value,
+                        Id = current.UpdatedBy.Id,
                         AvatarUuid = current.UpdatedBy.AvatarUUID,
-                        UserName = current.UpdatedBy.UserName
+                        UserName = current.UpdatedBy.UserName,
+                        Email = current.UpdatedBy.Email,
+                        FirstName = current.UpdatedBy.FirstName,
+                        LastName = current.UpdatedBy.LastName,
+                        UserType = "internal"
                     },
                     CreationTimestamp = current.CreationTimestamp,
                     ModificationTimestamp = current.ModificationTimestamp,
@@ -145,15 +153,23 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 ExpireAt = expected.ExpireAt,
                 CreatedAt = expected.CreatedAt,
                 CreatedBy = new ApiUserInfo {
-                    Id = expected.CreatedBy.Id.Value,
+                    Id = expected.CreatedBy.Id,
                     AvatarUuid = expected.CreatedBy.AvatarUUID,
-                    UserName = expected.CreatedBy.UserName
+                    UserName = expected.CreatedBy.UserName,
+                    Email = expected.CreatedBy.Email,
+                    FirstName = expected.CreatedBy.FirstName,
+                    LastName = expected.CreatedBy.LastName,
+                    UserType = "internal"
                 },
                 UpdatedAt = expected.UpdatedAt,
                 UpdatedBy = new ApiUserInfo {
-                    Id = expected.UpdatedBy.Id.Value,
+                    Id = expected.UpdatedBy.Id,
                     AvatarUuid = expected.UpdatedBy.AvatarUUID,
-                    UserName = expected.UpdatedBy.UserName
+                    UserName = expected.UpdatedBy.UserName,
+                    Email = expected.UpdatedBy.Email,
+                    FirstName = expected.UpdatedBy.FirstName,
+                    LastName = expected.UpdatedBy.LastName,
+                    UserType = "internal"
                 },
                 CreationTimestamp = expected.CreationTimestamp,
                 ModificationTimestamp = expected.ModificationTimestamp,
@@ -464,15 +480,23 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     Classification = (int)expectedClassification,
                     CreatedAt = current.CreatedAt,
                     CreatedBy = new ApiUserInfo {
-                        Id = current.CreatedBy.Id.Value,
+                        Id = current.CreatedBy.Id,
                         UserName = current.CreatedBy.UserName,
-                        AvatarUuid = current.CreatedBy.AvatarUUID
+                        AvatarUuid = current.CreatedBy.AvatarUUID,
+                        Email = current.CreatedBy.Email,
+                        FirstName = current.CreatedBy.FirstName,
+                        LastName = current.CreatedBy.LastName,
+                        UserType = "internal"
                     },
                     DeletedAt = current.DeletedAt,
                     DeletedBy = new ApiUserInfo {
-                        Id = current.DeletedBy.Id.Value,
+                        Id = current.DeletedBy.Id,
                         UserName = current.DeletedBy.UserName,
-                        AvatarUuid = current.DeletedBy.AvatarUUID
+                        AvatarUuid = current.DeletedBy.AvatarUUID,
+                        Email = current.DeletedBy.Email,
+                        FirstName = current.DeletedBy.FirstName,
+                        LastName = current.DeletedBy.LastName,
+                        UserType = "internal"
                     },
                     ExpireAt = current.ExpireAt,
                     Id = current.Id,
@@ -481,9 +505,13 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     Size = current.Size,
                     UpdatedAt = current.UpdatedAt,
                     UpdatedBy = new ApiUserInfo {
-                        Id = current.UpdatedBy.Id.Value,
+                        Id = current.UpdatedBy.Id,
                         UserName = current.UpdatedBy.UserName,
-                        AvatarUuid = current.UpdatedBy.AvatarUUID
+                        AvatarUuid = current.UpdatedBy.AvatarUUID,
+                        Email = current.UpdatedBy.Email,
+                        FirstName = current.UpdatedBy.FirstName,
+                        LastName = current.UpdatedBy.LastName,
+                        UserType = "internal"
                     }
                 };
                 param.Items.Add(currentApi);
@@ -535,15 +563,23 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 Classification = (int)expectedClassification,
                 CreatedAt = expected.CreatedAt,
                 CreatedBy = new ApiUserInfo {
-                    Id = expected.CreatedBy.Id.Value,
+                    Id = expected.CreatedBy.Id,
                     UserName = expected.CreatedBy.UserName,
-                    AvatarUuid = expected.CreatedBy.AvatarUUID
+                    AvatarUuid = expected.CreatedBy.AvatarUUID,
+                    Email = expected.CreatedBy.Email,
+                    FirstName = expected.CreatedBy.FirstName,
+                    LastName = expected.CreatedBy.LastName,
+                    UserType = "internal"
                 },
                 DeletedAt = expected.DeletedAt,
                 DeletedBy = new ApiUserInfo {
-                    Id = expected.DeletedBy.Id.Value,
+                    Id = expected.DeletedBy.Id,
                     UserName = expected.DeletedBy.UserName,
-                    AvatarUuid = expected.DeletedBy.AvatarUUID
+                    AvatarUuid = expected.DeletedBy.AvatarUUID,
+                    Email = expected.DeletedBy.Email,
+                    FirstName = expected.DeletedBy.FirstName,
+                    LastName = expected.DeletedBy.LastName,
+                    UserType = "internal"
                 },
                 ExpireAt = expected.ExpireAt,
                 Id = expected.Id,
@@ -552,9 +588,13 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 Size = expected.Size,
                 UpdatedAt = expected.UpdatedAt,
                 UpdatedBy = new ApiUserInfo {
-                    Id = expected.UpdatedBy.Id.Value,
+                    Id = expected.UpdatedBy.Id,
                     UserName = expected.UpdatedBy.UserName,
-                    AvatarUuid = expected.UpdatedBy.AvatarUUID
+                    AvatarUuid = expected.UpdatedBy.AvatarUUID,
+                    Email = expected.UpdatedBy.Email,
+                    FirstName = expected.UpdatedBy.FirstName,
+                    LastName = expected.UpdatedBy.LastName,
+                    UserType = "internal"
                 }
             };
 

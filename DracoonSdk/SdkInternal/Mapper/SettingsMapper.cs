@@ -15,9 +15,12 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 CryptoEnabled = apiGeneralConfig.CryptoEnabled,
                 EmailNotificationButtonEnabled = apiGeneralConfig.EmailNotificationButtonEnabled,
                 EulaEnabled = apiGeneralConfig.EulaEnabled,
-                MediaServerEnabled = apiGeneralConfig.MediaServerEnabled,
                 SharePasswordSmsEnabled = apiGeneralConfig.SharePasswordSmsEnabled,
-                UseS3Storage = apiGeneralConfig.UseS3Storage
+                UseS3Storage = apiGeneralConfig.UseS3Storage,
+                S3TagsEnabled = apiGeneralConfig.S3TagsEnabled,
+                HomeRoomsActive = apiGeneralConfig.HomeRoomsActive,
+                HomeRoomParentId = apiGeneralConfig.HomeRoomParentId,
+                SubscriptionPlan = EnumConverter.ConvertValueToSubscriptionPlanEnum(apiGeneralConfig.SubscriptionPlan)
             };
             return general;
         }

@@ -62,14 +62,16 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 AccessKey = apiDownloadShare.AccessKey,
                 ShowCreatorName = apiDownloadShare.ShowCreatorName,
                 ShowCreatorUserName = apiDownloadShare.ShowCreatorUserName,
-                NotifyCreator = apiDownloadShare.NotifyCreator,
                 MaxAllowedDownloads = apiDownloadShare.MaxAllowedDownloads,
                 CurrentDownloadsCount = apiDownloadShare.CurrentDownloadsCount,
                 CreatedAt = apiDownloadShare.CreatedAt,
                 CreatedBy = UserMapper.FromApiUserInfo(apiDownloadShare.CreatedBy),
                 IsProtected = apiDownloadShare.IsProtected,
                 IsEncrypted = apiDownloadShare.IsEncrypted,
-                Type = EnumConverter.ConvertValueToNodeTypeEnum(apiDownloadShare.Type)
+                Type = EnumConverter.ConvertValueToNodeTypeEnum(apiDownloadShare.Type),
+                DataUrl = apiDownloadShare.DataUrl,
+                UpdatedAt = apiDownloadShare.UpdatedAt,
+                UpdatedBy = UserMapper.FromApiUserInfo(apiDownloadShare.UpdatedBy)
             };
             return downloadShare;
         }
@@ -139,7 +141,6 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 Name = apiUploadShare.Name,
                 IsProtected = apiUploadShare.IsProtected,
                 AccessKey = apiUploadShare.AccessKey,
-                NotifyCreator = apiUploadShare.NotifyCreator,
                 CreatedAt = apiUploadShare.CreatedAt,
                 CreatedBy = UserMapper.FromApiUserInfo(apiUploadShare.CreatedBy),
                 ExpireAt = apiUploadShare.ExpireAt,
@@ -153,7 +154,12 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 ShowUploadedFiles = apiUploadShare.ShowUploadedFiles,
                 MaxAllowedUploads = apiUploadShare.MaxAllowedUploads,
                 MaxAllowedTotalSizeOverAllUploadedFiles = apiUploadShare.MaxAllowedTotalSizeOverAllUploadedFiles,
-                Type = EnumConverter.ConvertValueToNodeTypeEnum(apiUploadShare.Type)
+                Type = EnumConverter.ConvertValueToNodeTypeEnum(apiUploadShare.Type),
+                DataUrl = apiUploadShare.DataUrl,
+                ShowCreatorName = apiUploadShare.ShowCreatorName,
+                ShowCreatorUsername = apiUploadShare.ShowCreatorUsername,
+                UpdatedAt = apiUploadShare.UpdatedAt,
+                UpdatedBy = UserMapper.FromApiUserInfo(apiUploadShare.UpdatedBy)
             };
             return uploadShare;
         }

@@ -20,7 +20,6 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 string.Equals(x.Email, y.Email) &&
                 string.Equals(x.FirstName, y.FirstName) &&
                 string.Equals(x.LastName, y.LastName) &&
-                string.Equals(x.Title, y.Title) &&
                 string.Equals(x.AvatarUUID, y.AvatarUUID);
         }
 
@@ -42,7 +41,6 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 string.Equals(x.Email, y.Email) &&
                 string.Equals(x.FirstName, y.FirstName) &&
                 string.Equals(x.LastName, y.LastName) &&
-                string.Equals(x.Title, y.Title) &&
                 string.Equals(x.UserType, y.UserType) &&
                 string.Equals(x.AvatarUuid, y.AvatarUuid);
         }
@@ -63,7 +61,6 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             Assert.Equal(x.AuthData, y.AuthData, new UserAuthDataComparer());
             return x.Id == y.Id &&
                 string.Equals(x.UserName, y.UserName) &&
-                string.Equals(x.Title, y.Title) &&
                 string.Equals(x.FirstName, y.FirstName) &&
                 string.Equals(x.LastName, y.LastName) &&
                 string.Equals(x.Email, y.Email) &&
@@ -73,7 +70,13 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 x.LastLoginSuccessAt == y.LastLoginSuccessAt &&
                 x.LastLoginFailAt == y.LastLoginFailAt &&
                 x.HomeRoomId == y.HomeRoomId &&
-                CompareHelper.ListIsEqual(x.UserRoles, y.UserRoles);
+                CompareHelper.ListIsEqual(x.UserRoles, y.UserRoles) &&
+                x.IsLocked == y.IsLocked &&
+                string.Equals(x.Language, y.Language) &&
+                x.MustSetEmail == y.MustSetEmail &&
+                x.NeedsToAcceptEULA == y.NeedsToAcceptEULA &&
+                string.Equals(x.Phone, y.Phone) &&
+                CompareHelper.ListIsEqual(x.UserGroups, y.UserGroups);
         }
 
         public int GetHashCode(UserAccount obj) {
@@ -98,6 +101,24 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
         }
 
         public int GetHashCode(UserAuthData obj) {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class UserGroupComparer : IEqualityComparer<UserGroup> {
+        public bool Equals(UserGroup x, UserGroup y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            return x.Id == y.Id &&
+                x.IsMember == y.IsMember &&
+                string.Equals(x.Name, y.Name);
+        }
+
+        public int GetHashCode(UserGroup obj) {
             throw new NotImplementedException();
         }
     }

@@ -175,5 +175,23 @@ namespace Dracoon.Sdk.UnitTest.Test.Util {
         }
 
         #endregion
+
+        #region ConvertValueToSubscriptionPlanEnum
+
+        [Theory]
+        [InlineData(0, SubscriptionPlan.Standard)]
+        [InlineData(1, SubscriptionPlan.Premium)]
+        [InlineData(2, SubscriptionPlan.Free)]
+        public void ConvertValueToSubscriptionPlanEnum(int value, SubscriptionPlan expected) {
+            // ARRANGE
+
+            // ACT
+            SubscriptionPlan actual = EnumConverter.ConvertValueToSubscriptionPlanEnum(value);
+
+            // ASSERT
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
     }
 }

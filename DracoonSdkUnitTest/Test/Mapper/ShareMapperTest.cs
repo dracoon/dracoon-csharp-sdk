@@ -80,18 +80,32 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 AccessKey = expected.AccessKey,
                 ShowCreatorName = expected.ShowCreatorName,
                 ShowCreatorUserName = expected.ShowCreatorUserName,
-                NotifyCreator = expected.NotifyCreator,
                 MaxAllowedDownloads = expected.MaxAllowedDownloads,
                 CurrentDownloadsCount = expected.CurrentDownloadsCount,
                 CreatedAt = expected.CreatedAt,
                 CreatedBy = new ApiUserInfo {
                     AvatarUuid = expected.CreatedBy.AvatarUUID,
                     UserName = expected.CreatedBy.UserName,
-                    Id = expected.CreatedBy.Id.Value
+                    Id = expected.CreatedBy.Id,
+                    Email = expected.CreatedBy.Email,
+                    FirstName = expected.CreatedBy.FirstName,
+                    LastName = expected.CreatedBy.LastName,
+                    UserType = "internal"
                 },
                 IsProtected = expected.IsProtected,
                 IsEncrypted = expected.IsEncrypted,
-                Type = "folder"
+                Type = "folder",
+                DataUrl = expected.DataUrl,
+                UpdatedAt = expected.UpdatedAt,
+                UpdatedBy = new ApiUserInfo {
+                    AvatarUuid = expected.UpdatedBy.AvatarUUID,
+                    UserName = expected.UpdatedBy.UserName,
+                    Id = expected.UpdatedBy.Id,
+                    Email = expected.UpdatedBy.Email,
+                    FirstName = expected.UpdatedBy.FirstName,
+                    LastName = expected.UpdatedBy.LastName,
+                    UserType = "internal"
+                }
             };
 
             Mock.Arrange(() => UserMapper.FromApiUserInfo(param.CreatedBy)).Returns(expected.CreatedBy);
@@ -132,18 +146,32 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     AccessKey = current.AccessKey,
                     ShowCreatorName = current.ShowCreatorName,
                     ShowCreatorUserName = current.ShowCreatorUserName,
-                    NotifyCreator = current.NotifyCreator,
                     MaxAllowedDownloads = current.MaxAllowedDownloads,
                     CurrentDownloadsCount = current.CurrentDownloadsCount,
                     CreatedAt = current.CreatedAt,
                     CreatedBy = new ApiUserInfo {
                         AvatarUuid = current.CreatedBy.AvatarUUID,
                         UserName = current.CreatedBy.UserName,
-                        Id = current.CreatedBy.Id.Value
+                        Id = current.CreatedBy.Id,
+                        Email = current.CreatedBy.Email,
+                        FirstName = current.CreatedBy.FirstName,
+                        LastName = current.CreatedBy.LastName,
+                        UserType = "internal"
                     },
                     IsProtected = current.IsProtected,
                     IsEncrypted = current.IsEncrypted,
-                    Type = "folder"
+                    Type = "folder",
+                    DataUrl = current.DataUrl,
+                    UpdatedAt = current.UpdatedAt,
+                    UpdatedBy = new ApiUserInfo {
+                        AvatarUuid = current.UpdatedBy.AvatarUUID,
+                        UserName = current.UpdatedBy.UserName,
+                        Id = current.UpdatedBy.Id,
+                        Email = current.UpdatedBy.Email,
+                        FirstName = current.UpdatedBy.FirstName,
+                        LastName = current.UpdatedBy.LastName,
+                        UserType = "internal"
+                    }
                 };
                 param.Items.Add(currentApi);
                 Mock.Arrange(() => ShareMapper.FromApiDownloadShare(currentApi)).Returns(current);
@@ -224,12 +252,15 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 Name = expected.Name,
                 IsProtected = expected.IsProtected,
                 AccessKey = expected.AccessKey,
-                NotifyCreator = expected.NotifyCreator,
                 CreatedAt = expected.CreatedAt,
                 CreatedBy = new ApiUserInfo {
                     AvatarUuid = expected.CreatedBy.AvatarUUID,
                     UserName = expected.CreatedBy.UserName,
-                    Id = expected.CreatedBy.Id.Value
+                    Id = expected.CreatedBy.Id,
+                    Email = expected.CreatedBy.Email,
+                    FirstName = expected.CreatedBy.FirstName,
+                    LastName = expected.CreatedBy.LastName,
+                    UserType = "internal"
                 },
                 ExpireAt = expected.ExpireAt,
                 IsEncrypted = expected.IsEncrypted,
@@ -241,7 +272,20 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 ShowUploadedFiles = expected.ShowUploadedFiles,
                 MaxAllowedUploads = expected.MaxAllowedUploads,
                 MaxAllowedTotalSizeOverAllUploadedFiles = expected.MaxAllowedTotalSizeOverAllUploadedFiles,
-                Type = "folder"
+                Type = "folder",
+                DataUrl = expected.DataUrl,
+                ShowCreatorName = expected.ShowCreatorName,
+                ShowCreatorUsername = expected.ShowCreatorUsername,
+                UpdatedAt = expected.UpdatedAt,
+                UpdatedBy = new ApiUserInfo {
+                    AvatarUuid = expected.UpdatedBy.AvatarUUID,
+                    UserName = expected.UpdatedBy.UserName,
+                    Id = expected.UpdatedBy.Id,
+                    Email = expected.UpdatedBy.Email,
+                    FirstName = expected.UpdatedBy.FirstName,
+                    LastName = expected.UpdatedBy.LastName,
+                    UserType = "internal"
+                }
             };
 
             Mock.Arrange(() => UserMapper.FromApiUserInfo(param.CreatedBy)).Returns(expected.CreatedBy);
@@ -280,12 +324,15 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     Notes = current.Notes,
                     ExpireAt = current.ExpireAt,
                     AccessKey = current.AccessKey,
-                    NotifyCreator = current.NotifyCreator,
                     CreatedAt = current.CreatedAt,
                     CreatedBy = new ApiUserInfo {
                         AvatarUuid = current.CreatedBy.AvatarUUID,
                         UserName = current.CreatedBy.UserName,
-                        Id = current.CreatedBy.Id.Value
+                        Id = current.CreatedBy.Id,
+                        Email = current.CreatedBy.Email,
+                        FirstName = current.CreatedBy.FirstName,
+                        LastName = current.CreatedBy.LastName,
+                        UserType = "internal"
                     },
                     IsProtected = current.IsProtected,
                     IsEncrypted = current.IsEncrypted,
@@ -295,7 +342,20 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     MaxAllowedUploads = current.MaxAllowedUploads,
                     ShowUploadedFiles = current.ShowUploadedFiles,
                     UploadedFilesExpirationPeriod = current.UploadedFilesExpirationPeriod,
-                    Type = "folder"
+                    Type = "folder",
+                    DataUrl = current.DataUrl,
+                    ShowCreatorName = current.ShowCreatorName,
+                    ShowCreatorUsername = current.ShowCreatorUsername,
+                    UpdatedAt = current.UpdatedAt,
+                    UpdatedBy = new ApiUserInfo {
+                        AvatarUuid = current.UpdatedBy.AvatarUUID,
+                        UserName = current.UpdatedBy.UserName,
+                        Id = current.UpdatedBy.Id,
+                        Email = current.UpdatedBy.Email,
+                        FirstName = current.UpdatedBy.FirstName,
+                        LastName = current.UpdatedBy.LastName,
+                        UserType = "internal"
+                    }
                 };
                 param.Items.Add(currentApi);
                 Mock.Arrange(() => ShareMapper.FromApiUploadShare(currentApi)).Returns(current);

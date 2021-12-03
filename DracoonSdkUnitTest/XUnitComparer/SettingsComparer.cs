@@ -15,9 +15,12 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             return x.CryptoEnabled == y.CryptoEnabled &&
                 x.EmailNotificationButtonEnabled == y.EmailNotificationButtonEnabled &&
                 x.EulaEnabled == y.EulaEnabled &&
-                x.MediaServerEnabled == y.MediaServerEnabled &&
                 x.SharePasswordSmsEnabled == y.SharePasswordSmsEnabled &&
-                x.UseS3Storage == y.UseS3Storage;
+                x.UseS3Storage == y.UseS3Storage &&
+                x.S3TagsEnabled == y.S3TagsEnabled &&
+                x.HomeRoomsActive == y.HomeRoomsActive &&
+                x.HomeRoomParentId == y.HomeRoomParentId &&
+                x.SubscriptionPlan == y.SubscriptionPlan;
         }
 
         public int GetHashCode(ServerGeneralSettings obj) {

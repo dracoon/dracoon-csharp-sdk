@@ -58,6 +58,7 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 return false;
             }
             Assert.Equal(x.CreatedBy, y.CreatedBy, new ApiUserInfoComparer());
+            Assert.Equal(x.UpdatedBy, y.UpdatedBy, new ApiUserInfoComparer());
             return string.Equals(x.AccessKey, y.AccessKey) &&
                    x.CreatedAt == y.CreatedAt &&
                 x.CurrentDownloadsCount == y.CurrentDownloadsCount &&
@@ -70,10 +71,11 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 string.Equals(x.NodePath, y.NodePath) &&
                 string.Equals(x.Notes, y.Notes) &&
                 string.Equals(x.InternalNotes, y.InternalNotes) &&
-                x.NotifyCreator == y.NotifyCreator &&
                 x.ShareId == y.ShareId &&
                 x.ShowCreatorName == y.ShowCreatorName &&
-                x.ShowCreatorUserName == y.ShowCreatorUserName;
+                x.ShowCreatorUserName == y.ShowCreatorUserName &&
+                string.Equals(x.DataUrl, y.DataUrl) &&
+                x.UpdatedAt == y.UpdatedAt;
         }
 
         public int GetHashCode(ApiDownloadShare obj) {
@@ -90,6 +92,7 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 return false;
             }
             Assert.Equal(x.CreatedBy, y.CreatedBy, new UserInfoComparer());
+            Assert.Equal(x.UpdatedBy, y.UpdatedBy, new UserInfoComparer());
             return string.Equals(x.AccessKey, y.AccessKey) &&
                    x.CreatedAt == y.CreatedAt &&
                 x.CurrentDownloadsCount == y.CurrentDownloadsCount &&
@@ -102,10 +105,11 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 string.Equals(x.NodePath, y.NodePath) &&
                 string.Equals(x.Notes, y.Notes) &&
                 string.Equals(x.InternalNotes, y.InternalNotes) &&
-                x.NotifyCreator == y.NotifyCreator &&
                 x.ShareId == y.ShareId &&
                 x.ShowCreatorName == y.ShowCreatorName &&
-                x.ShowCreatorUserName == y.ShowCreatorUserName;
+                x.ShowCreatorUserName == y.ShowCreatorUserName &&
+                string.Equals(x.DataUrl, y.DataUrl) &&
+                x.UpdatedAt == y.UpdatedAt;
         }
 
         public int GetHashCode(DownloadShare obj) {
@@ -183,6 +187,7 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 return false;
             }
             Assert.Equal(x.CreatedBy, y.CreatedBy, new UserInfoComparer());
+            Assert.Equal(x.UpdatedBy, y.UpdatedBy, new UserInfoComparer());
             return string.Equals(x.AccessKey, y.AccessKey) &&
                 x.CreatedAt == y.CreatedAt &&
                 x.ExpireAt == y.ExpireAt &&
@@ -193,13 +198,16 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 string.Equals(x.NodePath, y.NodePath) &&
                 string.Equals(x.Notes, y.Notes) &&
                 string.Equals(x.InternalNotes, y.InternalNotes) &&
-                x.NotifyCreator == y.NotifyCreator &&
                 x.ShareId == y.ShareId &&
                 x.CurrentDoneUploadsCount == y.CurrentDoneUploadsCount &&
                 x.CurrentUploadedFilesCount == y.CurrentUploadedFilesCount &&
                 x.MaxAllowedTotalSizeOverAllUploadedFiles == y.MaxAllowedTotalSizeOverAllUploadedFiles &&
                 x.MaxAllowedUploads == y.MaxAllowedUploads &&
-                x.UploadedFilesExpirationPeriod == y.UploadedFilesExpirationPeriod;
+                x.UploadedFilesExpirationPeriod == y.UploadedFilesExpirationPeriod &&
+                string.Equals(x.DataUrl, y.DataUrl) &&
+                x.ShowCreatorName == y.ShowCreatorName &&
+                x.ShowCreatorUsername == y.ShowCreatorUsername &&
+                x.UpdatedAt == y.UpdatedAt;
         }
 
         public int GetHashCode(UploadShare obj) {
