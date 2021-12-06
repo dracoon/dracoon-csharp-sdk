@@ -210,5 +210,15 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             ReceiverLanguage = "de",
             TextMessageRecipients = new List<string> { "092834574" }
         };
+
+        internal static MailShareInfoRequest MailShareInfoRequest => new MailShareInfoRequest(123, "I'm a mail info message for a share!", new List<string> { "0481234", "049123" }) {
+            ReceiverLanguage = "de"
+        };
+
+        internal static ApiMailShareInfoRequest ApiMailShareInfoRequest => new ApiMailShareInfoRequest() {
+            Body = "I'm a mail info message for a share!",
+            Recipients = new List<string> { "0481234", "049123" },
+            ReceiverLanguage = "de"
+        };
     }
 }

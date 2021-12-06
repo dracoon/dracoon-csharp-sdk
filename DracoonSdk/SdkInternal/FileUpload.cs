@@ -199,7 +199,7 @@ namespace Dracoon.Sdk.SdkInternal {
         #region S3 upload
 
         protected bool CheckUseS3() {
-            Client.Executor.CheckApiServerVersion(ApiConfig.ApiS3DirectUploadPossible);
+            Client.Executor.CheckApiServerVersion();
             IRestRequest generalSettingsRequest = Client.Builder.GetGeneralSettings();
             ApiGeneralSettings apiGeneralSettings =
                 Client.Executor.DoSyncApiCall<ApiGeneralSettings>(generalSettingsRequest, RequestType.GetGeneralSettings);

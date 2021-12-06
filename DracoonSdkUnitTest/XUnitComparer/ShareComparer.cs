@@ -170,6 +170,24 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
         }
     }
 
+    internal class ApiMailShareInfoRequestComparer : IEqualityComparer<ApiMailShareInfoRequest> {
+        public bool Equals(ApiMailShareInfoRequest x, ApiMailShareInfoRequest y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            return string.Equals(x.Body, y.Body) &&
+                string.Equals(x.ReceiverLanguage, y.ReceiverLanguage) &&
+                CompareHelper.ListIsEqual(x.Recipients, y.Recipients);
+        }
+
+        public int GetHashCode(ApiMailShareInfoRequest obj) {
+            throw new NotImplementedException();
+        }
+    }
+
     internal class UploadShareComparer : IEqualityComparer<UploadShare> {
         public bool Equals(UploadShare x, UploadShare y) {
             if (x == null && y == null) {

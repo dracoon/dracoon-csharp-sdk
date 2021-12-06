@@ -30,7 +30,8 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         public ClassificationPolicies GetClassificationPolicies() {
-            _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetClassificationPoliciesMinimumVersion);
+            _client.Executor.CheckApiServerVersion();
+
             IRestRequest request = _client.Builder.GetClassificationPolicies();
             ApiClassificationPolicies apiClassificationPolicies = _client.Executor.DoSyncApiCall<ApiClassificationPolicies>(request, DracoonRequestExecutor.RequestType.GetClassificationPolicies);
             return SettingsMapper.FromApiClassificationPolicies(apiClassificationPolicies);

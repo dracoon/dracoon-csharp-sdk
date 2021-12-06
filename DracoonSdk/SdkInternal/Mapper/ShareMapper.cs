@@ -146,17 +146,13 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             return shareList;
         }
 
-        private static string GenerateRecipientString(IReadOnlyList<string> recipientList) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < recipientList.Count; i++) {
-                if (i == recipientList.Count - 1) {
-                    sb.Append(recipientList[i]);
-                } else {
-                    sb.Append(recipientList[i] + ",");
-                }
-            }
-
-            return sb.ToString();
+        internal static ApiMailShareInfoRequest ToApiMailShareInfoRequest(MailShareInfoRequest request) {
+            ApiMailShareInfoRequest apiRequest = new ApiMailShareInfoRequest() {
+                Body = request.Body,
+                ReceiverLanguage = request.ReceiverLanguage,
+                Recipients = request.Recipients
+            };
+            return apiRequest;
         }
     }
 }

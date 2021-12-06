@@ -128,6 +128,10 @@ namespace Dracoon.Sdk.SdkInternal {
 
         IRestRequest PostCreateUploadShare(ApiCreateUploadShareRequest uploadShareParams);
 
+        IRestRequest PostMailDownloadShare(long shareId, ApiMailShareInfoRequest mailParams);
+
+        IRestRequest PostMailUploadShare(long shareId, ApiMailShareInfoRequest mailParams);
+
         IRestRequest DeleteDownloadShare(long shareId);
 
         IRestRequest DeleteUploadShare(long shareId);

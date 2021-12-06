@@ -153,20 +153,15 @@ namespace Dracoon.Sdk.SdkInternal {
 
         private List<UserKeyPair> GetUserKeyPairs() {
             List<UserKeyPair> returnValue = new List<UserKeyPair>();
-            try {
-                // Check if api supports this api endpoint. If not only provide the keypair using the "old" api.
-                _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetUserKeyPairsMinimumVersion);
+            // Check if api supports this api endpoint. If not only provide the keypair using the "old" api.
+            _client.Executor.CheckApiServerVersion();
 
-                IRestRequest request = _client.Builder.GetUserKeyPairs();
-                List<ApiUserKeyPair> result = _client.Executor.DoSyncApiCall<List<ApiUserKeyPair>>(request, RequestType.GetUserKeyPairs);
+            IRestRequest request = _client.Builder.GetUserKeyPairs();
+            List<ApiUserKeyPair> result = _client.Executor.DoSyncApiCall<List<ApiUserKeyPair>>(request, RequestType.GetUserKeyPairs);
 
-                foreach (ApiUserKeyPair apiUserKeyPair in result) {
-                    UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(apiUserKeyPair);
-                    returnValue.Add(userKeyPair);
-                }
-            } catch (DracoonApiException error) when (error.ErrorCode.Code == DracoonApiCode.API_VERSION_NOT_SUPPORTED.Code) {
-                UserKeyPair keyPair = GetUserKeyPair(UserKeyPairAlgorithm.RSA2048);
-                returnValue.Add(keyPair);
+            foreach (ApiUserKeyPair apiUserKeyPair in result) {
+                UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(apiUserKeyPair);
+                returnValue.Add(userKeyPair);
             }
             return returnValue;
         }

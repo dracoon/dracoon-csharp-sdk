@@ -1353,144 +1353,14 @@
 
   <members name="iShares">
 
-    <IShares>
-      <summary>
-        Handler to maintain the shares.
-      </summary>
-    </IShares>
 
-    <CreateDownloadShare>
-      <summary>
-        Creates a download share for a node.
-      </summary>
-      <param name="request">
-        The request with the target node ID and the download share settings. See also <seealso cref="Dracoon.Sdk.Model.CreateDownloadShareRequest"/>
-      </param>
-      <returns>
-        The download share. See also <seealso cref="Dracoon.Sdk.Model.DownloadShare"/>
-      </returns>
-      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
-      </exception>
-      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
-      </exception>
-      <exception cref="System.ArgumentException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
-      </exception>
-      <exception cref="System.ArgumentNullException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
-      </exception>
-    </CreateDownloadShare>
-
-    <GetDownloadShares>
-      <summary>
-        Retrieves the download shares which are created by the user.
-      </summary>
-      <param name="offset">
-        The range offset. (Zero-based index; must be 0 or positive if set)
-      </param>
-      <param name="limit">
-        The range limit. (Number of returned records; must be positive if set)
-      </param>
-      <param name="filter">
-        The filter for the request result. See also <seealso cref="Dracoon.Sdk.Filter.GetDownloadSharesFilter"/>
-      </param>
-      <param name="sort">
-        The sort for the request result. See also <seealso cref="Dracoon.Sdk.Sort.SharesSort"/>
-      </param>
-      <returns>
-        The result list of download shares. See also <seealso cref="Dracoon.Sdk.Model.DownloadShareList"/>
-      </returns>
-      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
-      </exception>
-      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
-      </exception>
-      <exception cref="System.ArgumentException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
-      </exception>
-    </GetDownloadShares>
-
-    <DeleteDownloadShare>
-      <summary>
-        Delete a download shares.
-      </summary>
-      <param name="shareId">
-        The ID of the download share which should be deleted.
-      </param>
-      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
-      </exception>
-      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
-      </exception>
-      <exception cref="System.ArgumentException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
-      </exception>
-    </DeleteDownloadShare>
-
-    <CreateUploadShare>
-      <summary>
-        Creates a upload share for a node.
-      </summary>
-      <param name="request">
-        The request with the target node ID and the upload share settings. See also <seealso cref="Dracoon.Sdk.Model.CreateUploadShareRequest"/>
-      </param>
-      <returns>
-        The upload share. See also <seealso cref="Dracoon.Sdk.Model.UploadShare"/>
-      </returns>
-      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
-      </exception>
-      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
-      </exception>
-      <exception cref="System.ArgumentException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
-      </exception>
-      <exception cref="System.ArgumentNullException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
-      </exception>
-    </CreateUploadShare>
-
-    <GetUploadShares>
-      <summary>
-        Retrieves the upload shares which are created by the user.
-      </summary>
-      <param name="offset">
-        The range offset. (Zero-based index; must be 0 or positive if set)
-      </param>
-      <param name="limit">
-        The range limit. (Number of returned records; must be positive if set)
-      </param>
-      <param name="filter">
-        The filter for the request result. See also <seealso cref="Dracoon.Sdk.Filter.GetUploadSharesFilter"/>
-      </param>
-      <param name="sort">
-        The sort for the request result. See also <seealso cref="Dracoon.Sdk.Sort.SharesSort"/>
-      </param>
-      <returns>
-        The result list of upload shares. See also <seealso cref="Dracoon.Sdk.Model.UploadShareList"/>
-      </returns>
-      <exception cref="Dracoon.Sdk.Error.DracoonApiException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
-      </exception>
-      <exception cref="Dracoon.Sdk.Error.DracoonNetIOException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
-      </exception>
-      <exception cref="System.ArgumentException">
-        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
-      </exception>
-    </GetUploadShares>
 
     <DeleteUploadShare>
       <summary>
-        Delete a upload share.
+
       </summary>
       <param name="shareId">
-        The ID of the upload share which should be deleted.
+
       </param>
       <exception cref="Dracoon.Sdk.Error.DracoonApiException">
         <include file="../Error/ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>

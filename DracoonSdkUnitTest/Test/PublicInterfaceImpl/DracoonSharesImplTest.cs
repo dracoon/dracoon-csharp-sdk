@@ -369,5 +369,65 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
         }
 
         #endregion
+
+        #region DownloadShareMail
+
+        [Fact]
+        public void SendDownloadShareMail_Success() {
+            // ARRANGE
+
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonSharesImpl s = new DracoonSharesImpl(c);
+            Mock.Arrange(() => Arg.IsAny<MailShareInfoRequest>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool)).DoNothing().OccursAtLeast(3);
+            Mock.Arrange(() => Arg.IsAny<IEnumerable<string>>().EnumerableMustNotNullOrEmpty(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Builder.PostMailDownloadShare(Arg.AnyLong, Arg.IsAny<ApiMailShareInfoRequest>())).Returns(FactoryRestSharp.PostMailDownloadShare(123)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.PostMailDownloadShare, 0)).DoNothing().Occurs(1);
+            Mock.Arrange(() => ShareMapper.ToApiMailShareInfoRequest(Arg.IsAny<MailShareInfoRequest>())).Returns(FactoryShare.ApiMailShareInfoRequest).Occurs(1);
+
+            // ACT
+            s.SendMailForDownloadShare(FactoryShare.MailShareInfoRequest);
+
+            // ASSERT
+            Mock.Assert(() => Arg.IsAny<MailShareInfoRequest>().MustNotNull(Arg.AnyString));
+            Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool));
+            Mock.Assert(() => Arg.IsAny<IEnumerable<string>>().EnumerableMustNotNullOrEmpty(Arg.AnyString));
+            Mock.Assert(() => ShareMapper.ToApiMailShareInfoRequest(Arg.IsAny<MailShareInfoRequest>()));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
+
+        #region UploadShareMail
+
+        [Fact]
+        public void SendUploadShareMail_Success() {
+            // ARRANGE
+
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonSharesImpl s = new DracoonSharesImpl(c);
+            Mock.Arrange(() => Arg.IsAny<MailShareInfoRequest>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool)).DoNothing().OccursAtLeast(3);
+            Mock.Arrange(() => Arg.IsAny<IEnumerable<string>>().EnumerableMustNotNullOrEmpty(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Builder.PostMailUploadShare(Arg.AnyLong, Arg.IsAny<ApiMailShareInfoRequest>())).Returns(FactoryRestSharp.PostMailUploadShare(123)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.PostMailUploadShare, 0)).DoNothing().Occurs(1);
+            Mock.Arrange(() => ShareMapper.ToApiMailShareInfoRequest(Arg.IsAny<MailShareInfoRequest>())).Returns(FactoryShare.ApiMailShareInfoRequest).Occurs(1);
+
+            // ACT
+            s.SendMailForUploadShare(FactoryShare.MailShareInfoRequest);
+
+            // ASSERT
+            Mock.Assert(() => Arg.IsAny<MailShareInfoRequest>().MustNotNull(Arg.AnyString));
+            Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool));
+            Mock.Assert(() => Arg.IsAny<IEnumerable<string>>().EnumerableMustNotNullOrEmpty(Arg.AnyString));
+            Mock.Assert(() => ShareMapper.ToApiMailShareInfoRequest(Arg.IsAny<MailShareInfoRequest>()));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
     }
 }

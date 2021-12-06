@@ -168,6 +168,44 @@ namespace Dracoon.Sdk.SdkInternal {
             return ShareMapper.FromApiUploadShareList(result);
         }
 
+        public void SendMailForDownloadShare(MailShareInfoRequest request) {
+            _client.Executor.CheckApiServerVersion();
+
+            #region Parameter Validation
+
+            request.MustNotNull(nameof(request));
+            request.ShareId.MustPositive(nameof(request.ShareId));
+            request.Body.MustNotNullOrEmptyOrWhitespace(nameof(request.Body));
+            request.Recipients.EnumerableMustNotNullOrEmpty(nameof(request.Recipients));
+            request.Recipients.ForEach(current => current.MustNotNullOrEmptyOrWhitespace(nameof(request.Recipients) + " element"));
+            request.ReceiverLanguage.MustNotNullOrEmptyOrWhitespace(nameof(request.ReceiverLanguage), true);
+
+            #endregion
+
+            ApiMailShareInfoRequest apiRequest = ShareMapper.ToApiMailShareInfoRequest(request);
+            IRestRequest restRequest = _client.Builder.PostMailDownloadShare(request.ShareId, apiRequest);
+            _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, DracoonRequestExecutor.RequestType.PostMailDownloadShare);
+        }
+
+        public void SendMailForUploadShare(MailShareInfoRequest request) {
+            _client.Executor.CheckApiServerVersion();
+
+            #region Parameter Validation
+
+            request.MustNotNull(nameof(request));
+            request.ShareId.MustPositive(nameof(request.ShareId));
+            request.Body.MustNotNullOrEmptyOrWhitespace(nameof(request.Body));
+            request.Recipients.EnumerableMustNotNullOrEmpty(nameof(request.Recipients));
+            request.Recipients.ForEach(current => current.MustNotNullOrEmptyOrWhitespace(nameof(request.Recipients) + " element"));
+            request.ReceiverLanguage.MustNotNullOrEmptyOrWhitespace(nameof(request.ReceiverLanguage), true);
+
+            #endregion
+
+            ApiMailShareInfoRequest apiRequest = ShareMapper.ToApiMailShareInfoRequest(request);
+            IRestRequest restRequest = _client.Builder.PostMailUploadShare(request.ShareId, apiRequest);
+            _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, DracoonRequestExecutor.RequestType.PostMailUploadShare);
+        }
+
         #endregion
     }
 }

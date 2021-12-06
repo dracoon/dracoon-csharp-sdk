@@ -289,10 +289,14 @@ namespace Dracoon.Sdk.Example {
             DownloadShare dl = dc.Shares.CreateDownloadShare(req);
         }
 
+        public static void SendDownloadShareInfoMail() {
+            MailShareInfoRequest req = new MailShareInfoRequest(1, "Testmail!", new List<string> { "test@mail.com" });
+            dc.Shares.SendMailForDownloadShare(req);
+        }
+
         public static void GetDownloadShares() {
             GetDownloadSharesFilter filter = new GetDownloadSharesFilter();
             filter.AddAccessKeyFilter(GetDownloadSharesFilter.AccessKey.Contains("ACCESSKEY").Build());
-
             
             DownloadShareList res = dc.Shares.GetDownloadShares(filter: filter, sort: SharesSort.CreatedAt.Descending());
         }

@@ -20,6 +20,7 @@ namespace Dracoon.Sdk.SdkInternal {
             PostDownloadToken, GetFileKey, PostUploadToken, PutCompleteUpload, PutCompleteS3Upload,
             PostUploadChunk, PutUploadS3Chunk, GetDownloadChunk, PostCopyNodes, PostMoveNodes,
             GetSearchNodes, GetMissingFileKeys, PostMissingFileKeys, PostCreateDownloadShare, DeleteDownloadShare,
+            PostMailDownloadShare, PostMailUploadShare,
             GetDownloadShares, PostCreateUploadShare, DeleteUploadShare, GetUploadShares, PostFavorite,
             DeleteFavorite, GetAuthenticatedPing, PostOAuthToken, PostOAuthRefresh, GetGeneralSettings,
             GetInfrastructureSettings, GetDefaultsSettings, GetRecycleBin, DeleteRecycleBin, GetPreviousVersions,

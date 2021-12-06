@@ -112,23 +112,6 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
         }
 
         [Fact]
-        public void GetUserKeyPairAlgorithms_NotSupportedAlgorithms() {
-            // ARRANGE
-            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
-            DracoonServerSettingsImpl ss = new DracoonServerSettingsImpl(c);
-            Mock.Arrange(() => c.Executor.CheckApiServerVersion(Arg.AnyString)).Throws(new DracoonApiException()).Occurs(1);
-
-            // ACT
-            List<UserKeyPairAlgorithmData> actual = ss.GetAvailableUserKeyPairAlgorithms();
-
-            // ASSERT
-            Assert.NotNull(actual);
-            Mock.Assert(actual.Count == 1);
-            Mock.Assert(actual[0].Algorithm == Crypto.Sdk.UserKeyPairAlgorithm.RSA2048);
-            Mock.Assert(() => c.Executor.CheckApiServerVersion(Arg.AnyString));
-        }
-
-        [Fact]
         public void GetFileKeyAlgorithms() {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
@@ -147,23 +130,6 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Assert(() => SettingsMapper.FromApiFileKeyAlgorithms(Arg.IsAny<List<ApiAlgorithm>>()));
             Mock.Assert(c.Builder);
             Mock.Assert(c.Executor);
-        }
-
-        [Fact]
-        public void GetFileKeyAlgorithms_NotSupportedAlgorithms() {
-            // ARRANGE
-            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
-            DracoonServerSettingsImpl ss = new DracoonServerSettingsImpl(c);
-            Mock.Arrange(() => c.Executor.CheckApiServerVersion(Arg.AnyString)).Throws(new DracoonApiException()).Occurs(1);
-
-            // ACT
-            List<FileKeyAlgorithmData> actual = ss.GetAvailableFileKeyAlgorithms();
-
-            // ASSERT
-            Assert.NotNull(actual);
-            Mock.Assert(actual.Count == 1);
-            Mock.Assert(actual[0].Algorithm == Crypto.Sdk.EncryptedFileKeyAlgorithm.RSA2048_AES256GCM);
-            Mock.Assert(() => c.Executor.CheckApiServerVersion(Arg.AnyString));
         }
 
         #endregion

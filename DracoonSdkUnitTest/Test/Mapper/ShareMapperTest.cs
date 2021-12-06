@@ -325,5 +325,27 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
         }
 
         #endregion
+
+        #region ToApiMailShareInfoRequest
+
+        [Fact]
+        public void ToApiMailShareInfoRequest() {
+            // ARRANGE
+            ApiMailShareInfoRequest expected = FactoryShare.ApiMailShareInfoRequest;
+
+            MailShareInfoRequest param = new MailShareInfoRequest(123, expected.Body, expected.Recipients) {
+                ReceiverLanguage = expected.ReceiverLanguage
+            };
+
+            // ACT
+            ApiMailShareInfoRequest actual = ShareMapper.ToApiMailShareInfoRequest(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new ApiMailShareInfoRequestComparer());
+        }
+
+
+        #endregion
+
     }
 }

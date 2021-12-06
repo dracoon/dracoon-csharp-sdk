@@ -534,6 +534,20 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        IRestRequest IRequestBuilder.PostMailDownloadShare(long shareId, ApiMailShareInfoRequest mailParams) {
+            RestRequest request = new RestRequest(ApiConfig.ApiPostMailDownloadShare, Method.POST);
+            SetGeneralRestValues(request, true, mailParams);
+            request.AddUrlSegment("shareId", shareId);
+            return request;
+        }
+
+        IRestRequest IRequestBuilder.PostMailUploadShare(long shareId, ApiMailShareInfoRequest mailParams) {
+            RestRequest request = new RestRequest(ApiConfig.ApiPostMailUploadShare, Method.POST);
+            SetGeneralRestValues(request, true, mailParams);
+            request.AddUrlSegment("shareId", shareId);
+            return request;
+        }
+
         #endregion
 
         #region DELETE

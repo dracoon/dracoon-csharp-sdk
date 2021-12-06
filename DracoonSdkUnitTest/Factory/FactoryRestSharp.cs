@@ -310,6 +310,16 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             return RestRequestWithAuth(ApiConfig.ApiDeleteUploadShare, Method.DELETE).AddUrlSegment("shareId", id);
         }
 
+        internal static IRestRequest PostMailDownloadShare(long id) {
+            return RestRequestWithAuth(ApiConfig.ApiPostMailDownloadShare, Method.POST).AddUrlSegment("shareId", id).AddParameter("application/json", 
+                JsonConvert.SerializeObject(FactoryShare.ApiMailShareInfoRequest), ParameterType.RequestBody);
+        }
+
+        internal static IRestRequest PostMailUploadShare(long id) {
+            return RestRequestWithAuth(ApiConfig.ApiPostMailUploadShare, Method.POST).AddUrlSegment("shareId", id).AddParameter("application/json",
+                JsonConvert.SerializeObject(FactoryShare.ApiMailShareInfoRequest), ParameterType.RequestBody);
+        }
+
         internal static IRestRequest GetUploadSharesMock(long? offset = null, long? limit = null, GetUploadSharesFilter f = null, SharesSort s = null) {
             RestRequest rr = RestRequestWithAuth(ApiConfig.ApiGetUploadShares, Method.GET);
             ApplyFilter(f, rr);
