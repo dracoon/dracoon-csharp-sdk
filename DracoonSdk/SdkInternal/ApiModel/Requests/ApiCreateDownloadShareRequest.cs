@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
     internal class ApiCreateDownloadShareRequest {
@@ -23,9 +24,6 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
         [JsonProperty("showCreatorUsername", NullValueHandling = NullValueHandling.Ignore)]
         public bool ShowCreatorUserName { get; set; }
 
-        [JsonProperty("notifyCreator", NullValueHandling = NullValueHandling.Ignore)]
-        public bool NotifyCreator { get; set; }
-
         [JsonProperty("maxDownloads", NullValueHandling = NullValueHandling.Ignore)]
         public int? MaxAllowedDownloads { get; set; }
 
@@ -38,22 +36,10 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
         [JsonProperty("fileKey", NullValueHandling = NullValueHandling.Ignore)]
         public ApiFileKey FileKey { get; set; }
 
-        [JsonProperty("sendMail", NullValueHandling = NullValueHandling.Ignore)]
-        public bool SendMail { get; set; }
+        [JsonProperty("receiverLanguage", NullValueHandling = NullValueHandling.Ignore)]
+        public string ReceiverLanguage { get; set; }
 
-        [JsonProperty("mailRecipients", NullValueHandling = NullValueHandling.Ignore)]
-        public string MailRecipients { get; set; }
-
-        [JsonProperty("mailSubject", NullValueHandling = NullValueHandling.Ignore)]
-        public string MailSubject { get; set; }
-
-        [JsonProperty("mailBody", NullValueHandling = NullValueHandling.Ignore)]
-        public string MailBody { get; set; }
-
-        [JsonProperty("sendSms", NullValueHandling = NullValueHandling.Ignore)]
-        public bool SendSms { get; set; }
-
-        [JsonProperty("smsRecipients", NullValueHandling = NullValueHandling.Ignore)]
-        public string SmsRecipients { get; set; }
+        [JsonProperty("textMessageRecipients", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> TextMessageRecipients { get; set; }
     }
 }

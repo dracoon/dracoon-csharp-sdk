@@ -84,7 +84,6 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>())).Returns(FactoryUser.ApiUserKeyPair_2048).Occurs(1);
             Mock.Arrange(() => c.Builder.SetUserKeyPair(Arg.IsAny<ApiUserKeyPair>())).Returns(FactoryRestSharp.SetUserKeyPairMock(FactoryUser.ApiUserKeyPair_2048)).Occurs(1);
             Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.SetUserKeyPair, 0)).DoNothing().Occurs(1);
-            Mock.Arrange(() => a.AssertUserKeyPairAlgorithmSupported(Arg.IsAny<UserKeyPairAlgorithm>())).DoNothing().Occurs(1);
 
             // ACT
             a.SetUserKeyPair(UserKeyPairAlgorithm.RSA2048);
@@ -105,7 +104,6 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>())).Returns(FactoryUser.ApiUserKeyPair_4096).Occurs(1);
             Mock.Arrange(() => c.Builder.SetUserKeyPair(Arg.IsAny<ApiUserKeyPair>())).Returns(FactoryRestSharp.SetUserKeyPairMock(FactoryUser.ApiUserKeyPair_4096)).Occurs(1);
             Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.SetUserKeyPair, 0)).DoNothing().Occurs(1);
-            Mock.Arrange(() => a.AssertUserKeyPairAlgorithmSupported(Arg.IsAny<UserKeyPairAlgorithm>())).DoNothing().Occurs(1);
 
             // ACT
             a.SetUserKeyPair(UserKeyPairAlgorithm.RSA4096);
@@ -127,7 +125,6 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonAccountImpl a = new DracoonAccountImpl(c);
             Mock.Arrange(() => c.Builder.DeleteUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048))).Returns(FactoryRestSharp.DeleteUserKeyPairMock()).Occurs(1);
-            Mock.Arrange(() => a.AssertUserKeyPairAlgorithmSupported(UserKeyPairAlgorithm.RSA2048)).DoNothing().Occurs(1);
             Mock.Arrange(() => UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048)).Returns("A").Occurs(1);
             Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.DeleteUserKeyPair, 0)).DoNothing().Occurs(1);
 
@@ -147,7 +144,6 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonAccountImpl a = new DracoonAccountImpl(c);
             Mock.Arrange(() => c.Builder.DeleteUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096))).Returns(FactoryRestSharp.DeleteUserKeyPairMock()).Occurs(1);
-            Mock.Arrange(() => a.AssertUserKeyPairAlgorithmSupported(UserKeyPairAlgorithm.RSA4096)).DoNothing().Occurs(1);
             Mock.Arrange(() => UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096)).Returns("RSA-4096").Occurs(1);
             Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.DeleteUserKeyPair, 0)).DoNothing().Occurs(1);
 
@@ -226,7 +222,6 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
                 .Returns(FactoryUser.ApiUserKeyPair_2048).Occurs(1);
             Mock.Arrange(() => UserMapper.FromApiUserKeyPair(Arg.IsAny<ApiUserKeyPair>())).Returns(FactoryUser.UserKeyPair_2048).Occurs(1);
             Mock.Arrange(() => Crypto.Sdk.Crypto.CheckUserKeyPair(Arg.IsAny<UserKeyPair>(), Arg.AnyString)).Returns(true).Occurs(1);
-            Mock.Arrange(() => a.AssertUserKeyPairAlgorithmSupported(UserKeyPairAlgorithm.RSA2048)).DoNothing().Occurs(1);
             Mock.Arrange(() => UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048)).Returns("A").Occurs(1);
 
             // ACT
@@ -253,7 +248,6 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
                 .Returns(FactoryUser.ApiUserKeyPair_4096).Occurs(1);
             Mock.Arrange(() => UserMapper.FromApiUserKeyPair(Arg.IsAny<ApiUserKeyPair>())).Returns(FactoryUser.UserKeyPair_4096).Occurs(1);
             Mock.Arrange(() => Crypto.Sdk.Crypto.CheckUserKeyPair(Arg.IsAny<UserKeyPair>(), Arg.AnyString)).Returns(true).Occurs(1);
-            Mock.Arrange(() => a.AssertUserKeyPairAlgorithmSupported(UserKeyPairAlgorithm.RSA4096)).DoNothing().Occurs(1);
             Mock.Arrange(() => UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096)).Returns("RSA-4096").Occurs(1);
 
             // ACT
@@ -276,7 +270,6 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonAccountImpl a = new DracoonAccountImpl(c);
             Mock.Arrange(() => c.Builder.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048))).Returns(FactoryRestSharp.GetUserKeyPairMock(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048)));
-            Mock.Arrange(() => a.AssertUserKeyPairAlgorithmSupported(UserKeyPairAlgorithm.RSA2048)).DoNothing();
             Mock.Arrange(() => UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048)).Returns("A");
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUserKeyPair>(Arg.IsAny<IRestRequest>(), RequestType.GetUserKeyPair, 0))
                 .Returns(FactoryUser.ApiUserKeyPair_2048);
@@ -297,7 +290,6 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonAccountImpl a = new DracoonAccountImpl(c);
             Mock.Arrange(() => c.Builder.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048))).Returns(FactoryRestSharp.GetUserKeyPairMock(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048)));
-            Mock.Arrange(() => a.AssertUserKeyPairAlgorithmSupported(UserKeyPairAlgorithm.RSA2048)).DoNothing();
             Mock.Arrange(() => UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048)).Returns("A");
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUserKeyPair>(Arg.IsAny<IRestRequest>(), RequestType.GetUserKeyPair, 0))
                 .Returns(FactoryUser.ApiUserKeyPair_2048);

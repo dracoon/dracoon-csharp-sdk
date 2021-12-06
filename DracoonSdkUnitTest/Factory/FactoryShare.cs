@@ -157,15 +157,10 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             },
             ShowCreatorName = true,
             ShowCreatorUserName = false,
-            NotifyCreator = true,
             MaxAllowedDownloads = 5,
             Password = "Pass1234!",
-            MailRecipients = null,
-            MailBody = null,
-            MailSubject = null,
-            SendMail = false,
-            SmsRecipients = null,
-            SendSms = false
+            ReceiverLanguage = "de",
+            TextMessageRecipients = new List<string> { "092834574" }
         };
 
         internal static CreateDownloadShareRequest CreateDownloadShareRequest => new CreateDownloadShareRequest(567986) {
@@ -175,14 +170,10 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             Expiration = new DateTime(2000, 1, 1, 0, 0, 0),
             ShowCreatorName = true,
             ShowCreatorUserName = false,
-            NotifyCreator = true,
             MaxAllowedDownloads = 5,
-            AccessPassword = "Pass1234!",
-            EncryptionPassword = "Pass1234!",
-            EmailRecipients = null,
-            EmailBody = null,
-            EmailSubject = null,
-            SmsRecipients = null
+            Password = "Pass1234!",
+            ReceiverLanguage = "de",
+            TextMessageRecipients = new List<string> { "092834574" }
         };
 
         internal static ApiCreateUploadShareRequest ApiCreateUploadShareRequest => new ApiCreateUploadShareRequest {
@@ -195,17 +186,14 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                 EnableExpiration = true
             },
             ShowUploadedFiles = true,
-            NotifyCreator = false,
             MaxAllowedTotalSizeOverAllUploadedFiles = 12345,
             MaxAllowedUploads = 4,
-            AccessPassword = "Pass1234!",
+            Password = "Pass1234!",
             UploadedFilesExpirationPeriod = 1000,
-            MailRecipients = null,
-            MailBody = null,
-            MailSubject = null,
-            SendMail = false,
-            SmsRecipients = null,
-            SendSms = false
+            ShowCreatorName = true,
+            ShowCreatorUsername = false,
+            ReceiverLanguage = "de",
+            TextMessageRecipients = new List<string> { "092834574" }
         };
 
         internal static CreateUploadShareRequest CreateUploadShareRequest => new CreateUploadShareRequest(45638, "Share") {
@@ -213,15 +201,14 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             InternalNotes = "Some internal notes.",
             Expiration = new DateTime(2000, 1, 1, 0, 0, 0),
             ShowUploadedFiles = true,
-            NotifyCreator = false,
             MaxAllowedTotalSizeOverAllUploadedFiles = 12345,
             MaxAllowedUploads = 4,
-            AccessPassword = "Pass1234!",
+            Password = "Pass1234!",
             UploadedFilesExpirationPeriod = 1000,
-            EmailRecipients = null,
-            EmailBody = null,
-            EmailSubject = null,
-            SmsRecipients = null,
+            ShowCreatorName = true,
+            ShowCreatorUsername = false,
+            ReceiverLanguage = "de",
+            TextMessageRecipients = new List<string> { "092834574" }
         };
     }
 }

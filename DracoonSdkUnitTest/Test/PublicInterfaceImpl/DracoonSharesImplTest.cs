@@ -26,24 +26,14 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
         public void CreateDownloadShare_Success() {
             // ARRANGE
             Node node = FactoryNode.Node;
-            node.IsEncrypted = true;
-            node.Type = NodeType.File;
             CreateDownloadShareRequest req = FactoryShare.CreateDownloadShareRequest;
-            req.EmailRecipients = new List<string> {
-                "985678"
-            };
-            req.EmailBody = "Any body!";
-            req.EmailSubject = "Any subject!";
-            req.SmsRecipients = new List<string> {
-                "28436054"
-            };
+            req.TextMessageRecipients = null;
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonSharesImpl s = new DracoonSharesImpl(c);
             Mock.Arrange(() => Arg.IsAny<CreateDownloadShareRequest>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.NodesImpl.GetNode(Arg.AnyLong)).Returns(node).Occurs(1);
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool)).DoNothing().OccursAtLeast(1);
             Mock.Arrange(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
-            Mock.Arrange(() => Arg.IsAny<IEnumerable<string>>().EnumerableMustNotNullOrEmpty(Arg.AnyString)).DoNothing();
             Mock.Arrange(() => ShareMapper.ToUnencryptedApiCreateDownloadShareRequest(Arg.IsAny<CreateDownloadShareRequest>()))
                 .Returns(FactoryShare.ApiCreateDownloadShareRequest).Occurs(1);
             Mock.Arrange(() => CryptoHelper.DetermineUserKeyPairVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>())).Returns(UserKeyPairAlgorithm.RSA2048).Occurs(1);
@@ -68,7 +58,6 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Assert(() => Arg.IsAny<CreateDownloadShareRequest>().MustNotNull(Arg.AnyString));
             Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool));
             Mock.Assert(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString));
-            Mock.Assert(() => Arg.IsAny<IEnumerable<string>>().EnumerableMustNotNullOrEmpty(Arg.AnyString));
             Mock.Assert(() => ShareMapper.ToUnencryptedApiCreateDownloadShareRequest(Arg.IsAny<CreateDownloadShareRequest>()));
             Mock.Assert(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>()));
             Mock.Assert(() => FileMapper.ToApiFileKey(Arg.IsAny<EncryptedFileKey>()));
@@ -104,69 +93,37 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
         }
 
         [Fact]
-        public void CreateDownloadShare_EncryptedWrongPw_Fail() {
-            // ARRANGE
-            Node node = FactoryNode.Node;
-            node.IsEncrypted = true;
-            node.Type = NodeType.File;
-            CreateDownloadShareRequest req = FactoryShare.CreateDownloadShareRequest;
-            req.AccessPassword = "Pass1234!";
-            req.EncryptionPassword = null;
-            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
-            DracoonSharesImpl s = new DracoonSharesImpl(c);
-            Mock.Arrange(() => Arg.IsAny<CreateDownloadShareRequest>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
-            Mock.Arrange(() => c.NodesImpl.GetNode(Arg.AnyLong)).Returns(node).Occurs(1);
-            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool)).DoNothing().Occurs(1);
-            Mock.Arrange(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
-
-            // ACT - ASSERT
-            Assert.Throws<ArgumentException>(() => s.CreateDownloadShare(req));
-            Mock.Assert(() => Arg.IsAny<CreateDownloadShareRequest>().MustNotNull(Arg.AnyString));
-            Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool));
-            Mock.Assert(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString));
-            Mock.Assert(c.NodesImpl);
-            Mock.Assert(c.Executor);
-        }
-
-        [Fact]
-        public void CreateDownloadShare_NotEncryptedWrongPw_Fail() {
-            // ARRANGE
-            Node node = FactoryNode.Node;
-            node.IsEncrypted = false;
-            node.Type = NodeType.File;
-            CreateDownloadShareRequest req = FactoryShare.CreateDownloadShareRequest;
-            req.AccessPassword = null;
-            req.EncryptionPassword = "Pass1234!";
-            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
-            DracoonSharesImpl s = new DracoonSharesImpl(c);
-            Mock.Arrange(() => Arg.IsAny<CreateDownloadShareRequest>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
-            Mock.Arrange(() => c.NodesImpl.GetNode(Arg.AnyLong)).Returns(node).Occurs(1);
-            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool)).DoNothing().Occurs(1);
-            Mock.Arrange(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
-
-            // ACT - ASSERT
-            Assert.Throws<ArgumentException>(() => s.CreateDownloadShare(req));
-            Mock.Assert(() => Arg.IsAny<CreateDownloadShareRequest>().MustNotNull(Arg.AnyString));
-            Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool));
-            Mock.Assert(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString));
-            Mock.Assert(c.NodesImpl);
-            Mock.Assert(c.Executor);
-        }
-
-        [Fact]
         public void CreateDownloadShare_EncryptedNoPw_Fail() {
             // ARRANGE
             Node node = FactoryNode.Node;
             node.IsEncrypted = true;
             node.Type = NodeType.File;
             CreateDownloadShareRequest req = FactoryShare.CreateDownloadShareRequest;
-            req.AccessPassword = null;
-            req.EncryptionPassword = null;
+            req.Password = null;
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonSharesImpl s = new DracoonSharesImpl(c);
             Mock.Arrange(() => Arg.IsAny<CreateDownloadShareRequest>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.NodesImpl.GetNode(Arg.AnyLong)).Returns(node).Occurs(1);
-            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool)).DoNothing().Occurs(1);
+
+            // ACT - ASSERT
+            Assert.Throws<ArgumentException>(() => s.CreateDownloadShare(req));
+            Mock.Assert(() => Arg.IsAny<CreateDownloadShareRequest>().MustNotNull(Arg.AnyString));
+            Mock.Assert(c.NodesImpl);
+            Mock.Assert(c.Executor);
+        }
+
+        [Fact]
+        public void CreateDownloadShare_EncryptedTextMessage_Fail() {
+            // ARRANGE
+            Node node = FactoryNode.Node;
+            node.IsEncrypted = true;
+            node.Type = NodeType.File;
+            CreateDownloadShareRequest req = FactoryShare.CreateDownloadShareRequest;
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonSharesImpl s = new DracoonSharesImpl(c);
+            Mock.Arrange(() => Arg.IsAny<CreateDownloadShareRequest>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.NodesImpl.GetNode(Arg.AnyLong)).Returns(node).Occurs(1);
+            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool)).DoNothing().Occurs(2);
             Mock.Arrange(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
 
             // ACT - ASSERT
@@ -179,58 +136,48 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
         }
 
         [Fact]
-        public void CreateDownloadShare_NotEncryptedNoAccessPw_Fail() {
+        public void CreateDownloadShare_EmptyRecipient_Fail() {
             // ARRANGE
             Node node = FactoryNode.Node;
             node.IsEncrypted = false;
             node.Type = NodeType.File;
             CreateDownloadShareRequest req = FactoryShare.CreateDownloadShareRequest;
-            req.AccessPassword = "";
-            req.EncryptionPassword = null;
+            req.TextMessageRecipients = new List<string> { "" };
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonSharesImpl s = new DracoonSharesImpl(c);
             Mock.Arrange(() => Arg.IsAny<CreateDownloadShareRequest>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.NodesImpl.GetNode(Arg.AnyLong)).Returns(node).Occurs(1);
-            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, true)).DoNothing().Occurs(1);
-            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).Throws(new ArgumentException()).Occurs(1);
             Mock.Arrange(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
 
             // ACT - ASSERT
             Assert.Throws<ArgumentException>(() => s.CreateDownloadShare(req));
             Mock.Assert(() => Arg.IsAny<CreateDownloadShareRequest>().MustNotNull(Arg.AnyString));
-            Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, true));
-            Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
             Mock.Assert(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString));
             Mock.Assert(c.NodesImpl);
             Mock.Assert(c.Executor);
-
         }
 
         [Fact]
-        public void CreateDownloadShare_SmsRecipientsNoAccessPw_Fail() {
+        public void CreateDownloadShare_TextMessagePWEmpty_Fail() {
             // ARRANGE
             Node node = FactoryNode.Node;
             node.IsEncrypted = false;
             node.Type = NodeType.File;
             CreateDownloadShareRequest req = FactoryShare.CreateDownloadShareRequest;
-            req.AccessPassword = null;
-            req.EncryptionPassword = null;
-            req.SmsRecipients = new List<string>();
-            req.EmailRecipients = null;
+            req.Password = null;
+            req.TextMessageRecipients = new List<string> { "" };
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonSharesImpl s = new DracoonSharesImpl(c);
             Mock.Arrange(() => Arg.IsAny<CreateDownloadShareRequest>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.NodesImpl.GetNode(Arg.AnyLong)).Returns(node).Occurs(1);
-            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool)).DoNothing().OccursAtLeast(1);
+            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool)).DoNothing().Occurs(2);
             Mock.Arrange(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
-            Mock.Arrange(() => Arg.IsAny<IEnumerable<string>>().EnumerableMustNotNullOrEmpty(Arg.AnyString)).DoNothing().Occurs(1);
 
             // ACT - ASSERT
             Assert.Throws<ArgumentException>(() => s.CreateDownloadShare(req));
             Mock.Assert(() => Arg.IsAny<CreateDownloadShareRequest>().MustNotNull(Arg.AnyString));
             Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool));
             Mock.Assert(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString));
-            Mock.Assert(() => Arg.IsAny<IEnumerable<string>>().EnumerableMustNotNullOrEmpty(Arg.AnyString));
             Mock.Assert(c.NodesImpl);
             Mock.Assert(c.Executor);
         }
@@ -293,25 +240,16 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
         #region CreateUploadShare
 
         [Fact]
-        public void CreateUploadShare() {
+        public void CreateUploadShare_Success() {
             // ARRANGE
             CreateUploadShareRequest req = FactoryShare.CreateUploadShareRequest;
-            req.EmailRecipients = new List<string> {
-                "985678"
-            };
-            req.EmailBody = "Any body!";
-            req.EmailSubject = "Any subject!";
-            req.SmsRecipients = new List<string> {
-                "28436054"
-            };
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonSharesImpl s = new DracoonSharesImpl(c);
             Mock.Arrange(() => Arg.IsAny<CreateUploadShareRequest>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
-            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool)).DoNothing().OccursAtLeast(1);
+            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool)).DoNothing().OccursAtLeast(3);
             Mock.Arrange(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(2);
             Mock.Arrange(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
-            Mock.Arrange(() => Arg.IsAny<IEnumerable<string>>().EnumerableMustNotNullOrEmpty(Arg.AnyString)).DoNothing();
             Mock.Arrange(() => ShareMapper.ToApiCreateUploadShareRequest(Arg.IsAny<CreateUploadShareRequest>()))
                 .Returns(FactoryShare.ApiCreateUploadShareRequest).Occurs(1);
             Mock.Arrange(() => c.Builder.PostCreateUploadShare(Arg.IsAny<ApiCreateUploadShareRequest>())).Returns(FactoryRestSharp.PostCreateUploadShareMock()).Occurs(1);
@@ -329,7 +267,6 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool));
             Mock.Assert(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString));
             Mock.Assert(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString));
-            Mock.Assert(() => Arg.IsAny<IEnumerable<string>>().EnumerableMustNotNullOrEmpty(Arg.AnyString));
             Mock.Assert(() => ShareMapper.ToApiCreateUploadShareRequest(Arg.IsAny<CreateUploadShareRequest>()));
             Mock.Assert(() => ShareMapper.FromApiUploadShare(Arg.IsAny<ApiUploadShare>()));
             Mock.Assert(c.Builder);
@@ -337,20 +274,17 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
         }
 
         [Fact]
-        public void CreateUploadShare_SmsRecipientsNoAccessPw_Fail() {
+        public void CreateUploadShare_TextMessagePWEmpty_Fail() {
             // ARRANGE
             CreateUploadShareRequest req = FactoryShare.CreateUploadShareRequest;
-            req.AccessPassword = null;
-            req.SmsRecipients = new List<string>();
-            req.EmailRecipients = null;
+            req.Password = null;
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonSharesImpl s = new DracoonSharesImpl(c);
             Mock.Arrange(() => Arg.IsAny<CreateUploadShareRequest>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
-            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool)).DoNothing().OccursAtLeast(1);
+            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool)).DoNothing().Occurs(2);
             Mock.Arrange(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(2);
             Mock.Arrange(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
-            Mock.Arrange(() => Arg.IsAny<IEnumerable<string>>().EnumerableMustNotNullOrEmpty(Arg.AnyString)).DoNothing();
 
             // ACT - ASSERT
             Assert.Throws<ArgumentException>(() => s.CreateUploadShare(req));
@@ -359,7 +293,27 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool));
             Mock.Assert(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString));
             Mock.Assert(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString));
-            Mock.Assert(() => Arg.IsAny<IEnumerable<string>>().EnumerableMustNotNullOrEmpty(Arg.AnyString));
+            Mock.Assert(c.Executor);
+        }
+
+        [Fact]
+        public void CreateUploadShare_EmptyRecipient_Fail() {
+            // ARRANGE
+            CreateUploadShareRequest req = FactoryShare.CreateUploadShareRequest;
+            req.TextMessageRecipients = new List<string> { "" };
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonSharesImpl s = new DracoonSharesImpl(c);
+            Mock.Arrange(() => Arg.IsAny<CreateUploadShareRequest>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(2);
+            Mock.Arrange(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
+
+            // ACT - ASSERT
+            Assert.Throws<ArgumentException>(() => s.CreateUploadShare(req));
+            Mock.Assert(() => Arg.IsAny<CreateUploadShareRequest>().MustNotNull(Arg.AnyString));
+            Mock.Assert(() => Arg.AnyLong.MustPositive(Arg.AnyString));
+            Mock.Assert(() => Arg.IsAny<int?>().NullableMustPositive(Arg.AnyString));
+            Mock.Assert(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString));
             Mock.Assert(c.Executor);
         }
 

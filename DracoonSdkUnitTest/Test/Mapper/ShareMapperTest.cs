@@ -12,30 +12,10 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
     public class ShareMapperTest {
         #region ToUnencryptedApiCreateDownloadShareRequest
 
-        [Theory]
-        [InlineData(null, null)]
-        [InlineData("0151789513,017115674615", "test@dracoon.com,test2@dracoon.com")]
-        public void ToUnencryptedApiCreateDownloadShareRequest(string smsRecipients, string emailRecipients) {
+        [Fact]
+        public void ToUnencryptedApiCreateDownloadShareRequest() {
             // ARRANGE
             ApiCreateDownloadShareRequest expected = FactoryShare.ApiCreateDownloadShareRequest;
-
-            List<string> smsRecList = null;
-            if (smsRecipients != null) {
-                smsRecList = new List<string>();
-                smsRecList.AddRange(smsRecipients.Split(','));
-                expected.SmsRecipients = smsRecipients;
-                expected.SendSms = true;
-            }
-
-            List<string> emailRecList = null;
-            if (emailRecipients != null) {
-                emailRecList = new List<string>();
-                emailRecList.AddRange(emailRecipients.Split(','));
-                expected.MailBody = "Some body";
-                expected.MailSubject = "You received a DRACOON share!";
-                expected.MailRecipients = emailRecipients;
-                expected.SendMail = true;
-            }
 
             CreateDownloadShareRequest param = new CreateDownloadShareRequest(expected.NodeId) {
                 Name = expected.Name,
@@ -44,13 +24,10 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 Expiration = expected.Expiration.ExpireAt,
                 ShowCreatorName = expected.ShowCreatorName,
                 ShowCreatorUserName = expected.ShowCreatorUserName,
-                NotifyCreator = expected.NotifyCreator,
                 MaxAllowedDownloads = expected.MaxAllowedDownloads,
-                AccessPassword = expected.Password,
-                EmailRecipients = emailRecList,
-                EmailBody = expected.MailBody,
-                EmailSubject = expected.MailSubject,
-                SmsRecipients = smsRecList
+                Password = expected.Password,
+                ReceiverLanguage = expected.ReceiverLanguage,
+                TextMessageRecipients = expected.TextMessageRecipients
             };
 
             // ACT
@@ -188,45 +165,24 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
 
         #region ToApiCreateUploadShareRequest
 
-        [Theory]
-        [InlineData(null, null)]
-        [InlineData("0151789513,017115674615", "test@dracoon.com,test2@dracoon.com")]
-        public void ToApiCreateUploadShareRequest(string smsRecipients, string emailRecipients) {
+        [Fact]
+        public void ToApiCreateUploadShareRequest() {
             // ARRANGE
             ApiCreateUploadShareRequest expected = FactoryShare.ApiCreateUploadShareRequest;
-
-            List<string> smsRecList = null;
-            if (smsRecipients != null) {
-                smsRecList = new List<string>();
-                smsRecList.AddRange(smsRecipients.Split(','));
-                expected.SmsRecipients = smsRecipients;
-                expected.SendSms = true;
-            }
-
-            List<string> emailRecList = null;
-            if (emailRecipients != null) {
-                emailRecList = new List<string>();
-                emailRecList.AddRange(emailRecipients.Split(','));
-                expected.MailBody = "Some body";
-                expected.MailSubject = "You received a DRACOON share!";
-                expected.MailRecipients = emailRecipients;
-                expected.SendMail = true;
-            }
 
             CreateUploadShareRequest param = new CreateUploadShareRequest(expected.NodeId, expected.Name) {
                 Notes = expected.Notes,
                 InternalNotes = expected.InternalNotes,
                 Expiration = expected.Expiration.ExpireAt,
                 ShowUploadedFiles = expected.ShowUploadedFiles,
-                NotifyCreator = expected.NotifyCreator,
                 MaxAllowedTotalSizeOverAllUploadedFiles = expected.MaxAllowedTotalSizeOverAllUploadedFiles,
                 MaxAllowedUploads = expected.MaxAllowedUploads,
-                AccessPassword = expected.AccessPassword,
+                Password = expected.Password,
                 UploadedFilesExpirationPeriod = expected.UploadedFilesExpirationPeriod,
-                EmailRecipients = emailRecList,
-                EmailBody = expected.MailBody,
-                EmailSubject = expected.MailSubject,
-                SmsRecipients = smsRecList
+                ShowCreatorName = expected.ShowCreatorName,
+                ShowCreatorUsername = expected.ShowCreatorUsername,
+                ReceiverLanguage = expected.ReceiverLanguage,
+                TextMessageRecipients = expected.TextMessageRecipients
             };
 
             // ACT

@@ -2,72 +2,113 @@
 using System.Collections.Generic;
 
 namespace Dracoon.Sdk.Model {
-    /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/CreateUploadShareRequest/*'/>
+    /// <summary>
+    ///     Request to create a new upload share.
+    /// </summary>
     public class CreateUploadShareRequest {
-        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/NodeId/*'/>
+
+        /// <summary>
+        ///     The id of the node in which the files will be uploaded.
+        /// </summary>
         public long NodeId { get; private set; }
 
-        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/Name/*'/>
+        /// <summary>
+        ///     The name of the new share.
+        /// </summary>
         public string Name { get; private set; }
 
-        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/AccessPassword/*'/>
-        public string AccessPassword { get; set; }
+        /// <summary>
+        ///     The access password of the new upload share.
+        /// </summary>
+        public string Password { get; set; }
 
-        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/Expiration/*'/>
+        /// <summary>
+        ///     The expiration date of the new share.
+        /// </summary>
         public DateTime? Expiration { get; set; }
 
-        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/UploadedFilesExpirationPeriod/*'/>
+        /// <summary>
+        ///     Number of days after which uploaded files expire.
+        /// </summary>
         public int? UploadedFilesExpirationPeriod { get; set; }
 
-        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/Notes/*'/>
+        /// <summary>
+        ///     The notes of the new share.
+        /// </summary>
         public string Notes { get; set; }
 
-        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/InternalNotes/*'/>
+        /// <summary>
+        ///     The internal notes of the new share.
+        /// </summary>
         public String InternalNotes { get; set; }
 
-        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/NotifyCreator/*'/>
-        public bool NotifyCreator { get; set; }
-
-        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/ShowUploadedFiles/*'/>
+        /// <summary>
+        ///     Allow display of already uploaded files.
+        /// </summary>
         public bool ShowUploadedFiles { get; set; }
 
-        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/MaxAllowedUploads/*'/>
+        /// <summary>
+        ///     Maximal amount of files which can be uploaded with the new upload share.
+        /// </summary>
         public int? MaxAllowedUploads { get; set; }
 
-        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/MaxAllowedTotalSizeOverAllUploadedFiles/*'/>
+        /// <summary>
+        ///     Maximal total size over all still uploaded files (in bytes).
+        /// </summary>
         public long? MaxAllowedTotalSizeOverAllUploadedFiles { get; set; }
 
-        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/EmailRecipients/*'/>
-        public List<string> EmailRecipients { get; set; }
+        /// <summary>
+        ///     The IETF language tag for the text message language which will be sent to the text message receivers. See also <seealso cref="TextMessageRecipients"/>
+        /// </summary>
+        public string ReceiverLanguage { get; set; }
 
-        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/EmailSubject/*'/>
-        public string EmailSubject { get; set; }
+        /// <summary>
+        ///     The list of the text message recipients. E.123 / E.164 Formatted
+        /// </summary>
+        public List<string> TextMessageRecipients { get; set; }
 
-        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/EmailBody/*'/>
-        public string EmailBody { get; set; }
+        /// <summary>
+        ///     If set to <c>true</c> the creators name for the new share will be shown.
+        /// </summary>
+        public bool ShowCreatorName { get; set; }
 
-        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/SmsRecipients/*'/>
-        public List<string> SmsRecipients { get; set; }
+        /// <summary>
+        ///     If set to <c>true</c> the creators user name for the new share will be shown.
+        /// </summary>
+        public bool ShowCreatorUsername { get; set; }
 
-        /// <include file="UserRequestsDoc.xml" path='docs/members[@name="createUploadShareRequest"]/CreateUploadShareRequestConstructor/*'/>
-        public CreateUploadShareRequest(long nodeId, string name, bool notifyCreator = false, bool showUploadedFiles = false,
-            string accessPassword = null, DateTime? expiration = null, int? uploadedFileExpirationPeriod = null, string notes = null,
-            int? maxAllowedUploads = null, long? maxAllowedTotalSizeOverAllUploadedFiles = null, List<string> emailRecipients = null,
-            string emailSubject = null, string emailBody = null, List<string> smsRecipients = null) {
+        /// <summary>
+        ///     Constructs a new create upload share request.
+        /// </summary>
+        /// <param name="nodeId"><inheritdoc cref="NodeId"/></param>
+        /// <param name="name"><inheritdoc cref="Name"/></param>
+        /// <param name="showUploadedFiles"><inheritdoc cref="ShowUploadedFiles"/></param>
+        /// <param name="showCreatorName"><inheritdoc cref="ShowCreatorName"/></param>
+        /// <param name="showCreatorUsername"><inheritdoc cref="ShowCreatorUsername"/></param>
+        /// <param name="password"><inheritdoc cref="Password"/></param>
+        /// <param name="expiration"><inheritdoc cref="Expiration"/></param>
+        /// <param name="uploadedFileExpirationPeriod"><inheritdoc cref="UploadedFilesExpirationPeriod"/></param>
+        /// <param name="notes"><inheritdoc cref="Notes"/></param>
+        /// <param name="maxAllowedUploads"><inheritdoc cref="MaxAllowedUploads"/></param>
+        /// <param name="maxAllowedTotalSizeOverAllUploadedFiles"><inheritdoc cref="MaxAllowedTotalSizeOverAllUploadedFiles"/></param>
+        /// <param name="receiverLanguage"><inheritdoc cref="ReceiverLanguage"/></param>
+        /// <param name="textMessageRecipients"><inheritdoc cref="TextMessageRecipients"/></param>
+        public CreateUploadShareRequest(long nodeId, string name, bool showUploadedFiles = false, bool showCreatorName = false, bool showCreatorUsername = false, string password = null, DateTime? expiration = null, 
+            int? uploadedFileExpirationPeriod = null, string notes = null, int? maxAllowedUploads = null, long? maxAllowedTotalSizeOverAllUploadedFiles = null,
+            string receiverLanguage = null, List<string> textMessageRecipients = null) {
             NodeId = nodeId;
             Name = name;
-            AccessPassword = accessPassword;
+            Password = password;
             Expiration = expiration;
             UploadedFilesExpirationPeriod = uploadedFileExpirationPeriod;
             Notes = notes;
-            NotifyCreator = notifyCreator;
             ShowUploadedFiles = showUploadedFiles;
             MaxAllowedUploads = maxAllowedUploads;
             MaxAllowedTotalSizeOverAllUploadedFiles = maxAllowedTotalSizeOverAllUploadedFiles;
-            EmailRecipients = emailRecipients;
-            EmailSubject = emailSubject;
-            EmailBody = emailBody;
-            SmsRecipients = smsRecipients;
+            ShowCreatorName = showCreatorName;
+            ShowCreatorUsername = showCreatorUsername;
+            ReceiverLanguage = receiverLanguage;
+            TextMessageRecipients = textMessageRecipients;
         }
     }
 }

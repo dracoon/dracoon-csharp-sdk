@@ -25,23 +25,6 @@ namespace Dracoon.Sdk.SdkInternal {
             _client = client;
         }
 
-        internal void AssertUserKeyPairAlgorithmSupported(UserKeyPairAlgorithm algorithm) {
-            string minAlgorithmVersion = "4.0.0";
-            switch (algorithm) {
-                case UserKeyPairAlgorithm.RSA2048:
-                    return;
-                case UserKeyPairAlgorithm.RSA4096:
-                    minAlgorithmVersion = ApiConfig.ApiVersionMin_Algorithm_UserKeyPair_RSA4096;
-                    break;
-            }
-
-            try {
-                _client.Executor.CheckApiServerVersion(minAlgorithmVersion);
-            } catch (DracoonApiException) {
-                throw new DracoonApiException(new DracoonApiCode(DracoonApiCode.SERVER_CRYPTO_VERSION_NOT_SUPPORTED.Code, "Algorithm " + algorithm.GetStringValue() + " requires minimum api version of " + minAlgorithmVersion + "."));
-            }
-        }
-
         public UserAccount GetUserAccount() {
             _client.Executor.CheckApiServerVersion();
             IRestRequest request = _client.Builder.GetUserAccount();
@@ -58,8 +41,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public void SetUserKeyPair(UserKeyPairAlgorithm algorithm) {
             _client.Executor.CheckApiServerVersion();
-
-            AssertUserKeyPairAlgorithmSupported(algorithm);
 
             UserKeyPair cryptoPair = GenerateNewUserKeyPair(algorithm, _client.EncryptionPassword);
             ApiUserKeyPair apiUserKeyPair = UserMapper.ToApiUserKeyPair(cryptoPair);
@@ -85,8 +66,6 @@ namespace Dracoon.Sdk.SdkInternal {
         public void DeleteUserKeyPair(UserKeyPairAlgorithm algorithm) {
             _client.Executor.CheckApiServerVersion();
 
-            AssertUserKeyPairAlgorithmSupported(algorithm);
-
             string algorithmString = UserMapper.ToApiUserKeyPairVersion(algorithm);
             IRestRequest request = _client.Builder.DeleteUserKeyPair(algorithmString);
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.DeleteUserKeyPair);
@@ -102,8 +81,6 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         internal UserKeyPair GetAndCheckUserKeyPair(UserKeyPairAlgorithm algorithm) {
-            AssertUserKeyPairAlgorithmSupported(algorithm);
-
             try {
                 UserKeyPair userKeyPair = GetUserKeyPair(algorithm);
                 CheckKeyPair(userKeyPair);

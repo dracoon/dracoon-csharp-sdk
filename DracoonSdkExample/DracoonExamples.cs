@@ -44,7 +44,6 @@ namespace Dracoon.Sdk.Example {
         private static void GetServerSettings() {
             ServerGeneralSettings generalSettings = dc.Server.ServerSettings.GetGeneral();
             Console.WriteLine("Crypto is enabled: " + generalSettings.CryptoEnabled);
-            Console.WriteLine("Media server is enabled: " + generalSettings.MediaServerEnabled);
             Console.WriteLine("Share password via SMS is enabled: " + generalSettings.SharePasswordSmsEnabled);
 
             ServerInfrastructureSettings infrastructureSettings = dc.Server.ServerSettings.GetInfrastructure();
@@ -150,7 +149,7 @@ namespace Dracoon.Sdk.Example {
         private static void GetAvatarImageOfNodeCreator() {
             long nodeId = 1;
             Node node = dc.Nodes.GetNode(nodeId);
-            byte[] avatar = dc.Users.GetUserAvatar(node.CreatedBy.Id.Value, node.CreatedBy.AvatarUUID);
+            byte[] avatar = dc.Users.GetUserAvatar(node.CreatedBy.Id, node.CreatedBy.AvatarUUID);
         }
 
         private static void ListFilteredRootNodes() {
@@ -283,6 +282,12 @@ namespace Dracoon.Sdk.Example {
         #endregion
 
         #region DracoonClient.Shares
+
+        public static void CreateDownloadShare() {
+            CreateDownloadShareRequest req = new CreateDownloadShareRequest(1, password: "Passw0rd!");
+
+            DownloadShare dl = dc.Shares.CreateDownloadShare(req);
+        }
 
         public static void GetDownloadShares() {
             GetDownloadSharesFilter filter = new GetDownloadSharesFilter();

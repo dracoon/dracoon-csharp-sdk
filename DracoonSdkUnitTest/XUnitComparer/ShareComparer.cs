@@ -26,21 +26,16 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             }
             Assert.Equal(x.FileKey, y.FileKey, new ApiFileKeyComparer());
             Assert.Equal(x.KeyPair, y.KeyPair, new ApiUserKeyPairComparer());
-            return string.Equals(x.MailBody, y.MailBody) &&
-                string.Equals(x.MailRecipients, y.MailRecipients) &&
-                string.Equals(x.MailSubject, y.MailSubject) &&
-                string.Equals(x.Name, y.Name) &&
+            return string.Equals(x.Name, y.Name) &&
                 string.Equals(x.Notes, y.Notes) &&
                 string.Equals(x.InternalNotes, y.InternalNotes) &&
                 string.Equals(x.Password, y.Password) &&
-                string.Equals(x.SmsRecipients, y.SmsRecipients) &&
                 x.MaxAllowedDownloads == y.MaxAllowedDownloads &&
                 x.NodeId == y.NodeId &&
-                x.NotifyCreator == y.NotifyCreator &&
-                x.SendMail == y.SendMail &&
-                x.SendSms == y.SendSms &&
                 x.ShowCreatorName == y.ShowCreatorName &&
                 x.ShowCreatorUserName == y.ShowCreatorUserName &&
+                x.ReceiverLanguage == y.ReceiverLanguage &&
+                x.TextMessageRecipients == y.TextMessageRecipients &&
                 expirationEqual;
         }
 
@@ -154,22 +149,19 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             if (x.Expiration == null && y.Expiration == null) {
                 expirationEqual = true;
             }
-            return string.Equals(x.MailBody, y.MailBody) &&
-                string.Equals(x.MailRecipients, y.MailRecipients) &&
-                string.Equals(x.MailSubject, y.MailSubject) &&
-                string.Equals(x.Name, y.Name) &&
+            return string.Equals(x.Name, y.Name) &&
                 string.Equals(x.Notes, y.Notes) &&
                 string.Equals(x.InternalNotes, y.InternalNotes) &&
-                string.Equals(x.SmsRecipients, y.SmsRecipients) &&
                 x.NodeId == y.NodeId &&
-                x.NotifyCreator == y.NotifyCreator &&
-                x.SendMail == y.SendMail &&
-                x.SendSms == y.SendSms &&
-                string.Equals(x.AccessPassword, y.AccessPassword) &&
+                string.Equals(x.Password, y.Password) &&
                 x.MaxAllowedTotalSizeOverAllUploadedFiles == y.MaxAllowedTotalSizeOverAllUploadedFiles &&
                 x.MaxAllowedUploads == y.MaxAllowedUploads &&
                 x.ShowUploadedFiles == y.ShowUploadedFiles &&
                 x.UploadedFilesExpirationPeriod == y.UploadedFilesExpirationPeriod &&
+                x.ShowCreatorName == y.ShowCreatorName &&
+                x.ShowCreatorUsername == y.ShowCreatorUsername &&
+                x.ReceiverLanguage == y.ReceiverLanguage &&
+                x.TextMessageRecipients == y.TextMessageRecipients &&
                 expirationEqual;
         }
 

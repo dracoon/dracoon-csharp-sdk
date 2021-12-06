@@ -364,7 +364,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
             if (request.DataRoomRescueKeyPairAlgorithm != null) {
                 request.DataRoomRescueKeyPassword.MustNotNullOrEmptyOrWhitespace(nameof(request.DataRoomRescueKeyPassword));
-                _client.AccountImpl.AssertUserKeyPairAlgorithmSupported(request.DataRoomRescueKeyPairAlgorithm.Value);
             }
 
             #endregion

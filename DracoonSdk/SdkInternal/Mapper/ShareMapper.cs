@@ -24,28 +24,11 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 Expiration = apiExpiration,
                 ShowCreatorName = request.ShowCreatorName,
                 ShowCreatorUserName = request.ShowCreatorUserName,
-                NotifyCreator = request.NotifyCreator,
                 MaxAllowedDownloads = request.MaxAllowedDownloads,
-                Password = request.AccessPassword
+                Password = request.Password,
+                ReceiverLanguage = request.ReceiverLanguage,
+                TextMessageRecipients = request.TextMessageRecipients
             };
-
-            if (request.EmailRecipients != null) {
-                // Check if the list is not empty is still in the previous validator done
-                apiCreateDownloadShareRequest.SendMail = true;
-                apiCreateDownloadShareRequest.MailRecipients = GenerateRecipientString(request.EmailRecipients);
-                apiCreateDownloadShareRequest.MailBody = request.EmailBody;
-                apiCreateDownloadShareRequest.MailSubject = request.EmailSubject;
-            } else {
-                apiCreateDownloadShareRequest.SendMail = false;
-            }
-
-            if (request.SmsRecipients != null) {
-                // Check if the list is not empty is still in the previous validator done
-                apiCreateDownloadShareRequest.SendSms = true;
-                apiCreateDownloadShareRequest.SmsRecipients = GenerateRecipientString(request.SmsRecipients);
-            } else {
-                apiCreateDownloadShareRequest.SendSms = false;
-            }
 
             return apiCreateDownloadShareRequest;
         }
@@ -102,34 +85,19 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             ApiCreateUploadShareRequest apiCreateUploadShareRequest = new ApiCreateUploadShareRequest {
                 NodeId = request.NodeId,
                 Name = request.Name,
-                AccessPassword = request.AccessPassword,
+                Password = request.Password,
                 Expiration = apiExpiration,
                 UploadedFilesExpirationPeriod = request.UploadedFilesExpirationPeriod,
                 Notes = request.Notes,
                 InternalNotes = request.InternalNotes,
-                NotifyCreator = request.NotifyCreator,
                 ShowUploadedFiles = request.ShowUploadedFiles,
                 MaxAllowedUploads = request.MaxAllowedUploads,
-                MaxAllowedTotalSizeOverAllUploadedFiles = request.MaxAllowedTotalSizeOverAllUploadedFiles
+                MaxAllowedTotalSizeOverAllUploadedFiles = request.MaxAllowedTotalSizeOverAllUploadedFiles,
+                ShowCreatorName = request.ShowCreatorName,
+                ShowCreatorUsername = request.ShowCreatorUsername,
+                ReceiverLanguage = request.ReceiverLanguage,
+                TextMessageRecipients = request.TextMessageRecipients
             };
-
-            if (request.EmailRecipients != null) {
-                // Check if the list is not empty is still in the previous validator done
-                apiCreateUploadShareRequest.SendMail = true;
-                apiCreateUploadShareRequest.MailRecipients = GenerateRecipientString(request.EmailRecipients);
-                apiCreateUploadShareRequest.MailBody = request.EmailBody;
-                apiCreateUploadShareRequest.MailSubject = request.EmailSubject;
-            } else {
-                apiCreateUploadShareRequest.SendMail = false;
-            }
-
-            if (request.SmsRecipients != null) {
-                // Check if the list is not empty is still in the previous validator done
-                apiCreateUploadShareRequest.SendSms = true;
-                apiCreateUploadShareRequest.SmsRecipients = GenerateRecipientString(request.SmsRecipients);
-            } else {
-                apiCreateUploadShareRequest.SendSms = false;
-            }
 
             return apiCreateUploadShareRequest;
         }
