@@ -28,7 +28,11 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 HasInheritPermissions = expected.InheritPermissions.Value,
                 AdminUserIds = expected.AdminIds,
                 AdminGroupIds = expected.AdminGroupIds,
-                NewGroupMemberAcceptance = paramGMA
+                NewGroupMemberAcceptance = paramGMA,
+                Classification = Classification.Internal,
+                HasActivitiesLog = expected.HasActivitiesLog,
+                TimestampCreation = expected.TimestampCreation,
+                TimestampModification = expected.TimestampModification
             };
 
             Mock.Arrange(() => EnumConverter.ConvertGroupMemberAcceptanceToValue(paramGMA)).Returns(expectedGMAValue);

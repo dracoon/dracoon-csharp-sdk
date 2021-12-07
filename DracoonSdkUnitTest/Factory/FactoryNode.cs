@@ -147,18 +147,22 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             Nodes = new List<ApiCopyNode> {
                         new ApiCopyNode {
                             NodeId = 13575,
-                            NewName = "Name1"
+                            NewName = "Name1",
+                            TimestampCreation = new DateTime(2001, 1, 1, 0, 0, 1),
+                            TimestampModification = new DateTime(2002, 1, 1, 0, 0, 0)
                         },
                         new ApiCopyNode {
                             NodeId = 36584,
-                            NewName = "Name2"
+                            NewName = "Name2",
+                            TimestampCreation = new DateTime(2003, 1, 1, 0, 0, 1),
+                            TimestampModification = new DateTime(2004, 1, 1, 0, 0, 0)
                         }
                     }
         };
 
         internal static CopyNodesRequest CopyNodesRequest => new CopyNodesRequest(256, new List<CopyNode> {
-                    new CopyNode(13575, "Name1"),
-                    new CopyNode(36584, "Name2")
+                    new CopyNode(13575, "Name1", new DateTime(2001, 1, 1, 0, 0, 1), new DateTime(2002, 1, 1, 0, 0, 0)),
+                    new CopyNode(36584, "Name2", new DateTime(2003, 1, 1, 0, 0, 1), new DateTime(2004, 1, 1, 0, 0, 0))
                 }) {
             KeepShareLinks = true,
             ResolutionStrategy = ResolutionStrategy.Overwrite
@@ -170,18 +174,22 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             Nodes = new List<ApiMoveNode> {
                         new ApiMoveNode {
                             NodeId = 5634,
-                            NewName = "Name1"
+                            NewName = "Name1",
+                            TimestampCreation = new DateTime(2001, 1, 1, 0, 0, 1),
+                            TimestampModification = new DateTime(2002, 1, 1, 0, 0, 0)
                         },
                         new ApiMoveNode {
                             NodeId = 435678,
-                            NewName = "Name2"
+                            NewName = "Name2",
+                            TimestampCreation = new DateTime(2003, 1, 1, 0, 0, 1),
+                            TimestampModification = new DateTime(2004, 1, 1, 0, 0, 0)
                         }
                     }
         };
 
         internal static MoveNodesRequest MoveNodesRequest => new MoveNodesRequest(235, new List<MoveNode> {
-                    new MoveNode(5634, "Name1"),
-                    new MoveNode(435678, "Name2")
+                    new MoveNode(5634, "Name1", new DateTime(2001, 1, 1, 0, 0, 1), new DateTime(2002, 1, 1, 0, 0, 0)),
+                    new MoveNode(435678, "Name2", new DateTime(2003, 1, 1, 0, 0, 1), new DateTime(2004, 1, 1, 0, 0, 0))
                 }) {
             ResolutionStrategy = ResolutionStrategy.Overwrite,
             KeepShareLinks = true

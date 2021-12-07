@@ -303,7 +303,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 expected.KeepShareLinks);
 
             foreach (ApiCopyNode currentApi in expected.Nodes) {
-                param.NodesToBeCopied.Add(new CopyNode(currentApi.NodeId, currentApi.NewName));
+                param.NodesToBeCopied.Add(new CopyNode(currentApi.NodeId, currentApi.NewName, currentApi.TimestampCreation, currentApi.TimestampModification));
             }
 
             Mock.Arrange(() => EnumConverter.ConvertResolutionStrategyToValue(param.ResolutionStrategy)).Returns(expected.ResolutionStrategy);
@@ -331,7 +331,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 expected.KeepShareLinks);
 
             foreach (ApiMoveNode currentApi in expected.Nodes) {
-                param.NodesToBeMoved.Add(new MoveNode(currentApi.NodeId, currentApi.NewName));
+                param.NodesToBeMoved.Add(new MoveNode(currentApi.NodeId, currentApi.NewName, currentApi.TimestampCreation, currentApi.TimestampModification));
             }
 
             Mock.Arrange(() => EnumConverter.ConvertResolutionStrategyToValue(param.ResolutionStrategy)).Returns(expected.ResolutionStrategy);

@@ -15,7 +15,10 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             ApiCreateFolderRequest expected = FactoryFolder.ApiCreateFolderRequest;
 
             CreateFolderRequest param = new CreateFolderRequest(expected.ParentId, expected.Name) {
-                Notes = expected.Notes
+                Notes = expected.Notes,
+                Classification = Classification.Internal,
+                TimestampCreation = expected.TimestampCreation,
+                TimestampModification = expected.TimestampModification
             };
 
             // ACT

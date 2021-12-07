@@ -1,5 +1,6 @@
 ﻿using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
+using System;
 using System.Collections.Generic;
 
 namespace Dracoon.Sdk.UnitTest.Factory {
@@ -11,6 +12,10 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             Notes = "Some notes!",
             RecycleBinRetentionPeriod = 5,
             InheritPermissions = true,
+            Classification = 2,
+            TimestampCreation = new DateTime(2001, 1, 1, 0, 0, 1),
+            TimestampModification = new DateTime(2002, 1, 1, 0, 0, 0),
+            HasActivitiesLog = true,
             AdminIds = new List<long> {
                         5,
                         2
@@ -26,6 +31,10 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             Notes = "Some notes!",
             RecycleBinRetentionPeriod = 5,
             HasInheritPermissions = true,
+            Classification = Classification.Internal,
+            TimestampCreation = new DateTime(2001, 1, 1, 0, 0, 1),
+            TimestampModification = new DateTime(2002, 1, 1, 0, 0, 0),
+            HasActivitiesLog = true,
             AdminUserIds = new List<long> {
                         5,
                         2

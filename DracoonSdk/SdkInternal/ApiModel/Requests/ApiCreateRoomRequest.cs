@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
@@ -29,5 +30,17 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
 
         [JsonProperty("newGroupMemberAcceptance", NullValueHandling = NullValueHandling.Ignore)]
         public string NewGroupMemberAcceptance { get; set; }
+
+        [JsonProperty("classification", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Classification { get; set; }
+
+        [JsonProperty("timestampCreation", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? TimestampCreation { get; set; }
+
+        [JsonProperty("timestampModification", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? TimestampModification { get; set; }
+
+        [JsonProperty("hasActivitiesLog", NullValueHandling = NullValueHandling.Ignore)]
+        public bool HasActivitiesLog { get; set; }
     }
 }

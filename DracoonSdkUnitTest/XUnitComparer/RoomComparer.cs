@@ -20,7 +20,11 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 string.Equals(x.Notes, y.Notes) &&
                 x.ParentId == y.ParentId &&
                 x.Quota == y.Quota &&
-                x.RecycleBinRetentionPeriod == y.RecycleBinRetentionPeriod;
+                x.RecycleBinRetentionPeriod == y.RecycleBinRetentionPeriod &&
+                x.Classification == y.Classification &&
+                x.HasActivitiesLog == y.HasActivitiesLog &&
+                x.TimestampCreation == y.TimestampCreation &&
+                x.TimestampModification == y.TimestampModification;
         }
 
         public int GetHashCode(ApiCreateRoomRequest obj) {

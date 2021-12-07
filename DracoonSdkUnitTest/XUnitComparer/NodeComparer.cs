@@ -142,7 +142,9 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 return false;
             }
             return x.NodeId == y.NodeId &&
-                string.Equals(x.NewName, y.NewName);
+                string.Equals(x.NewName, y.NewName) &&
+                x.TimestampCreation == y.TimestampCreation &&
+                x.TimestampModification == y.TimestampModification;
         }
 
         public int GetHashCode(ApiCopyNode obj) {
@@ -177,7 +179,9 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 return false;
             }
             return x.NodeId == y.NodeId &&
-                string.Equals(x.NewName, y.NewName);
+                string.Equals(x.NewName, y.NewName) &&
+                x.TimestampCreation == y.TimestampCreation &&
+                x.TimestampModification == y.TimestampModification;
         }
 
         public int GetHashCode(ApiMoveNode obj) {

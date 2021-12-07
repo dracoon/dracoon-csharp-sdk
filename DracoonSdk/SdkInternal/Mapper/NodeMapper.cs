@@ -114,7 +114,9 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             foreach (CopyNode currentCopyNode in request.NodesToBeCopied) {
                 ApiCopyNode apiCopyNode = new ApiCopyNode {
                     NodeId = currentCopyNode.NodeId,
-                    NewName = currentCopyNode.NewName
+                    NewName = currentCopyNode.NewName,
+                    TimestampCreation = currentCopyNode.TimestampCreation,
+                    TimestampModification = currentCopyNode.TimestampModification
                 };
                 copyNodeList.Add(apiCopyNode);
             }
@@ -132,7 +134,9 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             foreach (MoveNode currentMoveNode in request.NodesToBeMoved) {
                 ApiMoveNode apiMoveNode = new ApiMoveNode {
                     NodeId = currentMoveNode.NodeId,
-                    NewName = currentMoveNode.NewName
+                    NewName = currentMoveNode.NewName,
+                    TimestampCreation = currentMoveNode.TimestampCreation,
+                    TimestampModification = currentMoveNode.TimestampModification
                 };
                 moveNodesList.Add(apiMoveNode);
             }
