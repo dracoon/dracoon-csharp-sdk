@@ -39,7 +39,10 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
 
             UpdateFolderRequest param = new UpdateFolderRequest(346) {
                 Name = expected.Name,
-                Notes = expected.Notes
+                Notes = expected.Notes,
+                Classification = Classification.Internal,
+                TimestampCreation = expected.TimestampCreation,
+                TimestampModification = expected.TimestampModification
             };
 
             // ACT

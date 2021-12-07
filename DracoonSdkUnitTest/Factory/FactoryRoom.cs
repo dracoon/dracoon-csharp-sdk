@@ -48,13 +48,17 @@ namespace Dracoon.Sdk.UnitTest.Factory {
         internal static ApiUpdateRoomRequest ApiUpdateRoomRequest => new ApiUpdateRoomRequest {
             Name = "Room1_rename",
             Quota = 3456345,
-            Notes = "Some other notes."
+            Notes = "Some other notes.",
+            TimestampCreation = new DateTime(2001, 1, 1, 0, 0, 1),
+            TimestampModification = new DateTime(2002, 1, 1, 0, 0, 0),
         };
 
         internal static UpdateRoomRequest UpdateRoomRequest => new UpdateRoomRequest(215) {
             Name = "Room1_rename",
             Quota = 3456345,
-            Notes = "Some other notes."
+            Notes = "Some other notes.",
+            TimestampCreation = new DateTime(2001, 1, 1, 0, 0, 1),
+            TimestampModification = new DateTime(2002, 1, 1, 0, 0, 0),
         };
 
         internal static ApiEnableRoomEncryptionRequest ApiEnableRoomEncryptionRequest => new ApiEnableRoomEncryptionRequest {

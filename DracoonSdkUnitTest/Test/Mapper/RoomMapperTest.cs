@@ -56,7 +56,9 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             UpdateRoomRequest param = new UpdateRoomRequest(12) {
                 Name = expected.Name,
                 Quota = expected.Quota,
-                Notes = expected.Notes
+                Notes = expected.Notes,
+                TimestampCreation = expected.TimestampCreation,
+                TimestampModification = expected.TimestampModification
             };
 
             // ACT

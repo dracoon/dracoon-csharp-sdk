@@ -22,12 +22,18 @@ namespace Dracoon.Sdk.UnitTest.Factory {
 
         internal static ApiUpdateFolderRequest ApiUpdateFolderRequest => new ApiUpdateFolderRequest {
             Name = "NewFolder1",
-            Notes = "Some new notes!"
+            Notes = "Some new notes!",
+            Classification = 2,
+            TimestampCreation = new DateTime(2001, 1, 1, 0, 0, 1),
+            TimestampModification = new DateTime(2002, 1, 1, 0, 0, 0)
         };
 
         internal static UpdateFolderRequest UpdateFolderRequest => new UpdateFolderRequest(2534) {
             Name = "NewFolder1",
-            Notes = "Some new notes!"
+            Notes = "Some new notes!",
+            Classification = Classification.Internal,
+            TimestampCreation = new DateTime(2001, 1, 1, 0, 0, 1),
+            TimestampModification = new DateTime(2002, 1, 1, 0, 0, 0)
         };
     }
 }

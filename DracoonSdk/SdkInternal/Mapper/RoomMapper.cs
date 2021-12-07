@@ -28,7 +28,9 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             ApiUpdateRoomRequest apiUpdateRoomRequest = new ApiUpdateRoomRequest {
                 Name = updateRoomRequest.Name,
                 Quota = updateRoomRequest.Quota,
-                Notes = updateRoomRequest.Notes
+                Notes = updateRoomRequest.Notes,
+                TimestampCreation = updateRoomRequest.TimestampCreation,
+                TimestampModification = updateRoomRequest.TimestampModification
             };
             return apiUpdateRoomRequest;
         }

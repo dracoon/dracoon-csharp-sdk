@@ -19,7 +19,10 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
         internal static ApiUpdateFolderRequest ToApiUpdateFolderRequest(UpdateFolderRequest updateFolderRequest) {
             ApiUpdateFolderRequest apiUpdateFolderRequest = new ApiUpdateFolderRequest {
                 Name = updateFolderRequest.Name,
-                Notes = updateFolderRequest.Notes
+                Notes = updateFolderRequest.Notes,
+                Classification = EnumConverter.ConvertClassificationEnumToValue(updateFolderRequest.Classification),
+                TimestampCreation = updateFolderRequest.TimestampCreation,
+                TimestampModification = updateFolderRequest.TimestampModification
             };
             return apiUpdateFolderRequest;
         }

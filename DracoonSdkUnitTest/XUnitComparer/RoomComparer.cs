@@ -42,7 +42,9 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             }
             return x.Quota == y.Quota &&
                 string.Equals(x.Name, y.Name) &&
-                string.Equals(x.Notes, y.Notes);
+                string.Equals(x.Notes, y.Notes) &&
+                x.TimestampCreation == y.TimestampCreation &&
+                x.TimestampModification == y.TimestampModification;
         }
 
         public int GetHashCode(ApiUpdateRoomRequest obj) {

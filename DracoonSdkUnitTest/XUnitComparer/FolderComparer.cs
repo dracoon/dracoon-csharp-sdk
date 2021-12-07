@@ -33,7 +33,10 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 return false;
             }
             return string.Equals(x.Name, y.Name) &&
-                string.Equals(x.Notes, y.Notes);
+                string.Equals(x.Notes, y.Notes) &&
+                x.Classification == y.Classification &&
+                x.TimestampCreation == y.TimestampCreation &&
+                x.TimestampModification == y.TimestampModification;
         }
 
         public int GetHashCode(ApiUpdateFolderRequest obj) {
