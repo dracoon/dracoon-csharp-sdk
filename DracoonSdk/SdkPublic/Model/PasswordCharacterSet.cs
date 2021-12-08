@@ -1,9 +1,17 @@
 ﻿namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="passwordCharacterSet"]/PasswordCharacterSet/*'/>
+    /// <summary>
+    ///     This model stores the character set definition.
+    /// </summary>
     public class PasswordCharacterSet {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="passwordCharacterSet"]/Set/*'/>
+
+        /// <summary>
+        ///     A array of the allowed characters of this set.
+        /// </summary>
         public char[] Set { get; internal set; }
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="passwordCharacterSet"]/Type/*'/>
+
+        /// <summary>
+        ///     The type of this set.
+        /// </summary>
         public PasswordCharacterSetType Type { get; internal set; }
     }
 }

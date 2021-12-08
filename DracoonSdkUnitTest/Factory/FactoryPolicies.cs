@@ -25,6 +25,21 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             UpdatedBy = FactoryUser.UserInfo
         };
 
+        internal static PasswordLoginPolicies PasswordLoginPolicies => new PasswordLoginPolicies {
+            CharacterPolicies = PasswordCharacterPolicies,
+            MinimumPasswordLength = 8,
+            RejectKeyboardPatterns = true,
+            RejectOwnUserInfo = true,
+            RejectDictionaryWords = false,
+            NumberOfArchivedPasswords = 3,
+            PasswordExpiration = new PasswordExpiration {
+                IsEnabled = true,
+                ExpiresAfterDays = 30
+            },
+            UpdatedAt = new DateTime(2000, 1, 1, 0, 0, 0),
+            UpdatedBy = FactoryUser.UserInfo
+        };
+
         internal static PasswordCharacterPolicies PasswordCharacterPolicies => new PasswordCharacterPolicies {
             NumberOfMustContainCharacteristics = 2,
             PredefinedCharacterSets = new List<PasswordCharacterSet> {
@@ -44,8 +59,22 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             NumberOfCharacteristicsToEnforce = 2
         };
 
-        internal static ApiPasswordSettings ApiPasswordSettings => new ApiPasswordSettings {
-            EncryptionPasswordSettings = new ApiEncryptionPasswordSettings {
+        internal static ApiPasswordPolicies ApiPasswordSettings => new ApiPasswordPolicies {
+            LoginPasswordSettings = new ApiLoginPasswordPolicy {
+                CharacterRules = ApiPasswordCharacterRules,
+                MinimumPasswordLength = 8,
+                RejectKeyboardPatterns = true,
+                RejectUserInfo = true,
+                RejectDictionaryWords = false,
+                NumberOfArchivedPasswords = 3,
+                PasswordExpiration = new ApiPasswordExpiration {
+                    Enabled = true,
+                    MaxDaysPasswordAge = 30
+                },
+                UpdatedAt = new DateTime(2000, 1, 1, 0, 0, 0),
+                UpdatedBy = FactoryUser.ApiUserInfo
+            },
+            EncryptionPasswordSettings = new ApiEncryptionPasswordPolicy {
                 CharacterRules = ApiPasswordCharacterRules,
                 MinimumPasswordLength = 9,
                 RejectKeyboardPatterns = true,
@@ -53,7 +82,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                 UpdatedAt = new DateTime(2000, 1, 1, 0, 0, 0),
                 UpdatedBy = FactoryUser.ApiUserInfo
             },
-            SharePasswordSettings = new ApiSharePasswordSettings {
+            SharePasswordSettings = new ApiSharePasswordPolicy {
                 CharacterRules = ApiPasswordCharacterRules,
                 MinimumPasswordLength = 9,
                 RejectKeyboardPatterns = true,

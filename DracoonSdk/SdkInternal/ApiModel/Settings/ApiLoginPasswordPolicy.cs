@@ -2,7 +2,8 @@
 using System;
 
 namespace Dracoon.Sdk.SdkInternal.ApiModel {
-    internal class ApiSharePasswordSettings {
+    internal class ApiLoginPasswordPolicy {
+
         [JsonProperty("characterRules", NullValueHandling = NullValueHandling.Ignore)]
         public ApiCharacterRules CharacterRules { get; set; }
 
@@ -17,6 +18,12 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
 
         [JsonProperty("rejectKeyboardPatterns", NullValueHandling = NullValueHandling.Ignore)]
         public bool RejectKeyboardPatterns { get; set; }
+
+        [JsonProperty("numberOfArchivedPasswords", NullValueHandling = NullValueHandling.Ignore)]
+        public int NumberOfArchivedPasswords { get; set; }
+
+        [JsonProperty("passwordExpiration", NullValueHandling = NullValueHandling.Ignore)]
+        public ApiPasswordExpiration PasswordExpiration { get; set; }
 
         [JsonProperty("updatedAt", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime UpdatedAt { get; set; }

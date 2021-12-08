@@ -2,12 +2,15 @@
 using System;
 
 namespace Dracoon.Sdk.SdkInternal.ApiModel {
-    internal class ApiEncryptionPasswordSettings {
+    internal class ApiSharePasswordPolicy {
         [JsonProperty("characterRules", NullValueHandling = NullValueHandling.Ignore)]
         public ApiCharacterRules CharacterRules { get; set; }
 
         [JsonProperty("minLength", NullValueHandling = NullValueHandling.Ignore)]
         public int MinimumPasswordLength { get; set; }
+
+        [JsonProperty("rejectDictionaryWords", NullValueHandling = NullValueHandling.Ignore)]
+        public bool RejectDictionaryWords { get; set; }
 
         [JsonProperty("rejectUserInfo", NullValueHandling = NullValueHandling.Ignore)]
         public bool RejectUserInfo { get; set; }

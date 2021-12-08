@@ -10,8 +10,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 Name = createFolderRequest.Name,
                 Notes = createFolderRequest.Notes,
                 Classification = EnumConverter.ConvertClassificationEnumToValue(createFolderRequest.Classification),
-                TimestampCreation = createFolderRequest.TimestampCreation,
-                TimestampModification = createFolderRequest.TimestampModification
+                TimestampCreation = createFolderRequest.CreationTime,
+                TimestampModification = createFolderRequest.ModificationTime
             };
             return apiCreateFolderRequest;
         }
@@ -21,8 +21,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 Name = updateFolderRequest.Name,
                 Notes = updateFolderRequest.Notes,
                 Classification = EnumConverter.ConvertClassificationEnumToValue(updateFolderRequest.Classification),
-                TimestampCreation = updateFolderRequest.TimestampCreation,
-                TimestampModification = updateFolderRequest.TimestampModification
+                TimestampCreation = updateFolderRequest.CreationTime,
+                TimestampModification = updateFolderRequest.ModificationTime
             };
             return apiUpdateFolderRequest;
         }

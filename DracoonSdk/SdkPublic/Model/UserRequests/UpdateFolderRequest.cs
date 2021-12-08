@@ -40,7 +40,7 @@ namespace Dracoon.Sdk.Model {
         ///         Nullable. If not set, the default is the current server time in UTC.
         ///     </para>
         /// </summary>
-        public DateTime? TimestampCreation { get; set; }
+        public DateTime? CreationTime { get; set; }
 
         /// <summary>
         ///     The content modification time of this node.
@@ -48,7 +48,7 @@ namespace Dracoon.Sdk.Model {
         ///         Nullable. If not set, the default is the current server time in UTC.
         ///     </para>
         /// </summary>
-        public DateTime? TimestampModification { get; set; }
+        public DateTime? ModificationTime { get; set; }
 
         /// <summary>
         ///     Constructs a new update folder request.
@@ -57,15 +57,15 @@ namespace Dracoon.Sdk.Model {
         /// <param name="name"><inheritdoc cref="Name"/></param>
         /// <param name="notes"><inheritdoc cref="Notes"/></param>
         /// <param name="classification"><inheritdoc cref="Classification"/></param>
-        /// <param name="timestampCreation"><inheritdoc cref="TimestampCreation"/></param>
-        /// <param name="timestampModification"><inheritdoc cref="TimestampModification"/></param>
-        public UpdateFolderRequest(long id, string name = null, string notes = null, Classification? classification = null, DateTime? timestampCreation = null, DateTime? timestampModification = null) {
+        /// <param name="creationTime"><inheritdoc cref="CreationTime"/></param>
+        /// <param name="modificationTime"><inheritdoc cref="ModificationTime"/></param>
+        public UpdateFolderRequest(long id, string name = null, string notes = null, Classification? classification = null, DateTime? creationTime = null, DateTime? modificationTime = null) {
             Id = id;
             Name = name;
             Notes = notes;
             Classification = classification;
-            TimestampCreation = timestampCreation;
-            TimestampModification = timestampModification;
+            CreationTime = creationTime;
+            ModificationTime = modificationTime;
         }
     }
 }

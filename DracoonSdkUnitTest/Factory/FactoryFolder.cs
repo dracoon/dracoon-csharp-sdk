@@ -16,8 +16,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
         internal static CreateFolderRequest CreateFolderRequest => new CreateFolderRequest(345678, "Folder1") {
             Notes = "Some notes!",
             Classification = Classification.Internal,
-            TimestampCreation = new DateTime(2001, 1, 1, 0, 0, 1),
-            TimestampModification = new DateTime(2002, 1, 1, 0, 0, 0)
+            CreationTime = new DateTime(2001, 1, 1, 0, 0, 1),
+            ModificationTime = new DateTime(2002, 1, 1, 0, 0, 0)
         };
 
         internal static ApiUpdateFolderRequest ApiUpdateFolderRequest => new ApiUpdateFolderRequest {
@@ -32,8 +32,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             Name = "NewFolder1",
             Notes = "Some new notes!",
             Classification = Classification.Internal,
-            TimestampCreation = new DateTime(2001, 1, 1, 0, 0, 1),
-            TimestampModification = new DateTime(2002, 1, 1, 0, 0, 0)
+            CreationTime = new DateTime(2001, 1, 1, 0, 0, 1),
+            ModificationTime = new DateTime(2002, 1, 1, 0, 0, 0)
         };
     }
 }

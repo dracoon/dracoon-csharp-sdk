@@ -18,8 +18,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 NewGroupMemberAcceptance = EnumConverter.ConvertGroupMemberAcceptanceToValue(createRoomRequest.NewGroupMemberAcceptance),
                 Classification = EnumConverter.ConvertClassificationEnumToValue(createRoomRequest.Classification),
                 HasActivitiesLog = createRoomRequest.HasActivitiesLog,
-                TimestampCreation = createRoomRequest.TimestampCreation,
-                TimestampModification = createRoomRequest.TimestampModification
+                TimestampCreation = createRoomRequest.CreationTime,
+                TimestampModification = createRoomRequest.ModificationTime
             };
             return apiCreateRoomRequest;
         }
@@ -29,8 +29,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 Name = updateRoomRequest.Name,
                 Quota = updateRoomRequest.Quota,
                 Notes = updateRoomRequest.Notes,
-                TimestampCreation = updateRoomRequest.TimestampCreation,
-                TimestampModification = updateRoomRequest.TimestampModification
+                TimestampCreation = updateRoomRequest.CreationTime,
+                TimestampModification = updateRoomRequest.ModificationTime
             };
             return apiUpdateRoomRequest;
         }

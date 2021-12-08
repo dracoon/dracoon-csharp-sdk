@@ -25,7 +25,7 @@ namespace Dracoon.Sdk.Model {
         ///         Nullable. If not set, the default is the current server time in UTC.
         ///     </para>
         /// </summary>
-        public DateTime? TimestampCreation { get; set; }
+        public DateTime? CreationTime { get; set; }
 
         /// <summary>
         ///     The content modification time of this node.
@@ -33,20 +33,20 @@ namespace Dracoon.Sdk.Model {
         ///         Nullable. If not set, the default is the current server time in UTC.
         ///     </para>
         /// </summary>
-        public DateTime? TimestampModification { get; set; }
+        public DateTime? ModificationTime { get; set; }
 
         /// <summary>
         ///     Constructs a new copy node information.
         /// </summary>
         /// <param name="nodeId"><inheritdoc cref="NodeId"/></param>
         /// <param name="newName"><inheritdoc cref="NewName"/></param>
-        /// <param name="timestampCreation"><inheritdoc cref="TimestampCreation"/></param>
-        /// <param name="timestampModification"><inheritdoc cref="TimestampModification"/></param>
-        public CopyNode(long nodeId, string newName = null, DateTime? timestampCreation = null, DateTime? timestampModification = null) {
+        /// <param name="creationTime"><inheritdoc cref="CreationTime"/></param>
+        /// <param name="modificationTime"><inheritdoc cref="ModificationTime"/></param>
+        public CopyNode(long nodeId, string newName = null, DateTime? creationTime = null, DateTime? modificationTime = null) {
             NodeId = nodeId;
             NewName = newName;
-            TimestampCreation = timestampCreation;
-            TimestampModification = timestampModification;
+            CreationTime = creationTime;
+            this.ModificationTime = modificationTime;
         }
     }
 }

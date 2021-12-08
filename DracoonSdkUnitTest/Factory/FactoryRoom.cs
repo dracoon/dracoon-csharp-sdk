@@ -32,8 +32,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             RecycleBinRetentionPeriod = 5,
             HasInheritPermissions = true,
             Classification = Classification.Internal,
-            TimestampCreation = new DateTime(2001, 1, 1, 0, 0, 1),
-            TimestampModification = new DateTime(2002, 1, 1, 0, 0, 0),
+            CreationTime = new DateTime(2001, 1, 1, 0, 0, 1),
+            ModificationTime = new DateTime(2002, 1, 1, 0, 0, 0),
             HasActivitiesLog = true,
             AdminUserIds = new List<long> {
                         5,
@@ -57,8 +57,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             Name = "Room1_rename",
             Quota = 3456345,
             Notes = "Some other notes.",
-            TimestampCreation = new DateTime(2001, 1, 1, 0, 0, 1),
-            TimestampModification = new DateTime(2002, 1, 1, 0, 0, 0),
+            CreationTime = new DateTime(2001, 1, 1, 0, 0, 1),
+            ModificationTime = new DateTime(2002, 1, 1, 0, 0, 0),
         };
 
         internal static ApiEnableRoomEncryptionRequest ApiEnableRoomEncryptionRequest => new ApiEnableRoomEncryptionRequest {

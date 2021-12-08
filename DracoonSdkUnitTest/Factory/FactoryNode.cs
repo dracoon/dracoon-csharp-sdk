@@ -51,8 +51,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             CreatedBy = FactoryUser.UserInfo,
             UpdatedAt = new DateTime(2000, 1, 1, 0, 0, 0).AddDays(2),
             UpdatedBy = FactoryUser.UserInfo,
-            CreationTimestamp = new DateTime(1999, 1, 1, 0, 0, 0),
-            ModificationTimestamp = new DateTime(1999, 5, 1, 0, 0, 0),
+            CreationTime = new DateTime(1999, 1, 1, 0, 0, 0),
+            ModificationTime = new DateTime(1999, 5, 1, 0, 0, 0),
             HasInheritPermissions = true,
             Permissions = NodePermissions,
             IsFavorite = false,
@@ -61,13 +61,15 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             CountFiles = 1,
             CountRooms = 2,
             CountFolders = 2,
-            CountDeletedVersions = 11,
+            CountPreviousVersions = 11,
+            CountComments = 2,
             RecycleBinRetentionPeriod = 15,
             CountDownloadShares = 6,
             CountUploadShares = 4,
             BranchVersion = 12358239758,
             ConfigParentRoomId = 8,
-            IsBrowsable = true
+            IsBrowsable = true,
+            HasActivitiesLog = true
         };
 
         internal static NodeList NodeList => new NodeList {
@@ -110,10 +112,12 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             RecycleBinRetentionPeriod = 15,
             CountDownloadShares = 6,
             CountUploadShares = 4,
+            CountComments = 2,
             BranchVersion = 12358239758,
             FileType = ".txt",
             ConfigParentRoomId = 8,
-            IsBrowsable = true
+            IsBrowsable = true,
+            HasActivitiesLog = true
         };
 
         internal static ApiNodeList ApiNodeList => new ApiNodeList {
@@ -203,7 +207,9 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             FirstDeletedAt = new DateTime(2000, 1, 1, 0, 0, 0),
             LastDeletedAt = new DateTime(2000, 1, 1, 0, 0, 0).AddDays(1),
             LastDeletedNodeId = 123452,
-            VersionsCount = 12563
+            VersionsCount = 12563,
+            CreationTime = new DateTime(2001, 1, 1, 0, 0, 1),
+            ModificationTime = new DateTime(2002, 1, 1, 0, 0, 0)
         };
 
         internal static RecycleBinItemList RecycleBinItemList => new RecycleBinItemList {
@@ -234,7 +240,9 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             FirstDeletedAt = new DateTime(2000, 1, 1, 0, 0, 0),
             LastDeletedAt = new DateTime(2000, 1, 1, 0, 0, 0).AddDays(1),
             LastDeletedNodeId = 123452,
-            CntVersions = 12563
+            CntVersions = 12563,
+            TimestampCreation = new DateTime(2001, 1, 1, 0, 0, 1),
+            TimestampModification = new DateTime(2002, 1, 1, 0, 0, 0)
         };
 
         internal static PreviousVersion PreviousVersion => new PreviousVersion {

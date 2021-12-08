@@ -61,7 +61,9 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 MediaServerConfigEnabled = expected.MediaServerConfigEnabled,
                 S3DefaultRegion = expected.S3DefaultRegion,
                 SmsConfigEnabled = expected.SmsConfigEnabled,
-                S3EnforceDirectUpload = expected.S3EnforceDirectUpload
+                S3EnforceDirectUpload = expected.S3EnforceDirectUpload,
+                IsDracoonCloud = expected.IsDracoonCloud,
+                TenantUUID = expected.TenantUUID
             };
 
             // ACT
@@ -97,7 +99,9 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 DownloadShareDefaultExpirationPeriodInDays = expected.DownloadShareDefaultExpirationPeriodInDays,
                 FileUploadDefaultExpirationPeriodInDays = expected.FileUploadDefaultExpirationPeriodInDays,
                 LanguageDefault = expected.LanguageDefault,
-                UploadShareDefaultExpirationPeriodInDays = expected.UploadShareDefaultExpirationPeriodInDays
+                UploadShareDefaultExpirationPeriodInDays = expected.UploadShareDefaultExpirationPeriodInDays,
+                HideLoginInputFields = expected.HideLoginInputFields,
+                NonMemberViewerDefault = expected.NonMemberViewerDefault
             };
 
             // ACT
@@ -129,7 +133,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             // ARRANGE
             PasswordSharePolicies expected = FactoryPolicies.PasswordSharePolicies;
 
-            ApiSharePasswordSettings param = new ApiSharePasswordSettings {
+            ApiSharePasswordPolicy param = new ApiSharePasswordPolicy {
                 CharacterRules = FactoryPolicies.ApiPasswordCharacterRules,
                 MinimumPasswordLength = expected.MinimumPasswordLength,
                 RejectDictionaryWords = expected.RejectDictionaryWords,
@@ -153,7 +157,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
         public void FromApiPasswordSharePolicies_Null() {
             // ARRANGE
             PasswordSharePolicies expected = null;
-            ApiSharePasswordSettings param = null;
+            ApiSharePasswordPolicy param = null;
 
             // ACT
             PasswordSharePolicies actual = SettingsMapper.FromApiPasswordSharePolicies(param);
@@ -171,7 +175,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             // ARRANGE
             PasswordEncryptionPolicies expected = FactoryPolicies.PasswordEncryptionPolicies;
 
-            ApiEncryptionPasswordSettings param = new ApiEncryptionPasswordSettings {
+            ApiEncryptionPasswordPolicy param = new ApiEncryptionPasswordPolicy {
                 CharacterRules = FactoryPolicies.ApiPasswordCharacterRules,
                 MinimumPasswordLength = expected.MinimumPasswordLength,
                 RejectKeyboardPatterns = expected.RejectKeyboardPatterns,
@@ -194,13 +198,95 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
         public void FromApiPasswordEncryptionPolicies_Null() {
             // ARRANGE
             PasswordEncryptionPolicies expected = null;
-            ApiEncryptionPasswordSettings param = null;
+            ApiEncryptionPasswordPolicy param = null;
 
             // ACT
             PasswordEncryptionPolicies actual = SettingsMapper.FromApiPasswordEncryptionPolicies(param);
 
             // ASSERT
             Assert.Equal(expected, actual, new PasswordEncryptionPolicyComparer());
+        }
+
+        #endregion
+
+        #region FromApiPasswordLoginPolicies
+
+        [Fact]
+        public void FromApiPasswordLoginPolicies() {
+            // ARRANGE
+            PasswordLoginPolicies expected = FactoryPolicies.PasswordLoginPolicies;
+
+            ApiLoginPasswordPolicy param = new ApiLoginPasswordPolicy {
+                CharacterRules = FactoryPolicies.ApiPasswordCharacterRules,
+                MinimumPasswordLength = expected.MinimumPasswordLength,
+                RejectDictionaryWords = expected.RejectDictionaryWords,
+                RejectKeyboardPatterns = expected.RejectKeyboardPatterns,
+                RejectUserInfo = expected.RejectKeyboardPatterns,
+                UpdatedAt = expected.UpdatedAt,
+                UpdatedBy = FactoryUser.ApiUserInfo,
+                NumberOfArchivedPasswords = expected.NumberOfArchivedPasswords,
+                PasswordExpiration = new ApiPasswordExpiration {
+                    Enabled = expected.PasswordExpiration.IsEnabled,
+                    MaxDaysPasswordAge = expected.PasswordExpiration.ExpiresAfterDays
+                }
+            };
+
+            Mock.Arrange(() => SettingsMapper.FromApiPasswordCharacterPolicies(param.CharacterRules)).Returns(expected.CharacterPolicies);
+            Mock.Arrange(() => UserMapper.FromApiUserInfo(param.UpdatedBy)).Returns(expected.UpdatedBy);
+            Mock.Arrange(() => SettingsMapper.FromApiPasswordExpiration(param.PasswordExpiration)).Returns(expected.PasswordExpiration);
+
+            // ACT
+            PasswordLoginPolicies actual = SettingsMapper.FromApiPasswordLoginPolicies(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new PasswordLoginPolicyComparer());
+        }
+
+        [Fact]
+        public void FromApiPasswordLoginPolicies_Null() {
+            // ARRANGE
+            PasswordLoginPolicies expected = null;
+            ApiLoginPasswordPolicy param = null;
+
+            // ACT
+            PasswordLoginPolicies actual = SettingsMapper.FromApiPasswordLoginPolicies(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new PasswordLoginPolicyComparer());
+        }
+
+        #endregion
+
+        #region FromApiPasswordExpiration
+
+        [Fact]
+        public void FromApiPasswordExpiration() {
+            // ARRANGE
+            PasswordExpiration expected = FactoryPolicies.PasswordLoginPolicies.PasswordExpiration;
+
+            ApiPasswordExpiration param = new ApiPasswordExpiration {
+                    Enabled = expected.IsEnabled,
+                    MaxDaysPasswordAge = expected.ExpiresAfterDays
+            };
+
+            // ACT
+            PasswordExpiration actual = SettingsMapper.FromApiPasswordExpiration(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new PasswordExpirationComparer());
+        }
+
+        [Fact]
+        public void FromApiPasswordExpiration_Null() {
+            // ARRANGE
+            PasswordExpiration expected = null;
+            ApiPasswordExpiration param = null;
+
+            // ACT
+            PasswordExpiration actual = SettingsMapper.FromApiPasswordExpiration(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new PasswordExpirationComparer());
         }
 
         #endregion

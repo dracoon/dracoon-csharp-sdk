@@ -34,7 +34,9 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 MediaServerConfigEnabled = apiInfrastructureConfig.MediaServerConfigEnabled,
                 S3DefaultRegion = apiInfrastructureConfig.S3DefaultRegion,
                 SmsConfigEnabled = apiInfrastructureConfig.SmsConfigEnabled,
-                S3EnforceDirectUpload = apiInfrastructureConfig.S3EnforceDirectUpload
+                S3EnforceDirectUpload = apiInfrastructureConfig.S3EnforceDirectUpload,
+                IsDracoonCloud = apiInfrastructureConfig.IsDracoonCloud,
+                TenantUUID = apiInfrastructureConfig.TenantUUID
             };
             return infrastructure;
         }
@@ -48,12 +50,14 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 LanguageDefault = apiDefaultsConfig.LanguageDefault,
                 DownloadShareDefaultExpirationPeriodInDays = apiDefaultsConfig.DownloadShareDefaultExpirationPeriodInDays,
                 FileUploadDefaultExpirationPeriodInDays = apiDefaultsConfig.FileUploadDefaultExpirationPeriodInDays,
-                UploadShareDefaultExpirationPeriodInDays = apiDefaultsConfig.UploadShareDefaultExpirationPeriodInDays
+                UploadShareDefaultExpirationPeriodInDays = apiDefaultsConfig.UploadShareDefaultExpirationPeriodInDays,
+                NonMemberViewerDefault = apiDefaultsConfig.NonMemberViewerDefault,
+                HideLoginInputFields = apiDefaultsConfig.HideLoginInputFields
             };
             return defaults;
         }
 
-        internal static PasswordSharePolicies FromApiPasswordSharePolicies(ApiSharePasswordSettings apiPolicies) {
+        internal static PasswordSharePolicies FromApiPasswordSharePolicies(ApiSharePasswordPolicy apiPolicies) {
             if (apiPolicies == null) {
                 return null;
             }
@@ -70,7 +74,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             return policies;
         }
 
-        internal static PasswordEncryptionPolicies FromApiPasswordEncryptionPolicies(ApiEncryptionPasswordSettings apiPolicies) {
+        internal static PasswordEncryptionPolicies FromApiPasswordEncryptionPolicies(ApiEncryptionPasswordPolicy apiPolicies) {
             if (apiPolicies == null) {
                 return null;
             }
@@ -84,6 +88,37 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 UpdatedBy = UserMapper.FromApiUserInfo(apiPolicies.UpdatedBy)
             };
             return policies;
+        }
+
+        internal static PasswordLoginPolicies FromApiPasswordLoginPolicies(ApiLoginPasswordPolicy apiPolicies) {
+            if (apiPolicies == null) {
+                return null;
+            }
+
+            PasswordLoginPolicies policies = new PasswordLoginPolicies {
+                CharacterPolicies = FromApiPasswordCharacterPolicies(apiPolicies.CharacterRules),
+                MinimumPasswordLength = apiPolicies.MinimumPasswordLength,
+                RejectKeyboardPatterns = apiPolicies.RejectKeyboardPatterns,
+                RejectOwnUserInfo = apiPolicies.RejectUserInfo,
+                RejectDictionaryWords = apiPolicies.RejectDictionaryWords,
+                NumberOfArchivedPasswords = apiPolicies.NumberOfArchivedPasswords,
+                PasswordExpiration = FromApiPasswordExpiration(apiPolicies.PasswordExpiration),
+                UpdatedAt = apiPolicies.UpdatedAt,
+                UpdatedBy = UserMapper.FromApiUserInfo(apiPolicies.UpdatedBy)
+            };
+            return policies;
+        }
+
+        internal static PasswordExpiration FromApiPasswordExpiration(ApiPasswordExpiration apiExpiration) {
+            if (apiExpiration == null) {
+                return null;
+            }
+
+            PasswordExpiration expiration = new PasswordExpiration {
+                IsEnabled = apiExpiration.Enabled,
+                ExpiresAfterDays = apiExpiration.MaxDaysPasswordAge
+            };
+            return expiration;
         }
 
         internal static PasswordCharacterPolicies FromApiPasswordCharacterPolicies(ApiCharacterRules apiPolicies) {

@@ -1,10 +1,17 @@
 ﻿namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="avatarInfo"]/AvatarInfo/*'/>
+    /// <summary>
+    ///     Informations about the current set avatar.
+    /// </summary>
     public class AvatarInfo {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="avatarInfo"]/AvatarUUID/*'/>
+
+        /// <summary>
+        ///     The unique id of the current set avatar image.
+        /// </summary>
         public string AvatarUUID { get; set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="avatarInfo"]/IsCustomAvatar/*'/>
+        /// <summary>
+        ///     Indicates if the current set avatar is a custom set image or the default server generated image.
+        /// </summary>
         public bool IsCustomAvatar { get; set; }
     }
 }

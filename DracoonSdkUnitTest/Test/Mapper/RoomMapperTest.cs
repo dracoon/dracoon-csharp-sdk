@@ -31,8 +31,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 NewGroupMemberAcceptance = paramGMA,
                 Classification = Classification.Internal,
                 HasActivitiesLog = expected.HasActivitiesLog,
-                TimestampCreation = expected.TimestampCreation,
-                TimestampModification = expected.TimestampModification
+                CreationTime = expected.TimestampCreation,
+                ModificationTime = expected.TimestampModification
             };
 
             Mock.Arrange(() => EnumConverter.ConvertGroupMemberAcceptanceToValue(paramGMA)).Returns(expectedGMAValue);
@@ -57,8 +57,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 Name = expected.Name,
                 Quota = expected.Quota,
                 Notes = expected.Notes,
-                TimestampCreation = expected.TimestampCreation,
-                TimestampModification = expected.TimestampModification
+                CreationTime = expected.TimestampCreation,
+                ModificationTime = expected.TimestampModification
             };
 
             // ACT

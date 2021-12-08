@@ -26,5 +26,11 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
 
         [JsonProperty("lastDeletedNodeId", NullValueHandling = NullValueHandling.Ignore)]
         public long LastDeletedNodeId { get; set; }
+
+        [JsonProperty("timestampCreation", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? TimestampCreation { get; set; }
+
+        [JsonProperty("timestampModification", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? TimestampModification { get; set; }
     }
 }

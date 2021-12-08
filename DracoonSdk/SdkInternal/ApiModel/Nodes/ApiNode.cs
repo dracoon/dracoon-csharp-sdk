@@ -85,6 +85,9 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         [JsonProperty("cntFiles", NullValueHandling = NullValueHandling.Ignore)]
         public int? CountFiles { get; set; }
 
+        [JsonProperty("cntComments", NullValueHandling = NullValueHandling.Ignore)]
+        public int? CountComments { get; set; }
+
         [JsonProperty("cntDeletedVersions", NullValueHandling = NullValueHandling.Ignore)]
         public int? CountDeletedVersions { get; set; }
 
@@ -108,5 +111,8 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         
         [JsonProperty("isBrowsable", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsBrowsable { get; set; }
+
+        [JsonProperty("hasActivitiesLog", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? HasActivitiesLog { get; set; }
     }
 }

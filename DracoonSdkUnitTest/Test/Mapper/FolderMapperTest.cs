@@ -17,8 +17,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             CreateFolderRequest param = new CreateFolderRequest(expected.ParentId, expected.Name) {
                 Notes = expected.Notes,
                 Classification = Classification.Internal,
-                TimestampCreation = expected.TimestampCreation,
-                TimestampModification = expected.TimestampModification
+                CreationTime = expected.TimestampCreation,
+                ModificationTime = expected.TimestampModification
             };
 
             // ACT
@@ -41,8 +41,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 Name = expected.Name,
                 Notes = expected.Notes,
                 Classification = Classification.Internal,
-                TimestampCreation = expected.TimestampCreation,
-                TimestampModification = expected.TimestampModification
+                CreationTime = expected.TimestampCreation,
+                ModificationTime = expected.TimestampModification
             };
 
             // ACT

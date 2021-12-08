@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Dracoon.Sdk.Model;
+using System;
 
 namespace Dracoon.Sdk.Model {
     /// <summary>
-    ///     This model stores the policies for the share password.
+    ///     This model stores the policies for the login password.
     /// </summary>
-    public class PasswordSharePolicies {
+    public class PasswordLoginPolicies {
 
         /// <summary>
         ///     The password containment definition.
@@ -30,6 +31,16 @@ namespace Dracoon.Sdk.Model {
         ///     Is <c>true</c> if keyboard patterns like "qwer" or "asdf" are rejected. Otherwise <c>false</c>.
         /// </summary>
         public bool RejectKeyboardPatterns { get; internal set; }
+
+        /// <summary>
+        ///     The number of passwords to archive. Range: 0 - 10. If 0 = disabled.
+        /// </summary>
+        public int NumberOfArchivedPasswords { get; internal set; }
+
+        /// <summary>
+        ///     Informations about the expiration of a login password.
+        /// </summary>
+        public PasswordExpiration PasswordExpiration { get; internal set; }
 
         /// <summary>
         ///     Defines when the share password policies are updated last.

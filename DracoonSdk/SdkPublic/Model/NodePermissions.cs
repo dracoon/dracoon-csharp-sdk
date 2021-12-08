@@ -1,34 +1,57 @@
 ﻿namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="nodePermissions"]/NodePermissions/*'/>
+    /// <summary>
+    ///     This model stores information about the permission a user has on a node.
+    /// </summary>
     public class NodePermissions {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="nodePermissions"]/Manage/*'/>
+
+        /// <summary>
+        ///     Is <c>true</c> if the user has the permission on the data room. Otherwise <c>false</c>.
+        /// </summary>
         public bool Manage { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="nodePermissions"]/Read/*'/>
+        /// <summary>
+        ///     Is <c>true</c> if the user has the permission on the data room. Otherwise <c>false</c>.
+        /// </summary>
         public bool Read { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="nodePermissions"]/Create/*'/>
+        /// <summary>
+        ///     Is <c>true</c> if the user has the permission on the data room. Otherwise <c>false</c>.
+        /// </summary>
         public bool Create { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="nodePermissions"]/Change/*'/>
+        /// <summary>
+        ///     Is <c>true</c> if the user has the permission on the data room. Otherwise <c>false</c>.
+        /// </summary>
         public bool Change { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="nodePermissions"]/Delete/*'/>
+        /// <summary>
+        ///     Is <c>true</c> if the user has the permission on the data room. Otherwise <c>false</c>.
+        /// </summary>
         public bool Delete { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="nodePermissions"]/ManageDownloadShare/*'/>
+        /// <summary>
+        ///     Is <c>true</c> if the user has the permission on the data room. Otherwise <c>false</c>.
+        /// </summary>
         public bool ManageDownloadShare { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="nodePermissions"]/ManageUploadShare/*'/>
+        /// <summary>
+        ///     Is <c>true</c> if the user has the permission on the data room. Otherwise <c>false</c>.
+        /// </summary>
         public bool ManageUploadShare { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="nodePermissions"]/CanReadRecycleBin/*'/>
+        /// <summary>
+        ///     Is <c>true</c> if the user has the permission on the data room. Otherwise <c>false</c>.
+        /// </summary>
         public bool CanReadRecycleBin { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="nodePermissions"]/CanRestoreRecycleBin/*'/>
+        /// <summary>
+        ///     Is <c>true</c> if the user has the permission on the data room. Otherwise <c>false</c>.
+        /// </summary>
         public bool CanRestoreRecycleBin { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="nodePermissions"]/CanDeleteRecycleBin/*'/>
+        /// <summary>
+        ///     Is <c>true</c> if the user has the permission on the data room. Otherwise <c>false</c>.
+        /// </summary>
         public bool CanDeleteRecycleBin { get; internal set; }
     }
 }

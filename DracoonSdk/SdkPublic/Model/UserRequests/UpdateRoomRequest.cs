@@ -37,7 +37,7 @@ namespace Dracoon.Sdk.Model {
         ///         Nullable. If not set, the default is the current server time in UTC.
         ///     </para>
         /// </summary>
-        public DateTime? TimestampCreation { get; set; }
+        public DateTime? CreationTime { get; set; }
 
         /// <summary>
         ///     The content modification time of this node.
@@ -45,7 +45,7 @@ namespace Dracoon.Sdk.Model {
         ///         Nullable. If not set, the default is the current server time in UTC.
         ///     </para>
         /// </summary>
-        public DateTime? TimestampModification { get; set; }
+        public DateTime? ModificationTime { get; set; }
 
         /// <summary>
         ///     Constructs a new update room request.
@@ -54,15 +54,15 @@ namespace Dracoon.Sdk.Model {
         /// <param name="name"><inheritdoc cref="Name"/></param>
         /// <param name="quota"><inheritdoc cref="Quota"/></param>
         /// <param name="notes"><inheritdoc cref="Notes"/></param>
-        /// <param name="timestampCreation"><inheritdoc cref="TimestampCreation"/></param>
-        /// <param name="timestampModification"><inheritdoc cref="TimestampModification"/></param>
-        public UpdateRoomRequest(long id, string name = null, long? quota = null, string notes = null, DateTime? timestampCreation = null, DateTime? timestampModification = null) {
+        /// <param name="creationTime"><inheritdoc cref="CreationTime"/></param>
+        /// <param name="modificationTime"><inheritdoc cref="ModificationTime"/></param>
+        public UpdateRoomRequest(long id, string name = null, long? quota = null, string notes = null, DateTime? creationTime = null, DateTime? modificationTime = null) {
             Id = id;
             Name = name;
             Quota = quota;
             Notes = notes;
-            TimestampCreation = timestampCreation;
-            TimestampModification = timestampModification;
+            CreationTime = creationTime;
+            ModificationTime = modificationTime;
         }
     }
 }

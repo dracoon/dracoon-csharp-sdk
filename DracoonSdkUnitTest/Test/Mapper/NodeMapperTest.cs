@@ -68,8 +68,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                         LastName = current.UpdatedBy.LastName,
                         UserType = "internal"
                     },
-                    CreationTimestamp = current.CreationTimestamp,
-                    ModificationTimestamp = current.ModificationTimestamp,
+                    CreationTimestamp = current.CreationTime,
+                    ModificationTimestamp = current.ModificationTime,
                     InheritPermissions = current.HasInheritPermissions,
                     Permissions = new ApiNodePermissions {
                         Manage = current.Permissions.Manage,
@@ -88,14 +88,16 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     CountFiles = current.CountFiles,
                     CountRooms = current.CountRooms,
                     CountFolders = current.CountFolders,
-                    CountDeletedVersions = current.CountDeletedVersions,
+                    CountDeletedVersions = current.CountPreviousVersions,
+                    CountComments = current.CountComments,
                     RecycleBinRetentionPeriod = current.RecycleBinRetentionPeriod,
                     CountDownloadShares = current.CountDownloadShares,
                     CountUploadShares = current.CountUploadShares,
                     BranchVersion = current.BranchVersion,
                     FileType = current.Extension,
                     ConfigParentRoomId = current.ConfigParentRoomId,
-                    IsBrowsable = current.IsBrowsable
+                    IsBrowsable = current.IsBrowsable,
+                    HasActivitiesLog = current.HasActivitiesLog
                 };
                 param.Items.Add(currentApi);
                 Mock.Arrange(() => NodeMapper.FromApiNode(currentApi)).Returns(current);
@@ -171,8 +173,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                     LastName = expected.UpdatedBy.LastName,
                     UserType = "internal"
                 },
-                CreationTimestamp = expected.CreationTimestamp,
-                ModificationTimestamp = expected.ModificationTimestamp,
+                CreationTimestamp = expected.CreationTime,
+                ModificationTimestamp = expected.ModificationTime,
                 InheritPermissions = expected.HasInheritPermissions,
                 Permissions = new ApiNodePermissions {
                     Manage = expected.Permissions.Manage,
@@ -191,14 +193,16 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 CountFiles = expected.CountFiles,
                 CountRooms = expected.CountRooms,
                 CountFolders = expected.CountFolders,
-                CountDeletedVersions = expected.CountDeletedVersions,
+                CountDeletedVersions = expected.CountPreviousVersions,
+                CountComments = expected.CountComments,
                 RecycleBinRetentionPeriod = expected.RecycleBinRetentionPeriod,
                 CountDownloadShares = expected.CountDownloadShares,
                 CountUploadShares = expected.CountUploadShares,
                 BranchVersion = expected.BranchVersion,
                 FileType = expected.Extension,
                 ConfigParentRoomId = expected.ConfigParentRoomId,
-                IsBrowsable = expected.IsBrowsable
+                IsBrowsable = expected.IsBrowsable,
+                HasActivitiesLog = expected.HasActivitiesLog
             };
 
             Mock.Arrange(() => EnumConverter.ConvertValueToNodeTypeEnum(expectedTypeValue)).Returns(expectedType);
@@ -421,7 +425,9 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 FirstDeletedAt = expected.FirstDeletedAt,
                 LastDeletedAt = expected.LastDeletedAt,
                 LastDeletedNodeId = expected.LastDeletedNodeId,
-                CntVersions = expected.VersionsCount
+                CntVersions = expected.VersionsCount,
+                TimestampCreation = expected.CreationTime,
+                TimestampModification = expected.ModificationTime
             };
 
             Mock.Arrange(() => EnumConverter.ConvertValueToNodeTypeEnum(expectedTypeValue)).Returns(expectedType);

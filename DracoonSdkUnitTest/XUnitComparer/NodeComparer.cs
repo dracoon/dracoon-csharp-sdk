@@ -33,8 +33,8 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 x.ExpireAt == y.ExpireAt &&
                 x.CreatedAt == y.CreatedAt &&
                 x.UpdatedAt == y.UpdatedAt &&
-                x.CreationTimestamp == y.CreationTimestamp &&
-                x.ModificationTimestamp == y.ModificationTimestamp &&
+                x.CreationTime == y.CreationTime &&
+                x.ModificationTime == y.ModificationTime &&
                 x.HasInheritPermissions == y.HasInheritPermissions &&
                 x.IsFavorite == y.IsFavorite &&
                 x.IsEncrypted == y.IsEncrypted &&
@@ -42,12 +42,14 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 x.CountRooms == y.CountRooms &&
                 x.CountFolders == y.CountFolders &&
                 x.CountFiles == y.CountFiles &&
-                x.CountDeletedVersions == y.CountDeletedVersions &&
+                x.CountPreviousVersions == y.CountPreviousVersions &&
+                x.CountComments == y.CountComments &&
                 x.RecycleBinRetentionPeriod == y.RecycleBinRetentionPeriod &&
                 x.CountDownloadShares == y.CountDownloadShares &&
                 x.CountUploadShares == y.CountUploadShares &&
                 x.BranchVersion == y.BranchVersion &&
-                x.IsBrowsable == y.IsBrowsable;
+                x.IsBrowsable == y.IsBrowsable &&
+                x.HasActivitiesLog == y.HasActivitiesLog;
         }
 
         public int GetHashCode(Node obj) {
@@ -223,7 +225,9 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 x.ParentId == y.ParentId &&
                 string.Equals(x.ParentPath, y.ParentPath) &&
                 x.Type == y.Type &&
-                x.VersionsCount == y.VersionsCount;
+                x.VersionsCount == y.VersionsCount &&
+                x.CreationTime == y.CreationTime &&
+                x.ModificationTime == y.ModificationTime;
         }
 
         public int GetHashCode(RecycleBinItem obj) {

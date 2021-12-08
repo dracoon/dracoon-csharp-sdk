@@ -34,7 +34,9 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             MediaServerConfigEnabled = true,
             S3DefaultRegion = "DE",
             SmsConfigEnabled = true,
-            S3EnforceDirectUpload = false
+            S3EnforceDirectUpload = false,
+            IsDracoonCloud = true,
+            TenantUUID = "RANDOMUUID"
         };
 
         internal static List<FileKeyAlgorithmData> FileKeyAlgorithms => new List<FileKeyAlgorithmData> {
@@ -89,21 +91,28 @@ namespace Dracoon.Sdk.UnitTest.Factory {
         internal static ApiInfrastructureSettings ApiInfrastructureSettings => new ApiInfrastructureSettings {
             MediaServerConfigEnabled = true,
             S3DefaultRegion = "DE",
-            SmsConfigEnabled = true
+            SmsConfigEnabled = true,
+            IsDracoonCloud = true,
+            TenantUUID = "RANDOMUUID",
+            S3EnforceDirectUpload = false
         };
 
         internal static ServerDefaultSettings ServerDefaultSettings => new ServerDefaultSettings {
             DownloadShareDefaultExpirationPeriodInDays = 5,
             FileUploadDefaultExpirationPeriodInDays = 4,
             LanguageDefault = "DE",
-            UploadShareDefaultExpirationPeriodInDays = 7
+            UploadShareDefaultExpirationPeriodInDays = 7,
+            HideLoginInputFields = false,
+            NonMemberViewerDefault = false
         };
 
         internal static ApiDefaultsSettings ApiDefaultsSettings => new ApiDefaultsSettings {
             DownloadShareDefaultExpirationPeriodInDays = 5,
             FileUploadDefaultExpirationPeriodInDays = 4,
             LanguageDefault = "DE",
-            UploadShareDefaultExpirationPeriodInDays = 7
+            UploadShareDefaultExpirationPeriodInDays = 7,
+            HideLoginInputFields = false,
+            NonMemberViewerDefault = false,
         };
     }
 }

@@ -1,7 +1,12 @@
 ﻿namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="classificationPolicies"]/ClassificationPolicies/*'/>
+    /// <summary>
+    ///     This model stores informations about policies for the classifications.
+    /// </summary>
     public class ClassificationPolicies {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="classificationPolicy"]/ShareClassificationPolicy/*'/>
+
+        /// <summary>
+        ///     The policies for classifications if sharing nodes.
+        /// </summary>
         public ShareClassificationPolicy ShareClassificationPolicy { get; internal set; }
     }
 }

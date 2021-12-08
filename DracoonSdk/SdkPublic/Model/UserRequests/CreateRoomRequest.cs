@@ -81,7 +81,7 @@ namespace Dracoon.Sdk.Model {
         ///         Nullable. If not set, the default is the current server time in UTC.
         ///     </para>
         /// </summary>
-        public DateTime? TimestampCreation { get; set; }
+        public DateTime? CreationTime { get; set; }
 
         /// <summary>
         ///     The content modification time of this node.
@@ -89,7 +89,7 @@ namespace Dracoon.Sdk.Model {
         ///         Nullable. If not set, the default is the current server time in UTC.
         ///     </para>
         /// </summary>
-        public DateTime? TimestampModification { get; set; }
+        public DateTime? ModificationTime { get; set; }
 
         /// <summary>
         ///     Indicates if the activities log is enabled
@@ -113,11 +113,11 @@ namespace Dracoon.Sdk.Model {
         /// <param name="adminUserIds"><inheritdoc cref="AdminUserIds"/></param>
         /// <param name="adminGroupIds"><inheritdoc cref="AdminGroupIds"/></param>
         /// <param name="classification"><inheritdoc cref="Classification"/></param>
-        /// <param name="timestampCreation"><inheritdoc cref="TimestampCreation"/></param>
-        /// <param name="timestampModificaiton"><inheritdoc cref="TimestampModification"/></param>
+        /// <param name="creationTime"><inheritdoc cref="CreationTime"/></param>
+        /// <param name="modificationTime"><inheritdoc cref="ModificationTime"/></param>
         public CreateRoomRequest(string name, long parentId = 0, GroupMemberAcceptance newGroupMemberAcceptance = GroupMemberAcceptance.AutoAllow, bool hasActivitiesLog = true,
             long? quota = null, string notes = null, int? recycleBinRetentionPeriod = null, bool? hasInheritPermissions = null,
-            List<long> adminUserIds = null, List<long> adminGroupIds = null, Classification? classification = null, DateTime? timestampCreation = null, DateTime? timestampModificaiton = null) {
+            List<long> adminUserIds = null, List<long> adminGroupIds = null, Classification? classification = null, DateTime? creationTime = null, DateTime? modificationTime = null) {
             Name = name;
             ParentId = parentId;
             Quota = quota;
@@ -128,8 +128,8 @@ namespace Dracoon.Sdk.Model {
             AdminGroupIds = adminGroupIds;
             NewGroupMemberAcceptance = newGroupMemberAcceptance;
             Classification = classification;
-            TimestampCreation = timestampCreation;
-            TimestampModification = timestampModificaiton;
+            CreationTime = creationTime;
+            ModificationTime = modificationTime;
             HasActivitiesLog = hasActivitiesLog;
         }
     }

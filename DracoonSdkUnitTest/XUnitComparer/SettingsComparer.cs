@@ -38,7 +38,10 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             }
             return x.MediaServerConfigEnabled == y.MediaServerConfigEnabled &&
                 string.Equals(x.S3DefaultRegion, y.S3DefaultRegion) &&
-                x.SmsConfigEnabled == y.SmsConfigEnabled;
+                x.SmsConfigEnabled == y.SmsConfigEnabled &&
+                x.S3EnforceDirectUpload == y.S3EnforceDirectUpload &&
+                x.IsDracoonCloud == y.IsDracoonCloud &&
+                string.Equals(x.TenantUUID, y.TenantUUID);
         }
 
         public int GetHashCode(ServerInfrastructureSettings obj) {
@@ -57,7 +60,9 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             return x.DownloadShareDefaultExpirationPeriodInDays == y.DownloadShareDefaultExpirationPeriodInDays &&
                 x.FileUploadDefaultExpirationPeriodInDays == y.FileUploadDefaultExpirationPeriodInDays &&
                 string.Equals(x.LanguageDefault, y.LanguageDefault) &&
-                x.UploadShareDefaultExpirationPeriodInDays == y.UploadShareDefaultExpirationPeriodInDays;
+                x.UploadShareDefaultExpirationPeriodInDays == y.UploadShareDefaultExpirationPeriodInDays &&
+                x.HideLoginInputFields == y.HideLoginInputFields &&
+                x.NonMemberViewerDefault == y.NonMemberViewerDefault;
         }
 
         public int GetHashCode(ServerDefaultSettings obj) {
@@ -73,11 +78,13 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             if ((x == null && y != null) || (x != null && y == null)) {
                 return false;
             }
+            Assert.Equal(x.CharacterPolicies, y.CharacterPolicies, new PasswordCharacterPolicyComparer());
+            Assert.Equal(x.UpdatedBy, y.UpdatedBy, new UserInfoComparer());
+
             return x.MinimumPasswordLength == y.MinimumPasswordLength &&
                 x.RejectKeyboardPatterns == y.RejectKeyboardPatterns &&
                 x.RejectOwnUserInfo == y.RejectOwnUserInfo &&
-                x.UpdatedAt == y.UpdatedAt &&
-                x.UpdatedBy.Id == y.UpdatedBy.Id;
+                x.UpdatedAt == y.UpdatedAt;
         }
 
         public int GetHashCode(PasswordEncryptionPolicies obj) {
@@ -93,14 +100,57 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             if ((x == null && y != null) || (x != null && y == null)) {
                 return false;
             }
+            Assert.Equal(x.CharacterPolicies, y.CharacterPolicies, new PasswordCharacterPolicyComparer());
+            Assert.Equal(x.UpdatedBy, y.UpdatedBy, new UserInfoComparer());
+
+            return x.MinimumPasswordLength == y.MinimumPasswordLength &&
+                x.RejectKeyboardPatterns == y.RejectKeyboardPatterns &&
+                x.RejectOwnUserInfo == y.RejectOwnUserInfo &&
+                x.UpdatedAt == y.UpdatedAt;
+        }
+
+        public int GetHashCode(PasswordSharePolicies obj) {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class PasswordLoginPolicyComparer : IEqualityComparer<PasswordLoginPolicies> {
+        public bool Equals(PasswordLoginPolicies x, PasswordLoginPolicies y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            Assert.Equal(x.PasswordExpiration, y.PasswordExpiration, new PasswordExpirationComparer());
+            Assert.Equal(x.CharacterPolicies, y.CharacterPolicies, new PasswordCharacterPolicyComparer());
+            Assert.Equal(x.UpdatedBy, y.UpdatedBy, new UserInfoComparer());
+
             return x.MinimumPasswordLength == y.MinimumPasswordLength &&
                 x.RejectKeyboardPatterns == y.RejectKeyboardPatterns &&
                 x.RejectOwnUserInfo == y.RejectOwnUserInfo &&
                 x.UpdatedAt == y.UpdatedAt &&
-                x.UpdatedBy.Id == y.UpdatedBy.Id;
+                x.NumberOfArchivedPasswords == y.NumberOfArchivedPasswords;
         }
 
-        public int GetHashCode(PasswordSharePolicies obj) {
+        public int GetHashCode(PasswordLoginPolicies obj) {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class PasswordExpirationComparer : IEqualityComparer<PasswordExpiration> {
+        public bool Equals(PasswordExpiration x, PasswordExpiration y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            return x.IsEnabled == y.IsEnabled &&
+                x.ExpiresAfterDays == y.ExpiresAfterDays;
+        }
+
+        public int GetHashCode(PasswordExpiration obj) {
             throw new NotImplementedException();
         }
     }

@@ -1,9 +1,19 @@
 ﻿namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="resolutionStrategy"]/ResolutionStrategy/*'/>
+    /// <summary>
+    ///     Enumeration of the resolution strategies.
+    /// </summary>
     public enum ResolutionStrategy {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="resolutionStrategy"]/AutoRename/*'/>
-        AutoRename, /// <include file = "ModelDoc.xml" path='docs/members[@name="resolutionStrategy"]/Overwrite/*'/>
-        Overwrite, /// <include file = "ModelDoc.xml" path='docs/members[@name="resolutionStrategy"]/Fail/*'/>
+        /// <summary>
+        ///     If a conflict exists on e.g. uploading a new file and the file name already exists, the new uploaded file will be automatically renamed.
+        /// </summary>
+        AutoRename,
+        /// <summary>
+        ///     If a conflict exists on e.g. uploading a new file and the file name already exists, the old file will be overwritten with the new.
+        /// </summary>
+        Overwrite,
+        /// <summary>
+        ///     If a conflict exists do nothing automatically and a error is thrown.
+        /// </summary>
         Fail
     }
 }
