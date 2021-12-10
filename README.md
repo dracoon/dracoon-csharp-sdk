@@ -32,7 +32,7 @@ Note that you also need to include the following dependencies:
 1. Bouncy Castle Provider Portable (v1.9.0): https://www.nuget.org/packages/Portable.BouncyCastle/
 2. Dracoon Crypto SDK (v3.0.0): https://www.nuget.org/packages/Dracoon.Crypto.Sdk/
 3. NewtonSoft.Json (v13.0.1): https://www.nuget.org/packages/Newtonsoft.Json/
-4. RestSharp (v106.13.0): https://www.nuget.org/packages/RestSharp/
+4. RestSharp (v106.15.0): https://www.nuget.org/packages/RestSharp/
 
 ## Example
 
