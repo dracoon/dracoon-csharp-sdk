@@ -1,8 +1,15 @@
 ﻿namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="groupMemberAcceptance"]/GroupMemberAcceptance/*'/>
+    /// <summary>
+    ///     Enumeration of group member acceptance types.
+    /// </summary>
     public enum GroupMemberAcceptance {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="groupMemberAcceptance"]/AutoAllow/*'/>
-        AutoAllow, /// <include file = "ModelDoc.xml" path='docs/members[@name="groupMemberAcceptance"]/Pending/*'/>
+        /// <summary>
+        ///     Indicates that new members automatically will be accepted on there group join.
+        /// </summary>
+        AutoAllow,
+        /// <summary>
+        ///     Indicates that new members must wait for approval on there group join.
+        /// </summary>
         Pending
     }
 }

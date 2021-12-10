@@ -305,7 +305,7 @@ namespace Dracoon.Sdk.SdkInternal {
             #region Parameter Validation
 
             request.MustNotNull(nameof(request));
-            request.ParentId.MustPositive(nameof(request.ParentId));
+            request.ParentId.NullableMustPositive(nameof(request.ParentId));
             request.Name.MustNotNullOrEmptyOrWhitespace(nameof(request.Name));
             request.Quota.NullableMustNotNegative(nameof(request.Quota));
             request.RecycleBinRetentionPeriod.NullableMustNotNegative(nameof(request.RecycleBinRetentionPeriod));
@@ -364,7 +364,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
             if (request.DataRoomRescueKeyPairAlgorithm != null) {
                 request.DataRoomRescueKeyPassword.MustNotNullOrEmptyOrWhitespace(nameof(request.DataRoomRescueKeyPassword));
-                _client.AccountImpl.AssertUserKeyPairAlgorithmSupported(request.DataRoomRescueKeyPairAlgorithm.Value);
             }
 
             #endregion

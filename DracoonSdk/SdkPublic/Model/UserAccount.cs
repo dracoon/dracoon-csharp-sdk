@@ -2,48 +2,127 @@
 using System.Collections.Generic;
 
 namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/UserAccount/*'/>
+    /// <summary>
+    ///     This model stores informations about the user account.
+    /// </summary>
     public class UserAccount {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/Id/*'/>
+        /// <summary>
+        ///     The id of the user.
+        /// </summary>
         public long Id { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/AuthData/*'/>
+        /// <summary>
+        ///     The login data of the user. <seealso cref="Dracoon.Sdk.Model.UserAuthData"/>
+        /// </summary>
         public UserAuthData AuthData { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/UserName/*'/>
+        /// <summary>
+        ///     The user name of the user.
+        /// </summary>
         public string UserName { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/Title/*'/>
-        public string Title { get; internal set; }
-
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/FirstName/*'/>
+        /// <summary>
+        ///     The first name of the user.
+        /// </summary>
         public string FirstName { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/LastName/*'/>
+        /// <summary>
+        ///     The last name of the user.
+        /// </summary>
         public string LastName { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/Email/*'/>
+        /// <summary>
+        ///     The email address of the user.
+        ///     <para>
+        ///         Nullable
+        ///     </para>
+        /// </summary>
         public string Email { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/HasEncryptionEnabled/*'/>
+        /// <summary>
+        ///     If <c>true</c> then the user has set a personal encryption key.
+        ///     <para>
+        ///         Nullable if the system wide encryption is not active. See also <seealso cref="ServerGeneralSettings.CryptoEnabled"/>
+        ///     </para>
+        /// </summary>
         public bool? HasEncryptionEnabled { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/HasManageableRooms/*'/>
+        /// <summary>
+        ///     If <c>true</c> then the user has rooms in which he is the admin.
+        /// </summary>
         public bool HasManageableRooms { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/ExpireAt/*'/>
+        /// <summary>
+        ///     Indicates at which date the user gets invalid.
+        ///     <para>
+        ///         Nullable if account never expires
+        ///     </para>
+        /// </summary>
         public DateTime? ExpireAt { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/LastLoginSuccessAt/*'/>
+        /// <summary>
+        ///     Indicates the date of the last successful login of the user.
+        ///     <para>
+        ///         Nullable if no successful login is happend so far
+        ///     </para>
+        /// </summary>
         public DateTime? LastLoginSuccessAt { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/LastLoginFailAt/*'/>
+        /// <summary>
+        ///     Indicates the date of the last failed login of the user.
+        ///     <para>
+        ///         Nullable if no unsuccessful login is happend so far
+        ///     </para>
+        /// </summary>
         public DateTime? LastLoginFailAt { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/UserRoles/*'/>
+        /// <summary>
+        ///     The user roles which the user has. See also <seealso cref="Dracoon.Sdk.Model.UserRole"/>
+        /// </summary>
         public List<UserRole> UserRoles { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userAccount"]/HomeRoomId/*'/>
+        /// <summary>
+        ///     This room is the default home room id of the user.
+        ///     <para>
+        ///         Nullable if home rooms are not active in the system. See also <seealso cref="ServerGeneralSettings.HomeRoomsActive"/>
+        ///     </para>
+        /// </summary>
         public long? HomeRoomId { get; internal set; }
+
+        /// <summary>
+        ///     Indicates if the user is locked.
+        /// </summary>
+        public bool IsLocked { get; internal set; }
+
+        /// <summary>
+        ///     IETF language tag.
+        /// </summary>
+        public string Language { get; internal set; }
+
+        /// <summary>
+        ///     Indicates if the user must set his <see cref="Email"/> at the first login.
+        /// </summary>
+        public bool MustSetEmail { get; internal set; }
+
+        /// <summary>
+        ///     Indicates if the user must accept the EULA.
+        ///     <para>
+        ///         Nullable if the eula is disabled in the system. See also <seealso cref="ServerGeneralSettings.EulaEnabled"/>
+        ///     </para>
+        /// </summary>
+        public bool? NeedsToAcceptEULA { get; internal set; }
+
+        /// <summary>
+        ///     The phone number of the user.
+        ///     <para>
+        ///         Nullable
+        ///     </para>
+        /// </summary>
+        public string Phone { get; internal set; }
+
+        /// <summary>
+        ///     The groups of which the user is member of.
+        /// </summary>
+        public List<UserGroup> UserGroups { get; internal set; }
     }
 }

@@ -2,45 +2,21 @@
     /// <include file = "SpecificSort.xml" path='docs/members[@name="searchNodesSort"]/SearchNodesSort/*'/>
     public class SearchNodesSort : DracoonSort {
         /// <include file = "SpecificSort.xml" path='docs/members[@name="searchNodesSort"]/UpdatedAt/*'/>
-        public static SortField<SearchNodesSort> UpdatedAt {
-            get {
-                return new SortField<SearchNodesSort>(new SearchNodesSort(), "updatedAt");
-            }
-        }
+        public static SortField<SearchNodesSort> UpdatedAt => new SortField<SearchNodesSort>(new SearchNodesSort(), "updatedAt");
 
         /// <include file = "SpecificSort.xml" path='docs/members[@name="searchNodesSort"]/Size/*'/>
-        public static SortField<SearchNodesSort> Size {
-            get {
-                return new SortField<SearchNodesSort>(new SearchNodesSort(), "size");
-            }
-        }
+        public static SortField<SearchNodesSort> Size => new SortField<SearchNodesSort>(new SearchNodesSort(), "size");
 
         /// <include file = "SpecificSort.xml" path='docs/members[@name="searchNodesSort"]/CreatedAt/*'/>
-        public static SortField<SearchNodesSort> CreatedAt {
-            get {
-                return new SortField<SearchNodesSort>(new SearchNodesSort(), "createdAt");
-            }
-        }
+        public static SortField<SearchNodesSort> CreatedAt => new SortField<SearchNodesSort>(new SearchNodesSort(), "createdAt");
 
         /// <include file = "SpecificSort.xml" path='docs/members[@name="searchNodesSort"]/Name/*'/>
-        public static SortField<SearchNodesSort> Name {
-            get {
-                return new SortField<SearchNodesSort>(new SearchNodesSort(), "name");
-            }
-        }
+        public static SortField<SearchNodesSort> Name => new SortField<SearchNodesSort>(new SearchNodesSort(), "name");
 
         /// <include file = "SpecificSort.xml" path='docs/members[@name="searchNodesSort"]/ModificationTimestamp/*'/>
-        public static SortField<SearchNodesSort> ModificationTimestamp {
-            get {
-                return new SortField<SearchNodesSort>(new SearchNodesSort(), "timestampModification");
-            }
-        }
+        public static SortField<SearchNodesSort> ModificationTimestamp => new SortField<SearchNodesSort>(new SearchNodesSort(), "timestampModification");
 
         /// <include file = "SpecificSort.xml" path='docs/members[@name="searchNodesSort"]/CreationTimestamp/*'/>
-        public static SortField<SearchNodesSort> CreationTimestamp {
-            get {
-                return new SortField<SearchNodesSort>(new SearchNodesSort(), "timestampCreation");
-            }
-        }
+        public static SortField<SearchNodesSort> CreationTimestamp => new SortField<SearchNodesSort>(new SearchNodesSort(), "timestampCreation");
     }
 }

@@ -1,9 +1,9 @@
-﻿using Dracoon.Sdk.SdkInternal.OAuth;
+﻿using Dracoon.Sdk.SdkInternal;
+using Dracoon.Sdk.SdkInternal.OAuth;
 using Dracoon.Sdk.SdkInternal.Validator;
 using System;
 using System.Collections.Specialized;
 using System.Web;
-using Dracoon.Sdk.SdkInternal;
 
 namespace Dracoon.Sdk {
     /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="oAuthHelper"]/OAuthHelper/*'/>

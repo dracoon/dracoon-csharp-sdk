@@ -1,9 +1,19 @@
 ﻿namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="nodeType"]/NodeType/*'/>
+    /// <summary>
+    ///     Enumeration of node types.
+    /// </summary>
     public enum NodeType {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="nodeType"]/Room/*'/>
-        Room, /// <include file = "ModelDoc.xml" path='docs/members[@name="nodeType"]/Folder/*'/>
-        Folder, /// <include file = "ModelDoc.xml" path='docs/members[@name="nodeType"]/File/*'/>
+        /// <summary>
+        ///     The node is of type room.
+        /// </summary>
+        Room,
+        /// <summary>
+        ///     The node is of type folder.
+        /// </summary>
+        Folder,
+        /// <summary>
+        ///     The node is of type file.
+        /// </summary>
         File
     }
 }

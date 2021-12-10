@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Dracoon.Sdk.Error {
     /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonFileIOException"]/DracoonFileIOException/*'/>
-     [Serializable]
+    [Serializable]
     public class DracoonFileIOException : DracoonException {
         /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonFileIOException"]/DracoonFileIOExceptionConstructorOne/*'/>
         public DracoonFileIOException() { }

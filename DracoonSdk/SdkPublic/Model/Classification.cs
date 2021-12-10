@@ -1,10 +1,23 @@
 ﻿namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="classification"]/Classification/*'/>
+    /// <summary>
+    ///     Enumeration of file classification types.
+    /// </summary>
     public enum Classification {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="classification"]/Public/*'/>
-        Public = 1, /// <include file = "ModelDoc.xml" path='docs/members[@name="classification"]/Internal/*'/>
-        Internal = 2, /// <include file = "ModelDoc.xml" path='docs/members[@name="classification"]/Confidential/*'/>
-        Confidential = 3, /// <include file = "ModelDoc.xml" path='docs/members[@name="classification"]/StrictlyConfidential/*'/>
+        /// <summary>
+        ///     The public classification.
+        /// </summary>
+        Public = 1,
+        /// <summary>
+        ///     The internal classification.
+        /// </summary>
+        Internal = 2,
+        /// <summary>
+        ///     The confidential classification.
+        /// </summary>
+        Confidential = 3,
+        /// <summary>
+        ///     The strictly confidential classification.
+        /// </summary>
         StrictlyConfidential = 4
     }
 }

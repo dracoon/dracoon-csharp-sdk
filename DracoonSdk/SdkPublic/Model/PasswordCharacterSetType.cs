@@ -1,15 +1,27 @@
 ﻿namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="passwordCharacterSetType"]/PasswordCharacterSetType/*'/>
+    /// <summary>
+    ///     Defines the type of a character set.
+    /// </summary>
     public enum PasswordCharacterSetType {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="passwordCharacterSetType"]/None/*'/>
+        /// <summary>
+        ///     Every character set.
+        /// </summary>
         None,
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="passwordCharacterSetType"]/Uppercase/*'/>
+        /// <summary>
+        ///     Upper case characters set.
+        /// </summary>
         Uppercase,
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="passwordCharacterSetType"]/Lowercase/*'/>
+        /// <summary>
+        ///     Lower case characters set.
+        /// </summary>
         Lowercase,
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="passwordCharacterSetType"]/Numeric/*'/>
+        /// <summary>
+        ///     Numeric characters set.
+        /// </summary>
         Numeric,
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="passwordCharacterSetType"]/Special/*'/>
+        /// <summary>
+        ///     Special characters set.
+        /// </summary>
         Special
     }
 }

@@ -1,7 +1,12 @@
 ﻿namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="shareClassificationPolicy"]/ShareClassificationPolicy/*'/>
+    /// <summary>
+    ///     This model stores informations about policies for the classifications if sharing nodes.
+    /// </summary>
     public class ShareClassificationPolicy {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="shareClassificationPolicy"]/ClassificationMinimumForSharePasswort/*'/>
+
+        /// <summary>
+        ///     For nodes which have this classification minimum a password is required (and higher classifications).
+        /// </summary>
         public Classification? ClassificationMinimumForSharePasswort { get; internal set; }
     }
 }

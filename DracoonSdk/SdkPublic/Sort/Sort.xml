@@ -41,7 +41,7 @@
 
     <Ascending>
       <summary>
-        Sets the sort to ascending order.
+        Sets the sort to ascending order. (smallest value first)
       </summary>
       <returns>
         The usable sort order.
@@ -50,7 +50,7 @@
 
     <Descending>
       <summary>
-        Sets the sort to descending order.
+        Sets the sort to descending order. (largest value first)
       </summary>
       <returns>
         The usable sort order.

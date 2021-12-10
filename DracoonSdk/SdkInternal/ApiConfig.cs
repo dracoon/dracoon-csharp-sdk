@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal static class ApiConfig {
-        internal const string MinimumApiVersion = "4.23.0";
+        internal const string MinimumApiVersion = "4.33.0";
         internal const string ApiPrefix = "api/v4";
         internal const string AuthorizationHeader = "Authorization";
         // token template: mediaserver/image/{mediaToken}/{width}x{height}
@@ -29,12 +29,6 @@ namespace Dracoon.Sdk.SdkInternal {
         };
 
         internal static readonly Encoding ENCODING = Encoding.UTF8;
-
-        #region Crypto-Algorithm
-
-        internal const string ApiVersionMin_Algorithm_UserKeyPair_RSA4096 = "4.24.0";
-
-        #endregion
 
         #region Public-Endpoint
 
@@ -82,12 +76,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #endregion
 
-        #region Minimum version requirements
-
-        internal const string ApiGetUserKeyPairsMinimumVersion = "4.24.0";
-
-        #endregion
-
         #endregion
 
         #region Nodes-Endpoint
@@ -118,12 +106,6 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiPostMissingFileKeys = ApiPrefix + "/nodes/files/keys";
         internal const string ApiPostFavorite = ApiPrefix + "/nodes/{nodeId}/favorite";
         internal const string ApiPostRestoreNodeVersion = ApiPrefix + "/nodes/deleted_nodes/actions/restore";
-
-        #region Minimum version requirements
-
-        internal const string ApiS3DirectUploadPossible = "4.15.0";
-
-        #endregion
 
         #endregion
 
@@ -161,6 +143,8 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal const string ApiPostCreateDownloadShare = ApiPrefix + "/shares/downloads";
         internal const string ApiPostCreateUploadShare = ApiPrefix + "/shares/uploads";
+        internal const string ApiPostMailDownloadShare = ApiPrefix + "/shares/downloads/{shareId}/email";
+        internal const string ApiPostMailUploadShare = ApiPrefix + "/shares/uploads/{shareId}/email";
 
         #endregion
 
@@ -183,13 +167,6 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiGetPasswordPolicies = ApiPrefix + "/config/info/policies/passwords";
         internal const string ApiGetAlgorithms = ApiPrefix + "/config/info/policies/algorithms";
         internal const string ApiGetClassificationPolicies = ApiPrefix + "/config/info/policies/classifications";
-
-        #endregion
-
-        #region Minimum version requirements
-
-        internal const string ApiGetAlgorithmsMinimumVersion = "4.24.0";
-        internal const string ApiGetClassificationPoliciesMinimumVersion = "4.30.0";
 
         #endregion
 

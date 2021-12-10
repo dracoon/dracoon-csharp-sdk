@@ -20,9 +20,6 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         [JsonProperty("email", NullValueHandling = NullValueHandling.Ignore)]
         public string Email { get; set; }
 
-        [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
-        public string Title { get; set; }
-
         [JsonProperty("userType", NullValueHandling = NullValueHandling.Ignore)]
         public string UserType { get; set; }
     }

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace Dracoon.Sdk.SdkInternal.ApiModel {
     internal class ApiUserAccount {
@@ -11,9 +12,6 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
 
         [JsonProperty("userName", NullValueHandling = NullValueHandling.Ignore)]
         public string UserName { get; set; }
-
-        [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
-        public string Title { get; set; }
 
         [JsonProperty("firstName", NullValueHandling = NullValueHandling.Ignore)]
         public string FirstName { get; set; }
@@ -44,5 +42,23 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
 
         [JsonProperty("homeRoomId", NullValueHandling = NullValueHandling.Ignore)]
         public long? HomeRoomId { get; set; }
+
+        [JsonProperty("isLocked", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsLocked { get; set; }
+
+        [JsonProperty("language", NullValueHandling = NullValueHandling.Ignore)]
+        public string Language { get; set; }
+
+        [JsonProperty("mustSetEmail", NullValueHandling = NullValueHandling.Ignore)]
+        public bool MustSetEmail { get; set; }
+
+        [JsonProperty("needsToAcceptEULA", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? NeedsToAcceptEULA { get; set; }
+
+        [JsonProperty("phone", NullValueHandling = NullValueHandling.Ignore)]
+        public string Phone { get; set; }
+
+        [JsonProperty("userGroups", NullValueHandling = NullValueHandling.Ignore)]
+        public List<ApiUserGroup> UserGroups { get; set; }
     }
 }

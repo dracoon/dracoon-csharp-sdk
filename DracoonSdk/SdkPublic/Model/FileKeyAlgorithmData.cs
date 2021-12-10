@@ -1,18 +1,19 @@
 ﻿using Dracoon.Crypto.Sdk;
 
 namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="fileKeyAlgorithmData"]/FileKeyAlgorithmData/*'/>
+    /// <summary>
+    ///     This model stores informations about a algorithm for the file keys.
+    /// </summary>
     public class FileKeyAlgorithmData {
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="fileKeyAlgorithmData"]/Algorithm/*'/>
-        public EncryptedFileKeyAlgorithm Algorithm {
-            get; internal set;
-        }
+        /// <summary>
+        ///     The file key algorithm.
+        /// </summary>
+        public EncryptedFileKeyAlgorithm Algorithm { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="fileKeyAlgorithmData"]/State/*'/>
-        public AlgorithmState State {
-            get; internal set;
-        }
-
+        /// <summary>
+        ///     The state of the file key algorithm.
+        /// </summary>
+        public AlgorithmState State { get; internal set; }
     }
 }

@@ -62,7 +62,7 @@ namespace Dracoon.Sdk {
 
         private static void ValidateParameters(string name, string value, bool nullable = false) {
             if (string.IsNullOrWhiteSpace(value)) {
-                if(value == null) {
+                if (value == null) {
                     if (!nullable) {
                         throw new ArgumentNullException(name);
                     }

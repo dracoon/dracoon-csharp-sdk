@@ -1,26 +1,24 @@
 ﻿using Newtonsoft.Json;
 using System.ComponentModel;
 
-namespace Dracoon.Sdk.SdkInternal.ApiModel
-{
-    internal class ApiInfrastructureSettings
-    {
+namespace Dracoon.Sdk.SdkInternal.ApiModel {
+    internal class ApiInfrastructureSettings {
         [JsonProperty("smsConfigEnabled", NullValueHandling = NullValueHandling.Ignore)]
-        public bool SmsConfigEnabled {
-            get; set;
-        }
+        public bool SmsConfigEnabled { get; set; }
+
         [JsonProperty("mediaServerConfigEnabled", NullValueHandling = NullValueHandling.Ignore)]
-        public bool MediaServerConfigEnabled {
-            get; set;
-        }
+        public bool MediaServerConfigEnabled { get; set; }
+
         [JsonProperty("s3DefaultRegion", NullValueHandling = NullValueHandling.Ignore)]
-        public string S3DefaultRegion {
-            get; set;
-        }
-        [DefaultValue(false)]
-        [JsonProperty("s3EnforceDirectUpload", DefaultValueHandling = DefaultValueHandling.Populate)]
-        public bool S3EnforceDirectUpload {
-            get; set;
-        }
+        public string S3DefaultRegion { get; set; }
+
+        [JsonProperty("s3EnforceDirectUpload", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public bool S3EnforceDirectUpload { get; set; }
+
+        [JsonProperty("isDracoonCloud", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public bool IsDracoonCloud { get; set; }
+
+        [JsonProperty("tenantUuid", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string TenantUUID { get; set; }
     }
 }

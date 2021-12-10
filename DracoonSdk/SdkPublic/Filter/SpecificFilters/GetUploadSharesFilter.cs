@@ -2,32 +2,19 @@
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getUploadSharesFilter"]/GetUploadSharesFilter/*'/>
     public class GetUploadSharesFilter : DracoonFilter {
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getUploadSharesFilter"]/Name/*'/>
-        public static NameFilter Name {
-            get {
-                return new NameFilter();
-            }
-        }
+        public static NameFilter Name => new NameFilter();
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getUploadSharesFilter"]/UserId/*'/>
-        public static UserIdFilter UserId {
-            get {
-                return new UserIdFilter();
-            }
-        }
+        public static UserIdFilter UserId => new UserIdFilter();
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getUploadSharesFilter"]/CreatedBy/*'/>
-        public static CreatedByFilter CreatedBy {
-            get {
-                return new CreatedByFilter();
-            }
-        }
+        public static CreatedByFilter CreatedBy => new CreatedByFilter();
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getUploadSharesFilter"]/NodeId/*'/>
-        public static NodeIdFilter NodeId {
-            get {
-                return new NodeIdFilter("targetId");
-            }
-        }
+        public static NodeIdFilter NodeId => new NodeIdFilter("targetId");
+
+        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getUploadSharesFilter"]/AccessKey/*'/>
+        public static AccessKeyFilter AccessKey => new AccessKeyFilter();
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getUploadSharesFilter"]/AddNameFilter/*'/>
         public void AddNameFilter(DracoonFilterType<NameFilter> nameFilter) {
@@ -51,6 +38,12 @@
         public void AddNodeIdFilter(DracoonFilterType<NodeIdFilter> nodeIdFilter) {
             CheckFilter(nodeIdFilter, nameof(nodeIdFilter));
             FiltersList.Add(nodeIdFilter);
+        }
+
+        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getUploadSharesFilter"]/AddAccessKeyFilter/*'/>
+        public void AddAccessKeyFilter(DracoonFilterType<AccessKeyFilter> accessKeyFilter) {
+            CheckFilter(accessKeyFilter, nameof(accessKeyFilter));
+            FiltersList.Add(accessKeyFilter);
         }
     }
 }

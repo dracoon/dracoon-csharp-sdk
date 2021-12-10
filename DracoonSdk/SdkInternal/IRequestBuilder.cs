@@ -1,9 +1,9 @@
-﻿using System.Net;
-using Dracoon.Sdk.Filter;
+﻿using Dracoon.Sdk.Filter;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.Sort;
 using RestSharp;
+using System.Net;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal interface IRequestBuilder {
@@ -127,6 +127,10 @@ namespace Dracoon.Sdk.SdkInternal {
         IRestRequest PostCreateDownloadShare(ApiCreateDownloadShareRequest downloadShareParams);
 
         IRestRequest PostCreateUploadShare(ApiCreateUploadShareRequest uploadShareParams);
+
+        IRestRequest PostMailDownloadShare(long shareId, ApiMailShareInfoRequest mailParams);
+
+        IRestRequest PostMailUploadShare(long shareId, ApiMailShareInfoRequest mailParams);
 
         IRestRequest DeleteDownloadShare(long shareId);
 

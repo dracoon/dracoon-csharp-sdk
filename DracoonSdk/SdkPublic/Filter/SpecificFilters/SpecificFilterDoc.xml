@@ -259,6 +259,13 @@
       </para>
     </NodeId>
 
+    <AccessKey>
+      Gets a new filter for the access key.
+      <para>
+        See also <seealso cref="Dracoon.Sdk.Filter.AccessKeyFilter"/>
+      </para>
+    </AccessKey>
+
     <AddUserIdFilter>
       <summary>
         Adds a user id filter to the get download shares filter.
@@ -306,6 +313,18 @@
         <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
       </exception>
     </AddNodeIdFilter>
+
+    <AddAccessKeyFilter>
+      <summary>
+        Adds a access key filter to the get download shares filter.
+      </summary>
+      <param name="accessKeyFilter">
+        The defined access key filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddAccessKeyFilter>
 
   </members>
 
@@ -426,6 +445,13 @@
       </summary>
     </NodeId>
 
+    <AccessKey>
+      Gets a new filter for the access key.
+      <para>
+        See also <seealso cref="Dracoon.Sdk.Filter.AccessKeyFilter"/>
+      </para>
+    </AccessKey>
+    
     <AddNameFilter>
       <summary>
         Adds a name filter to the get upload shares filter.
@@ -473,6 +499,18 @@
         <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
       </exception>
     </AddNodeIdFilter>
+
+    <AddAccessKeyFilter>
+      <summary>
+        Adds a access key filter to the get upload shares filter.
+      </summary>
+      <param name="accessKeyFilter">
+        The defined access key filter.
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+    </AddAccessKeyFilter>
 
   </members>
 

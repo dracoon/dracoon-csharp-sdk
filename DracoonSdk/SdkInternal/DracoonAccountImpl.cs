@@ -10,9 +10,6 @@ using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -26,23 +23,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal DracoonAccountImpl(IInternalDracoonClient client) {
             _client = client;
-        }
-
-        internal void AssertUserKeyPairAlgorithmSupported(UserKeyPairAlgorithm algorithm) {
-            string minAlgorithmVersion = "4.0.0";
-            switch (algorithm) {
-                case UserKeyPairAlgorithm.RSA2048:
-                    return;
-                case UserKeyPairAlgorithm.RSA4096:
-                    minAlgorithmVersion = ApiConfig.ApiVersionMin_Algorithm_UserKeyPair_RSA4096;
-                    break;
-            }
-
-            try {
-                _client.Executor.CheckApiServerVersion(minAlgorithmVersion);
-            } catch (DracoonApiException) {
-                throw new DracoonApiException(new DracoonApiCode(DracoonApiCode.SERVER_CRYPTO_VERSION_NOT_SUPPORTED.Code, "Algorithm " + algorithm.GetStringValue() + " requires minimum api version of " + minAlgorithmVersion + "."));
-            }
         }
 
         public UserAccount GetUserAccount() {
@@ -61,8 +41,6 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public void SetUserKeyPair(UserKeyPairAlgorithm algorithm) {
             _client.Executor.CheckApiServerVersion();
-
-            AssertUserKeyPairAlgorithmSupported(algorithm);
 
             UserKeyPair cryptoPair = GenerateNewUserKeyPair(algorithm, _client.EncryptionPassword);
             ApiUserKeyPair apiUserKeyPair = UserMapper.ToApiUserKeyPair(cryptoPair);
@@ -88,8 +66,6 @@ namespace Dracoon.Sdk.SdkInternal {
         public void DeleteUserKeyPair(UserKeyPairAlgorithm algorithm) {
             _client.Executor.CheckApiServerVersion();
 
-            AssertUserKeyPairAlgorithmSupported(algorithm);
-
             string algorithmString = UserMapper.ToApiUserKeyPairVersion(algorithm);
             IRestRequest request = _client.Builder.DeleteUserKeyPair(algorithmString);
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.DeleteUserKeyPair);
@@ -105,8 +81,6 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         internal UserKeyPair GetAndCheckUserKeyPair(UserKeyPairAlgorithm algorithm) {
-            AssertUserKeyPairAlgorithmSupported(algorithm);
-
             try {
                 UserKeyPair userKeyPair = GetUserKeyPair(algorithm);
                 CheckKeyPair(userKeyPair);
@@ -179,20 +153,15 @@ namespace Dracoon.Sdk.SdkInternal {
 
         private List<UserKeyPair> GetUserKeyPairs() {
             List<UserKeyPair> returnValue = new List<UserKeyPair>();
-            try {
-                // Check if api supports this api endpoint. If not only provide the keypair using the "old" api.
-                _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetUserKeyPairsMinimumVersion);
+            // Check if api supports this api endpoint. If not only provide the keypair using the "old" api.
+            _client.Executor.CheckApiServerVersion();
 
-                IRestRequest request = _client.Builder.GetUserKeyPairs();
-                List<ApiUserKeyPair> result = _client.Executor.DoSyncApiCall<List<ApiUserKeyPair>>(request, RequestType.GetUserKeyPairs);
+            IRestRequest request = _client.Builder.GetUserKeyPairs();
+            List<ApiUserKeyPair> result = _client.Executor.DoSyncApiCall<List<ApiUserKeyPair>>(request, RequestType.GetUserKeyPairs);
 
-                foreach (ApiUserKeyPair apiUserKeyPair in result) {
-                    UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(apiUserKeyPair);
-                    returnValue.Add(userKeyPair);
-                }
-            } catch (DracoonApiException error) when (error.ErrorCode.Code == DracoonApiCode.API_VERSION_NOT_SUPPORTED.Code) {
-                UserKeyPair keyPair = GetUserKeyPair(UserKeyPairAlgorithm.RSA2048);
-                returnValue.Add(keyPair);
+            foreach (ApiUserKeyPair apiUserKeyPair in result) {
+                UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(apiUserKeyPair);
+                returnValue.Add(userKeyPair);
             }
             return returnValue;
         }
@@ -213,14 +182,13 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #region Avatar functions
 
-        public Image GetAvatar() {
+        public byte[] GetAvatar() {
             ApiAvatarInfo apiAvatarInfo = GetApiAvatarInfoInternally();
 
             using (WebClient avatarClient = _client.Builder.ProvideAvatarDownloadWebClient()) {
                 byte[] avatarImageBytes =
                     _client.Executor.ExecuteWebClientDownload(avatarClient, new Uri(apiAvatarInfo.AvatarUri), RequestType.GetUserAvatar);
-                MemoryStream ms = new MemoryStream(avatarImageBytes);
-                return Image.FromStream(ms);
+                return avatarImageBytes;
             }
         }
 
@@ -245,14 +213,8 @@ namespace Dracoon.Sdk.SdkInternal {
             return UserMapper.FromApiAvatarInfo(defaultAvatarInfo);
         }
 
-        public AvatarInfo UpdateAvatar(Image newAvatar) {
+        public AvatarInfo UpdateAvatar(byte[] newAvatar) {
             _client.Executor.CheckApiServerVersion();
-
-            byte[] avatarBytes = null;
-            using (MemoryStream ms = new MemoryStream()) {
-                newAvatar.Save(ms, newAvatar.RawFormat);
-                avatarBytes = ms.ToArray();
-            }
 
             #region Build multipart
 
@@ -260,10 +222,10 @@ namespace Dracoon.Sdk.SdkInternal {
             byte[] packageHeader = ApiConfig.ENCODING.GetBytes(
                 $"--{formDataBoundary}\r\nContent-Disposition: form-data; name=\"{"file"}\"; filename=\"{"avatarImage"}\"\r\n\r\n");
             byte[] packageFooter = ApiConfig.ENCODING.GetBytes(string.Format("\r\n--" + formDataBoundary + "--"));
-            byte[] multipartFormatedChunkData = new byte[packageHeader.Length + packageFooter.Length + avatarBytes.Length];
+            byte[] multipartFormatedChunkData = new byte[packageHeader.Length + packageFooter.Length + newAvatar.Length];
             Buffer.BlockCopy(packageHeader, 0, multipartFormatedChunkData, 0, packageHeader.Length);
-            Buffer.BlockCopy(avatarBytes, 0, multipartFormatedChunkData, packageHeader.Length, avatarBytes.Length);
-            Buffer.BlockCopy(packageFooter, 0, multipartFormatedChunkData, packageHeader.Length + avatarBytes.Length, packageFooter.Length);
+            Buffer.BlockCopy(newAvatar, 0, multipartFormatedChunkData, packageHeader.Length, newAvatar.Length);
+            Buffer.BlockCopy(packageFooter, 0, multipartFormatedChunkData, packageHeader.Length + newAvatar.Length, packageFooter.Length);
 
             #endregion
 

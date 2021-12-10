@@ -1,6 +1,5 @@
 ﻿
 using System;
-using System.Collections.Generic;
 
 namespace Dracoon.Sdk.Error {
     /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonApiCode"]/DracoonApiCode/*'/>
@@ -934,7 +933,7 @@ namespace Dracoon.Sdk.Error {
                 return false;
             }
 
-            return Equals((DracoonApiCode) obj);
+            return Equals((DracoonApiCode)obj);
         }
 
         /// <inheritdoc />

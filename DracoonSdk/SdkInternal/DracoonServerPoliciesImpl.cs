@@ -16,21 +16,22 @@ namespace Dracoon.Sdk.SdkInternal {
         public PasswordEncryptionPolicies GetEncryptionPasswordPolicies() {
             _client.Executor.CheckApiServerVersion();
             IRestRequest request = _client.Builder.GetPasswordPolicies();
-            ApiPasswordSettings apiPasswordPolicies =
-                _client.Executor.DoSyncApiCall<ApiPasswordSettings>(request, DracoonRequestExecutor.RequestType.GetPasswordPolicies);
+            ApiPasswordPolicies apiPasswordPolicies =
+                _client.Executor.DoSyncApiCall<ApiPasswordPolicies>(request, DracoonRequestExecutor.RequestType.GetPasswordPolicies);
             return SettingsMapper.FromApiPasswordEncryptionPolicies(apiPasswordPolicies.EncryptionPasswordSettings);
         }
 
         public PasswordSharePolicies GetSharesPasswordPolicies() {
             _client.Executor.CheckApiServerVersion();
             IRestRequest request = _client.Builder.GetPasswordPolicies();
-            ApiPasswordSettings apiPasswordPolicies =
-                _client.Executor.DoSyncApiCall<ApiPasswordSettings>(request, DracoonRequestExecutor.RequestType.GetPasswordPolicies);
+            ApiPasswordPolicies apiPasswordPolicies =
+                _client.Executor.DoSyncApiCall<ApiPasswordPolicies>(request, DracoonRequestExecutor.RequestType.GetPasswordPolicies);
             return SettingsMapper.FromApiPasswordSharePolicies(apiPasswordPolicies.SharePasswordSettings);
         }
 
         public ClassificationPolicies GetClassificationPolicies() {
-            _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetClassificationPoliciesMinimumVersion);
+            _client.Executor.CheckApiServerVersion();
+
             IRestRequest request = _client.Builder.GetClassificationPolicies();
             ApiClassificationPolicies apiClassificationPolicies = _client.Executor.DoSyncApiCall<ApiClassificationPolicies>(request, DracoonRequestExecutor.RequestType.GetClassificationPolicies);
             return SettingsMapper.FromApiClassificationPolicies(apiClassificationPolicies);

@@ -1,9 +1,17 @@
 ﻿namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="passwordExpiration"]/PasswordExpiration/*'/>
+    /// <summary>
+    ///     This model stores the settings for the password expiration.
+    /// </summary>
     public class PasswordExpiration {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="passwordExpiration"]/IsEnabled/*'/>
+
+        /// <summary>
+        ///     Is <c>true</c> if password will expire. Otherwise <c>false</c>.
+        /// </summary>
         public bool IsEnabled { get; internal set; }
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="passwordExpiration"]/ExpiresAfterDays/*'/>
+
+        /// <summary>
+        ///     Defines how old passwords can be (in Days).
+        /// </summary>
         public int ExpiresAfterDays { get; internal set; }
     }
 }

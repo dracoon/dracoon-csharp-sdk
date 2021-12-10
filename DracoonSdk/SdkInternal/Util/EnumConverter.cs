@@ -147,5 +147,16 @@ namespace Dracoon.Sdk.SdkInternal.Util {
                     return AlgorithmState.Discouraged;
             }
         }
+
+        public static SubscriptionPlan ConvertValueToSubscriptionPlanEnum(int value) {
+            switch (value) {
+                case 1:
+                    return SubscriptionPlan.Premium;
+                case 2:
+                    return SubscriptionPlan.Free;
+                default:
+                    return SubscriptionPlan.Standard;
+            }
+        }
     }
 }

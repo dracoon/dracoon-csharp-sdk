@@ -61,8 +61,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 CreatedBy = UserMapper.FromApiUserInfo(apiNode.CreatedBy),
                 UpdatedAt = apiNode.UpdatedAt,
                 UpdatedBy = UserMapper.FromApiUserInfo(apiNode.UpdatedBy),
-                CreationTimestamp = apiNode.CreationTimestamp,
-                ModificationTimestamp = apiNode.ModificationTimestamp,
+                CreationTime = apiNode.CreationTimestamp,
+                ModificationTime = apiNode.ModificationTimestamp,
                 HasInheritPermissions = apiNode.InheritPermissions,
                 Permissions = FromApiNodePermissions(apiNode.Permissions),
                 IsFavorite = apiNode.IsFavorite,
@@ -71,12 +71,15 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 CountRooms = apiNode.CountRooms,
                 CountFolders = apiNode.CountFolders,
                 CountFiles = apiNode.CountFiles,
-                CountDeletedVersions = apiNode.CountDeletedVersions,
+                CountComments = apiNode.CountComments,
+                CountPreviousVersions = apiNode.CountDeletedVersions,
                 RecycleBinRetentionPeriod = apiNode.RecycleBinRetentionPeriod,
                 CountDownloadShares = apiNode.CountDownloadShares,
                 CountUploadShares = apiNode.CountUploadShares,
                 BranchVersion = apiNode.BranchVersion,
-                ConfigParentRoomId = apiNode.ConfigParentRoomId
+                ConfigParentRoomId = apiNode.ConfigParentRoomId,
+                IsBrowsable = apiNode.IsBrowsable,
+                HasActivitiesLog = apiNode.HasActivitiesLog
             };
             return node;
         }
@@ -113,7 +116,9 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             foreach (CopyNode currentCopyNode in request.NodesToBeCopied) {
                 ApiCopyNode apiCopyNode = new ApiCopyNode {
                     NodeId = currentCopyNode.NodeId,
-                    NewName = currentCopyNode.NewName
+                    NewName = currentCopyNode.NewName,
+                    TimestampCreation = currentCopyNode.CreationTime,
+                    TimestampModification = currentCopyNode.ModificationTime
                 };
                 copyNodeList.Add(apiCopyNode);
             }
@@ -131,7 +136,9 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             foreach (MoveNode currentMoveNode in request.NodesToBeMoved) {
                 ApiMoveNode apiMoveNode = new ApiMoveNode {
                     NodeId = currentMoveNode.NodeId,
-                    NewName = currentMoveNode.NewName
+                    NewName = currentMoveNode.NewName,
+                    TimestampCreation = currentMoveNode.CreationTime,
+                    TimestampModification = currentMoveNode.ModificationTime
                 };
                 moveNodesList.Add(apiMoveNode);
             }
@@ -175,7 +182,9 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 FirstDeletedAt = apiNode.FirstDeletedAt,
                 LastDeletedAt = apiNode.LastDeletedAt,
                 LastDeletedNodeId = apiNode.LastDeletedNodeId,
-                VersionsCount = apiNode.CntVersions
+                VersionsCount = apiNode.CntVersions,
+                CreationTime = apiNode.TimestampCreation,
+                ModificationTime = apiNode.TimestampModification
             };
             return node;
         }

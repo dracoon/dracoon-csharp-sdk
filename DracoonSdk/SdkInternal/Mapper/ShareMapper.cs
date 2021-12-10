@@ -20,31 +20,15 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 NodeId = request.NodeId,
                 Name = request.Name,
                 Notes = request.Notes,
+                InternalNotes = request.InternalNotes,
                 Expiration = apiExpiration,
                 ShowCreatorName = request.ShowCreatorName,
                 ShowCreatorUserName = request.ShowCreatorUserName,
-                NotifyCreator = request.NotifyCreator,
                 MaxAllowedDownloads = request.MaxAllowedDownloads,
-                Password = request.AccessPassword
+                Password = request.Password,
+                ReceiverLanguage = request.ReceiverLanguage,
+                TextMessageRecipients = request.TextMessageRecipients
             };
-
-            if (request.EmailRecipients != null) {
-                // Check if the list is not empty is still in the previous validator done
-                apiCreateDownloadShareRequest.SendMail = true;
-                apiCreateDownloadShareRequest.MailRecipients = GenerateRecipientString(request.EmailRecipients);
-                apiCreateDownloadShareRequest.MailBody = request.EmailBody;
-                apiCreateDownloadShareRequest.MailSubject = request.EmailSubject;
-            } else {
-                apiCreateDownloadShareRequest.SendMail = false;
-            }
-
-            if (request.SmsRecipients != null) {
-                // Check if the list is not empty is still in the previous validator done
-                apiCreateDownloadShareRequest.SendSms = true;
-                apiCreateDownloadShareRequest.SmsRecipients = GenerateRecipientString(request.SmsRecipients);
-            } else {
-                apiCreateDownloadShareRequest.SendSms = false;
-            }
 
             return apiCreateDownloadShareRequest;
         }
@@ -56,18 +40,21 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 NodePath = apiDownloadShare.NodePath,
                 Name = apiDownloadShare.Name,
                 Notes = apiDownloadShare.Notes,
+                InternalNotes = apiDownloadShare.InternalNotes,
                 ExpireAt = apiDownloadShare.ExpireAt,
                 AccessKey = apiDownloadShare.AccessKey,
                 ShowCreatorName = apiDownloadShare.ShowCreatorName,
                 ShowCreatorUserName = apiDownloadShare.ShowCreatorUserName,
-                NotifyCreator = apiDownloadShare.NotifyCreator,
                 MaxAllowedDownloads = apiDownloadShare.MaxAllowedDownloads,
                 CurrentDownloadsCount = apiDownloadShare.CurrentDownloadsCount,
                 CreatedAt = apiDownloadShare.CreatedAt,
                 CreatedBy = UserMapper.FromApiUserInfo(apiDownloadShare.CreatedBy),
                 IsProtected = apiDownloadShare.IsProtected,
                 IsEncrypted = apiDownloadShare.IsEncrypted,
-                Type = EnumConverter.ConvertValueToNodeTypeEnum(apiDownloadShare.Type)
+                Type = EnumConverter.ConvertValueToNodeTypeEnum(apiDownloadShare.Type),
+                DataUrl = apiDownloadShare.DataUrl,
+                UpdatedAt = apiDownloadShare.UpdatedAt,
+                UpdatedBy = UserMapper.FromApiUserInfo(apiDownloadShare.UpdatedBy)
             };
             return downloadShare;
         }
@@ -98,33 +85,19 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             ApiCreateUploadShareRequest apiCreateUploadShareRequest = new ApiCreateUploadShareRequest {
                 NodeId = request.NodeId,
                 Name = request.Name,
-                AccessPassword = request.AccessPassword,
+                Password = request.Password,
                 Expiration = apiExpiration,
                 UploadedFilesExpirationPeriod = request.UploadedFilesExpirationPeriod,
                 Notes = request.Notes,
-                NotifyCreator = request.NotifyCreator,
+                InternalNotes = request.InternalNotes,
                 ShowUploadedFiles = request.ShowUploadedFiles,
                 MaxAllowedUploads = request.MaxAllowedUploads,
-                MaxAllowedTotalSizeOverAllUploadedFiles = request.MaxAllowedTotalSizeOverAllUploadedFiles
+                MaxAllowedTotalSizeOverAllUploadedFiles = request.MaxAllowedTotalSizeOverAllUploadedFiles,
+                ShowCreatorName = request.ShowCreatorName,
+                ShowCreatorUsername = request.ShowCreatorUsername,
+                ReceiverLanguage = request.ReceiverLanguage,
+                TextMessageRecipients = request.TextMessageRecipients
             };
-
-            if (request.EmailRecipients != null) {
-                // Check if the list is not empty is still in the previous validator done
-                apiCreateUploadShareRequest.SendMail = true;
-                apiCreateUploadShareRequest.MailRecipients = GenerateRecipientString(request.EmailRecipients);
-                apiCreateUploadShareRequest.MailBody = request.EmailBody;
-                apiCreateUploadShareRequest.MailSubject = request.EmailSubject;
-            } else {
-                apiCreateUploadShareRequest.SendMail = false;
-            }
-
-            if (request.SmsRecipients != null) {
-                // Check if the list is not empty is still in the previous validator done
-                apiCreateUploadShareRequest.SendSms = true;
-                apiCreateUploadShareRequest.SmsRecipients = GenerateRecipientString(request.SmsRecipients);
-            } else {
-                apiCreateUploadShareRequest.SendSms = false;
-            }
 
             return apiCreateUploadShareRequest;
         }
@@ -136,20 +109,25 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 Name = apiUploadShare.Name,
                 IsProtected = apiUploadShare.IsProtected,
                 AccessKey = apiUploadShare.AccessKey,
-                NotifyCreator = apiUploadShare.NotifyCreator,
                 CreatedAt = apiUploadShare.CreatedAt,
                 CreatedBy = UserMapper.FromApiUserInfo(apiUploadShare.CreatedBy),
                 ExpireAt = apiUploadShare.ExpireAt,
                 NodePath = apiUploadShare.NodePath,
                 IsEncrypted = apiUploadShare.IsEncrypted,
                 Notes = apiUploadShare.Notes,
+                InternalNotes = apiUploadShare.InternalNotes,
                 UploadedFilesExpirationPeriod = apiUploadShare.UploadedFilesExpirationPeriod,
                 CurrentDoneUploadsCount = apiUploadShare.CurrentDoneUploadsCount,
                 CurrentUploadedFilesCount = apiUploadShare.CurrentUploadedFilesCount,
                 ShowUploadedFiles = apiUploadShare.ShowUploadedFiles,
                 MaxAllowedUploads = apiUploadShare.MaxAllowedUploads,
                 MaxAllowedTotalSizeOverAllUploadedFiles = apiUploadShare.MaxAllowedTotalSizeOverAllUploadedFiles,
-                Type = EnumConverter.ConvertValueToNodeTypeEnum(apiUploadShare.Type)
+                Type = EnumConverter.ConvertValueToNodeTypeEnum(apiUploadShare.Type),
+                DataUrl = apiUploadShare.DataUrl,
+                ShowCreatorName = apiUploadShare.ShowCreatorName,
+                ShowCreatorUsername = apiUploadShare.ShowCreatorUsername,
+                UpdatedAt = apiUploadShare.UpdatedAt,
+                UpdatedBy = UserMapper.FromApiUserInfo(apiUploadShare.UpdatedBy)
             };
             return uploadShare;
         }
@@ -168,17 +146,13 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             return shareList;
         }
 
-        private static string GenerateRecipientString(IReadOnlyList<string> recipientList) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < recipientList.Count; i++) {
-                if (i == recipientList.Count - 1) {
-                    sb.Append(recipientList[i]);
-                } else {
-                    sb.Append(recipientList[i] + ",");
-                }
-            }
-
-            return sb.ToString();
+        internal static ApiMailShareInfoRequest ToApiMailShareInfoRequest(MailShareInfoRequest request) {
+            ApiMailShareInfoRequest apiRequest = new ApiMailShareInfoRequest() {
+                Body = request.Body,
+                ReceiverLanguage = request.ReceiverLanguage,
+                Recipients = request.Recipients
+            };
+            return apiRequest;
         }
     }
 }

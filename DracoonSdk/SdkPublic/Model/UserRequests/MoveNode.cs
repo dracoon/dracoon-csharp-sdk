@@ -1,16 +1,52 @@
-﻿namespace Dracoon.Sdk.Model {
-    /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="moveNode"]/MoveNode/*'/>
+﻿using System;
+
+namespace Dracoon.Sdk.Model {
+    /// <summary>
+    ///     Informations about the node which should be moved.
+    /// </summary>
     public class MoveNode {
-        /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="moveNode"]/NodeId/*'/>
+
+        /// <summary>
+        ///     The id of the node which should be moved.
+        /// </summary>
         public long NodeId { get; private set; }
 
-        /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="moveNode"]/NewName/*'/>
+        /// <summary>
+        ///     A new name for the moved node.
+        ///     <para>
+        ///         Nullable. If not set, the moved node keeps his name.
+        ///     </para>
+        /// </summary>
         public string NewName { get; set; }
 
-        /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="moveNode"]/MoveNodeConstructor/*'/>
-        public MoveNode(long nodeId, string newName = null) {
+        /// <summary>
+        ///     The external creation time of this node.
+        ///     <para>
+        ///         Nullable. If not set, the default is the current server time in UTC.
+        ///     </para>
+        /// </summary>
+        public DateTime? CreationTime { get; set; }
+
+        /// <summary>
+        ///     The content modification time of this node.
+        ///     <para>
+        ///         Nullable. If not set, the default is the current server time in UTC.
+        ///     </para>
+        /// </summary>
+        public DateTime? ModificationTime { get; set; }
+
+        /// <summary>
+        ///     Constructs a new move node information.
+        /// </summary>
+        /// <param name="nodeId"><inheritdoc cref="NodeId"/></param>
+        /// <param name="newName"><inheritdoc cref="NewName"/></param>
+        /// <param name="creationTime"><inheritdoc cref="CreationTime"/></param>
+        /// <param name="modificationTime"><inheritdoc cref="ModificationTime"/></param>
+        public MoveNode(long nodeId, string newName = null, DateTime? creationTime = null, DateTime? modificationTime = null) {
             NodeId = nodeId;
             NewName = newName;
+            CreationTime = creationTime;
+            ModificationTime = modificationTime;
         }
     }
 }

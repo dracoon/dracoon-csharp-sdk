@@ -1,11 +1,20 @@
 ﻿using System.Collections.Generic;
 
 namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="passwordCharacterPolicies"]/PasswordCharacterPolicies/*'/>
+    /// <summary>
+    ///     This model stores the policy for the character containment.
+    /// </summary>
     public class PasswordCharacterPolicies {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="passwordCharacterPolicies"]/PredefinedCharacterSets/*'/>
+
+        /// <summary>
+        ///     List of character sets which must be contained.
+        /// </summary>
         public List<PasswordCharacterSet> PredefinedCharacterSets { get; internal set; }
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="passwordCharacterPolicies"]/NumberOfMustContainCharacteristics/*'/>
+
+        /// <summary>
+        ///     Defines how much characteristics must be contained. 
+        ///     This means if value is 2 and "PredefinedCharacterSets" hast 3 lists then the password must contain characters of 2 lists of the retrieved 3.
+        /// </summary>
         public int NumberOfMustContainCharacteristics { get; internal set; }
     }
 }

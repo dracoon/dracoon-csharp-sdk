@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
     internal class ApiCreateUploadShareRequest {
@@ -9,7 +10,7 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
         public string Name { get; set; }
 
         [JsonProperty("password", NullValueHandling = NullValueHandling.Ignore)]
-        public string AccessPassword { get; set; }
+        public string Password { get; set; }
 
         [JsonProperty("expiration", NullValueHandling = NullValueHandling.Ignore)]
         public ApiExpiration Expiration { get; set; }
@@ -20,8 +21,8 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
         [JsonProperty("notes", NullValueHandling = NullValueHandling.Ignore)]
         public string Notes { get; set; }
 
-        [JsonProperty("notifyCreator", NullValueHandling = NullValueHandling.Ignore)]
-        public bool NotifyCreator { get; set; }
+        [JsonProperty("internalNotes", NullValueHandling = NullValueHandling.Ignore)]
+        public string InternalNotes { get; set; }
 
         [JsonProperty("showUploadedFiles", NullValueHandling = NullValueHandling.Ignore)]
         public bool ShowUploadedFiles { get; set; }
@@ -32,22 +33,16 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
         [JsonProperty("maxSize", NullValueHandling = NullValueHandling.Ignore)]
         public long? MaxAllowedTotalSizeOverAllUploadedFiles { get; set; }
 
-        [JsonProperty("sendMail", NullValueHandling = NullValueHandling.Ignore)]
-        public bool SendMail { get; set; }
+        [JsonProperty("receiverLanguage", NullValueHandling = NullValueHandling.Ignore)]
+        public string ReceiverLanguage { get; set; }
 
-        [JsonProperty("mailRecipients", NullValueHandling = NullValueHandling.Ignore)]
-        public string MailRecipients { get; set; }
+        [JsonProperty("textMessageRecipients", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> TextMessageRecipients { get; set; }
 
-        [JsonProperty("mailSubject", NullValueHandling = NullValueHandling.Ignore)]
-        public string MailSubject { get; set; }
+        [JsonProperty("showCreatorName", NullValueHandling = NullValueHandling.Ignore)]
+        public bool ShowCreatorName { get; set; }
 
-        [JsonProperty("mailBody", NullValueHandling = NullValueHandling.Ignore)]
-        public string MailBody { get; set; }
-
-        [JsonProperty("sendSms", NullValueHandling = NullValueHandling.Ignore)]
-        public bool SendSms { get; set; }
-
-        [JsonProperty("smsRecipients", NullValueHandling = NullValueHandling.Ignore)]
-        public string SmsRecipients { get; set; }
+        [JsonProperty("showCreatorUsername", NullValueHandling = NullValueHandling.Ignore)]
+        public bool ShowCreatorUsername { get; set; }
     }
 }

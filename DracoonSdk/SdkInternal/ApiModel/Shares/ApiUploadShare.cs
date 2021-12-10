@@ -18,9 +18,6 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         [JsonProperty("accessKey", NullValueHandling = NullValueHandling.Ignore)]
         public string AccessKey { get; set; }
 
-        [JsonProperty("notifyCreator", NullValueHandling = NullValueHandling.Ignore)]
-        public bool NotifyCreator { get; set; }
-
         [JsonProperty("createdAt", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime CreatedAt { get; set; }
 
@@ -34,22 +31,25 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         public string NodePath { get; set; }
 
         [JsonProperty("isEncrypted", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? IsEncrypted { get; set; }
+        public bool IsEncrypted { get; set; }
 
         [JsonProperty("notes", NullValueHandling = NullValueHandling.Ignore)]
         public string Notes { get; set; }
+
+        [JsonProperty("internalNotes", NullValueHandling = NullValueHandling.Ignore)]
+        public string InternalNotes { get; set; }
 
         [JsonProperty("filesExpiryPeriod", NullValueHandling = NullValueHandling.Ignore)]
         public int? UploadedFilesExpirationPeriod { get; set; }
 
         [JsonProperty("cntUploads", NullValueHandling = NullValueHandling.Ignore)]
-        public int? CurrentDoneUploadsCount { get; set; }
+        public int CurrentDoneUploadsCount { get; set; }
 
         [JsonProperty("cntFiles", NullValueHandling = NullValueHandling.Ignore)]
-        public int? CurrentUploadedFilesCount { get; set; }
+        public int CurrentUploadedFilesCount { get; set; }
 
         [JsonProperty("showUploadedFiles", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? ShowUploadedFiles { get; set; }
+        public bool ShowUploadedFiles { get; set; }
 
         [JsonProperty("maxSlots", NullValueHandling = NullValueHandling.Ignore)]
         public int? MaxAllowedUploads { get; set; }
@@ -59,5 +59,20 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
 
         [JsonProperty("targetType", NullValueHandling = NullValueHandling.Ignore)]
         public string Type { get; set; }
+
+        [JsonProperty("updatedAt", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? UpdatedAt { get; set; }
+
+        [JsonProperty("updatedBy", NullValueHandling = NullValueHandling.Ignore)]
+        public ApiUserInfo UpdatedBy { get; set; }
+
+        [JsonProperty("dataUrl", NullValueHandling = NullValueHandling.Ignore)]
+        public string DataUrl { get; set; }
+
+        [JsonProperty("showCreatorName", NullValueHandling = NullValueHandling.Ignore)]
+        public bool ShowCreatorName { get; set; }
+
+        [JsonProperty("showCreatorUsername", NullValueHandling = NullValueHandling.Ignore)]
+        public bool ShowCreatorUsername { get; set; }
     }
 }

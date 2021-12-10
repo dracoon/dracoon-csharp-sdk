@@ -1,28 +1,50 @@
 ﻿namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/UserInfo/*'/>
+    /// <summary>
+    ///     This model stores informations about the user.
+    /// </summary>
     public class UserInfo {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/Id/*'/>
-        public long? Id { get; internal set; }
+        /// <summary>
+        ///     The id of the user.
+        /// </summary>
+        public long Id { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/UserName/*'/>
+        /// <summary>
+        ///     The user name.
+        /// </summary>
         public string UserName { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/AvatarUUID/*'/>
+        /// <summary>
+        ///     The uuid of the avatar image for this user.
+        /// </summary>
         public string AvatarUUID { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/FirstName/*'/>
+        /// <summary>
+        ///     The first name of the user. 
+        ///     <para>
+        ///         Nullable if <see cref="UserType"/> is <see cref="UserType.External"/> or <see cref="UserType.Deleted"/>
+        ///     </para>
+        /// </summary>
         public string FirstName { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/LastName/*'/>
+        /// <summary>
+        ///     The last name of the user. 
+        ///     <para>
+        ///         Nullable if <see cref="UserType"/> is <see cref="UserType.External"/> or <see cref="UserType.Deleted"/>
+        ///     </para>
+        /// </summary>
         public string LastName { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/Email/*'/>
+        /// <summary>
+        ///     The email address of the user.
+        ///     <para>
+        ///         Nullable
+        ///     </para>
+        /// </summary>
         public string Email { get; internal set; }
 
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/Title/*'/>
-        public string Title { get; internal set; }
-
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userInfo"]/UserType/*'/>
+        /// <summary>
+        ///     The type of the user.
+        /// </summary>
         public UserType UserType { get; internal set; }
     }
 }

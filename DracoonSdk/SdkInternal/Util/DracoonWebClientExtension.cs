@@ -17,7 +17,7 @@ namespace Dracoon.Sdk.SdkInternal.Util {
         }
 
         protected override WebRequest GetWebRequest(Uri address) {
-            HttpWebRequest request = (HttpWebRequest) base.GetWebRequest(address);
+            HttpWebRequest request = (HttpWebRequest)base.GetWebRequest(address);
             if (request != null) {
                 if (_rangeFrom.HasValue && _rangeTo.HasValue) {
                     request.AddRange(_rangeFrom.Value, _rangeTo.Value);

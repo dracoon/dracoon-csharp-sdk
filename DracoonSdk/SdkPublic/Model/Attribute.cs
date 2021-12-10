@@ -1,9 +1,17 @@
 ﻿namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="attribute"]/Attribute/*'/>
+    /// <summary>
+    ///     This model stores a single custom defined attribute.
+    /// </summary>
     public class Attribute {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="attribute"]/Key/*'/>
+
+        /// <summary>
+        ///     The attribute key name.
+        /// </summary>
         public string Key { get; set; }
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="attribute"]/Value/*'/>
+
+        /// <summary>
+        ///     The attribute value.
+        /// </summary>
         public string Value { get; set; }
     }
 }

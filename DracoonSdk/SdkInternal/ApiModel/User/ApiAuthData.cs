@@ -9,7 +9,7 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         [JsonProperty("password", NullValueHandling = NullValueHandling.Ignore)]
         public string Password { get; set; }
         [JsonProperty("mustChangePassword", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? MustChangePassword { get; set; }
+        public bool MustChangePassword { get; set; }
         [JsonProperty("adConfigId", NullValueHandling = NullValueHandling.Ignore)]
         public int? ADConfigId { get; set; }
         [JsonProperty("oidConfigId", NullValueHandling = NullValueHandling.Ignore)]

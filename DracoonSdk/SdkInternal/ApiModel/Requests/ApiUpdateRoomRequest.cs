@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 
 namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
     internal class ApiUpdateRoomRequest {
@@ -10,5 +11,11 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
 
         [JsonProperty("notes", NullValueHandling = NullValueHandling.Ignore)]
         public string Notes { get; set; }
+
+        [JsonProperty("timestampCreation", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? TimestampCreation { get; set; }
+
+        [JsonProperty("timestampModification", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? TimestampModification { get; set; }
     }
 }

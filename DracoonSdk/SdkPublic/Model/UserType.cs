@@ -1,10 +1,23 @@
 ﻿namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="userType"]/UserType/*'/>
+    /// <summary>
+    ///     Enumeration of user types.
+    /// </summary>
     public enum UserType {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="userType"]/Internal/*'/>
-        Internal, /// <include file = "ModelDoc.xml" path='docs/members[@name="userType"]/External/*'/>
-        External, /// <include file = "ModelDoc.xml" path='docs/members[@name="userType"]/System/*'/>
-        System, /// <include file = "ModelDoc.xml" path='docs/members[@name="userType"]/Deleted/*'/>
+        /// <summary>
+        ///     The user is a internal user with his own DRACOON account.
+        /// </summary>
+        Internal,
+        /// <summary>
+        ///     The user hasn't an own DRACOON account.
+        /// </summary>
+        External,
+        /// <summary>
+        ///     The user is a non human user.
+        /// </summary>
+        System,
+        /// <summary>
+        ///     The user was a user with his own DRACOON account but is know deleted.
+        /// </summary>
         Deleted
     }
 }

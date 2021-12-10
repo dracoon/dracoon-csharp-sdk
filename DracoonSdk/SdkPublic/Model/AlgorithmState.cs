@@ -1,8 +1,15 @@
 ﻿namespace Dracoon.Sdk.Model {
-    /// <include file = "ModelDoc.xml" path='docs/members[@name="algorithmState"]/AlgorithmState/*'/>
+    /// <summary>
+    ///     Enumeration of algorithm states.
+    /// </summary>
     public enum AlgorithmState {
-        /// <include file = "ModelDoc.xml" path='docs/members[@name="algorithmState"]/Required/*'/>
-        Required, /// <include file = "ModelDoc.xml" path='docs/members[@name="algorithmState"]/Discouraged/*'/>
+        /// <summary>
+        ///     The prefered algorithms.
+        /// </summary>
+        Required,
+        /// <summary>
+        ///     Algorithms flagged with this state shouldn't be used anymore.
+        /// </summary>
         Discouraged
     }
 }

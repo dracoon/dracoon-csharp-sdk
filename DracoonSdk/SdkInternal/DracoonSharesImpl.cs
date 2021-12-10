@@ -1,5 +1,4 @@
-﻿using Dracoon.Crypto.Sdk;
-using Dracoon.Crypto.Sdk.Model;
+﻿using Dracoon.Crypto.Sdk.Model;
 using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Filter;
 using Dracoon.Sdk.Model;
@@ -37,39 +36,21 @@ namespace Dracoon.Sdk.SdkInternal {
                 throw new DracoonApiException(DracoonApiCode.VALIDATION_DL_SHARE_CANNOT_CREATE_ON_ENCRYPTED_ROOM_FOLDER);
             }
 
-            request.Name.MustNotNullOrEmptyOrWhitespace(nameof(request.Name), true);
-            request.MaxAllowedDownloads.NullableMustPositive(nameof(request.MaxAllowedDownloads));
-            if (targetNode.IsEncrypted.GetValueOrDefault(false) && string.IsNullOrWhiteSpace(request.EncryptionPassword) &&
-                !string.IsNullOrWhiteSpace(request.AccessPassword)) {
-                throw new ArgumentException("Download share of a encrypted node must have a encryption password and no access password.");
-            }
-
-            if (!targetNode.IsEncrypted.GetValueOrDefault(false) && string.IsNullOrWhiteSpace(request.AccessPassword) &&
-                !string.IsNullOrWhiteSpace(request.EncryptionPassword)) {
-                throw new ArgumentException("Download share of a not encrypted node must have a access password and no encryption password.");
-            }
-
-            if (targetNode.IsEncrypted.GetValueOrDefault(false) && string.IsNullOrWhiteSpace(request.EncryptionPassword)) {
+            if (targetNode.IsEncrypted.GetValueOrDefault(false) && string.IsNullOrWhiteSpace(request.Password)) {
                 throw new ArgumentException("Download share of a encrypted node must have a encryption password.");
             }
 
-            if (!targetNode.IsEncrypted.GetValueOrDefault(false)) {
-                request.AccessPassword?.MustNotNullOrEmptyOrWhitespace(nameof(request.AccessPassword));
-            }
-
-            if (request.EmailRecipients != null) {
-                request.EmailRecipients.EnumerableMustNotNullOrEmpty(nameof(request.EmailRecipients));
-                request.EmailRecipients.ForEach(current => current.MustNotNullOrEmptyOrWhitespace(nameof(request.EmailRecipients) + " element"));
-                request.EmailBody.MustNotNullOrEmptyOrWhitespace(nameof(request.EmailBody));
-                request.EmailSubject.MustNotNullOrEmptyOrWhitespace(nameof(request.EmailSubject));
-            }
-
-            if (request.SmsRecipients != null) {
-                request.SmsRecipients.EnumerableMustNotNullOrEmpty(nameof(request.SmsRecipients));
-                request.SmsRecipients.ForEach(current => current.MustNotNullOrEmptyOrWhitespace(nameof(request.SmsRecipients) + " element"));
-                if (string.IsNullOrEmpty(request.AccessPassword)) {
-                    throw new ArgumentException("If a SMS should be sent, a access password must be set.");
+            request.Name.MustNotNullOrEmptyOrWhitespace(nameof(request.Name), true);
+            request.MaxAllowedDownloads.NullableMustPositive(nameof(request.MaxAllowedDownloads));
+            request.ReceiverLanguage.MustNotNullOrEmptyOrWhitespace(nameof(request.ReceiverLanguage), true);
+            if (request.TextMessageRecipients != null) {
+                if (targetNode.IsEncrypted.GetValueOrDefault(false)) {
+                    throw new ArgumentException("You can not send text messages with passwords for encrypted shares. Due to the fact that the password is never sent to the server.");
                 }
+                if (string.IsNullOrEmpty(request.Password)) {
+                    throw new ArgumentException("If a text message should be sent, a password must be set.");
+                }
+                request.TextMessageRecipients.ForEach(current => current.MustNotNullOrEmptyOrWhitespace(nameof(request.TextMessageRecipients) + " element"));
             }
 
             #endregion
@@ -81,12 +62,13 @@ namespace Dracoon.Sdk.SdkInternal {
                 UserKeyPair creatorKeyPair = _client.AccountImpl.GetAndCheckUserKeyPair(CryptoHelper.DetermineUserKeyPairVersion(creatorEncryptedFileKey.Version));
                 PlainFileKey plainFileKey = _client.NodesImpl.DecryptFileKey(creatorEncryptedFileKey, creatorKeyPair.UserPrivateKey, request.NodeId);
 
-                UserKeyPair newGeneratedKeyPair = _client.AccountImpl.GenerateNewUserKeyPair(_client.AccountImpl.GetPreferredUserKeyPairAlgorithm(), request.EncryptionPassword);
+                UserKeyPair newGeneratedKeyPair = _client.AccountImpl.GenerateNewUserKeyPair(_client.AccountImpl.GetPreferredUserKeyPairAlgorithm(), request.Password);
                 EncryptedFileKey newEncryptedFileKey =
                     _client.NodesImpl.EncryptFileKey(plainFileKey, newGeneratedKeyPair.UserPublicKey, request.NodeId);
 
                 apiRequest.KeyPair = UserMapper.ToApiUserKeyPair(newGeneratedKeyPair);
                 apiRequest.FileKey = FileMapper.ToApiFileKey(newEncryptedFileKey);
+                apiRequest.Password = null; // Password must not set if it is encrypted.
             }
 
             IRestRequest restRequest = _client.Builder.PostCreateDownloadShare(apiRequest);
@@ -140,19 +122,12 @@ namespace Dracoon.Sdk.SdkInternal {
             request.MaxAllowedUploads.NullableMustPositive(nameof(request.MaxAllowedUploads));
             request.MaxAllowedTotalSizeOverAllUploadedFiles.NullableMustPositive(nameof(request.MaxAllowedTotalSizeOverAllUploadedFiles));
             request.UploadedFilesExpirationPeriod.NullableMustPositive(nameof(request.UploadedFilesExpirationPeriod));
-            if (request.EmailRecipients != null) {
-                request.EmailRecipients.EnumerableMustNotNullOrEmpty(nameof(request.EmailRecipients));
-                request.EmailRecipients.ForEach(current => current.MustNotNullOrEmptyOrWhitespace(nameof(request.EmailRecipients) + " element"));
-                request.EmailBody.MustNotNullOrEmptyOrWhitespace(nameof(request.EmailBody));
-                request.EmailSubject.MustNotNullOrEmptyOrWhitespace(nameof(request.EmailSubject));
-            }
-
-            if (request.SmsRecipients != null) {
-                request.SmsRecipients.EnumerableMustNotNullOrEmpty(nameof(request.SmsRecipients));
-                request.SmsRecipients.ForEach(current => current.MustNotNullOrEmptyOrWhitespace(nameof(request.SmsRecipients) + " element"));
-                if (string.IsNullOrEmpty(request.AccessPassword)) {
-                    throw new ArgumentException("If a SMS should be sent, a access password must be set.");
+            request.ReceiverLanguage.MustNotNullOrEmptyOrWhitespace(nameof(request.ReceiverLanguage), true);
+            if(request.TextMessageRecipients != null) {
+                if (string.IsNullOrEmpty(request.Password)) {
+                    throw new ArgumentException("If a text message should be sent, a password must be set.");
                 }
+                request.TextMessageRecipients.ForEach(current => current.MustNotNullOrEmptyOrWhitespace(nameof(request.TextMessageRecipients) + " element"));
             }
 
             #endregion
@@ -191,6 +166,44 @@ namespace Dracoon.Sdk.SdkInternal {
             ApiUploadShareList result =
                 _client.Executor.DoSyncApiCall<ApiUploadShareList>(restRequest, DracoonRequestExecutor.RequestType.GetUploadShares);
             return ShareMapper.FromApiUploadShareList(result);
+        }
+
+        public void SendMailForDownloadShare(MailShareInfoRequest request) {
+            _client.Executor.CheckApiServerVersion();
+
+            #region Parameter Validation
+
+            request.MustNotNull(nameof(request));
+            request.ShareId.MustPositive(nameof(request.ShareId));
+            request.Body.MustNotNullOrEmptyOrWhitespace(nameof(request.Body));
+            request.Recipients.EnumerableMustNotNullOrEmpty(nameof(request.Recipients));
+            request.Recipients.ForEach(current => current.MustNotNullOrEmptyOrWhitespace(nameof(request.Recipients) + " element"));
+            request.ReceiverLanguage.MustNotNullOrEmptyOrWhitespace(nameof(request.ReceiverLanguage), true);
+
+            #endregion
+
+            ApiMailShareInfoRequest apiRequest = ShareMapper.ToApiMailShareInfoRequest(request);
+            IRestRequest restRequest = _client.Builder.PostMailDownloadShare(request.ShareId, apiRequest);
+            _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, DracoonRequestExecutor.RequestType.PostMailDownloadShare);
+        }
+
+        public void SendMailForUploadShare(MailShareInfoRequest request) {
+            _client.Executor.CheckApiServerVersion();
+
+            #region Parameter Validation
+
+            request.MustNotNull(nameof(request));
+            request.ShareId.MustPositive(nameof(request.ShareId));
+            request.Body.MustNotNullOrEmptyOrWhitespace(nameof(request.Body));
+            request.Recipients.EnumerableMustNotNullOrEmpty(nameof(request.Recipients));
+            request.Recipients.ForEach(current => current.MustNotNullOrEmptyOrWhitespace(nameof(request.Recipients) + " element"));
+            request.ReceiverLanguage.MustNotNullOrEmptyOrWhitespace(nameof(request.ReceiverLanguage), true);
+
+            #endregion
+
+            ApiMailShareInfoRequest apiRequest = ShareMapper.ToApiMailShareInfoRequest(request);
+            IRestRequest restRequest = _client.Builder.PostMailUploadShare(request.ShareId, apiRequest);
+            _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, DracoonRequestExecutor.RequestType.PostMailUploadShare);
         }
 
         #endregion
