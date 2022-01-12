@@ -88,6 +88,7 @@
     <Compile Include="Test\PublicInterfaceImpl\DracoonServerSettingsImplTest.cs" />
     <Compile Include="Test\PublicInterfaceImpl\DracoonSharesImplTest.cs" />
     <Compile Include="Test\PublicInterfaceImpl\DracoonUsersImplTest.cs" />
+    <Compile Include="Test\Sort\SortTesting.cs" />
     <Compile Include="Test\Util\CryptoHelperTest.cs" />
     <Compile Include="Test\Util\EnumConverterTest.cs" />
     <Compile Include="Test\Util\FileHashTest.cs" />
@@ -174,5 +175,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
