@@ -12,7 +12,7 @@
         /// <summary>
         ///     Gets a new sort for the field 'UpdatedBy' of a <see cref="Dracoon.Sdk.Model.Node"/>.
         /// </summary>
-        public static SortField<GetNodesSort> UpdatedBy => new SortField<GetNodesSort>(new GetNodesSort(), "updatedBy");
+        public static SortField<SearchNodesSort> UpdatedBy => new SortField<SearchNodesSort>(new SearchNodesSort(), "updatedBy");
 
         /// <summary>
         ///     Gets a new sort for the field 'Size' of a <see cref="Dracoon.Sdk.Model.Node"/>.
@@ -27,7 +27,7 @@
         /// <summary>
         ///     Gets a new sort for the field 'CreatedBy' of a <see cref="Dracoon.Sdk.Model.Node"/>.
         /// </summary>
-        public static SortField<GetNodesSort> CreatedBy => new SortField<GetNodesSort>(new GetNodesSort(), "createdBy");
+        public static SortField<SearchNodesSort> CreatedBy => new SortField<SearchNodesSort>(new SearchNodesSort(), "createdBy");
 
         /// <summary>
         ///     Gets a new sort for the field 'Name' of a <see cref="Dracoon.Sdk.Model.Node"/>.
@@ -37,17 +37,17 @@
         /// <summary>
         ///     Gets a new sort for the field 'Classification' of a <see cref="Dracoon.Sdk.Model.Node"/>.
         /// </summary>
-        public static SortField<GetNodesSort> Classification => new SortField<GetNodesSort>(new GetNodesSort(), "classification");
+        public static SortField<SearchNodesSort> Classification => new SortField<SearchNodesSort>(new SearchNodesSort(), "classification");
 
         /// <summary>
         ///     Gets a new sort for the field 'Extension' of a <see cref="Dracoon.Sdk.Model.Node"/>.
         /// </summary>
-        public static SortField<GetNodesSort> FileType => new SortField<GetNodesSort>(new GetNodesSort(), "fileType");
+        public static SortField<SearchNodesSort> FileType => new SortField<SearchNodesSort>(new SearchNodesSort(), "fileType");
 
         /// <summary>
         ///     Gets a new sort for the field 'CountPreviousVersions' of a <see cref="Dracoon.Sdk.Model.Node"/>.
         /// </summary>
-        public static SortField<GetNodesSort> CountPreviousVersions => new SortField<GetNodesSort>(new GetNodesSort(), "cntDeletedVersions");
+        public static SortField<SearchNodesSort> CountPreviousVersions => new SortField<SearchNodesSort>(new SearchNodesSort(), "cntDeletedVersions");
 
         /// <summary>
         ///     Gets a new sort for the field 'ModificationTime' of a <see cref="Dracoon.Sdk.Model.Node"/>.
