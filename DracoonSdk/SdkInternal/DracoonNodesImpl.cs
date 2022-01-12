@@ -29,7 +29,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #region Node services
 
-        public NodeList GetNodes(long parentNodeId = 0, long? offset = null, long? limit = null, GetNodesFilter filter = null) {
+        public NodeList GetNodes(long parentNodeId = 0, long? offset = null, long? limit = null, GetNodesFilter filter = null, GetNodesSort sort = null) {
             _client.Executor.CheckApiServerVersion();
 
             #region Parameter Validation
@@ -40,7 +40,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest restRequest = _client.Builder.GetNodes(parentNodeId, offset, limit, filter: filter);
+            IRestRequest restRequest = _client.Builder.GetNodes(parentNodeId, offset, limit, filter: filter, sort: sort);
             ApiNodeList result = _client.Executor.DoSyncApiCall<ApiNodeList>(restRequest, RequestType.GetNodes);
             return NodeMapper.FromApiNodeList(result);
         }

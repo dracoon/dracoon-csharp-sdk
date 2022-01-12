@@ -32,7 +32,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.IsAny<long?>().NullableMustNotNegative(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.IsAny<long>().MustNotNegative(Arg.AnyString)).DoNothing().Occurs(1);
-            Mock.Arrange(() => c.Builder.GetNodes(Arg.AnyLong, Arg.IsAny<long?>(), Arg.IsAny<long?>(), Arg.IsAny<GetNodesFilter>())).Returns(FactoryRestSharp.GetNodesMock(1)).Occurs(1);
+            Mock.Arrange(() => c.Builder.GetNodes(Arg.AnyLong, Arg.IsAny<long?>(), Arg.IsAny<long?>(), Arg.IsAny<GetNodesFilter>(), Arg.IsAny<GetNodesSort>())).Returns(FactoryRestSharp.GetNodesMock(1)).Occurs(1);
             Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNodeList>(Arg.IsAny<IRestRequest>(), RequestType.GetNodes, 0)).Returns(FactoryNode.ApiNodeList).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNodeList(Arg.IsAny<ApiNodeList>())).Returns(FactoryNode.NodeList).Occurs(1);
 

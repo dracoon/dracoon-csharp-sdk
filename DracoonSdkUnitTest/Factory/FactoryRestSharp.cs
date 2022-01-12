@@ -70,9 +70,10 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             requestForSortAdding.AddQueryParameter("sort", sortString);
         }
 
-        internal static IRestRequest GetNodesMock(long parent, long? offset = null, long? limit = null, GetNodesFilter filter = null) {
+        internal static IRestRequest GetNodesMock(long parent, long? offset = null, long? limit = null, GetNodesFilter filter = null, GetNodesSort sort = null) {
             RestRequest rr = RestRequestWithAuth(ApiConfig.ApiGetChildNodes, Method.GET);
             ApplyFilter(filter, rr);
+            ApplySort(sort, rr);
             rr.AddQueryParameter("parent_id", parent.ToString());
             if (offset.HasValue) {
                 rr.AddQueryParameter("offset", offset.ToString());

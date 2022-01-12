@@ -210,10 +210,11 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #region GET
 
-        IRestRequest IRequestBuilder.GetNodes(long parentNodeId, long? offset, long? limit, GetNodesFilter filter) {
+        IRestRequest IRequestBuilder.GetNodes(long parentNodeId, long? offset, long? limit, GetNodesFilter filter, GetNodesSort sort) {
             RestRequest request = new RestRequest(ApiConfig.ApiGetChildNodes, Method.GET);
             SetGeneralRestValues(request, true);
             AddFilters(filter, request);
+            AddSort(sort, request);
             request.AddQueryParameter("parent_id", parentNodeId.ToString());
             if (offset.HasValue) {
                 request.AddQueryParameter("offset", offset.ToString());

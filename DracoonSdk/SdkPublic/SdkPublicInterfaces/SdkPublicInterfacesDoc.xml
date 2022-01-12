@@ -402,6 +402,9 @@
       <param name="filter">
         The filter for the request result. See also <seealso cref="Dracoon.Sdk.Filter.GetNodesFilter"/>
       </param>
+      <param name="sort">
+        The sort for the request result. See also <seealso cref="Dracoon.Sdk.Sort.GetNodesSort"/>
+      </param>
       <returns>
         List of nodes. See also <seealso cref="Dracoon.Sdk.Model.NodeList"/>
       </returns>
