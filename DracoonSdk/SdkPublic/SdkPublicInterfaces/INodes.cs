@@ -8,7 +8,7 @@ namespace Dracoon.Sdk {
     /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/INodes/*'/>
     public interface INodes {
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/GetNodes/*'/>
-        NodeList GetNodes(long parentNodeId = 0, long? offset = null, long? limit = null, GetNodesFilter filter = null);
+        NodeList GetNodes(long parentNodeId = 0, long? offset = null, long? limit = null, GetNodesFilter filter = null, GetNodesSort sort = null);
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/GetNodeId/*'/>
         Node GetNode(long nodeId);

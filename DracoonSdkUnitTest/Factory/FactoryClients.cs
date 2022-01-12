@@ -98,12 +98,11 @@ namespace Dracoon.Sdk.UnitTest.Factory {
 
                 #region Node request mocks
 
-                Mock.Arrange(() => r.GetNodes(Arg.AnyLong, Arg.IsAny<long?>(), Arg.IsAny<long?>(), Arg.IsAny<GetNodesFilter>())).Returns(
-                    (long parent, long? offset, long? limit, GetNodesFilter filter) => {
+                Mock.Arrange(() => r.GetNodes(Arg.AnyLong, Arg.IsAny<long?>(), Arg.IsAny<long?>(), Arg.IsAny<GetNodesFilter>(), Arg.IsAny<GetNodesSort>())).Returns(
+                    (long parent, long? offset, long? limit, GetNodesFilter f, GetNodesSort s) => {
                         RestRequest rr = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetChildNodes, Method.GET);
-                        if (filter != null && !string.IsNullOrWhiteSpace(filter.ToString())) {
-                            rr.AddQueryParameter("filter", filter.ToString());
-                        }
+                        ApplyFilter(f, rr);
+                        ApplySort(s, rr);
 
                         rr.AddQueryParameter("parent_id", parent.ToString());
                         if (offset.HasValue) {

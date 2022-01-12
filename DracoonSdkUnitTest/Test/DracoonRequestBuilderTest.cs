@@ -283,12 +283,13 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 5, offset = 3, limit = 2;
             GetNodesFilter f = new GetNodesFilter();
+            GetNodesSort s = GetNodesSort.Name.Ascending();
             f.AddNodeIsEncryptedFilter(GetNodesFilter.IsEncrypted.EqualTo(true).Build());
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetNodes(id, offset, limit, f);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.GetNodes(id, offset, limit, f, s);
 
             // ACT
-            IRestRequest actual = builder.GetNodes(id, offset, limit, f);
+            IRestRequest actual = builder.GetNodes(id, offset, limit, f, s);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());

@@ -1,13 +1,22 @@
 ﻿namespace Dracoon.Sdk.Sort {
-    /// <include file = "SpecificSort.xml" path='docs/members[@name="sharesSort"]/SharesSort/*'/>
+    /// <summary>
+    ///     This class provides filters for <see cref="Dracoon.Sdk.IShares.GetDownloadShares(long?, long?, Filter.GetDownloadSharesFilter, SharesSort)"/> or <see cref="Dracoon.Sdk.IShares.GetUploadShares(long?, long?, Filter.GetUploadSharesFilter, SharesSort)"/>.
+    /// </summary>
     public class SharesSort : DracoonSort {
-        /// <include file = "SpecificSort.xml" path='docs/members[@name="sharesSort"]/CreatedAt/*'/>
+
+        /// <summary>
+        ///     Gets a new sort for the field 'CreatedAt' of a <see cref="Dracoon.Sdk.Model.DownloadShare"/> or <see cref="Dracoon.Sdk.Model.UploadShare"/>.
+        /// </summary>
         public static SortField<SharesSort> CreatedAt => new SortField<SharesSort>(new SharesSort(), "createdAt");
 
-        /// <include file = "SpecificSort.xml" path='docs/members[@name="sharesSort"]/ExpireAt/*'/>
+        /// <summary>
+        ///     Gets a new sort for the field 'Name' of a <see cref="Dracoon.Sdk.Model.DownloadShare"/> or <see cref="Dracoon.Sdk.Model.UploadShare"/>.
+        /// </summary>
         public static SortField<SharesSort> ExpireAt => new SortField<SharesSort>(new SharesSort(), "expireAt");
 
-        /// <include file = "SpecificSort.xml" path='docs/members[@name="sharesSort"]/Name/*'/>
+        /// <summary>
+        ///     Gets a new sort for the field 'ExpireAt' of a <see cref="Dracoon.Sdk.Model.DownloadShare"/> or <see cref="Dracoon.Sdk.Model.UploadShare"/>.
+        /// </summary>
         public static SortField<SharesSort> Name => new SortField<SharesSort>(new SharesSort(), "name");
     }
 }

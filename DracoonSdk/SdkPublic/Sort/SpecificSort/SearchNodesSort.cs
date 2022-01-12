@@ -1,22 +1,72 @@
 ﻿namespace Dracoon.Sdk.Sort {
-    /// <include file = "SpecificSort.xml" path='docs/members[@name="searchNodesSort"]/SearchNodesSort/*'/>
+    /// <summary>
+    ///     This class provides sorts for <see cref="Dracoon.Sdk.INodes.SearchNodes(string, long, long, long, Filter.SearchNodesFilter, SearchNodesSort)"/>.
+    /// </summary>
     public class SearchNodesSort : DracoonSort {
-        /// <include file = "SpecificSort.xml" path='docs/members[@name="searchNodesSort"]/UpdatedAt/*'/>
+
+        /// <summary>
+        ///     Gets a new sort for the field 'UpdatedAt' of a <see cref="Dracoon.Sdk.Model.Node"/>.
+        /// </summary>
         public static SortField<SearchNodesSort> UpdatedAt => new SortField<SearchNodesSort>(new SearchNodesSort(), "updatedAt");
 
-        /// <include file = "SpecificSort.xml" path='docs/members[@name="searchNodesSort"]/Size/*'/>
+        /// <summary>
+        ///     Gets a new sort for the field 'UpdatedBy' of a <see cref="Dracoon.Sdk.Model.Node"/>.
+        /// </summary>
+        public static SortField<GetNodesSort> UpdatedBy => new SortField<GetNodesSort>(new GetNodesSort(), "updatedBy");
+
+        /// <summary>
+        ///     Gets a new sort for the field 'Size' of a <see cref="Dracoon.Sdk.Model.Node"/>.
+        /// </summary>
         public static SortField<SearchNodesSort> Size => new SortField<SearchNodesSort>(new SearchNodesSort(), "size");
 
-        /// <include file = "SpecificSort.xml" path='docs/members[@name="searchNodesSort"]/CreatedAt/*'/>
+        /// <summary>
+        ///     Gets a new sort for the field 'CreatedAt' of a <see cref="Dracoon.Sdk.Model.Node"/>.
+        /// </summary>
         public static SortField<SearchNodesSort> CreatedAt => new SortField<SearchNodesSort>(new SearchNodesSort(), "createdAt");
 
-        /// <include file = "SpecificSort.xml" path='docs/members[@name="searchNodesSort"]/Name/*'/>
+        /// <summary>
+        ///     Gets a new sort for the field 'CreatedBy' of a <see cref="Dracoon.Sdk.Model.Node"/>.
+        /// </summary>
+        public static SortField<GetNodesSort> CreatedBy => new SortField<GetNodesSort>(new GetNodesSort(), "createdBy");
+
+        /// <summary>
+        ///     Gets a new sort for the field 'Name' of a <see cref="Dracoon.Sdk.Model.Node"/>.
+        /// </summary>
         public static SortField<SearchNodesSort> Name => new SortField<SearchNodesSort>(new SearchNodesSort(), "name");
 
-        /// <include file = "SpecificSort.xml" path='docs/members[@name="searchNodesSort"]/ModificationTimestamp/*'/>
+        /// <summary>
+        ///     Gets a new sort for the field 'Classification' of a <see cref="Dracoon.Sdk.Model.Node"/>.
+        /// </summary>
+        public static SortField<GetNodesSort> Classification => new SortField<GetNodesSort>(new GetNodesSort(), "classification");
+
+        /// <summary>
+        ///     Gets a new sort for the field 'Extension' of a <see cref="Dracoon.Sdk.Model.Node"/>.
+        /// </summary>
+        public static SortField<GetNodesSort> FileType => new SortField<GetNodesSort>(new GetNodesSort(), "fileType");
+
+        /// <summary>
+        ///     Gets a new sort for the field 'CountPreviousVersions' of a <see cref="Dracoon.Sdk.Model.Node"/>.
+        /// </summary>
+        public static SortField<GetNodesSort> CountPreviousVersions => new SortField<GetNodesSort>(new GetNodesSort(), "cntDeletedVersions");
+
+        /// <summary>
+        ///     Gets a new sort for the field 'ModificationTime' of a <see cref="Dracoon.Sdk.Model.Node"/>.
+        /// </summary>
         public static SortField<SearchNodesSort> ModificationTimestamp => new SortField<SearchNodesSort>(new SearchNodesSort(), "timestampModification");
 
-        /// <include file = "SpecificSort.xml" path='docs/members[@name="searchNodesSort"]/CreationTimestamp/*'/>
+        /// <summary>
+        ///     Gets a new sort for the field 'CreationTime' of a <see cref="Dracoon.Sdk.Model.Node"/>.
+        /// </summary>
         public static SortField<SearchNodesSort> CreationTimestamp => new SortField<SearchNodesSort>(new SearchNodesSort(), "timestampCreation");
+
+        /// <summary>
+        ///     Gets a new sort for the field 'Type' (room, folder, file) of a <see cref="Dracoon.Sdk.Model.Node"/>.
+        /// </summary>
+        public static SortField<SearchNodesSort> Type => new SortField<SearchNodesSort>(new SearchNodesSort(), "type");
+
+        /// <summary>
+        ///     Gets a new sort for the field 'ParentPath' of a <see cref="Dracoon.Sdk.Model.Node"/>.
+        /// </summary>
+        public static SortField<SearchNodesSort> ParentPath => new SortField<SearchNodesSort>(new SearchNodesSort(), "parentPath");
     }
 }

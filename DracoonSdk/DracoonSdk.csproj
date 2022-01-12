@@ -16,11 +16,15 @@
     <PackageIconUrl />
     <PackageProjectUrl>https://github.com/dracoon/dracoon-csharp-sdk</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Version>3.0.0</Version>
+    <Version>3.1.0</Version>
     <OutDir></OutDir>
     <Description>The DRACOON SDK for .NET Standard.</Description>
     <Copyright>Copyright ©2021 DRACOON GmbH</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>.\Dracoon.Sdk.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

@@ -51,7 +51,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         #region Nodes
 
-        IRestRequest GetNodes(long parentNodeId, long? offset = null, long? limit = null, GetNodesFilter filter = null);
+        IRestRequest GetNodes(long parentNodeId, long? offset = null, long? limit = null, GetNodesFilter filter = null, GetNodesSort sort = null);
 
         IRestRequest GetNode(long nodeId);
 
