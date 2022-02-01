@@ -69,7 +69,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Sort {
             new object[] { SearchNodesSort.Type.Descending(), "type:desc" }
         };
 
-        [Theory, MemberData(nameof(GetNodesSorts))]
+        [Theory, MemberData(nameof(SearchNodesSorts))]
         public void TestSortMappingSearchNodes(DracoonSort sort, string filterString) {
             // ARRANGE
 
@@ -88,7 +88,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Sort {
             new object[] { SharesSort.Name.Descending(), "name:desc" }
         };
 
-        [Theory, MemberData(nameof(GetNodesSorts))]
+        [Theory, MemberData(nameof(SharesSorts))]
         public void TestSortMappingShares(DracoonSort sort, string filterString) {
             // ARRANGE
 
