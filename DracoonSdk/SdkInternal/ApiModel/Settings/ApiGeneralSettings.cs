@@ -23,7 +23,7 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         [JsonProperty("homeRoomsActive", NullValueHandling = NullValueHandling.Ignore)]
         public bool HomeRoomsActive { get; set; }
 
-        [JsonProperty("homeRoomsActive", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("homeRoomParentId", NullValueHandling = NullValueHandling.Ignore)]
         public long? HomeRoomParentId { get; set; }
 
         [JsonProperty("subscriptionPlan", NullValueHandling = NullValueHandling.Ignore)]

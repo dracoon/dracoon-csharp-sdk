@@ -167,6 +167,10 @@ namespace Dracoon.Sdk.SdkInternal {
             try {
                 int chunkSize = DefineS3ChunkSize();
                 int s3UrlBatchSize = DefineS3BatchSize(chunkSize);
+
+                List<ApiS3FileUploadPart> S3Parts = new List<ApiS3FileUploadPart>();
+                Queue<Uri> S3Urls = new Queue<Uri>();
+
                 long uploadedByteCount = 0;
                 byte[] buffer = new byte[chunkSize];
                 int bytesRead, offset = 0;
