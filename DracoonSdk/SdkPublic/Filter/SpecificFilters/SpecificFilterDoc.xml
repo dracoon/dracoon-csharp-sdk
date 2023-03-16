@@ -332,7 +332,7 @@
 
     <GetNodesFilter>
       <summary>
-        This class provides filters for <see cref="Dracoon.Sdk.INodes.GetNodes(long, long?, long?, GetNodesFilter, GetNodesSort)"/>.
+        This class provides filters for <see cref="Dracoon.Sdk.INodes.GetNodes(long, long?, long?, GetNodesFilter, Sort.GetNodesSort)"/>.
       </summary>
     </GetNodesFilter>
 
