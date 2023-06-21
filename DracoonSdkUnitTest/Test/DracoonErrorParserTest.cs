@@ -152,6 +152,8 @@ namespace Dracoon.Sdk.UnitTest.Test {
         [InlineData(RequestType.GetAuthenticatedPing, -10005, new string[] { }, new string[] { }, 1300)]
         [InlineData(RequestType.GetAuthenticatedPing, -70020, new string[] { }, new string[] { }, 5550)]
         [InlineData(RequestType.GetAuthenticatedPing, -40761, new string[] { }, new string[] { }, 5552)]
+        [InlineData(RequestType.PostMoveNodes, -40764, new string[] { }, new string[] { }, 5091)]
+        [InlineData(RequestType.PostMoveNodes, -40765, new string[] { }, new string[] { }, 5090)]
         [InlineData(RequestType.DeleteNodes, 0, new string[] { }, new string[] { }, 4104)]
         [InlineData(RequestType.PostMoveNodes, 0, new string[] { }, new string[] { }, 4103)]
         [InlineData(RequestType.PutRoom, 0, new string[] { }, new string[] { }, 4103)]

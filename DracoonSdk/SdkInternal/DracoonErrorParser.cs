@@ -177,6 +177,8 @@ namespace Dracoon.Sdk.SdkInternal {
                     return DracoonApiCode.VALIDATION_BAD_FILE_NAME;
                 case -40761:
                     return DracoonApiCode.VALIDATION_USER_HAS_NO_FILE_KEY;
+                case -41002:
+                    return DracoonApiCode.VALIDATION_NODE_NOT_A_FILE;
                 case -41052 when requestType == RequestType.PostCopyNodes:
                     return DracoonApiCode.VALIDATION_CANNOT_COPY_ROOM;
                 case -41052 when requestType == RequestType.PostMoveNodes:
@@ -284,6 +286,10 @@ namespace Dracoon.Sdk.SdkInternal {
                     return DracoonApiCode.SERVER_USER_KEY_PAIR_NOT_FOUND;
                 case -40761:
                     return DracoonApiCode.SERVER_FILE_KEY_NOT_FOUND;
+                case -40764:
+                    return DracoonApiCode.SERVER_VIRUS_SCAN_IN_PROGRESS;
+                case -40765:
+                    return DracoonApiCode.SERVER_MALICIOUS_FILE_DETECTED;
                 default: {
                         switch (requestType) {
                             case RequestType.DeleteNodes:
