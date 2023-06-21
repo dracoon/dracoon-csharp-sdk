@@ -16,6 +16,7 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             Assert.Equal(x.CreatedBy, y.CreatedBy, new UserInfoComparer());
             Assert.Equal(x.UpdatedBy, y.UpdatedBy, new UserInfoComparer());
             Assert.Equal(x.Permissions, y.Permissions, new NodePermissionsComparer());
+            Assert.Equal(x.VirusProtectionInfo, y.VirusProtectionInfo, new VirusProtectionInfoComparer());
 
             return x.Id == y.Id &&
                 x.Type == y.Type &&
@@ -78,6 +79,24 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
         }
 
         public int GetHashCode(NodePermissions obj) {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class VirusProtectionInfoComparer : IEqualityComparer<VirusProtectionInfo> {
+        public bool Equals(VirusProtectionInfo x, VirusProtectionInfo y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            return x.Verdict == y.Verdict &&
+                x.CheckedAt == y.CheckedAt &&
+                x.Sha256 == y.Sha256;
+        }
+
+        public int GetHashCode(VirusProtectionInfo obj) {
             throw new NotImplementedException();
         }
     }

@@ -32,6 +32,18 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             DeleteRecycleBin = false
         };
 
+        internal static VirusProtectionInfo VirusProtectionInfo => new VirusProtectionInfo {
+            Verdict = VirusProtectionVerdict.Clean,
+            CheckedAt = ApiVirusProtectionInfo.LastCheckedAt,
+            Sha256 = ApiVirusProtectionInfo.Sha256,
+        };
+
+        internal static ApiVirusProtectionInfo ApiVirusProtectionInfo => new ApiVirusProtectionInfo {
+            Verdict = "CLEAN",
+            LastCheckedAt = DateTime.UtcNow,
+            Sha256 = "SDKJ23DFS874234D"
+        };
+
         internal static Node Node => new Node {
             Id = 12,
             Type = NodeType.File,
@@ -69,7 +81,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             BranchVersion = 12358239758,
             ConfigParentRoomId = 8,
             IsBrowsable = true,
-            HasActivitiesLog = true
+            HasActivitiesLog = true,
+            VirusProtectionInfo = VirusProtectionInfo
         };
 
         internal static NodeList NodeList => new NodeList {
@@ -117,7 +130,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             FileType = ".txt",
             ConfigParentRoomId = 8,
             IsBrowsable = true,
-            HasActivitiesLog = true
+            HasActivitiesLog = true,
+            VirusProtectionInfo = ApiVirusProtectionInfo
         };
 
         internal static ApiNodeList ApiNodeList => new ApiNodeList {
