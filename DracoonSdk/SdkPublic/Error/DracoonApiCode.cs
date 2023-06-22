@@ -526,9 +526,9 @@ namespace Dracoon.Sdk.Error {
         #region Policies
 
         /// <summary>
-        /// Groups error.
+        /// Policies error.
         /// </summary>
-        public static readonly DracoonApiCode VALIDATION_CLASSIFICATION_POLICY_VIOLATION = new DracoonApiCode(3750, "A classification policy is violated.");
+        public static readonly DracoonApiCode VALIDATION_POLICY_VIOLATION = new DracoonApiCode(3750, "A policy is violated.");
 
         #endregion
         #region OTHERS

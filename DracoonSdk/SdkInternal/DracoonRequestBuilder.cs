@@ -382,6 +382,12 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        IRestRequest IRequestBuilder.GenerateVirusProtectionInfo(ApiGenerateVirusProtectionInfoRequest generateParams) {
+            RestRequest request = new RestRequest(ApiConfig.ApiGenerateVirusProtectionInfo, Method.POST);
+            SetGeneralRestValues(request, true, generateParams);
+            return request;
+        }
+
         #endregion
 
         #region PUT

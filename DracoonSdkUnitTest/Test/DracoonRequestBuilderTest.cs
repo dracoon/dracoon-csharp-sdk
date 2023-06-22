@@ -818,6 +818,20 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Assert.Equal(expected, actual, new RestRequestComparer());
         }
 
+
+        [Fact]
+        public void Nodes_PostGenerateVirusProtectionInfo() {
+            // ARRANGE
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.GenerateVirusProtectionInfo(FactoryFile.ApiGenerateVirusProtectionInfoRequest);
+
+            // ACT
+            IRestRequest actual = builder.GenerateVirusProtectionInfo(FactoryFile.ApiGenerateVirusProtectionInfoRequest);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
         #endregion
 
         #region Share-Endpoint

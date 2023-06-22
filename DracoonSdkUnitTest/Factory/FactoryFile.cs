@@ -170,5 +170,23 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             PartNumber = 1,
             PartEtag = "f78dfg67s7fd8s8f7"
         };
+
+        internal static ApiFileVirusProtectionInfo ApiFileVirusProtectionInfo => new ApiFileVirusProtectionInfo {
+            Verdict = "CLEAN",
+            LastCheckedAt = DateTime.UtcNow,
+            Sha256 = "SDKJ23DFS874234D",
+            NodeId = 1242
+        };
+
+        internal static FileVirusProtectionInfo FileVirusProtectionInfo => new FileVirusProtectionInfo {
+            Verdict = VirusProtectionVerdict.Clean,
+            CheckedAt = DateTime.UtcNow,
+            Sha256 = "SDKJ23DFS874234D",
+            NodeId = 1242
+        };
+
+        internal static ApiGenerateVirusProtectionInfoRequest ApiGenerateVirusProtectionInfoRequest => new ApiGenerateVirusProtectionInfoRequest {
+            FileIds = new List<long> { 1242 }
+        };
     }
 }

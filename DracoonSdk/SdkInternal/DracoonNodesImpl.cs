@@ -657,6 +657,27 @@ namespace Dracoon.Sdk.SdkInternal {
                 _client.Executor.DoSyncApiCall<ApiFileKey>(fileKeyRequest, RequestType.GetFileKey));
         }
 
+        public List<FileVirusProtectionInfo> GenerateVirusProtectionInfo(List<long> fileIds) {
+            #region Parameter Validation
+
+            fileIds.EnumerableMustNotNullOrEmpty(nameof(fileIds));
+            fileIds.ForEach(currentId => currentId.MustPositive(nameof(fileIds)));
+
+            #endregion
+
+            ApiGenerateVirusProtectionInfoRequest apiRequest = new ApiGenerateVirusProtectionInfoRequest() {
+                FileIds = fileIds
+            };
+            IRestRequest restRequest = _client.Builder.GenerateVirusProtectionInfo(apiRequest);
+            List<ApiFileVirusProtectionInfo> result = _client.Executor.DoSyncApiCall<List<ApiFileVirusProtectionInfo>>(restRequest, RequestType.GenerateVirusProtectionInfo);
+
+            List<FileVirusProtectionInfo> returnValue = new List<FileVirusProtectionInfo>(result.Count);
+            foreach (ApiFileVirusProtectionInfo current in result) {
+                returnValue.Add(FileMapper.FromApiFileVirusProtectionInfo(current));
+            }
+            return returnValue;
+        }
+
         #region IFileDownloadCallback / IFileUploadCallback implementation
 
         public void OnStarted(string actionId) {

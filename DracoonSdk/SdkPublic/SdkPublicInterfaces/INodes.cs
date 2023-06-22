@@ -2,6 +2,7 @@
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.Sort;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Dracoon.Sdk {
@@ -94,5 +95,8 @@ namespace Dracoon.Sdk {
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/BuildMediaUrl/*'/>
         Uri BuildMediaUrl(string mediaToken, int width, int height);
+
+        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/GenerateVirusProtectionInfo/*'/>
+        List<FileVirusProtectionInfo> GenerateVirusProtectionInfo(List<long> fileIds);
     }
 }

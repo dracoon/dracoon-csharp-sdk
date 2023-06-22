@@ -372,5 +372,9 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             return RestRequestWithAuth(ApiConfig.ApiGetS3Status, Method.GET).AddUrlSegment("uploadId", 1);
         }
 
+        internal static IRestRequest GenerateVirusProtectionInfoMock() {
+            return RestRequestWithAuth(ApiConfig.ApiGenerateVirusProtectionInfo, Method.POST);
+        }
+
     }
 }

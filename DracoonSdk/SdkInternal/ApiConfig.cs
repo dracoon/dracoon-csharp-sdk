@@ -106,6 +106,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiPostMissingFileKeys = ApiPrefix + "/nodes/files/keys";
         internal const string ApiPostFavorite = ApiPrefix + "/nodes/{nodeId}/favorite";
         internal const string ApiPostRestoreNodeVersion = ApiPrefix + "/nodes/deleted_nodes/actions/restore";
+        internal const string ApiGenerateVirusProtectionInfo = ApiPrefix + "/nodes/files/generate_verdict_info";
 
         #endregion
 

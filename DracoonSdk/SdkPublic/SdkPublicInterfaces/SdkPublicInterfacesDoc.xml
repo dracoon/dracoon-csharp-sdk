@@ -1153,6 +1153,24 @@
       </exception>
     </BuildMediaUrl>
 
+    <GenerateVirusProtectionInfo>
+      <summary>
+        Generates a list of verdicts for a given file id list.
+      </summary>
+      <param name="fileIds">
+        The list of the file ids.
+      </param>
+      <returns>
+        A list of verdict informations for the give file ids.
+      </returns>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </GenerateVirusProtectionInfo>
+
   </members>
 
   <members name="iServer">

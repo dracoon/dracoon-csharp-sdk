@@ -3,6 +3,7 @@ using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.Sort;
 using RestSharp;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Dracoon.Sdk.SdkInternal {
@@ -115,6 +116,8 @@ namespace Dracoon.Sdk.SdkInternal {
         WebClient ProvideChunkUploadWebClient(int chunkLength, long offset, string formDataBoundary, string totalFileSize);
 
         WebClient ProvideS3ChunkUploadWebClient();
+
+        IRestRequest GenerateVirusProtectionInfo(ApiGenerateVirusProtectionInfoRequest generateParams);
 
         #endregion
 

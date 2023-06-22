@@ -240,7 +240,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 case -80045:
                     return DracoonApiCode.VALIDATION_INVALID_ETAG;
                 case -80064:
-                    return DracoonApiCode.VALIDATION_CLASSIFICATION_POLICY_VIOLATION;
+                    return DracoonApiCode.VALIDATION_POLICY_VIOLATION;
                 case -90033:
                     return DracoonApiCode.SERVER_S3_IS_ENFORCED;
                 default:
