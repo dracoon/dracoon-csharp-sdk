@@ -463,6 +463,13 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        public IRestRequest DeleteMaliciousFile(long fileId) {
+            RestRequest request = new RestRequest(ApiConfig.ApiDeleteMaliciousFile, Method.DELETE);
+            SetGeneralRestValues(request, true);
+            request.AddUrlSegment("fileId", fileId);
+            return request;
+        }
+
         #endregion
 
         #region HTTP-Request

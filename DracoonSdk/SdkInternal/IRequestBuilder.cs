@@ -119,6 +119,8 @@ namespace Dracoon.Sdk.SdkInternal {
 
         IRestRequest GenerateVirusProtectionInfo(ApiGenerateVirusProtectionInfoRequest generateParams);
 
+        IRestRequest DeleteMaliciousFile(long fileId);
+
         #endregion
 
         #region Share

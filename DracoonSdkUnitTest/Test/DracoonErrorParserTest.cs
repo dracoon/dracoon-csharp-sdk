@@ -204,6 +204,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
         [InlineData(RequestType.GetAuthenticatedPing, -41050, new string[] { }, new string[] { }, 5104)]
         [InlineData(RequestType.GetAuthenticatedPing, -41051, new string[] { }, new string[] { }, 5105)]
         [InlineData(RequestType.GetAuthenticatedPing, -41100, new string[] { }, new string[] { }, 5111)]
+        [InlineData(RequestType.GetAuthenticatedPing, -41150, new string[] { }, new string[] { }, 5115)]
         [InlineData(RequestType.GetAuthenticatedPing, -60000, new string[] { }, new string[] { }, 5200)]
         [InlineData(RequestType.GetAuthenticatedPing, -60500, new string[] { }, new string[] { }, 5201)]
         [InlineData(RequestType.GetAuthenticatedPing, -70020, new string[] { }, new string[] { }, 5550)]

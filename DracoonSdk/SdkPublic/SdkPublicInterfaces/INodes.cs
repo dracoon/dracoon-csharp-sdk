@@ -98,5 +98,8 @@ namespace Dracoon.Sdk {
 
         /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/GenerateVirusProtectionInfo/*'/>
         List<FileVirusProtectionInfo> GenerateVirusProtectionInfo(List<long> fileIds);
+
+        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iNodes"]/DeleteMaliciousFile/*'/>
+        void DeleteMaliciousFile(long fileId);
     }
 }

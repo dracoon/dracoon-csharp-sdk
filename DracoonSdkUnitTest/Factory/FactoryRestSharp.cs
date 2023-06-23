@@ -376,5 +376,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             return RestRequestWithAuth(ApiConfig.ApiGenerateVirusProtectionInfo, Method.POST);
         }
 
+        internal static IRestRequest DeleteMaliciousFileMock(long fileId) {
+            return RestRequestWithAuth(ApiConfig.ApiDeleteMaliciousFile, Method.DELETE).AddUrlSegment("fileId", fileId);
+        }
     }
 }

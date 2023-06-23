@@ -818,7 +818,6 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Assert.Equal(expected, actual, new RestRequestComparer());
         }
 
-
         [Fact]
         public void Nodes_PostGenerateVirusProtectionInfo() {
             // ARRANGE
@@ -827,6 +826,21 @@ namespace Dracoon.Sdk.UnitTest.Test {
 
             // ACT
             IRestRequest actual = builder.GenerateVirusProtectionInfo(FactoryFile.ApiGenerateVirusProtectionInfoRequest);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void Nodes_DeleteMaliciousFile() {
+            // ARRANGE
+            long id = 893756;
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteMaliciousFile, Method.DELETE);
+            expected.AddUrlSegment("fileId", id);
+
+            // ACT
+            IRestRequest actual = builder.DeleteMaliciousFile(id);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());

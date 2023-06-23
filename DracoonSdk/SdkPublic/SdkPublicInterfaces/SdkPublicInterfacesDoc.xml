@@ -1171,6 +1171,21 @@
       </exception>
     </GenerateVirusProtectionInfo>
 
+    <DeleteMaliciousFile>
+      <summary>
+        Permanently deletes a malicious file.
+      </summary>
+      <param name="fileId">
+        The id of the file node which should be deleted
+      </param>
+      <exception cref="System.ArgumentException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentException/*'/>
+      </exception>
+      <exception cref="System.ArgumentNullException">
+        <include file="../Error/ErrorDoc.xml" path='docs/members[@name="system"]/ArgumentNullException/*'/>
+      </exception>
+    </DeleteMaliciousFile>
+    
   </members>
 
   <members name="iServer">

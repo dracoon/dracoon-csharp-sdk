@@ -126,6 +126,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiDeleteFavorite = ApiPrefix + "/nodes/{nodeId}/favorite";
         internal const string ApiDeleteRecycleBin = ApiPrefix + "/nodes/{roomId}/deleted_nodes";
         internal const string ApiDeletePreviousVersions = ApiPrefix + "/nodes/deleted_nodes";
+        internal const string ApiDeleteMaliciousFile = ApiPrefix + "/nodes/malicious_files/{fileId}";
 
         #endregion
 

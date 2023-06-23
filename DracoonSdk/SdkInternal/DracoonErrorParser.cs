@@ -353,6 +353,8 @@ namespace Dracoon.Sdk.SdkInternal {
                     return DracoonApiCode.SERVER_TARGET_NODE_NOT_FOUND;
                 case -41100:
                     return DracoonApiCode.SERVER_RESTOREVERSION_NOT_FOUND;
+                case -41150:
+                    return DracoonApiCode.SERVER_MALICIOUS_FILE_NOT_FOUND;
                 case -60000:
                     return DracoonApiCode.SERVER_DL_SHARE_NOT_FOUND;
                 case -60500:

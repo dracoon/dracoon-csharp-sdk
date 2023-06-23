@@ -678,6 +678,17 @@ namespace Dracoon.Sdk.SdkInternal {
             return returnValue;
         }
 
+        public void DeleteMaliciousFile(long fileId) {
+            #region Parameter Validation
+
+            fileId.MustPositive(nameof(fileId));
+
+            #endregion
+
+            IRestRequest restRequest = _client.Builder.DeleteMaliciousFile(fileId);
+            _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, RequestType.DeleteMaliciousFile);
+        }
+
         #region IFileDownloadCallback / IFileUploadCallback implementation
 
         public void OnStarted(string actionId) {
