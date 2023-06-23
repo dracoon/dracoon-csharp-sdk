@@ -173,14 +173,14 @@ namespace Dracoon.Sdk.UnitTest.Factory {
 
         internal static ApiFileVirusProtectionInfo ApiFileVirusProtectionInfo => new ApiFileVirusProtectionInfo {
             Verdict = "CLEAN",
-            LastCheckedAt = DateTime.UtcNow,
+            LastCheckedAt = new DateTime(2020, 1, 1, 5, 10, 15),
             Sha256 = "SDKJ23DFS874234D",
             NodeId = 1242
         };
 
         internal static FileVirusProtectionInfo FileVirusProtectionInfo => new FileVirusProtectionInfo {
             Verdict = VirusProtectionVerdict.Clean,
-            CheckedAt = DateTime.UtcNow,
+            CheckedAt = new DateTime(2020, 1, 1, 5, 10, 15),
             Sha256 = "SDKJ23DFS874234D",
             NodeId = 1242
         };

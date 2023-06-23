@@ -658,6 +658,8 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         public List<FileVirusProtectionInfo> GenerateVirusProtectionInfo(List<long> fileIds) {
+            _client.Executor.CheckApiServerVersion();
+
             #region Parameter Validation
 
             fileIds.EnumerableMustNotNullOrEmpty(nameof(fileIds));
@@ -679,6 +681,8 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         public void DeleteMaliciousFile(long fileId) {
+            _client.Executor.CheckApiServerVersion();
+
             #region Parameter Validation
 
             fileId.MustPositive(nameof(fileId));

@@ -40,7 +40,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
 
         internal static ApiVirusProtectionInfo ApiVirusProtectionInfo => new ApiVirusProtectionInfo {
             Verdict = "CLEAN",
-            LastCheckedAt = DateTime.UtcNow,
+            LastCheckedAt = new DateTime(2020, 1, 1, 0, 0, 0),
             Sha256 = "SDKJ23DFS874234D"
         };
 

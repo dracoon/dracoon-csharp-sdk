@@ -299,7 +299,8 @@ namespace Dracoon.Sdk.UnitTest.Factory {
 
 
                 Mock.Arrange(() => r.GenerateVirusProtectionInfo(Arg.IsAny<ApiGenerateVirusProtectionInfoRequest>())).Returns(
-                    FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGenerateVirusProtectionInfo, Method.POST));
+                    FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGenerateVirusProtectionInfo, Method.POST).AddParameter("application/json",
+                        JsonConvert.SerializeObject(FactoryFile.ApiGenerateVirusProtectionInfoRequest), ParameterType.RequestBody));
 
                 #endregion
 
