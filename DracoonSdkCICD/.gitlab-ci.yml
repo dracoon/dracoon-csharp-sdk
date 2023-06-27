@@ -75,9 +75,9 @@ sonar:
   stage: test
   <<: *secrets-template
   rules:
-    - if: $DISABLE_QUALITY_GATES == "false"
+    - if: $DISABLE_QUALITY_GATES == "false" && ($CI_COMMIT_REF_SLUG == "main" || $CI_COMMIT_REF_SLUG == "develop")
       when: on_success
-    - if: $DISABLE_QUALITY_GATES == "true"
+    - if: $DISABLE_QUALITY_GATES == "true" || ($CI_COMMIT_REF_SLUG != "main" && $CI_COMMIT_REF_SLUG != "develop")
       allow_failure: true
       when: on_success
   tags:
