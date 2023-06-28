@@ -40,6 +40,24 @@ namespace Dracoon.Sdk.UnitTest.Test.Util {
 
         #endregion
 
+        #region ConvertValueToVirusProtectionVerdictEnum
+
+        [Theory]
+        [InlineData("CLEAN", VirusProtectionVerdict.Clean)]
+        [InlineData("MALICIOUS", VirusProtectionVerdict.Malicious)]
+        [InlineData("IN_PROGRESS", VirusProtectionVerdict.InProgress)]
+        [InlineData("NO_SCANNING", VirusProtectionVerdict.NoScanning)]
+        public void ConvertValueToVirusProtectionVerdictEnum(string value, VirusProtectionVerdict expected) {
+            // ARRANGE
+
+            // ACT
+            VirusProtectionVerdict actual = EnumConverter.ConvertValueToVirusProtectionVerdictEnum(value);
+
+            // ASSERT
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
 
         #region ConvertValueToUserAuthMethodEnum
 

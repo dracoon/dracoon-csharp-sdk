@@ -227,5 +227,43 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
         }
 
         #endregion
+
+        #region FromApiFileVirusProtectionInfo
+
+        [Fact]
+        public void FromApiFileVirusProtectionInfo() {
+            // ARRANGE
+            FileVirusProtectionInfo expected = FactoryFile.FileVirusProtectionInfo;
+
+            ApiFileVirusProtectionInfo param = new ApiFileVirusProtectionInfo() {
+                Verdict = "CLEAN",
+                LastCheckedAt = expected.CheckedAt,
+                Sha256 = expected.Sha256,
+                NodeId = expected.NodeId
+            };
+
+            // ACT
+            FileVirusProtectionInfo actual = FileMapper.FromApiFileVirusProtectionInfo(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new FileVirusProtectionInfoComparer());
+        }
+
+        [Fact]
+        public void FromApiFileVirusProtectionInfo_null() {
+            // ARRANGE
+            FileVirusProtectionInfo expected = null;
+
+            ApiFileVirusProtectionInfo param = null;
+
+            // ACT
+            FileVirusProtectionInfo actual = FileMapper.FromApiFileVirusProtectionInfo(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
+
     }
 }

@@ -1151,5 +1151,54 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
         }
 
         #endregion
+
+        #region GenerateVirusProtectionInfo
+
+        [Fact]
+        public void GenerateVirusProtectionInfo() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonNodesImpl n = new DracoonNodesImpl(c);
+            Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.IsAny<IEnumerable<long>>().EnumerableMustNotNullOrEmpty(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<List<ApiFileVirusProtectionInfo>>(Arg.IsAny<IRestRequest>(), RequestType.GenerateVirusProtectionInfo, 0)).Returns(new List<ApiFileVirusProtectionInfo> { FactoryFile.ApiFileVirusProtectionInfo }).Occurs(1);
+            Mock.Arrange(() => FileMapper.FromApiFileVirusProtectionInfo(Arg.IsAny<ApiFileVirusProtectionInfo>())).Returns(FactoryFile.FileVirusProtectionInfo).Occurs(1);
+            Mock.Arrange(() => c.Builder.GenerateVirusProtectionInfo(Arg.IsAny<ApiGenerateVirusProtectionInfoRequest>())).Returns(FactoryRestSharp.GenerateVirusProtectionInfoMock()).Occurs(1);
+
+            // ACT
+            List<FileVirusProtectionInfo> actual = n.GenerateVirusProtectionInfo(new List<long> { 1242 });
+
+            // ASSERT
+            Assert.Equal(FactoryFile.FileVirusProtectionInfo, actual[0], new FileVirusProtectionInfoComparer());
+            Mock.Assert(() => Arg.AnyLong.MustPositive(Arg.AnyString));
+            Mock.Assert(() => Arg.IsAny<IEnumerable<long>>().EnumerableMustNotNullOrEmpty(Arg.AnyString));
+            Mock.Assert(() => FileMapper.FromApiFileVirusProtectionInfo(Arg.IsAny<ApiFileVirusProtectionInfo>()));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
+
+        #region DeleteMaliciousFile
+
+        [Fact]
+        public void DeleteMaliciousFile() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonNodesImpl n = new DracoonNodesImpl(c);
+            Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().OccursAtLeast(1);
+            Mock.Arrange(() => c.Builder.DeleteMaliciousFile(Arg.AnyLong)).Returns(FactoryRestSharp.DeleteMaliciousFileMock(123)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.DeleteMaliciousFile, 0)).DoNothing().Occurs(1);
+
+            // ACT
+            n.DeleteMaliciousFile(123);
+
+            // ASSERT
+            Mock.Assert(() => Arg.AnyLong.MustPositive(Arg.AnyString));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
     }
 }

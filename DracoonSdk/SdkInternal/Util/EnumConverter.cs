@@ -158,5 +158,18 @@ namespace Dracoon.Sdk.SdkInternal.Util {
                     return SubscriptionPlan.Standard;
             }
         }
+
+        public static readonly Func<string, VirusProtectionVerdict> ConvertValueToVirusProtectionVerdictEnum = value => {
+            switch (value) {
+                case "MALICIOUS":
+                    return VirusProtectionVerdict.Malicious;
+                case "IN_PROGRESS":
+                    return VirusProtectionVerdict.InProgress;
+                case "CLEAN":
+                    return VirusProtectionVerdict.Clean;
+                default:
+                    return VirusProtectionVerdict.NoScanning;
+            }
+        };
     }
 }

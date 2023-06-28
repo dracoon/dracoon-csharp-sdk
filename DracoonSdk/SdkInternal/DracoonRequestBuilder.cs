@@ -382,6 +382,12 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        IRestRequest IRequestBuilder.GenerateVirusProtectionInfo(ApiGenerateVirusProtectionInfoRequest generateParams) {
+            RestRequest request = new RestRequest(ApiConfig.ApiGenerateVirusProtectionInfo, Method.POST);
+            SetGeneralRestValues(request, true, generateParams);
+            return request;
+        }
+
         #endregion
 
         #region PUT
@@ -454,6 +460,13 @@ namespace Dracoon.Sdk.SdkInternal {
         IRestRequest IRequestBuilder.DeletePreviousVersion(ApiDeletePreviousVersionsRequest deleteParams) {
             RestRequest request = new RestRequest(ApiConfig.ApiDeletePreviousVersions, Method.DELETE);
             SetGeneralRestValues(request, true, deleteParams);
+            return request;
+        }
+
+        public IRestRequest DeleteMaliciousFile(long fileId) {
+            RestRequest request = new RestRequest(ApiConfig.ApiDeleteMaliciousFile, Method.DELETE);
+            SetGeneralRestValues(request, true);
+            request.AddUrlSegment("fileId", fileId);
             return request;
         }
 

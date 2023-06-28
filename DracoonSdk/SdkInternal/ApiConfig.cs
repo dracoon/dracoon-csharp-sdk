@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal static class ApiConfig {
-        internal const string MinimumApiVersion = "4.33.0";
+        internal const string MinimumApiVersion = "4.44.0";
         internal const string ApiPrefix = "api/v4";
         internal const string AuthorizationHeader = "Authorization";
         // token template: mediaserver/image/{mediaToken}/{width}x{height}
@@ -106,6 +106,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiPostMissingFileKeys = ApiPrefix + "/nodes/files/keys";
         internal const string ApiPostFavorite = ApiPrefix + "/nodes/{nodeId}/favorite";
         internal const string ApiPostRestoreNodeVersion = ApiPrefix + "/nodes/deleted_nodes/actions/restore";
+        internal const string ApiGenerateVirusProtectionInfo = ApiPrefix + "/nodes/files/generate_verdict_info";
 
         #endregion
 
@@ -125,6 +126,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiDeleteFavorite = ApiPrefix + "/nodes/{nodeId}/favorite";
         internal const string ApiDeleteRecycleBin = ApiPrefix + "/nodes/{roomId}/deleted_nodes";
         internal const string ApiDeletePreviousVersions = ApiPrefix + "/nodes/deleted_nodes";
+        internal const string ApiDeleteMaliciousFile = ApiPrefix + "/nodes/malicious_files/{fileId}";
 
         #endregion
 

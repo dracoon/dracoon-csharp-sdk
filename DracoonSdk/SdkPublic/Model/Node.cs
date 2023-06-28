@@ -194,5 +194,10 @@ namespace Dracoon.Sdk.Model {
         ///     Indicates if this room has an activities log or not.
         /// </summary>
         public bool? HasActivitiesLog { get; internal set; }
+
+        /// <summary>
+        ///     The virus scanning informations for this node.
+        /// </summary>
+        public VirusProtectionInfo VirusProtectionInfo { get; internal set; }
     }
 }

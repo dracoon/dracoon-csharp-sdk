@@ -1,4 +1,5 @@
 ﻿using Dracoon.Crypto.Sdk.Model;
+using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using System.Collections.Generic;
@@ -136,6 +137,25 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
         }
 
         public int GetHashCode(ApiCompleteFileUpload obj) {
+            throw new System.NotImplementedException();
+        }
+    }
+
+    internal class FileVirusProtectionInfoComparer : IEqualityComparer<FileVirusProtectionInfo> {
+        public bool Equals(FileVirusProtectionInfo x, FileVirusProtectionInfo y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            return x.Verdict == y.Verdict &&
+                x.CheckedAt == y.CheckedAt &&
+                x.Sha256 == y.Sha256 &&
+                x.NodeId == y.NodeId;
+        }
+
+        public int GetHashCode(FileVirusProtectionInfo obj) {
             throw new System.NotImplementedException();
         }
     }
