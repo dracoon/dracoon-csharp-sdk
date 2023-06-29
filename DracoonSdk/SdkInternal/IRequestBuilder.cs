@@ -3,7 +3,6 @@ using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.Sort;
 using RestSharp;
-using System.Collections.Generic;
 using System.Net;
 
 namespace Dracoon.Sdk.SdkInternal {
@@ -47,6 +46,18 @@ namespace Dracoon.Sdk.SdkInternal {
         WebClient ProvideAvatarDownloadWebClient();
 
         WebClient ProvideAvatarUploadWebClient(string formDataBoundary);
+
+        IRestRequest GetDownloadShareSubscriptions(long? offset, long? limit);
+
+        IRestRequest RemoveDownloadShareSubscription(long shareId);
+
+        IRestRequest AddDownloadShareSubscription(long shareId);
+
+        IRestRequest GetUploadShareSubscriptions(long? offset, long? limit);
+
+        IRestRequest RemoveUploadShareSubscription(long shareId);
+
+        IRestRequest AddUploadShareSubscription(long shareId);
 
         #endregion
 

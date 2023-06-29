@@ -2,6 +2,7 @@
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.OAuth;
+using Dracoon.Sdk.SdkInternal.User;
 using System;
 using System.Collections.Generic;
 
@@ -182,6 +183,32 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             AccessToken = "token1",
             RefreshToken = "refreshToken1",
             ExpiresIn = 123
+        };
+
+        internal static ShareSubscription ShareSubscription = new ShareSubscription {
+            ShareId = 1,
+            AuthParentRoomId = 2
+        };
+
+        internal static ApiShareSubscription ApiShareSubscription = new ApiShareSubscription {
+            ShareId = 1,
+            AuthParentId = 2
+        };
+
+        internal static ShareSubscriptionList ShareSubscriptionList = new ShareSubscriptionList {
+            Offset = 0,
+            Limit = 2,
+            Total = 2,
+            Items = new List<ShareSubscription> { ShareSubscription, ShareSubscription }
+        };
+
+        internal static ApiShareSubscriptionList ApiShareSubscriptionList = new ApiShareSubscriptionList {
+            Range = new ApiRange {
+                Offset = 0,
+                Limit = 2,
+                Total = 2,
+            },
+            Items = new List<ApiShareSubscription> { ApiShareSubscription, ApiShareSubscription }
         };
     }
 }

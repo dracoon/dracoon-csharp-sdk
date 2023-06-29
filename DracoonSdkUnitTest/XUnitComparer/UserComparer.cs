@@ -243,4 +243,40 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             throw new NotImplementedException();
         }
     }
+
+    internal class ShareSubscriptionComparer : IEqualityComparer<ShareSubscription> {
+        public bool Equals(ShareSubscription x, ShareSubscription y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            return x.ShareId == y.ShareId &&
+                x.AuthParentRoomId == y.AuthParentRoomId;
+        }
+
+        public int GetHashCode(ShareSubscription obj) {
+            throw new NotImplementedException();
+        }
+    }
+
+    internal class ShareSubscriptionListComparer : IEqualityComparer<ShareSubscriptionList> {
+        public bool Equals(ShareSubscriptionList x, ShareSubscriptionList y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            return x.Offset == y.Offset &&
+                x.Limit == y.Limit &&
+                x.Total == y.Total &&
+                CompareHelper.ListIsEqual(x.Items, y.Items);
+        }
+
+        public int GetHashCode(ShareSubscriptionList obj) {
+            throw new NotImplementedException();
+        }
+    }
 }

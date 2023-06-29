@@ -5,6 +5,7 @@ using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Mapper;
+using Dracoon.Sdk.SdkInternal.User;
 using Dracoon.Sdk.SdkInternal.Validator;
 using Newtonsoft.Json;
 using RestSharp;
@@ -303,6 +304,94 @@ namespace Dracoon.Sdk.SdkInternal {
 
             IRestRequest request = _client.Builder.DeleteUserProfileAttributes(attributeKey);
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.DeleteUserProfileAttributes);
+        }
+
+        #endregion
+
+        #region Subscriptions
+
+        public ShareSubscriptionList GetDownloadShareSubscriptions(long? offset = null, long? limit = null) {
+            _client.Executor.CheckApiServerVersion();
+
+            #region Parameter Validation
+
+            offset.NullableMustNotNegative(nameof(offset));
+            limit.NullableMustPositive(nameof(limit));
+
+            #endregion
+
+            IRestRequest restRequest = _client.Builder.GetDownloadShareSubscriptions(offset, limit);
+            ApiShareSubscriptionList result = _client.Executor.DoSyncApiCall<ApiShareSubscriptionList>(restRequest, RequestType.GetDownloadShareSubscriptions);
+            return UserMapper.FromApiShareSubscriptionList(result);
+        }
+
+        public void RemoveDownloadShareSubscription(long shareId) {
+            _client.Executor.CheckApiServerVersion();
+
+            #region Parameter Validation
+
+            shareId.MustPositive(nameof(shareId));
+
+            #endregion
+
+            IRestRequest restRequest = _client.Builder.RemoveDownloadShareSubscription(shareId);
+            _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, RequestType.DeleteDownloadShareSubscription);
+        }
+
+        public ShareSubscription AddDownloadShareSubscription(long shareId) {
+            _client.Executor.CheckApiServerVersion();
+
+            #region Parameter Validation
+
+            shareId.MustPositive(nameof(shareId));
+
+            #endregion
+
+            IRestRequest restRequest = _client.Builder.AddDownloadShareSubscription(shareId);
+            ApiShareSubscription result = _client.Executor.DoSyncApiCall<ApiShareSubscription>(restRequest, RequestType.PostDownloadShareSubscription);
+            return UserMapper.FromApiShareSubscription(result);
+        }
+
+        public ShareSubscriptionList GetUploadShareSubscriptions(long? offset = null, long? limit = null) {
+            _client.Executor.CheckApiServerVersion();
+
+            #region Parameter Validation
+
+            offset.NullableMustNotNegative(nameof(offset));
+            limit.NullableMustPositive(nameof(limit));
+
+            #endregion
+
+            IRestRequest restRequest = _client.Builder.GetUploadShareSubscriptions(offset, limit);
+            ApiShareSubscriptionList result = _client.Executor.DoSyncApiCall<ApiShareSubscriptionList>(restRequest, RequestType.GetUploadShareSubscriptions);
+            return UserMapper.FromApiShareSubscriptionList(result);
+        }
+
+        public void RemoveUploadShareSubscription(long shareId) {
+            _client.Executor.CheckApiServerVersion();
+
+            #region Parameter Validation
+
+            shareId.MustPositive(nameof(shareId));
+
+            #endregion
+
+            IRestRequest restRequest = _client.Builder.RemoveUploadShareSubscription(shareId);
+            _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, RequestType.DeleteUploadShareSubscription);
+        }
+
+        public ShareSubscription AddUploadShareSubscription(long shareId) {
+            _client.Executor.CheckApiServerVersion();
+
+            #region Parameter Validation
+
+            shareId.MustPositive(nameof(shareId));
+
+            #endregion
+
+            IRestRequest restRequest = _client.Builder.AddUploadShareSubscription(shareId);
+            ApiShareSubscription result = _client.Executor.DoSyncApiCall<ApiShareSubscription>(restRequest, RequestType.PostUploadShareSubscription);
+            return UserMapper.FromApiShareSubscription(result);
         }
 
         #endregion

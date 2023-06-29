@@ -379,5 +379,43 @@ namespace Dracoon.Sdk.UnitTest.Factory {
         internal static IRestRequest DeleteMaliciousFileMock(long fileId) {
             return RestRequestWithAuth(ApiConfig.ApiDeleteMaliciousFile, Method.DELETE).AddUrlSegment("fileId", fileId);
         }
+
+        internal static IRestRequest GetDownloadShareSubscriptionsMock(long? offset = null, long? limit = null) {
+            RestRequest rr = RestRequestWithAuth(ApiConfig.ApiGetDownloadShareSubscriptions, Method.GET);
+            if (offset.HasValue) {
+                rr.AddQueryParameter("offset", offset.ToString());
+            }
+            if (limit.HasValue) {
+                rr.AddQueryParameter("limit", limit.ToString());
+            }
+            return rr;
+        }
+
+        internal static IRestRequest GetUploadShareSubscriptionsMock(long? offset = null, long? limit = null) {
+            RestRequest rr = RestRequestWithAuth(ApiConfig.ApiGetUploadShareSubscriptions, Method.GET);
+            if (offset.HasValue) {
+                rr.AddQueryParameter("offset", offset.ToString());
+            }
+            if (limit.HasValue) {
+                rr.AddQueryParameter("limit", limit.ToString());
+            }
+            return rr;
+        }
+
+        internal static IRestRequest PostDownloadShareSubscriptionMock(long shareId) {
+            return RestRequestWithAuth(ApiConfig.ApiPostDownloadShareSubscription, Method.POST).AddUrlSegment("shareId", shareId);
+        }
+
+        internal static IRestRequest PostUploadShareSubscriptionMock(long shareId) {
+            return RestRequestWithAuth(ApiConfig.ApiPostUploadShareSubscription, Method.POST).AddUrlSegment("shareId", shareId);
+        }
+
+        internal static IRestRequest DeleteDownloadShareSubscriptionMock(long shareId) {
+            return RestRequestWithAuth(ApiConfig.ApiDeleteDownloadShareSubscription, Method.DELETE).AddUrlSegment("shareId", shareId);
+        }
+
+        internal static IRestRequest DeleteUploadShareSubscriptionMock(long shareId) {
+            return RestRequestWithAuth(ApiConfig.ApiDeleteUploadShareSubscription, Method.DELETE).AddUrlSegment("shareId", shareId);
+        }
     }
 }

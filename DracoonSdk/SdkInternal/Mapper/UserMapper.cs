@@ -3,6 +3,7 @@ using Dracoon.Crypto.Sdk.Model;
 using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
+using Dracoon.Sdk.SdkInternal.User;
 using Dracoon.Sdk.SdkInternal.Util;
 using System;
 using System.Collections.Generic;
@@ -189,5 +190,25 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             }
         }
 
+        internal static ShareSubscription FromApiShareSubscription(ApiShareSubscription apiSubscription) {
+            ShareSubscription subscription = new ShareSubscription {
+                ShareId = apiSubscription.ShareId,
+                AuthParentRoomId =  apiSubscription.AuthParentId
+            };
+            return subscription;
+        }
+
+        internal static ShareSubscriptionList FromApiShareSubscriptionList(ApiShareSubscriptionList apiSubscriptionList) {
+            ShareSubscriptionList subscriptionList = new ShareSubscriptionList {
+                Offset = apiSubscriptionList.Range.Offset,
+                Limit = apiSubscriptionList.Range.Limit,
+                Total = apiSubscriptionList.Range.Total,
+                Items = new List<ShareSubscription>()
+            };
+            foreach(ApiShareSubscription apiSubscription in apiSubscriptionList.Items) {
+                subscriptionList.Items.Add(FromApiShareSubscription(apiSubscription));
+            }
+            return subscriptionList;
+        }
     }
 }

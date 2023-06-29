@@ -395,5 +395,29 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             return true;
         }
 
+        internal static bool ListIsEqual(List<ShareSubscription> x, List<ShareSubscription> y) {
+            if (x == null && y == null) {
+                return true;
+            }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
+            }
+            if (x.Count != y.Count) {
+                return false;
+            }
+            ShareSubscriptionComparer comparer = new ShareSubscriptionComparer();
+            for (int i = 0; i < x.Count; i++) {
+                if (!comparer.Equals(x[i], y[i])) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
     }
 }
