@@ -115,7 +115,7 @@ namespace Dracoon.Sdk.Model {
         /// <param name="classification"><inheritdoc cref="Classification"/></param>
         /// <param name="creationTime"><inheritdoc cref="CreationTime"/></param>
         /// <param name="modificationTime"><inheritdoc cref="ModificationTime"/></param>
-        public CreateRoomRequest(string name, long parentId = 0, GroupMemberAcceptance newGroupMemberAcceptance = GroupMemberAcceptance.AutoAllow, bool hasActivitiesLog = true,
+        public CreateRoomRequest(string name, long? parentId = null, GroupMemberAcceptance newGroupMemberAcceptance = GroupMemberAcceptance.AutoAllow, bool hasActivitiesLog = true,
             long? quota = null, string notes = null, int? recycleBinRetentionPeriod = null, bool? hasInheritPermissions = null,
             List<long> adminUserIds = null, List<long> adminGroupIds = null, Classification? classification = null, DateTime? creationTime = null, DateTime? modificationTime = null) {
             Name = name;
