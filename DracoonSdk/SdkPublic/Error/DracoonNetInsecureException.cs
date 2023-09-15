@@ -2,16 +2,27 @@
 using System.Runtime.Serialization;
 
 namespace Dracoon.Sdk.Error {
-    /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonNetInsecureException"]/DracoonNetInsecureException/*'/>
+    /// <summary>
+    ///     Signals a insecure network connection.
+    /// </summary>
     [Serializable]
     public class DracoonNetInsecureException : DracoonNetIOException {
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonNetInsecureException"]/DracoonNetInsecureExceptionConstructorOne/*'/>
+        /// <summary>
+        ///     Constructs a new insecure network exception without any additional informations.
+        /// </summary>
         public DracoonNetInsecureException() { }
 
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonNetInsecureException"]/DracoonNetInsecureExceptionConstructorTwo/*'/>
+        /// <summary>
+        ///     Constructs a new insecure network exception with the specified error message.
+        /// </summary>
+        /// <param name="message">The error message</param>
         public DracoonNetInsecureException(string message) : base(message) { }
 
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonNetInsecureException"]/DracoonNetInsecureExceptionConstructorThree/*'/>
+        /// <summary>
+        ///     Constructs a new insecure network exception with the specified error message and the causing exception.
+        /// </summary>
+        /// <param name="message">The error message</param>
+        /// <param name="cause">The error causing exception</param>
         public DracoonNetInsecureException(string message, Exception cause) : base(message, cause) { }
 
         /// <inheritdoc />

@@ -29,10 +29,10 @@ namespace Dracoon.Sdk.Model {
         /// <summary>
         ///     Constructs a new copy nodes request.
         /// </summary>
-        /// <param name="targetNodeId"><inheritdoc cref="TargetNodeId"/></param>
-        /// <param name="nodesToBeCopied"><inheritdoc cref="NodesToBeCopied"/></param>
-        /// <param name="resolutionStrategy"><inheritdoc cref="ResolutionStrategy"/></param>
-        /// <param name="keepShareLinks"><inheritdoc cref="KeepShareLinks"/></param>
+        /// <param name="targetNodeId"><see cref="TargetNodeId"/></param>
+        /// <param name="nodesToBeCopied"><see cref="NodesToBeCopied"/></param>
+        /// <param name="resolutionStrategy"><see cref="ResolutionStrategy"/></param>
+        /// <param name="keepShareLinks"><see cref="KeepShareLinks"/></param>
         public CopyNodesRequest(long targetNodeId, List<CopyNode> nodesToBeCopied,
             ResolutionStrategy resolutionStrategy = ResolutionStrategy.AutoRename, bool keepShareLinks = false) {
             TargetNodeId = targetNodeId;

@@ -1,7 +1,10 @@
 ﻿using System;
 
 namespace Dracoon.Sdk.Filter {
-    /// <include file="FilterDoc.xml" path='docs/members[@name="dracoonFilterType"]/DracoonFilterType/*'/>
+    /// <summary>
+    ///     Class which holds/builds a single specific filter.
+    /// </summary>
+    /// <typeparam name="T">The specific filter class definition like <see cref="Dracoon.Sdk.Filter.NodeTypeFilter"/>.</typeparam>
     public class DracoonFilterType<T> {
         internal string FilterName = "";
         internal string FilterTypeString = "";
@@ -22,7 +25,10 @@ namespace Dracoon.Sdk.Filter {
             }
         }
 
-        /// <include file="FilterDoc.xml" path='docs/members[@name="dracoonFilterType"]/ToString/*'/>
+        /// <summary>
+        ///     Builds the string which contains a single filter like "type:eq:room".
+        /// </summary>
+        /// <returns>The single filter string.</returns>
         public override string ToString() {
             return FilterTypeString;
         }

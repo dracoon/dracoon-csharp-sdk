@@ -1,29 +1,93 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Reflection;
 
 namespace Dracoon.Sdk {
-    /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/DracoonHttpConfig/*'/>
+    /// <summary>
+    ///     <para>
+    ///         DracoonHttpConfig is used to configure HTTP communication options.
+    ///     </para>
+    ///     <list type="bullet">
+    ///         <listheader>
+    ///             <description>Following options can be configured:</description>
+    ///         </listheader>
+    ///         <item>
+    ///             <description><see cref="RetryEnabled"/></description>
+    ///         </item>
+    ///         <item>
+    ///             <description><see cref="ReadWriteTimeout"/></description>
+    ///         </item>
+    ///         <item>
+    ///             <description><see cref="ConnectionTimeout"/></description>
+    ///         </item>
+    ///         <item>
+    ///             <description><see cref="WebProxy"/></description>
+    ///         </item>
+    ///         <item>
+    ///             <description><see cref="UserAgent"/></description>
+    ///         </item>
+    ///         <item>
+    ///             <description><see cref="ChunkSize"/></description>
+    ///         </item>
+    ///    </list>
+    /// </summary>
     public class DracoonHttpConfig {
-        /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/RetryEnabled/*'/>
+        /// <summary>
+        ///     Enables/Disables auto retry on failed request (up to 3 tries).
+        ///     <para>
+        ///         (Default: <c>false</c>)
+        ///     </para>
+        /// </summary>
         public bool RetryEnabled { get; set; }
 
-        /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/ReadWriteTimeout/*'/>
+        /// <summary>
+        ///     The HTTP read-write timeout in milliseconds.
+        ///     <para>
+        ///         (Default: <c>15000</c>)
+        ///     </para>
+        /// </summary>
         public int ReadWriteTimeout { get; set; }
 
-        /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/ConnectionTimeout/*'/>
+        /// <summary>
+        ///     The HTTP connection timeout in milliseconds.
+        ///     <para>
+        ///         (Default: <c>15000</c>)
+        ///     </para>
+        /// </summary>
         public int ConnectionTimeout { get; set; }
 
-        /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/WebProxy/*'/>
+        /// <summary>
+        ///     The HTTP proxy settings.
+        /// </summary>
         public IWebProxy WebProxy { get; set; }
 
-        /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/UserAgent/*'/>
+        /// <summary>
+        ///     The User-Agent string.
+        ///     <para>
+        ///         (Default: <c>CSharp-SDK|[Version]|[EnvironmentOS]|-|-</c>)
+        ///     </para>
+        /// </summary>
         public string UserAgent { get; set; }
 
-        /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/ChunkSize/*'/>
+        /// <summary>
+        ///     The chunk size for upload/download in KiB.
+        ///     <para>
+        ///         (Default: 2048 KiB)
+        ///     </para>
+        /// </summary>
         public int ChunkSize { get; set; }
 
-        /// <include file = "SdkPublicDoc.xml" path='docs/members[@name="dracoonHttpConfig"]/DracoonHttpConfigConstructor/*'/>
+        /// <summary>
+        ///     Constructs a HTTP configuration.
+        /// </summary>
+        /// <param name="retryEnabled"><see cref="RetryEnabled"/></param>
+        /// <param name="readWriteTimeout"><see cref="ReadWriteTimeout"/></param>
+        /// <param name="connectionTimeout"><see cref="ConnectionTimeout"/></param>
+        /// <param name="webProxy"><see cref="WebProxy"/></param>
+        /// <param name="ownUserAgent"><see cref="UserAgent"/></param>
+        /// <param name="chunkSize"><see cref="ChunkSize"/></param>
         public DracoonHttpConfig(bool retryEnabled = false, int readWriteTimeout = 15000, int connectionTimeout = 15000, IWebProxy webProxy = null,
             string ownUserAgent = null, int chunkSize = 2048) {
             RetryEnabled = retryEnabled;

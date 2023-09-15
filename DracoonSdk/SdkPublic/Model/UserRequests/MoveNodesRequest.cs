@@ -29,10 +29,10 @@ namespace Dracoon.Sdk.Model {
         /// <summary>
         ///     Constructs a new move nodes request.
         /// </summary>
-        /// <param name="targetNodeId"><inheritdoc cref="TargetNodeId"/></param>
-        /// <param name="nodesToBeMoved"><inheritdoc cref="NodesToBeMoved"/></param>
-        /// <param name="resolutionStrategy"><inheritdoc cref="ResolutionStrategy"/></param>
-        /// <param name="keepShareLinks"><inheritdoc cref="KeepShareLinks"/></param>
+        /// <param name="targetNodeId"><see cref="TargetNodeId"/></param>
+        /// <param name="nodesToBeMoved"><see cref="NodesToBeMoved"/></param>
+        /// <param name="resolutionStrategy"><see cref="ResolutionStrategy"/></param>
+        /// <param name="keepShareLinks"><see cref="KeepShareLinks"/></param>
         public MoveNodesRequest(long targetNodeId, List<MoveNode> nodesToBeMoved,
             ResolutionStrategy resolutionStrategy = ResolutionStrategy.AutoRename, bool keepShareLinks = false) {
             TargetNodeId = targetNodeId;

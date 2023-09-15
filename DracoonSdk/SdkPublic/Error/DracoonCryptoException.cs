@@ -2,23 +2,37 @@
 using System.Runtime.Serialization;
 
 namespace Dracoon.Sdk.Error {
-    /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/DracoonCryptoException/*'/>
+    /// <summary>
+    ///     Signals a DRACOON crypto error.
+    ///     <para>The exception stores an error code which can be used to determine the error cause.</para>
+    /// </summary>
     [Serializable]
     public class DracoonCryptoException : DracoonException {
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/ErrorCode/*'/>
+        /// <summary>
+        ///     Describes what caused the error. See also <seealso cref="Dracoon.Sdk.Error.DracoonCryptoCode"/>
+        /// </summary>
         public DracoonCryptoCode ErrorCode { get; }
 
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/DracoonCryptoExceptionConstructorOne/*'/>
+        /// <summary>
+        ///     Constructs a new exception with an unkown error code.
+        /// </summary>
         public DracoonCryptoException() {
             ErrorCode = DracoonCryptoCode.UNKNOWN_ERROR;
         }
 
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/DracoonCryptoExceptionConstructorTwo/*'/>
+        /// <summary>
+        ///     Constructs a new exception with a specified error code.
+        /// </summary>
+        /// <param name="errorCode"><see cref="ErrorCode"/></param>
         public DracoonCryptoException(DracoonCryptoCode errorCode) : base(errorCode.Text) {
             ErrorCode = errorCode;
         }
 
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonCryptoException"]/DracoonCryptoExceptionConstructorThree/*'/>
+        /// <summary>
+        ///     Constructs a new exception with a specified error code and cause.
+        /// </summary>
+        /// <param name="errorCode"><see cref="ErrorCode"/></param>
+        /// <param name="cause">The error causing exception</param>
         public DracoonCryptoException(DracoonCryptoCode errorCode, Exception cause) : base(errorCode.Text, cause) {
             ErrorCode = errorCode;
         }

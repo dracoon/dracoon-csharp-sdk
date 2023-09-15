@@ -1,46 +1,93 @@
 ﻿namespace Dracoon.Sdk.Filter {
-    /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getDownloadSharesFilter"]/GetDownloadSharesFilter/*'/>
+    /// <summary>
+    ///     This class provides filters for <see cref="Dracoon.Sdk.IShares.GetDownloadShares(long?, long?, GetDownloadSharesFilter, Sort.SharesSort)"/>.
+    /// </summary>
     public class GetDownloadSharesFilter : DracoonFilter {
-        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getDownloadSharesFilter"]/UserId/*'/>
+        /// <summary>
+        ///     Gets a new filter for the CreatedBy field of a download share (<see cref="Dracoon.Sdk.Model.DownloadShare"/>).
+        ///     <para>
+        ///         See also <seealso cref="Dracoon.Sdk.Filter.UserIdFilter"/>
+        ///     </para>
+        /// </summary>
         public static UserIdFilter UserId => new UserIdFilter();
 
-        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getDownloadSharesFilter"]/Name/*'/>
+        /// <summary>
+        ///     Gets a new filter for the Name field of a node (<see cref="Dracoon.Sdk.Model.DownloadShare"/>).
+        ///     <para>
+        ///         See also <seealso cref="Dracoon.Sdk.Filter.NameFilter"/>
+        ///     </para>
+        /// </summary>
         public static NameFilter Name => new NameFilter();
 
-        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getDownloadSharesFilter"]/CreatedBy/*'/>
+        /// <summary>
+        ///     Gets a new filter for created by.
+        ///     <para>
+        ///         See also <seealso cref="Dracoon.Sdk.Filter.CreatedByFilter"/>
+        ///     </para>
+        /// </summary>
         public static CreatedByFilter CreatedBy => new CreatedByFilter();
 
-        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getDownloadSharesFilter"]/NodeId/*'/>
+        /// <summary>
+        ///     Gets a new filter for the referenced node id.
+        ///     <para>
+        ///         See also <seealso cref="Dracoon.Sdk.Filter.NodeIdFilter"/>
+        ///     </para>
+        /// </summary>
         public static NodeIdFilter NodeId => new NodeIdFilter("nodeId");
 
-        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getDownloadSharesFilter"]/AccessKey/*'/>
+        /// <summary>
+        ///     Gets a new filter for the access key.
+        ///     <para>
+        ///         See also <seealso cref="Dracoon.Sdk.Filter.AccessKeyFilter"/>
+        ///     </para>
+        /// </summary>
         public static AccessKeyFilter AccessKey => new AccessKeyFilter();
 
-        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getDownloadSharesFilter"]/AddUserIdFilter/*'/>
+        /// <summary>
+        ///     Adds a user id filter to the get download shares filter.
+        /// </summary>
+        /// <param name="userIdFilter">The defined user id filter.</param>
+        /// <exception cref="System.ArgumentException"></exception>
         public void AddUserIdFilter(DracoonFilterType<UserIdFilter> userIdFilter) {
             CheckFilter(userIdFilter, nameof(userIdFilter));
             FiltersList.Add(userIdFilter);
         }
 
-        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getDownloadSharesFilter"]/AddNameFilter/*'/>
+        /// <summary>
+        ///     Adds a name filter to the get download shares filter.
+        /// </summary>
+        /// <param name="nameFilter">The defined name filter.</param>
+        /// <exception cref="System.ArgumentException"></exception>
         public void AddNameFilter(DracoonFilterType<NameFilter> nameFilter) {
             CheckFilter(nameFilter, nameof(nameFilter));
             FiltersList.Add(nameFilter);
         }
 
-        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getDownloadSharesFilter"]/AddCreatedByFilter/*'/>
+        /// <summary>
+        ///     Adds a created by filter to the get download shares filter.
+        /// </summary>
+        /// <param name="createdByFilter">The defined created by filter.</param>
+        /// <exception cref="System.ArgumentException"></exception>
         public void AddCreatedByFilter(DracoonFilterType<CreatedByFilter> createdByFilter) {
             CheckFilter(createdByFilter, nameof(createdByFilter));
             FiltersList.Add(createdByFilter);
         }
 
-        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getDownloadSharesFilter"]/AddNodeIdFilter/*'/>
+        /// <summary>
+        ///     Adds a node id filter to the get download shares filter.
+        /// </summary>
+        /// <param name="nodeIdFilter">The defined node id filter.</param>
+        /// <exception cref="System.ArgumentException"></exception>
         public void AddNodeIdFilter(DracoonFilterType<NodeIdFilter> nodeIdFilter) {
             CheckFilter(nodeIdFilter, nameof(nodeIdFilter));
             FiltersList.Add(nodeIdFilter);
         }
 
-        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getDownloadSharesFilter"]/AddAccessKeyFilter/*'/>
+        /// <summary>
+        ///     Adds a access key filter to the get download shares filter.
+        /// </summary>
+        /// <param name="accessKeyFilter">The defined access key filter.</param>
+        /// <exception cref="System.ArgumentException"></exception>
         public void AddAccessKeyFilter(DracoonFilterType<AccessKeyFilter> accessKeyFilter) {
             CheckFilter(accessKeyFilter, nameof(accessKeyFilter));
             FiltersList.Add(accessKeyFilter);

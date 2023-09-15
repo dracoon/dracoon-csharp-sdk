@@ -2,18 +2,28 @@
 using System.Runtime.Serialization;
 
 namespace Dracoon.Sdk.Error {
-    /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiException/*'/>
+    /// <summary>
+    ///     Signals a DRACOON REST API error.
+    ///     <para>The exception stores an error code which can be used to determine the error cause.</para>
+    /// </summary>
     [Serializable]
     public class DracoonApiException : DracoonException {
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/ErrorCode/*'/>
+        /// <summary>
+        ///     Describes what caused the error. See also <seealso cref="Dracoon.Sdk.Error.DracoonApiCode"/>
+        /// </summary>
         public DracoonApiCode ErrorCode { get; }
 
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiExceptionConstructorOne/*'/>
+        /// <summary>
+        ///     Constructs a new exception with an unknown error code.
+        /// </summary>
         public DracoonApiException() {
             ErrorCode = DracoonApiCode.SERVER_UNKNOWN_ERROR;
         }
 
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonApiException"]/DracoonApiExceptionConstructorTwo/*'/>
+        /// <summary>
+        ///     Constructs a new exception with a specified error code.
+        /// </summary>
+        /// <param name="errorCode"><see cref="ErrorCode"/></param>
         public DracoonApiException(DracoonApiCode errorCode) : base(errorCode.Text) {
             ErrorCode = errorCode;
         }

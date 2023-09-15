@@ -102,19 +102,19 @@ namespace Dracoon.Sdk.Model {
         /// <summary>
         ///     Constructs a new create room request.
         /// </summary>
-        /// <param name="name"><inheritdoc cref="Name"/></param>
-        /// <param name="parentId"><inheritdoc cref="ParentId"/></param>
-        /// <param name="newGroupMemberAcceptance"><inheritdoc cref="NewGroupMemberAcceptance"/></param>
-        /// <param name="hasActivitiesLog"><inheritdoc cref="HasActivitiesLog"/></param>
-        /// <param name="quota"><inheritdoc cref="Quota"/></param>
-        /// <param name="notes"><inheritdoc cref="Notes"/></param>
-        /// <param name="recycleBinRetentionPeriod"><inheritdoc cref="RecycleBinRetentionPeriod"/></param>
-        /// <param name="hasInheritPermissions"><inheritdoc cref="HasInheritPermissions"/></param>
-        /// <param name="adminUserIds"><inheritdoc cref="AdminUserIds"/></param>
-        /// <param name="adminGroupIds"><inheritdoc cref="AdminGroupIds"/></param>
-        /// <param name="classification"><inheritdoc cref="Classification"/></param>
-        /// <param name="creationTime"><inheritdoc cref="CreationTime"/></param>
-        /// <param name="modificationTime"><inheritdoc cref="ModificationTime"/></param>
+        /// <param name="name"><see cref="Name"/></param>
+        /// <param name="parentId"><see cref="ParentId"/></param>
+        /// <param name="newGroupMemberAcceptance"><see cref="NewGroupMemberAcceptance"/></param>
+        /// <param name="hasActivitiesLog"><see cref="HasActivitiesLog"/></param>
+        /// <param name="quota"><see cref="Quota"/></param>
+        /// <param name="notes"><see cref="Notes"/></param>
+        /// <param name="recycleBinRetentionPeriod"><see cref="RecycleBinRetentionPeriod"/></param>
+        /// <param name="hasInheritPermissions"><see cref="HasInheritPermissions"/></param>
+        /// <param name="adminUserIds"><see cref="AdminUserIds"/></param>
+        /// <param name="adminGroupIds"><see cref="AdminGroupIds"/></param>
+        /// <param name="classification"><see cref="Classification"/></param>
+        /// <param name="creationTime"><see cref="CreationTime"/></param>
+        /// <param name="modificationTime"><see cref="ModificationTime"/></param>
         public CreateRoomRequest(string name, long? parentId = null, GroupMemberAcceptance newGroupMemberAcceptance = GroupMemberAcceptance.AutoAllow, bool hasActivitiesLog = true,
             long? quota = null, string notes = null, int? recycleBinRetentionPeriod = null, bool? hasInheritPermissions = null,
             List<long> adminUserIds = null, List<long> adminGroupIds = null, Classification? classification = null, DateTime? creationTime = null, DateTime? modificationTime = null) {

@@ -1,28 +1,57 @@
 ﻿namespace Dracoon.Sdk.Filter {
-    /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getNodesFilter"]/GetNodesFilter/*'/>
+    /// <summary>
+    ///     This class provides filters for <see cref="Dracoon.Sdk.INodes.GetNodes(long, long?, long?, GetNodesFilter, Sort.GetNodesSort)"/>.
+    /// </summary>
     public class GetNodesFilter : DracoonFilter {
-        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getNodesFilter"]/Type/*'/>
+        /// <summary>
+        ///     Gets a new filter for the Type field of a node (<see cref="Dracoon.Sdk.Model.Node"/>).
+        ///     <para>
+        ///         See also <seealso cref="Dracoon.Sdk.Filter.NodeTypeFilter"/>
+        ///     </para>
+        /// </summary>
         public static NodeTypeFilter Type => new NodeTypeFilter();
 
-        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getNodesFilter"]/Name/*'/>
+        /// <summary>
+        ///     Gets a new filter for the Name field of a node (<see cref="Dracoon.Sdk.Model.Node"/>).
+        ///     <para>
+        ///         See also <seealso cref="Dracoon.Sdk.Filter.NameFilter"/>
+        ///     </para>
+        /// </summary>
         public static NameFilter Name => new NameFilter();
 
-        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getNodesFilter"]/IsEncrypted/*'/>
+        /// <summary>
+        ///     Gets a new filter for the IsEncrypted field of a node (<see cref="Dracoon.Sdk.Model.Node"/>).
+        ///     <para>
+        ///         See also <seealso cref="Dracoon.Sdk.Filter.NodeIsEncryptedFilter"/>
+        ///     </para>
+        /// </summary>
         public static NodeIsEncryptedFilter IsEncrypted => new NodeIsEncryptedFilter();
 
-        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getNodesFilter"]/AddNodeTypeFilter/*'/>
+        /// <summary>
+        ///     Adds a type filter to the get nodes filter.
+        /// </summary>
+        /// <param name="typeFilter">The defined type filter.</param>
+        /// <exception cref="System.ArgumentException"></exception>
         public void AddNodeTypeFilter(DracoonFilterType<NodeTypeFilter> typeFilter) {
             CheckFilter(typeFilter, nameof(typeFilter));
             FiltersList.Add(typeFilter);
         }
 
-        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getNodesFilter"]/AddNameFilter/*'/>
+        /// <summary>
+        ///     Adds a name filter to the get nodes filter.
+        /// </summary>
+        /// <param name="nameFilter">The defined name filter.</param>
+        /// <exception cref="System.ArgumentException"></exception>
         public void AddNameFilter(DracoonFilterType<NameFilter> nameFilter) {
             CheckFilter(nameFilter, nameof(nameFilter));
             FiltersList.Add(nameFilter);
         }
 
-        /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="getNodesFilter"]/AddNodeIsEncryptedFilter/*'/>
+        /// <summary>
+        ///     Adds a is encrypted filter to the get nodes filter.
+        /// </summary>
+        /// <param name="isEncryptedFilter">The defined is encrypted filter.</param>
+        /// <exception cref="System.ArgumentException"></exception>
         public void AddNodeIsEncryptedFilter(DracoonFilterType<NodeIsEncryptedFilter> isEncryptedFilter) {
             CheckFilter(isEncryptedFilter, nameof(isEncryptedFilter));
             FiltersList.Add(isEncryptedFilter);

@@ -51,12 +51,12 @@ namespace Dracoon.Sdk.Model {
         /// <summary>
         ///     Constructs a new create folder request.
         /// </summary>
-        /// <param name="parentId"><inheritdoc cref="ParentId"/></param>
-        /// <param name="name"><inheritdoc cref="Name"/></param>
-        /// <param name="notes"><inheritdoc cref="Notes"/></param>
-        /// <param name="classification"><inheritdoc cref="Classification"/></param>
-        /// <param name="creationTime"><inheritdoc cref="CreationTime"/></param>
-        /// <param name="modificationTime"><inheritdoc cref="ModificationTime"/></param>
+        /// <param name="parentId"><see cref="ParentId"/></param>
+        /// <param name="name"><see cref="Name"/></param>
+        /// <param name="notes"><see cref="Notes"/></param>
+        /// <param name="classification"><see cref="Classification"/></param>
+        /// <param name="creationTime"><see cref="CreationTime"/></param>
+        /// <param name="modificationTime"><see cref="ModificationTime"/></param>
         public CreateFolderRequest(long parentId, string name, string notes = null, Classification? classification = null, DateTime? creationTime = null, DateTime? modificationTime = null) {
             ParentId = parentId;
             Name = name;

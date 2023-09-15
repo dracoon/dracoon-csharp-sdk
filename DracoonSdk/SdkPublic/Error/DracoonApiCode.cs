@@ -2,7 +2,9 @@
 using System;
 
 namespace Dracoon.Sdk.Error {
-    /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonApiCode"]/DracoonApiCode/*'/>
+    /// <summary>
+    ///     Collection of DRACOON API error codes.
+    /// </summary>
     public sealed class DracoonApiCode : IEquatable<DracoonApiCode> {
 
         /// <summary>
@@ -871,14 +873,14 @@ namespace Dracoon.Sdk.Error {
         #endregion
 
         /// <summary>
-        /// The error message.
+        ///     The error message.
         /// </summary>
         public string Text {
             get;
         }
 
         /// <summary>
-        /// The error code.
+        ///     The error code.
         /// </summary>
         public int Code {
             get;
@@ -889,7 +891,12 @@ namespace Dracoon.Sdk.Error {
             Text = text;
         }
 
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonApiCode"]/ToString/*'/>
+        /// <summary>
+        ///     Creates a string which contains the error number and the error message.
+        /// </summary>
+        /// <returns>
+        ///     A string with: Code + " " + Text
+        /// </returns>
         public override string ToString() {
             return Code + " " + Text;
         }
