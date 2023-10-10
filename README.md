@@ -12,7 +12,7 @@ A library to access the DRACOON REST API.
 #### Minimum Requirements
 
 .NET Standard 2.0
-API version: 4.33.0
+API version: 4.44.0
 
 #### Download
 
@@ -29,9 +29,9 @@ If you are using Visual Studio 2017 (or higher) and you are using NuGet with pac
 ```
 
 Note that you also need to include the following dependencies:
-1. Bouncy Castle Provider Portable (v1.9.0): https://www.nuget.org/packages/Portable.BouncyCastle/
-2. Dracoon Crypto SDK (v3.0.0): https://www.nuget.org/packages/Dracoon.Crypto.Sdk/
-3. NewtonSoft.Json (v13.0.1): https://www.nuget.org/packages/Newtonsoft.Json/
+1. Bouncy Castle Provider (v2.2.1): https://www.nuget.org/packages/BouncyCastle.Cryptography
+2. Dracoon Crypto SDK (v3.1.0): https://www.nuget.org/packages/Dracoon.Crypto.Sdk/
+3. NewtonSoft.Json (v13.0.3): https://www.nuget.org/packages/Newtonsoft.Json/
 4. RestSharp (v106.15.0): https://www.nuget.org/packages/RestSharp/
 
 ## Example
