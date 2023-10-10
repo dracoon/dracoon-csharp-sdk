@@ -2,16 +2,27 @@
 using System.Runtime.Serialization;
 
 namespace Dracoon.Sdk.Error {
-    /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOException/*'/>
+    /// <summary>
+    ///     Signals a network IO error.
+    /// </summary>
     [Serializable]
     public class DracoonNetIOException : DracoonException {
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOExceptionConstructorOne/*'/>
+        /// <summary>
+        ///     Constructs a new network IO exception without any additional informations.
+        /// </summary>
         public DracoonNetIOException() { }
 
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOExceptionConstructorTwo/*'/>
+        /// <summary>
+        ///     Constructs a new network IO exception with the specified error message.
+        /// </summary>
+        /// <param name="message">The error message</param>
         public DracoonNetIOException(string message) : base(message) { }
 
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonNetIOException"]/DracoonNetIOExceptionConstructorThree/*'/>
+        /// <summary>
+        ///     Constructs a new network IO exception with the specified error message and the causing exception.
+        /// </summary>
+        /// <param name="message">The error message</param>
+        /// <param name="cause">The error causing exception</param>
         public DracoonNetIOException(string message, Exception cause) : base(message, cause) { }
 
         /// <inheritdoc />

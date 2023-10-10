@@ -274,6 +274,98 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Assert.Equal(expected, actual, new RestRequestComparer());
         }
 
+        [Fact]
+        public void User_GetDownloadShareSubscriptions() {
+            // ARRANGE
+            long offset = 2, limit = 3;
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetDownloadShareSubscriptions, Method.GET);
+            expected.AddQueryParameter("offset", offset.ToString());
+            expected.AddQueryParameter("limit", limit.ToString());
+
+            // ACT
+            IRestRequest actual = builder.GetDownloadShareSubscriptions(offset, limit);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void User_GetUploadShareSubscriptions() {
+            // ARRANGE
+            long offset = 2, limit = 3;
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetUploadShareSubscriptions, Method.GET);
+            expected.AddQueryParameter("offset", offset.ToString());
+            expected.AddQueryParameter("limit", limit.ToString());
+
+            // ACT
+            IRestRequest actual = builder.GetUploadShareSubscriptions(offset, limit);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void User_PostDownloadShareSubscription() {
+            // ARRANGE
+            long shareId = 124;
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostDownloadShareSubscription, Method.POST);
+            expected.AddUrlSegment("shareId", shareId);
+
+            // ACT
+            IRestRequest actual = builder.AddDownloadShareSubscription(shareId);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void User_PostUploadShareSubscription() {
+            // ARRANGE
+            long shareId = 124;
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostUploadShareSubscription, Method.POST);
+            expected.AddUrlSegment("shareId", shareId);
+
+            // ACT
+            IRestRequest actual = builder.AddUploadShareSubscription(shareId);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void User_DeleteDownloadShareSubscription() {
+            // ARRANGE
+            long shareId = 127;
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteDownloadShareSubscription, Method.DELETE);
+            expected.AddUrlSegment("shareId", shareId);
+
+            // ACT
+            IRestRequest actual = builder.RemoveDownloadShareSubscription(shareId);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void User_DeleteUploadShareSubscription() {
+            // ARRANGE
+            long shareId = 127;
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteUploadShareSubscription, Method.DELETE);
+            expected.AddUrlSegment("shareId", shareId);
+
+            // ACT
+            IRestRequest actual = builder.RemoveUploadShareSubscription(shareId);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
         #endregion
 
         #region Nodes-Endpoint
@@ -813,6 +905,34 @@ namespace Dracoon.Sdk.UnitTest.Test {
 
             // ACT
             IRestRequest actual = builder.PutCompleteS3FileUpload("GH6D5", FactoryFile.ApiCompleteS3FileUpload);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void Nodes_PostGenerateVirusProtectionInfo() {
+            // ARRANGE
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            IRestRequest expected = FactoryClients.RequestBuilderMock.GenerateVirusProtectionInfo(FactoryFile.ApiGenerateVirusProtectionInfoRequest);
+
+            // ACT
+            IRestRequest actual = builder.GenerateVirusProtectionInfo(FactoryFile.ApiGenerateVirusProtectionInfoRequest);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
+        [Fact]
+        public void Nodes_DeleteMaliciousFile() {
+            // ARRANGE
+            long id = 893756;
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteMaliciousFile, Method.DELETE);
+            expected.AddUrlSegment("fileId", id);
+
+            // ACT
+            IRestRequest actual = builder.DeleteMaliciousFile(id);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());

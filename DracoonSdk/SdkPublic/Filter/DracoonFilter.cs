@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Dracoon.Sdk.Filter {
-    /// <include file="FilterDoc.xml" path='docs/members[@name="dracoonFilter"]/DracoonFilter/*'/>
+    /// <summary>
+    ///     Super class for all specific filters which holds the single added filters and checks if they are only added once.
+    /// </summary>
     public class DracoonFilter {
 
         internal List<dynamic> FiltersList = new List<dynamic>();
@@ -20,7 +22,10 @@ namespace Dracoon.Sdk.Filter {
             }
         }
 
-        /// <include file="FilterDoc.xml" path='docs/members[@name="dracoonFilter"]/ToString/*'/>
+        /// <summary>
+        ///     Builds the string which contains all filters separated with '|'.
+        /// </summary>
+        /// <returns>The string with all single filter strings.</returns>
         public override string ToString() {
             StringBuilder sb = new StringBuilder();
             foreach (object currentFilter in FiltersList) {

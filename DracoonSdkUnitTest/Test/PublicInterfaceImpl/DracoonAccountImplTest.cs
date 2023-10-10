@@ -1,13 +1,16 @@
 ﻿using Dracoon.Crypto.Sdk;
 using Dracoon.Crypto.Sdk.Model;
 using Dracoon.Sdk.Error;
+using Dracoon.Sdk.Filter;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Mapper;
+using Dracoon.Sdk.SdkInternal.User;
 using Dracoon.Sdk.SdkInternal.Util;
 using Dracoon.Sdk.SdkInternal.Validator;
+using Dracoon.Sdk.Sort;
 using Dracoon.Sdk.UnitTest.Factory;
 using Dracoon.Sdk.UnitTest.XUnitComparer;
 using Newtonsoft.Json;
@@ -539,6 +542,160 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
 
             // ASSERT
             Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
+
+        #region GetDownloadShareSubscriptions
+
+        [Fact]
+        public void GetDownloadShareSubscriptions() {
+            // ARRANGE
+            ShareSubscriptionList expected = FactoryUser.ShareSubscriptionList;
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl s = new DracoonAccountImpl(c);
+            Mock.Arrange(() => Arg.IsAny<long?>().NullableMustNotNegative(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Builder.GetDownloadShareSubscriptions(Arg.IsAny<long?>(), Arg.IsAny<long?>()))
+                    .Returns(FactoryRestSharp.GetDownloadShareSubscriptionsMock()).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiShareSubscriptionList>(Arg.IsAny<IRestRequest>(), RequestType.GetDownloadShareSubscriptions, 0))
+                    .Returns(FactoryUser.ApiShareSubscriptionList).Occurs(1);
+            Mock.Arrange(() => UserMapper.FromApiShareSubscriptionList(Arg.IsAny<ApiShareSubscriptionList>())).Returns(FactoryUser.ShareSubscriptionList).Occurs(1);
+
+            // ACT
+            ShareSubscriptionList actual = s.GetDownloadShareSubscriptions();
+
+            // ASSERT
+            Assert.NotNull(actual);
+            Mock.Assert(() => Arg.IsAny<long?>().NullableMustNotNegative(Arg.AnyString));
+            Mock.Assert(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString));
+            Mock.Assert(() => UserMapper.FromApiShareSubscriptionList(Arg.IsAny<ApiShareSubscriptionList>()));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
+
+        #region GetUploadShareSubscriptions
+
+        [Fact]
+        public void GetUploadShareSubscriptions() {
+            // ARRANGE
+            ShareSubscriptionList expected = FactoryUser.ShareSubscriptionList;
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl s = new DracoonAccountImpl(c);
+            Mock.Arrange(() => Arg.IsAny<long?>().NullableMustNotNegative(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Builder.GetUploadShareSubscriptions(Arg.IsAny<long?>(), Arg.IsAny<long?>()))
+                    .Returns(FactoryRestSharp.GetUploadShareSubscriptionsMock()).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiShareSubscriptionList>(Arg.IsAny<IRestRequest>(), RequestType.GetUploadShareSubscriptions, 0))
+                    .Returns(FactoryUser.ApiShareSubscriptionList).Occurs(1);
+            Mock.Arrange(() => UserMapper.FromApiShareSubscriptionList(Arg.IsAny<ApiShareSubscriptionList>())).Returns(FactoryUser.ShareSubscriptionList).Occurs(1);
+
+            // ACT
+            ShareSubscriptionList actual = s.GetUploadShareSubscriptions();
+
+            // ASSERT
+            Assert.NotNull(actual);
+            Mock.Assert(() => Arg.IsAny<long?>().NullableMustNotNegative(Arg.AnyString));
+            Mock.Assert(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString));
+            Mock.Assert(() => UserMapper.FromApiShareSubscriptionList(Arg.IsAny<ApiShareSubscriptionList>()));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
+
+        #region AddDownloadShareSubscription
+
+        [Fact]
+        public void AddDownloadShareSubscription() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl n = new DracoonAccountImpl(c);
+            Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Builder.AddDownloadShareSubscription(Arg.AnyLong)).Returns(FactoryRestSharp.PostDownloadShareSubscriptionMock(1)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiShareSubscription>(Arg.IsAny<IRestRequest>(), RequestType.PostDownloadShareSubscription, 0)).Returns(FactoryUser.ApiShareSubscription).Occurs(1);
+            Mock.Arrange(() => UserMapper.FromApiShareSubscription(Arg.IsAny<ApiShareSubscription>())).Returns(FactoryUser.ShareSubscription).Occurs(1);
+
+            // ACT
+            ShareSubscription actual = n.AddDownloadShareSubscription(1);
+
+            // ASSERT
+            Assert.NotNull(actual);
+            Mock.Assert(() => Arg.AnyLong.MustPositive(Arg.AnyString));
+            Mock.Assert(() => UserMapper.FromApiShareSubscription(Arg.IsAny<ApiShareSubscription>()));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
+
+        #region AddUploadShareSubscription
+
+        [Fact]
+        public void AddUploadShareSubscription() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl n = new DracoonAccountImpl(c);
+            Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Builder.AddUploadShareSubscription(Arg.AnyLong)).Returns(FactoryRestSharp.PostUploadShareSubscriptionMock(1)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiShareSubscription>(Arg.IsAny<IRestRequest>(), RequestType.PostUploadShareSubscription, 0)).Returns(FactoryUser.ApiShareSubscription).Occurs(1);
+            Mock.Arrange(() => UserMapper.FromApiShareSubscription(Arg.IsAny<ApiShareSubscription>())).Returns(FactoryUser.ShareSubscription).Occurs(1);
+
+            // ACT
+            ShareSubscription actual = n.AddUploadShareSubscription(1);
+
+            // ASSERT
+            Assert.NotNull(actual);
+            Mock.Assert(() => Arg.AnyLong.MustPositive(Arg.AnyString));
+            Mock.Assert(() => UserMapper.FromApiShareSubscription(Arg.IsAny<ApiShareSubscription>()));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
+
+        #region RemoveDownloadShareSubscription
+
+        [Fact]
+        public void RemoveDownloadShareSubscription() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl n = new DracoonAccountImpl(c);
+            Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Builder.RemoveDownloadShareSubscription(Arg.AnyLong)).Returns(FactoryRestSharp.DeleteDownloadShareSubscriptionMock(1)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.DeleteDownloadShareSubscription, 0)).DoNothing().Occurs(1);
+
+            // ACT
+            n.RemoveDownloadShareSubscription(1);
+
+            // ASSERT
+            Mock.Assert(() => Arg.AnyLong.MustPositive(Arg.AnyString));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
+
+        #region RemoveUploadShareSubscription
+
+        [Fact]
+        public void RemoveUploadShareSubscription() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonAccountImpl n = new DracoonAccountImpl(c);
+            Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Builder.RemoveUploadShareSubscription(Arg.AnyLong)).Returns(FactoryRestSharp.DeleteUploadShareSubscriptionMock(1)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.DeleteUploadShareSubscription, 0)).DoNothing().Occurs(1);
+
+            // ACT
+            n.RemoveUploadShareSubscription(1);
+
+            // ASSERT
+            Mock.Assert(() => Arg.AnyLong.MustPositive(Arg.AnyString));
             Mock.Assert(c.Builder);
             Mock.Assert(c.Executor);
         }

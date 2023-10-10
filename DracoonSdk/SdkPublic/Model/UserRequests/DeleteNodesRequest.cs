@@ -1,12 +1,19 @@
 ﻿using System.Collections.Generic;
 
 namespace Dracoon.Sdk.Model {
-    /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="deleteNodesRequest"]/DeleteNodesRequest/*'/>
+    /// <summary>
+    ///     Request to delete nodes.
+    /// </summary>
     public class DeleteNodesRequest {
-        /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="deleteNodesRequest"]/Ids/*'/>
+        /// <summary>
+        ///     The node ids which should be deleted.
+        /// </summary>
         public List<long> Ids { get; private set; }
 
-        /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="deleteNodesRequest"]/DeleteNodesRequestConstructor/*'/>
+        /// <summary>
+        ///     Constructs a new delete nodes request.
+        /// </summary>
+        /// <param name="ids"><see cref="Ids"/></param>
         public DeleteNodesRequest(List<long> ids) {
             Ids = ids;
         }

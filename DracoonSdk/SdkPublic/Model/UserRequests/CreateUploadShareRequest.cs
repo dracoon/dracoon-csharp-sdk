@@ -80,19 +80,19 @@ namespace Dracoon.Sdk.Model {
         /// <summary>
         ///     Constructs a new create upload share request.
         /// </summary>
-        /// <param name="nodeId"><inheritdoc cref="NodeId"/></param>
-        /// <param name="name"><inheritdoc cref="Name"/></param>
-        /// <param name="showUploadedFiles"><inheritdoc cref="ShowUploadedFiles"/></param>
-        /// <param name="showCreatorName"><inheritdoc cref="ShowCreatorName"/></param>
-        /// <param name="showCreatorUsername"><inheritdoc cref="ShowCreatorUsername"/></param>
-        /// <param name="password"><inheritdoc cref="Password"/></param>
-        /// <param name="expiration"><inheritdoc cref="Expiration"/></param>
-        /// <param name="uploadedFileExpirationPeriod"><inheritdoc cref="UploadedFilesExpirationPeriod"/></param>
-        /// <param name="notes"><inheritdoc cref="Notes"/></param>
-        /// <param name="maxAllowedUploads"><inheritdoc cref="MaxAllowedUploads"/></param>
-        /// <param name="maxAllowedTotalSizeOverAllUploadedFiles"><inheritdoc cref="MaxAllowedTotalSizeOverAllUploadedFiles"/></param>
-        /// <param name="receiverLanguage"><inheritdoc cref="ReceiverLanguage"/></param>
-        /// <param name="textMessageRecipients"><inheritdoc cref="TextMessageRecipients"/></param>
+        /// <param name="nodeId"><see cref="NodeId"/></param>
+        /// <param name="name"><see cref="Name"/></param>
+        /// <param name="showUploadedFiles"><see cref="ShowUploadedFiles"/></param>
+        /// <param name="showCreatorName"><see cref="ShowCreatorName"/></param>
+        /// <param name="showCreatorUsername"><see cref="ShowCreatorUsername"/></param>
+        /// <param name="password"><see cref="Password"/></param>
+        /// <param name="expiration"><see cref="Expiration"/></param>
+        /// <param name="uploadedFileExpirationPeriod"><see cref="UploadedFilesExpirationPeriod"/></param>
+        /// <param name="notes"><see cref="Notes"/></param>
+        /// <param name="maxAllowedUploads"><see cref="MaxAllowedUploads"/></param>
+        /// <param name="maxAllowedTotalSizeOverAllUploadedFiles"><see cref="MaxAllowedTotalSizeOverAllUploadedFiles"/></param>
+        /// <param name="receiverLanguage"><see cref="ReceiverLanguage"/></param>
+        /// <param name="textMessageRecipients"><see cref="TextMessageRecipients"/></param>
         public CreateUploadShareRequest(long nodeId, string name, bool showUploadedFiles = false, bool showCreatorName = false, bool showCreatorUsername = false, string password = null, DateTime? expiration = null, 
             int? uploadedFileExpirationPeriod = null, string notes = null, int? maxAllowedUploads = null, long? maxAllowedTotalSizeOverAllUploadedFiles = null,
             string receiverLanguage = null, List<string> textMessageRecipients = null) {

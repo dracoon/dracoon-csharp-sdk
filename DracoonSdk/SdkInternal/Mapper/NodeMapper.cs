@@ -79,7 +79,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 BranchVersion = apiNode.BranchVersion,
                 ConfigParentRoomId = apiNode.ConfigParentRoomId,
                 IsBrowsable = apiNode.IsBrowsable,
-                HasActivitiesLog = apiNode.HasActivitiesLog
+                HasActivitiesLog = apiNode.HasActivitiesLog,
+                VirusProtectionInfo = FromApiVirusProtectionInfo(apiNode.VirusProtectionInfo)
             };
             return node;
         }
@@ -249,6 +250,19 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 VersionsToBeDeleted = request.VersionIds
             };
             return apiRequest;
+        }
+
+        internal static VirusProtectionInfo FromApiVirusProtectionInfo(ApiVirusProtectionInfo apiInfo) {
+            if (apiInfo == null) {
+                return null;
+            }
+
+            VirusProtectionInfo info = new VirusProtectionInfo {
+                Verdict = EnumConverter.ConvertValueToVirusProtectionVerdictEnum(apiInfo.Verdict),
+                CheckedAt = apiInfo.LastCheckedAt,
+                Sha256 = apiInfo.Sha256
+            };
+            return info;
         }
     }
 }

@@ -297,6 +297,11 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                 Mock.Arrange(() => r.GetS3Status(Arg.AnyString)).Returns((string id) =>
                     FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetS3Status, Method.GET).AddUrlSegment("uploadId", id));
 
+
+                Mock.Arrange(() => r.GenerateVirusProtectionInfo(Arg.IsAny<ApiGenerateVirusProtectionInfoRequest>())).Returns(
+                    FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGenerateVirusProtectionInfo, Method.POST).AddParameter("application/json",
+                        JsonConvert.SerializeObject(FactoryFile.ApiGenerateVirusProtectionInfoRequest), ParameterType.RequestBody));
+
                 #endregion
 
                 #region Share request mocks

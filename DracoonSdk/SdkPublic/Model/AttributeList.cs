@@ -4,7 +4,7 @@ namespace Dracoon.Sdk.Model {
     /// <summary>
     ///     This model stores custom defined attributes. The list may be a paginated response.
     ///     <para>
-    ///         <see cref = "AttributeList.Offset" /> and < see cref="AttributeList.Limit"/> can be used to get the start and length of the page.
+    ///         <see cref = "AttributeList.Offset" /> and <see cref="AttributeList.Limit"/> can be used to get the start and length of the page.
     ///     </para>
     /// </summary>
     public class AttributeList {

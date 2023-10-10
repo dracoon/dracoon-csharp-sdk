@@ -10,7 +10,7 @@ namespace Dracoon.Sdk.Model {
         ///     This methods gets called when a download was started.
         /// </summary>
         /// <param name = "actionId">
-        ///     The id of the download.See also<seealso cref="INodes.DownloadFile(string, long, System.IO.Stream, IFileDownloadCallback)"/> or <seealso cref = "INodes.StartDownloadFileAsync(string, long, System.IO.Stream, IFileDownloadCallback)"/>
+        ///     The id of the download.See also <seealso cref="INodes.DownloadFile(string, long, System.IO.Stream, IFileDownloadCallback)"/> or <seealso cref = "INodes.StartDownloadFileAsync(string, long, System.IO.Stream, IFileDownloadCallback)"/>
         /// </param>
         void OnStarted(string actionId);
 
@@ -18,7 +18,7 @@ namespace Dracoon.Sdk.Model {
         ///     This methods gets called at every progress update(every 250ms).
         /// </summary>
         /// <param name = "actionId">
-        ///     The id of the download.See also<seealso cref="INodes.DownloadFile(string, long, System.IO.Stream, IFileDownloadCallback)"/> or <seealso cref = "INodes.StartDownloadFileAsync(string, long, System.IO.Stream, IFileDownloadCallback)"/>
+        ///     The id of the download.See also <seealso cref="INodes.DownloadFile(string, long, System.IO.Stream, IFileDownloadCallback)"/> or <seealso cref = "INodes.StartDownloadFileAsync(string, long, System.IO.Stream, IFileDownloadCallback)"/>
         /// </param>
         /// <param name = "bytesDownloaded">
         ///     The number of bytes which have been read.
@@ -32,7 +32,7 @@ namespace Dracoon.Sdk.Model {
         ///     This method gets called when a download was finished.
         /// </summary>
         /// <param name = "actionId">
-        ///     The id of the download.See also<seealso cref="INodes.DownloadFile(string, long, System.IO.Stream, IFileDownloadCallback)"/> or <seealso cref = "INodes.StartDownloadFileAsync(string, long, System.IO.Stream, IFileDownloadCallback)"/>
+        ///     The id of the download.See also <seealso cref="INodes.DownloadFile(string, long, System.IO.Stream, IFileDownloadCallback)"/> or <seealso cref = "INodes.StartDownloadFileAsync(string, long, System.IO.Stream, IFileDownloadCallback)"/>
         /// </param>
         void OnFinished(string actionId);
 
@@ -40,7 +40,7 @@ namespace Dracoon.Sdk.Model {
         ///     This method gets called when a download was canceled.
         /// </summary>
         /// <param name = "actionId">
-        ///     The id of the download.See also<seealso cref="INodes.DownloadFile(string, long, System.IO.Stream, IFileDownloadCallback)"/> or <seealso cref = "INodes.StartDownloadFileAsync(string, long, System.IO.Stream, IFileDownloadCallback)"/>
+        ///     The id of the download.See also <seealso cref="INodes.DownloadFile(string, long, System.IO.Stream, IFileDownloadCallback)"/> or <seealso cref = "INodes.StartDownloadFileAsync(string, long, System.IO.Stream, IFileDownloadCallback)"/>
         /// </param>
         void OnCanceled(string actionId);
 

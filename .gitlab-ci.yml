@@ -1,0 +1,122 @@
+#------------------------------ VARIABLES -----------------------------
+
+variables:
+  DISABLE_QUALITY_GATES: 'false'
+
+#------------------------------ TEMPLATES -----------------------------
+
+.secrets-template: &secrets-template
+  secrets:
+    ARTIFACTORY_REPO:
+      vault: Artifactory/repo-dracoon-sdk-csharp@Build-Environment
+      file: false
+    ARTIFACTORY_DOMAIN:
+      vault: Artifactory/domain@Build-Environment
+      file: false
+    SONAR_TOKEN:
+      vault: Sonar/token@Build-Environment
+      file: false
+    SONAR_URL:
+      vault: Sonar/url@Build-Environment
+      file: false
+    NUGET_ACCESS_KEY:
+      vault: nuget/access-key@Build-Environment
+      file: false
+
+#------------------------------- PREPARE ------------------------------
+
+prepare:
+  stage: .pre
+  tags:
+    - windows-amd64
+  script:
+    - nuget locals all -clear
+    #
+    # extract project version
+    - $VERSION_LINE = $(get-content -Path .\DracoonSdk\DracoonSdk.csproj | Select-String -Pattern '<Version>').ToString()
+    - $VERSION = $VERSION_LINE.SubString($VERSION_LINE.IndexOf("<Version>") + 9, $VERSION_LINE.IndexOf("</Version>") - $VERSION_LINE.IndexOf("<Version>") - 9)
+    - echo "$VERSION" >> shared.txt
+  artifacts:
+    paths:
+      - .\shared.txt
+
+#-------------------------------- BUILD -------------------------------
+
+build:
+  stage: build
+  tags:
+    - windows-amd64
+  dependencies:
+    - prepare
+  before_script:
+    - mkdir .\dist
+  script:
+    - nuget restore .\DracoonSdk\DracoonSdk.csproj -Source https://api.nuget.org/v3/index.json
+    - dotnet pack -c Release .\DracoonSdk\DracoonSdk.csproj -o .\dist
+  artifacts:
+    paths:
+      - .\dist
+
+#-------------------------------- TEST --------------------------------
+
+unit-test:
+  stage: test
+  <<: *secrets-template
+  tags:
+    - windows-amd64
+  dependencies:
+    - prepare
+  script:
+    - nuget restore .\DracoonSdk.sln -Source https://api.nuget.org/v3/index.json -Source https://$ARTIFACTORY_DOMAIN/artifactory/api/nuget/nuget-local
+    - C:\BuildTools\MSBuild\Current\Bin\MSBuild.exe DracoonSdkUnitTest\DracoonSdkUnitTest.csproj /p:Configuration="Release"
+    - C:\BuildTools\TelerikJustMock\Libraries\Telerik.JustMock.Console runadvanced --command "dotnet" --command-args "vstest .\DracoonSdkUnitTest\bin\Release\Dracoon.Sdk.UnitTest.dll"
+
+sonar:
+  stage: test
+  <<: *secrets-template
+  rules:
+    - if: $DISABLE_QUALITY_GATES == "false" && ($CI_COMMIT_REF_SLUG == "main" || $CI_COMMIT_REF_SLUG == "develop")
+      when: on_success
+    - if: $DISABLE_QUALITY_GATES == "true" || ($CI_COMMIT_REF_SLUG != "main" && $CI_COMMIT_REF_SLUG != "develop")
+      allow_failure: true
+      when: on_success
+  tags:
+    - windows-amd64
+  dependencies:
+    - prepare
+  before_script:
+    - $VERSION = (GET-CONTENT ./shared.txt)
+    - $BASE_DIR=(Get-Location).path
+  script:
+    - nuget restore .\DracoonSdk.sln -Source https://api.nuget.org/v3/index.json -Source https://$ARTIFACTORY_DOMAIN/artifactory/api/nuget/nuget-local
+    - C:\BuildTools\MSBuild\Current\Bin\MSBuild.exe DracoonSdkUnitTest\DracoonSdkUnitTest.csproj /p:Configuration="Release"
+    - C:\BuildTools\dependency-check\bin\dependency-check.bat --scan .\DracoonSdk --project dracoon-sdk-csharp --format ALL
+    - C:\BuildTools\TelerikJustMock\Libraries\Telerik.JustMock.Console runadvanced --command "C:\BuildTools\dotCover\dotCover.exe" --command-args 'cover /TargetExecutable="C:\BuildTools\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" /TargetArguments="Dracoon.Sdk.UnitTest.dll" /TargetWorkingDir="DracoonSdkUnitTest\bin\Release" /Scope="Dracoon.Sdk.dll" /Filters="-:module=Dracoon.Sdk.Example;-:module=Dracoon.Sdk.UnitTest" /Output=".\dotCoverResult.html" /ReportType="HTML"'
+    - dotnet clean -c Release .\DracoonSdk.sln
+    - C:\ProgramData\chocolatey\lib\sonarscanner-msbuild-net46\tools\SonarScanner.MSBuild.exe begin /s:${BASE_DIR}\SonarQube.Analysis.xml /k:dracoon-sdk-csharp /v:${VERSION} /d:sonar.host.url=$SONAR_URL /d:sonar.login=$SONAR_TOKEN /d:sonar.branch.name="${CI_COMMIT_REF_SLUG}" /d:sonar.scm.revision=${CI_COMMIT_SHORT_SHA}
+    - dotnet build -c Release .\DracoonSdk\DracoonSdk.csproj
+    - C:\ProgramData\chocolatey\lib\sonarscanner-msbuild-net46\tools\SonarScanner.MSBuild.exe end /d:sonar.login=$SONAR_TOKEN
+
+#-------------------------------- DEPLOY ------------------------------
+
+deploy-to-artifactory:
+  stage: deploy
+  <<: *secrets-template
+  tags:
+    - windows-amd64
+  dependencies:
+    - build
+  script:
+    - jf rt u --flat=true "dist\*.nupkg" $ARTIFACTORY_REPO
+
+deploy-to-nuget:
+  stage: deploy
+  <<: *secrets-template
+  only:
+    - tags
+  tags:
+    - windows-amd64
+  dependencies:
+    - build
+  script:
+    - dotnet nuget push .\dist\*.nupkg -k $NUGET_ACCESS_KEY -s https://www.nuget.org/api/v2/package

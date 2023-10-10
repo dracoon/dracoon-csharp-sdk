@@ -1,18 +1,40 @@
 ﻿using System;
 
 namespace Dracoon.Sdk {
-    /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServer"]/IServer/*'/>
+    /// <summary>
+    ///     Handler to query server informations.
+    /// </summary>
     public interface IServer {
-        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServer"]/GetVersion/*'/>
+        /// <summary>
+        ///     Retrieves the server's version.
+        /// </summary>
+        /// <returns>The server version.</returns>
+        /// <exception cref="Dracoon.Sdk.Error.DracoonApiException"></exception>
+        /// <exception cref="Dracoon.Sdk.Error.DracoonNetIOException"></exception>
         string GetVersion();
 
-        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServer"]/GetTime/*'/>
+        /// <summary>
+        ///     Retrieves the server's time.
+        /// </summary>
+        /// <returns>The server time.</returns>
+        /// <exception cref="Dracoon.Sdk.Error.DracoonApiException"></exception>
+        /// <exception cref="Dracoon.Sdk.Error.DracoonNetIOException"></exception>
         DateTime? GetTime();
 
-        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServer"]/ServerSettings/*'/>
+        /// <summary>
+        ///     Handler to query server configuration informations.
+        ///     <para>
+        ///         See also <seealso cref="Dracoon.Sdk.IServerSettings"/>
+        ///     </para>
+        /// </summary>
         IServerSettings ServerSettings { get; }
 
-        /// <include file = "SdkPublicInterfacesDoc.xml" path='docs/members[@name="iServer"]/ServerPolicies/*'/>
+        /// <summary>
+        ///         Handler to query server policy informations.
+        ///     <para>
+        ///         See also <seealso cref="Dracoon.Sdk.IServerPolicies"/>
+        ///     </para>
+        /// </summary>
         IServerPolicies ServerPolicies { get; }
     }
 }

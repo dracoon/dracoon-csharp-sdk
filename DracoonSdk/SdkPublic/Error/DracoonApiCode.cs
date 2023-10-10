@@ -2,7 +2,9 @@
 using System;
 
 namespace Dracoon.Sdk.Error {
-    /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonApiCode"]/DracoonApiCode/*'/>
+    /// <summary>
+    ///     Collection of DRACOON API error codes.
+    /// </summary>
     public sealed class DracoonApiCode : IEquatable<DracoonApiCode> {
 
         /// <summary>
@@ -452,6 +454,14 @@ namespace Dracoon.Sdk.Error {
         /// </summary>
         public static readonly DracoonApiCode VALIDATION_INVALID_ETAG = new DracoonApiCode(3129, "Invalid Etag(s).");
 
+
+        /// <summary>
+        /// Node is not a file.
+        ///
+        /// Api-Error-Codes or contexts: -41002
+        /// </summary>
+        public static readonly DracoonApiCode VALIDATION_NODE_NOT_A_FILE = new DracoonApiCode(3130, "Node is not a file.");
+
         #endregion
         #region SHARES
 
@@ -518,9 +528,9 @@ namespace Dracoon.Sdk.Error {
         #region Policies
 
         /// <summary>
-        /// Groups error.
+        /// Policies error.
         /// </summary>
-        public static readonly DracoonApiCode VALIDATION_CLASSIFICATION_POLICY_VIOLATION = new DracoonApiCode(3750, "A classification policy is violated.");
+        public static readonly DracoonApiCode VALIDATION_POLICY_VIOLATION = new DracoonApiCode(3750, "A policy is violated.");
 
         #endregion
         #region OTHERS
@@ -622,9 +632,14 @@ namespace Dracoon.Sdk.Error {
         public static readonly DracoonApiCode SERVER_TOO_MANY_REQUESTS = new DracoonApiCode(5011, "You sent to many requests in a short time, wait {0} seconds until your next call.");
 
         /// <summary>
-        /// The AV scanner detected that the file could be malicious.
+        /// Detected that the file could be malicious.
         /// </summary>
-        public static readonly DracoonApiCode SERVER_MALICIOUS_FILE_DETECTED = new DracoonApiCode(5090, "The AV scanner detected that the file could be malicious.");
+        public static readonly DracoonApiCode SERVER_MALICIOUS_FILE_DETECTED = new DracoonApiCode(5090, "Detected that the file could be malicious.");
+
+        /// <summary>
+        /// Virus scan in progress.
+        /// </summary>
+        public static readonly DracoonApiCode SERVER_VIRUS_SCAN_IN_PROGRESS = new DracoonApiCode(5091, "Virus scan in progress.");
 
         #endregion
 
@@ -739,6 +754,13 @@ namespace Dracoon.Sdk.Error {
         /// Api-Error-Codes or contexts: -90027
         /// </summary>
         public static readonly DracoonApiCode SERVER_S3_CONNECTION_FAILED = new DracoonApiCode(5115, "S3 connection failed.");
+
+        /// <summary>
+        /// Malicious file was not found.
+        /// 
+        /// Api-Error-Codes or contexts: -41150
+        /// </summary>
+        public static readonly DracoonApiCode SERVER_MALICIOUS_FILE_NOT_FOUND = new DracoonApiCode(5115, "Malicious file not found.");
         #endregion
 
         #region SHARES
@@ -851,14 +873,14 @@ namespace Dracoon.Sdk.Error {
         #endregion
 
         /// <summary>
-        /// The error message.
+        ///     The error message.
         /// </summary>
         public string Text {
             get;
         }
 
         /// <summary>
-        /// The error code.
+        ///     The error code.
         /// </summary>
         public int Code {
             get;
@@ -869,7 +891,12 @@ namespace Dracoon.Sdk.Error {
             Text = text;
         }
 
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonApiCode"]/ToString/*'/>
+        /// <summary>
+        ///     Creates a string which contains the error number and the error message.
+        /// </summary>
+        /// <returns>
+        ///     A string with: Code + " " + Text
+        /// </returns>
         public override string ToString() {
             return Code + " " + Text;
         }

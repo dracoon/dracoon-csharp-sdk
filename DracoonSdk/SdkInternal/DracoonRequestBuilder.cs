@@ -142,6 +142,34 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        public IRestRequest GetDownloadShareSubscriptions(long? offset, long? limit) {
+            RestRequest request = new RestRequest(ApiConfig.ApiGetDownloadShareSubscriptions, Method.GET);
+            SetGeneralRestValues(request, true);
+            if (offset.HasValue) {
+                request.AddQueryParameter("offset", offset.ToString());
+            }
+
+            if (limit.HasValue) {
+                request.AddQueryParameter("limit", limit.ToString());
+            }
+
+            return request;
+        }
+
+        public IRestRequest GetUploadShareSubscriptions(long? offset, long? limit) {
+            RestRequest request = new RestRequest(ApiConfig.ApiGetUploadShareSubscriptions, Method.GET);
+            SetGeneralRestValues(request, true);
+            if (offset.HasValue) {
+                request.AddQueryParameter("offset", offset.ToString());
+            }
+
+            if (limit.HasValue) {
+                request.AddQueryParameter("limit", limit.ToString());
+            }
+
+            return request;
+        }
+
         #endregion
 
         #region POST
@@ -149,6 +177,20 @@ namespace Dracoon.Sdk.SdkInternal {
         IRestRequest IRequestBuilder.SetUserKeyPair(ApiUserKeyPair apiUserKeyPair) {
             RestRequest request = new RestRequest(ApiConfig.ApiPostUserKeyPair, Method.POST);
             SetGeneralRestValues(request, true, apiUserKeyPair);
+            return request;
+        }
+
+        public IRestRequest AddDownloadShareSubscription(long shareId) {
+            RestRequest request = new RestRequest(ApiConfig.ApiPostDownloadShareSubscription, Method.POST);
+            SetGeneralRestValues(request, true);
+            request.AddUrlSegment("shareId", shareId);
+            return request;
+        }
+
+        public IRestRequest AddUploadShareSubscription(long shareId) {
+            RestRequest request = new RestRequest(ApiConfig.ApiPostUploadShareSubscription, Method.POST);
+            SetGeneralRestValues(request, true);
+            request.AddUrlSegment("shareId", shareId);
             return request;
         }
 
@@ -183,6 +225,20 @@ namespace Dracoon.Sdk.SdkInternal {
         IRestRequest IRequestBuilder.DeleteAvatar() {
             RestRequest request = new RestRequest(ApiConfig.ApiDeleteAvatar, Method.DELETE);
             SetGeneralRestValues(request, true);
+            return request;
+        }
+
+        public IRestRequest RemoveDownloadShareSubscription(long shareId) {
+            RestRequest request = new RestRequest(ApiConfig.ApiDeleteDownloadShareSubscription, Method.DELETE);
+            SetGeneralRestValues(request, true);
+            request.AddUrlSegment("shareId", shareId);
+            return request;
+        }
+
+        public IRestRequest RemoveUploadShareSubscription(long shareId) {
+            RestRequest request = new RestRequest(ApiConfig.ApiDeleteUploadShareSubscription, Method.DELETE);
+            SetGeneralRestValues(request, true);
+            request.AddUrlSegment("shareId", shareId);
             return request;
         }
 
@@ -382,6 +438,12 @@ namespace Dracoon.Sdk.SdkInternal {
             return request;
         }
 
+        IRestRequest IRequestBuilder.GenerateVirusProtectionInfo(ApiGenerateVirusProtectionInfoRequest generateParams) {
+            RestRequest request = new RestRequest(ApiConfig.ApiGenerateVirusProtectionInfo, Method.POST);
+            SetGeneralRestValues(request, true, generateParams);
+            return request;
+        }
+
         #endregion
 
         #region PUT
@@ -454,6 +516,13 @@ namespace Dracoon.Sdk.SdkInternal {
         IRestRequest IRequestBuilder.DeletePreviousVersion(ApiDeletePreviousVersionsRequest deleteParams) {
             RestRequest request = new RestRequest(ApiConfig.ApiDeletePreviousVersions, Method.DELETE);
             SetGeneralRestValues(request, true, deleteParams);
+            return request;
+        }
+
+        public IRestRequest DeleteMaliciousFile(long fileId) {
+            RestRequest request = new RestRequest(ApiConfig.ApiDeleteMaliciousFile, Method.DELETE);
+            SetGeneralRestValues(request, true);
+            request.AddUrlSegment("fileId", fileId);
             return request;
         }
 

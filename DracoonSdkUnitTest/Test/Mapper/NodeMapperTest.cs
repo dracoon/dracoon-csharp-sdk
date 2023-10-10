@@ -134,6 +134,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             Classification expectedClassification = Classification.Confidential;
             NodeType expectedType = NodeType.File;
             string expectedTypeValue = "file";
+            VirusProtectionVerdict expectedVirusProtectionVerdict = VirusProtectionVerdict.Clean;
+            string expectedVirusProtectionVerdictValue = "CLEAN";
 
             Node expected = FactoryNode.Node;
             expected.Type = expectedType;
@@ -202,10 +204,16 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 FileType = expected.Extension,
                 ConfigParentRoomId = expected.ConfigParentRoomId,
                 IsBrowsable = expected.IsBrowsable,
-                HasActivitiesLog = expected.HasActivitiesLog
+                HasActivitiesLog = expected.HasActivitiesLog,
+                VirusProtectionInfo = new ApiVirusProtectionInfo {
+                    Verdict = expectedVirusProtectionVerdictValue,
+                    LastCheckedAt = expected.VirusProtectionInfo.CheckedAt,
+                    Sha256 = expected.VirusProtectionInfo.Sha256
+                }
             };
 
             Mock.Arrange(() => EnumConverter.ConvertValueToNodeTypeEnum(expectedTypeValue)).Returns(expectedType);
+            Mock.Arrange(() => EnumConverter.ConvertValueToVirusProtectionVerdictEnum(expectedVirusProtectionVerdictValue)).Returns(expectedVirusProtectionVerdict);
             Mock.Arrange(() => EnumConverter.ConvertValueToClassificationEnum((int)expectedClassification)).Returns(expectedClassification);
             Mock.Arrange(() => UserMapper.FromApiUserInfo(param.CreatedBy)).Returns(expected.CreatedBy);
             Mock.Arrange(() => UserMapper.FromApiUserInfo(param.UpdatedBy)).Returns(expected.UpdatedBy);
@@ -271,6 +279,42 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
 
             // ASSERT
             Assert.Equal(expected, actual, new NodePermissionsComparer());
+        }
+
+        #endregion
+
+        #region FromApiVirusProtectionInfo
+
+        [Fact]
+        public void FromApiVirusProtectionInfo() {
+            // ARRANGE
+            VirusProtectionInfo expected = FactoryNode.VirusProtectionInfo;
+
+            ApiVirusProtectionInfo param = new ApiVirusProtectionInfo {
+                Verdict = "CLEAN",
+                LastCheckedAt = expected.CheckedAt,
+                Sha256 = expected.Sha256
+            };
+
+            // ACT
+            VirusProtectionInfo actual = NodeMapper.FromApiVirusProtectionInfo(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new VirusProtectionInfoComparer());
+        }
+
+        [Fact]
+        public void FromApiVirusProtectionInfo_Null() {
+            // ARRANGE
+            VirusProtectionInfo expected = null;
+
+            ApiVirusProtectionInfo param = null;
+
+            // ACT
+            VirusProtectionInfo actual = NodeMapper.FromApiVirusProtectionInfo(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new VirusProtectionInfoComparer());
         }
 
         #endregion

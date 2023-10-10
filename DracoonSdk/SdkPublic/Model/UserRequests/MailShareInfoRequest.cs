@@ -29,10 +29,10 @@ namespace Dracoon.Sdk.Model {
         /// <summary>
         ///     Constructs a new create mail share info request.
         /// </summary>
-        /// <param name="shareId"><inheritdoc cref="ShareId"/></param>
-        /// <param name="body"><inheritdoc cref="Body"/></param>
-        /// <param name="recipients"><inheritdoc cref="Recipients"/></param>
-        /// <param name="receiverLanguage"><inheritdoc cref="ReceiverLanguage"/></param>
+        /// <param name="shareId"><see cref="ShareId"/></param>
+        /// <param name="body"><see cref="Body"/></param>
+        /// <param name="recipients"><see cref="Recipients"/></param>
+        /// <param name="receiverLanguage"><see cref="ReceiverLanguage"/></param>
         public MailShareInfoRequest(long shareId, string body, List<string> recipients, string receiverLanguage = null) {
             ShareId = shareId;
             Body = body;

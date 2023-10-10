@@ -99,5 +99,18 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
             }
         }
 
+        internal static FileVirusProtectionInfo FromApiFileVirusProtectionInfo(ApiFileVirusProtectionInfo apiInfo) {
+            if (apiInfo == null) {
+                return null;
+            }
+
+            FileVirusProtectionInfo info = new FileVirusProtectionInfo {
+                Verdict = EnumConverter.ConvertValueToVirusProtectionVerdictEnum(apiInfo.Verdict),
+                CheckedAt = apiInfo.LastCheckedAt,
+                Sha256 = apiInfo.Sha256,
+                NodeId = apiInfo.NodeId
+            };
+            return info;
+        }
     }
 }

@@ -4,7 +4,7 @@ namespace Dracoon.Sdk.Model {
     /// <summary>
     ///     This model stores a list of download shares. The list may be a paginated response.
     ///     <para>
-    ///         <see cref = "Dracoon.Sdk.Model.DownloadShareList.Offset" /> and < see cref="Dracoon.Sdk.Model.DownloadShareList.Limit"/> can be used to get the start and length of the page.
+    ///         <see cref = "Dracoon.Sdk.Model.DownloadShareList.Offset" /> and <see cref="Dracoon.Sdk.Model.DownloadShareList.Limit"/> can be used to get the start and length of the page.
     ///     </para>
     /// </summary>
     public class DownloadShareList {

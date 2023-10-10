@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal static class ApiConfig {
-        internal const string MinimumApiVersion = "4.33.0";
+        internal const string MinimumApiVersion = "4.44.0";
         internal const string ApiPrefix = "api/v4";
         internal const string AuthorizationHeader = "Authorization";
         // token template: mediaserver/image/{mediaToken}/{width}x{height}
@@ -52,6 +52,8 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiGetAuthenticatedPing = ApiPrefix + "/user/ping";
         internal const string ApiGetAvatar = ApiPrefix + "/user/account/avatar";
         internal const string ApiGetUserProfileAttributes = ApiPrefix + "/user/profileAttributes";
+        internal const string ApiGetDownloadShareSubscriptions = ApiPrefix + "/user/subscriptions/download_shares";
+        internal const string ApiGetUploadShareSubscriptions = ApiPrefix + "/user/subscriptions/upload_shares";
 
         #endregion
 
@@ -59,6 +61,8 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal const string ApiPostUserKeyPair = ApiPrefix + "/user/account/keypair";
         internal const string ApiPostAvatar = ApiPrefix + "/user/account/avatar";
+        internal const string ApiPostDownloadShareSubscription = ApiPrefix + "/user/subscriptions/download_shares/{shareId}";
+        internal const string ApiPostUploadShareSubscription = ApiPrefix + "/user/subscriptions/upload_shares/{shareId}";
 
         #endregion
 
@@ -73,6 +77,8 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiDeleteUserKeyPair = ApiPrefix + "/user/account/keypair";
         internal const string ApiDeleteUserProfileAttributes = ApiPrefix + "/user/profileAttributes/{key}";
         internal const string ApiDeleteAvatar = ApiPrefix + "/user/account/avatar";
+        internal const string ApiDeleteDownloadShareSubscription = ApiPrefix + "/user/subscriptions/download_shares/{shareId}";
+        internal const string ApiDeleteUploadShareSubscription = ApiPrefix + "/user/subscriptions/upload_shares/{shareId}";
 
         #endregion
 
@@ -106,6 +112,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiPostMissingFileKeys = ApiPrefix + "/nodes/files/keys";
         internal const string ApiPostFavorite = ApiPrefix + "/nodes/{nodeId}/favorite";
         internal const string ApiPostRestoreNodeVersion = ApiPrefix + "/nodes/deleted_nodes/actions/restore";
+        internal const string ApiGenerateVirusProtectionInfo = ApiPrefix + "/nodes/files/generate_verdict_info";
 
         #endregion
 
@@ -125,6 +132,7 @@ namespace Dracoon.Sdk.SdkInternal {
         internal const string ApiDeleteFavorite = ApiPrefix + "/nodes/{nodeId}/favorite";
         internal const string ApiDeleteRecycleBin = ApiPrefix + "/nodes/{roomId}/deleted_nodes";
         internal const string ApiDeletePreviousVersions = ApiPrefix + "/nodes/deleted_nodes";
+        internal const string ApiDeleteMaliciousFile = ApiPrefix + "/nodes/malicious_files/{fileId}";
 
         #endregion
 

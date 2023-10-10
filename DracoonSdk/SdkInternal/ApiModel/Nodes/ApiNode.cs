@@ -114,5 +114,8 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
 
         [JsonProperty("hasActivitiesLog", NullValueHandling = NullValueHandling.Ignore)]
         public bool? HasActivitiesLog { get; set; }
+
+        [JsonProperty("virusProtectionInfo", NullValueHandling = NullValueHandling.Ignore)]
+        public ApiVirusProtectionInfo VirusProtectionInfo { get; set; }
     }
 }

@@ -2,16 +2,27 @@
 using System.Runtime.Serialization;
 
 namespace Dracoon.Sdk.Error {
-    /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonFileIOException"]/DracoonFileIOException/*'/>
+    /// <summary>
+    ///     Signals a IO error.
+    /// </summary>
     [Serializable]
     public class DracoonFileIOException : DracoonException {
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonFileIOException"]/DracoonFileIOExceptionConstructorOne/*'/>
+        /// <summary>
+        ///     Constructs a new IO exception without any additional informations.
+        /// </summary>
         public DracoonFileIOException() { }
 
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonFileIOException"]/DracoonFileIOExceptionConstructorTwo/*'/>
+        /// <summary>
+        ///     Constructs a new IO exception with the specified error message.
+        /// </summary>
+        /// <param name="message">The error message</param>
         public DracoonFileIOException(string message) : base(message) { }
 
-        /// <include file = "ErrorDoc.xml" path='docs/members[@name="dracoonFileIOException"]/DracoonFileIOExceptionConstructorThree/*'/>
+        /// <summary>
+        ///     Constructs a new IO exception with the specified error message and the causing exception.
+        /// </summary>
+        /// <param name="message">The error message</param>
+        /// <param name="cause">The error causing exception</param>
         public DracoonFileIOException(string message, Exception cause) : base(message, cause) { }
 
         /// <inheritdoc />

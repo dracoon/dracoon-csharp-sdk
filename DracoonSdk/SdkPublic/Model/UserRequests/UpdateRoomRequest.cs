@@ -50,12 +50,12 @@ namespace Dracoon.Sdk.Model {
         /// <summary>
         ///     Constructs a new update room request.
         /// </summary>
-        /// <param name="id"><inheritdoc cref="Id"/></param>
-        /// <param name="name"><inheritdoc cref="Name"/></param>
-        /// <param name="quota"><inheritdoc cref="Quota"/></param>
-        /// <param name="notes"><inheritdoc cref="Notes"/></param>
-        /// <param name="creationTime"><inheritdoc cref="CreationTime"/></param>
-        /// <param name="modificationTime"><inheritdoc cref="ModificationTime"/></param>
+        /// <param name="id"><see cref="Id"/></param>
+        /// <param name="name"><see cref="Name"/></param>
+        /// <param name="quota"><see cref="Quota"/></param>
+        /// <param name="notes"><see cref="Notes"/></param>
+        /// <param name="creationTime"><see cref="CreationTime"/></param>
+        /// <param name="modificationTime"><see cref="ModificationTime"/></param>
         public UpdateRoomRequest(long id, string name = null, long? quota = null, string notes = null, DateTime? creationTime = null, DateTime? modificationTime = null) {
             Id = id;
             Name = name;

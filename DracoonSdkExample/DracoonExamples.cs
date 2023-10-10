@@ -279,6 +279,18 @@ namespace Dracoon.Sdk.Example {
             dc.Nodes.DownloadFile(Guid.NewGuid().ToString(), node.Id, stream, new DLCallback());
         }
 
+        private static void GenerateVirusProtectionInfo() {
+            List<long> requestFileIds = new List<long> {
+                2549
+            };
+
+            List<FileVirusProtectionInfo> infoList = dc.Nodes.GenerateVirusProtectionInfo(requestFileIds);
+
+            foreach (FileVirusProtectionInfo current in infoList) {
+                Console.WriteLine("FileId: " + current.NodeId + "; Verdict: " + current.Verdict);
+            }
+        }
+
         #endregion
 
         #region DracoonClient.Shares
@@ -297,7 +309,7 @@ namespace Dracoon.Sdk.Example {
         public static void GetDownloadShares() {
             GetDownloadSharesFilter filter = new GetDownloadSharesFilter();
             filter.AddAccessKeyFilter(GetDownloadSharesFilter.AccessKey.Contains("ACCESSKEY").Build());
-            
+
             DownloadShareList res = dc.Shares.GetDownloadShares(filter: filter, sort: SharesSort.CreatedAt.Descending());
         }
 

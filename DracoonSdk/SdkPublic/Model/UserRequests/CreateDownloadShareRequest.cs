@@ -65,17 +65,17 @@ namespace Dracoon.Sdk.Model {
         /// <summary>
         ///     Constructs a new create download share request.
         /// </summary>
-        /// <param name="nodeId"><inheritdoc cref="NodeId"/></param>
-        /// <param name="showCreatorName"><inheritdoc cref="ShowCreatorName"/></param>
-        /// <param name="showCreatorUserName"><inheritdoc cref="ShowCreatorUserName"/></param>
-        /// <param name="name"><inheritdoc cref="Name"/></param>
-        /// <param name="password"><inheritdoc cref="Password"/></param>
-        /// <param name="expiration"><inheritdoc cref="Expiration"/></param>
-        /// <param name="notes"><inheritdoc cref="Notes"/></param>
-        /// <param name="internalNotes"><inheritdoc cref="InternalNotes"/></param>
-        /// <param name="maxAllowedDownloads"><inheritdoc cref="MaxAllowedDownloads"/></param>
-        /// <param name="receiverLanguage"><inheritdoc cref="ReceiverLanguage"/></param>
-        /// <param name="textMessageRecipients"><inheritdoc cref="TextMessageRecipients"/></param>
+        /// <param name="nodeId"><see cref="NodeId"/></param>
+        /// <param name="showCreatorName"><see cref="ShowCreatorName"/></param>
+        /// <param name="showCreatorUserName"><see cref="ShowCreatorUserName"/></param>
+        /// <param name="name"><see cref="Name"/></param>
+        /// <param name="password"><see cref="Password"/></param>
+        /// <param name="expiration"><see cref="Expiration"/></param>
+        /// <param name="notes"><see cref="Notes"/></param>
+        /// <param name="internalNotes"><see cref="InternalNotes"/></param>
+        /// <param name="maxAllowedDownloads"><see cref="MaxAllowedDownloads"/></param>
+        /// <param name="receiverLanguage"><see cref="ReceiverLanguage"/></param>
+        /// <param name="textMessageRecipients"><see cref="TextMessageRecipients"/></param>
         public CreateDownloadShareRequest(long nodeId, bool showCreatorName = false, bool showCreatorUserName = false, 
             string name = null, string password = null, DateTime? expiration = null, string notes = null,
             string internalNotes = null, int? maxAllowedDownloads = null, string receiverLanguage = null, List<string> textMessageRecipients = null) {

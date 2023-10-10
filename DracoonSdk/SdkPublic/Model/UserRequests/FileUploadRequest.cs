@@ -1,33 +1,61 @@
 ﻿using System;
 
 namespace Dracoon.Sdk.Model {
-    /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="fileUploadRequest"]/FileUploadRequest/*'/>
+    /// <summary>
+    ///     Request to upload a new file.
+    /// </summary>
     public class FileUploadRequest {
-        /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="fileUploadRequest"]/ParentId/*'/>
+        /// <summary>
+        ///     The id under which the new file should be created.
+        /// </summary>
         public long ParentId { get; private set; }
 
-        /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="fileUploadRequest"]/Name/*'/>
+        /// <summary>
+        ///     The name of the new file.
+        /// </summary>
         public string Name { get; private set; }
 
-        /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="fileUploadRequest"]/Classification/*'/>
+        /// <summary>
+        ///     The classification of the new file. See also <seealso cref="Dracoon.Sdk.Model.Classification"/>
+        /// </summary>
         public Classification? Classification { get; set; }
 
-        /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="fileUploadRequest"]/ResolutionStrategy/*'/>
+        /// <summary>
+        ///     The conflict resolution strategy for the upload operation. See also <seealso cref="Dracoon.Sdk.Model.ResolutionStrategy"/>
+        /// </summary>
         public ResolutionStrategy ResolutionStrategy { get; set; }
 
-        /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="fileUploadRequest"]/Notes/*'/>
+        /// <summary>
+        ///     The notes for the new file.
+        /// </summary>
         public string Notes { get; set; }
 
-        /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="fileUploadRequest"]/ExpirationDate/*'/>
+        /// <summary>
+        ///     The expiration date of the new file.
+        /// </summary>
         public DateTime? ExpirationDate { get; set; }
 
-        /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="fileUploadRequest"]/CreationTime/*'/>
+        /// <summary>
+        ///     The real creation time of the file.
+        /// </summary>
         public DateTime? CreationTime { get; set; }
 
-        /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="fileUploadRequest"]/ModificationTime/*'/>
+        /// <summary>
+        ///     The last modification time of the file.
+        /// </summary>
         public DateTime? ModificationTime { get; set; }
 
-        /// <include file = "UserRequestsDoc.xml" path='docs/members[@name="fileUploadRequest"]/FileUploadRequestConstructor/*'/>
+        /// <summary>
+        ///     Constructs a new file upload request.
+        /// </summary>
+        /// <param name="parentId"><see cref="ParentId"/></param>
+        /// <param name="name"><see cref="Name"/></param>
+        /// <param name="classification"><see cref="Classification"/></param>
+        /// <param name="resolutionStrategy"><see cref="ResolutionStrategy"/></param>
+        /// <param name="notes"><see cref="Notes"/></param>
+        /// <param name="expirationDate"><see cref="ExpirationDate"/></param>
+        /// <param name="creationTime"><see cref="CreationTime"/></param>
+        /// <param name="modificationTime"><see cref="ModificationTime"/></param>
         public FileUploadRequest(long parentId, string name, Classification? classification = null,
             ResolutionStrategy resolutionStrategy = ResolutionStrategy.AutoRename, string notes = null, DateTime? expirationDate = null, DateTime? creationTime = null, DateTime? modificationTime = null) {
             ParentId = parentId;

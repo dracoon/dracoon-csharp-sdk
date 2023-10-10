@@ -1,20 +1,32 @@
 ﻿namespace Dracoon.Sdk.Sort {
-    /// <include file="Sort.xml" path='docs/members[@name="dracoonSortOrder"]/DracoonSortOrder/*'/>
+    /// <summary>
+    ///     Provides the functionality to set the sort as ascending or descending.
+    /// </summary>
+    /// <typeparam name="T">Is the specific definition for a request like <see cref="Dracoon.Sdk.Sort.SearchNodesSort"/>.</typeparam>
     public class DracoonSortOrder<T> where T : DracoonSort {
         internal T Parent;
 
-        /// <include file="Sort.xml" path='docs/members[@name="dracoonSortOrder"]/DracoonSortOrderConstructor/*'/>
+        /// <summary>
+        ///     Constructs a new sort order.
+        /// </summary>
+        /// <param name="parent">The parent instance like <see cref="Dracoon.Sdk.Sort.SearchNodesSort"/>.</param>
         public DracoonSortOrder(T parent) {
             Parent = parent;
         }
 
-        /// <include file="Sort.xml" path='docs/members[@name="dracoonSortOrder"]/Ascending/*'/>
+        /// <summary>
+        ///     Sets the sort to ascending order. (smallest value first)
+        /// </summary>
+        /// <returns>The usable sort order.</returns>
         public T Ascending() {
             Parent.SortString += ":asc";
             return Parent;
         }
 
-        /// <include file="Sort.xml" path='docs/members[@name="dracoonSortOrder"]/Descending/*'/>
+        /// <summary>
+        ///     Sets the sort to descending order. (largest value first)
+        /// </summary>
+        /// <returns>The usable sort order.</returns>
         public T Descending() {
             Parent.SortString += ":desc";
             return Parent;

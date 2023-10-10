@@ -38,10 +38,10 @@ namespace Dracoon.Sdk.Model {
         /// <summary>
         ///     Constructs a new copy node information.
         /// </summary>
-        /// <param name="nodeId"><inheritdoc cref="NodeId"/></param>
-        /// <param name="newName"><inheritdoc cref="NewName"/></param>
-        /// <param name="creationTime"><inheritdoc cref="CreationTime"/></param>
-        /// <param name="modificationTime"><inheritdoc cref="ModificationTime"/></param>
+        /// <param name="nodeId"><see cref="NodeId"/></param>
+        /// <param name="newName"><see cref="NewName"/></param>
+        /// <param name="creationTime"><see cref="CreationTime"/></param>
+        /// <param name="modificationTime"><see cref="ModificationTime"/></param>
         public CopyNode(long nodeId, string newName = null, DateTime? creationTime = null, DateTime? modificationTime = null) {
             NodeId = nodeId;
             NewName = newName;

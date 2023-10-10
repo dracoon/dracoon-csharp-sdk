@@ -4,6 +4,7 @@ using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.Mapper;
+using Dracoon.Sdk.SdkInternal.User;
 using Dracoon.Sdk.UnitTest.Factory;
 using Dracoon.Sdk.UnitTest.XUnitComparer;
 using System.Collections.Generic;
@@ -408,6 +409,42 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
 
             // ASSERT
             Assert.Equal(expected, actual);
+        }
+
+        #endregion
+
+        #region FromApiShareSubscription
+
+        [Fact]
+        public void FromApiShareSubscription() {
+            // ARRANGE
+            ShareSubscription expected = FactoryUser.ShareSubscription;
+
+            ApiShareSubscription param = FactoryUser.ApiShareSubscription;
+
+            // ACT
+            ShareSubscription actual = UserMapper.FromApiShareSubscription(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new ShareSubscriptionComparer());
+        }
+
+        #endregion
+
+        #region FromApiShareSubscriptionList
+
+        [Fact]
+        public void FromApiShareSubscriptionList() {
+            // ARRANGE
+            ShareSubscriptionList expected = FactoryUser.ShareSubscriptionList;
+
+            ApiShareSubscriptionList param = FactoryUser.ApiShareSubscriptionList;
+
+            // ACT
+            ShareSubscriptionList actual = UserMapper.FromApiShareSubscriptionList(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new ShareSubscriptionListComparer());
         }
 
         #endregion

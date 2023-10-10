@@ -47,6 +47,18 @@ namespace Dracoon.Sdk.SdkInternal {
 
         WebClient ProvideAvatarUploadWebClient(string formDataBoundary);
 
+        IRestRequest GetDownloadShareSubscriptions(long? offset, long? limit);
+
+        IRestRequest RemoveDownloadShareSubscription(long shareId);
+
+        IRestRequest AddDownloadShareSubscription(long shareId);
+
+        IRestRequest GetUploadShareSubscriptions(long? offset, long? limit);
+
+        IRestRequest RemoveUploadShareSubscription(long shareId);
+
+        IRestRequest AddUploadShareSubscription(long shareId);
+
         #endregion
 
         #region Nodes
@@ -115,6 +127,10 @@ namespace Dracoon.Sdk.SdkInternal {
         WebClient ProvideChunkUploadWebClient(int chunkLength, long offset, string formDataBoundary, string totalFileSize);
 
         WebClient ProvideS3ChunkUploadWebClient();
+
+        IRestRequest GenerateVirusProtectionInfo(ApiGenerateVirusProtectionInfoRequest generateParams);
+
+        IRestRequest DeleteMaliciousFile(long fileId);
 
         #endregion
 
