@@ -59,10 +59,10 @@ namespace Dracoon.Sdk.SdkInternal {
                     version = version.Remove(version.IndexOf("-"));
                 }
 
-                _apiVersion = Regex.Split(version, "\\.");
+                _apiVersion = Regex.Split(version, "\\.", RegexOptions.None, new TimeSpan(0, 5, 0));
             }
 
-            string[] minVersion = Regex.Split(minVersionForCheck, "\\.");
+            string[] minVersion = Regex.Split(minVersionForCheck, "\\.", RegexOptions.None, new TimeSpan(0, 5, 0));
             for (int iterate = 0; iterate < 3; iterate++) {
                 int remoteVersionPart = int.Parse(_apiVersion[iterate]);
                 int minVersionPart = int.Parse(minVersion[iterate]);
