@@ -25,7 +25,7 @@ variables:
 
 #------------------------------- PREPARE ------------------------------
 
-preparation:
+prepare:
   stage: .pre
   tags:
     - windows-amd64
@@ -42,12 +42,12 @@ preparation:
 
 #-------------------------------- BUILD -------------------------------
 
-build-project:
+build:
   stage: build
   tags:
     - windows-amd64
   dependencies:
-    - preparation
+    - prepare
   before_script:
     - mkdir .\dist
   script:
@@ -65,7 +65,7 @@ unit-test:
   tags:
     - windows-amd64
   dependencies:
-    - preparation
+    - prepare
   script:
     - nuget restore .\DracoonSdk.sln -Source https://api.nuget.org/v3/index.json -Source https://$ARTIFACTORY_DOMAIN/artifactory/api/nuget/nuget-local
     - C:\BuildTools\MSBuild\Current\Bin\MSBuild.exe DracoonSdkUnitTest\DracoonSdkUnitTest.csproj /p:Configuration="Release"
@@ -83,7 +83,7 @@ sonar:
   tags:
     - windows-amd64
   dependencies:
-    - preparation
+    - prepare
   before_script:
     - $VERSION = (GET-CONTENT ./shared.txt)
     - $BASE_DIR=(Get-Location).path
@@ -105,7 +105,7 @@ deploy-to-artifactory:
   tags:
     - windows-amd64
   dependencies:
-    - build-project
+    - build
   script:
     - jf rt u --flat=true "dist\*.nupkg" $ARTIFACTORY_REPO
 
@@ -117,19 +117,6 @@ deploy-to-nuget:
   tags:
     - windows-amd64
   dependencies:
-    - build-project
+    - build
   script:
-    - echo "TODO"
-    #- dotnet nuget push .\dist\*.nupkg -k $NUGET_ACCESS_KEY -s https://www.nuget.org/api/v2/package
-
-deploy-to-github:
-  stage: deploy
-  <<: *secrets-template
-  only:
-    - tags
-  tags:
-    - windows-amd64
-  dependencies:
-    - build-project
-  script:
-    - echo "TODO"
+    - dotnet nuget push .\dist\*.nupkg -k $NUGET_ACCESS_KEY -s https://www.nuget.org/api/v2/package
