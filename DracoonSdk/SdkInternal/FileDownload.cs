@@ -12,6 +12,8 @@ using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal class FileDownload {
+        private readonly object LockObject = new object();
+
         protected string LogTag = nameof(FileDownload);
 
         protected const long ProgressUpdateInterval = 250;
@@ -121,7 +123,7 @@ namespace Dracoon.Sdk.SdkInternal {
             using (WebClient requestClient = Client.Builder.ProvideChunkDownloadWebClient(downloadedByteCount, requestCount)) {
                 long currentDownloadedByteCount = downloadedByteCount;
                 requestClient.DownloadProgressChanged += (o, progessEvent) => {
-                    lock (ProgressReportTimer) {
+                    lock (LockObject) {
                         if (ProgressReportTimer.ElapsedMilliseconds > ProgressUpdateInterval) {
                             NotifyProgress(ActionId, currentDownloadedByteCount + progessEvent.BytesReceived, totalSize);
                             LastNotifiedProgressValue = currentDownloadedByteCount + progessEvent.BytesReceived;
