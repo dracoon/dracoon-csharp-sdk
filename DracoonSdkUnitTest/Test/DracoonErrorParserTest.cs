@@ -344,7 +344,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
         [InlineData(RequestType.GetAuthenticatedPing, 0, new string[] { }, new string[] { }, 5000)]
         internal void TestGatewayTimeoutCodes(RequestType type, int apiCode, string[] headerNames, string[] headerValues, int expectedSdkErrorCode) {
             // ARRANGE
-            HttpWebResponse r = CreateMockedHttpWebResponse(502, GenerateJsonError(502, apiCode), headerNames, headerValues);
+            HttpWebResponse r = CreateMockedHttpWebResponse(504, GenerateJsonError(502, apiCode), headerNames, headerValues);
             WebException we = new WebException("Some message!", null, WebExceptionStatus.ProtocolError, r);
 
             try {
