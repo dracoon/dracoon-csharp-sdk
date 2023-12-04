@@ -97,6 +97,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 List<ApiS3FileUploadPart> s3Parts = UploadS3();
                 ApiCompleteFileUpload apiCompleteFileUpload = FileMapper.ToApiCompleteFileUpload(FileUploadRequest);
                 apiCompleteFileUpload.Parts = s3Parts;
+                apiCompleteFileUpload.IsPrioritisedVirusScan = FileUploadRequest.IsPrioritisedVirusScan;
                 IRestRequest completeFileUploadRequest = Client.Builder.PutCompleteS3FileUpload(UploadToken.UploadId, apiCompleteFileUpload);
                 Client.Executor.DoSyncApiCall<VoidResponse>(completeFileUploadRequest, RequestType.PutCompleteS3Upload);
                 publicResultNode = NodeMapper.FromApiNode(S3Finished());

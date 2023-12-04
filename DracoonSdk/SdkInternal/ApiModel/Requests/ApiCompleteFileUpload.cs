@@ -14,5 +14,8 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
 
         [JsonProperty("parts", NullValueHandling = NullValueHandling.Ignore)]
         public List<ApiS3FileUploadPart> Parts { get; set; }
+
+        [JsonProperty("isPrioritisedVirusScan", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsPrioritisedVirusScan { get; set; }
     }
 }

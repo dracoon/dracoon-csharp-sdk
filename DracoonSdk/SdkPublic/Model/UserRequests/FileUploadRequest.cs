@@ -46,6 +46,11 @@ namespace Dracoon.Sdk.Model {
         public DateTime? ModificationTime { get; set; }
 
         /// <summary>
+        ///     Indicates if this upload should be handled as a high priority virus scan.
+        /// </summary>
+        public bool IsPrioritisedVirusScan { get; set; }
+
+        /// <summary>
         ///     Constructs a new file upload request.
         /// </summary>
         /// <param name="parentId"><see cref="ParentId"/></param>
@@ -56,8 +61,10 @@ namespace Dracoon.Sdk.Model {
         /// <param name="expirationDate"><see cref="ExpirationDate"/></param>
         /// <param name="creationTime"><see cref="CreationTime"/></param>
         /// <param name="modificationTime"><see cref="ModificationTime"/></param>
+        /// <param name="isPrioritisedVirusScan"><see cref="IsPrioritisedVirusScan"/></param>
         public FileUploadRequest(long parentId, string name, Classification? classification = null,
-            ResolutionStrategy resolutionStrategy = ResolutionStrategy.AutoRename, string notes = null, DateTime? expirationDate = null, DateTime? creationTime = null, DateTime? modificationTime = null) {
+            ResolutionStrategy resolutionStrategy = ResolutionStrategy.AutoRename, string notes = null, DateTime? expirationDate = null, DateTime? creationTime = null, DateTime? modificationTime = null,
+            bool isPrioritisedVirusScan = false) {
             ParentId = parentId;
             Name = name;
             Classification = classification;
@@ -66,6 +73,7 @@ namespace Dracoon.Sdk.Model {
             ExpirationDate = expirationDate;
             CreationTime = creationTime;
             ModificationTime = modificationTime;
+            IsPrioritisedVirusScan = isPrioritisedVirusScan;
         }
     }
 }
