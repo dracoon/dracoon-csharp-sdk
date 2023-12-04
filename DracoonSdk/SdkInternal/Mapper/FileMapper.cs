@@ -72,7 +72,8 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
         internal static ApiCompleteFileUpload ToApiCompleteFileUpload(FileUploadRequest fileUploadRequest) {
             ApiCompleteFileUpload apiCompleteFileUpload = new ApiCompleteFileUpload {
                 FileName = fileUploadRequest.Name,
-                ResolutionStrategy = EnumConverter.ConvertResolutionStrategyToValue(fileUploadRequest.ResolutionStrategy)
+                ResolutionStrategy = EnumConverter.ConvertResolutionStrategyToValue(fileUploadRequest.ResolutionStrategy),
+                KeepShareLinks = fileUploadRequest.KeepShareLinks
             };
             return apiCompleteFileUpload;
         }

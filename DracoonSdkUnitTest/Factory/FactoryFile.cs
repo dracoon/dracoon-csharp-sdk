@@ -31,6 +31,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
         internal static FileUploadRequest UploadFileRequest => new FileUploadRequest(1423, "file.file", Classification.Public) {
             Notes = "Some notes!",
             ResolutionStrategy = ResolutionStrategy.Overwrite,
+            KeepShareLinks = true,
             ExpirationDate = new DateTime(2000, 1, 1, 0, 0, 0)
         };
 
@@ -77,13 +78,15 @@ namespace Dracoon.Sdk.UnitTest.Factory {
         internal static ApiCompleteFileUpload ApiCompleteFileUpload => new ApiCompleteFileUpload {
             FileName = "FileName1",
             ResolutionStrategy = "overwrite",
-            FileKey = ApiFileKey
+            FileKey = ApiFileKey,
+            KeepShareLinks = true
         };
 
         internal static ApiCompleteFileUpload ApiCompleteS3FileUpload => new ApiCompleteFileUpload {
             FileName = "FileName1",
             ResolutionStrategy = "overwrite",
             FileKey = ApiFileKey,
+            KeepShareLinks = true,
             Parts = new List<ApiS3FileUploadPart> {
                         ApiS3FileUploadPart
                     }

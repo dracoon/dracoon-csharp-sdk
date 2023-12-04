@@ -133,7 +133,8 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             }
             Assert.Equal(x.FileKey, y.FileKey, new ApiFileKeyComparer());
             return string.Equals(x.FileName, y.FileName) &&
-                string.Equals(x.ResolutionStrategy, y.ResolutionStrategy);
+                string.Equals(x.ResolutionStrategy, y.ResolutionStrategy) &&
+                x.KeepShareLinks == y.KeepShareLinks;
         }
 
         public int GetHashCode(ApiCompleteFileUpload obj) {

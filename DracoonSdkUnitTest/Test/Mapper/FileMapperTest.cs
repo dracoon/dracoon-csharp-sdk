@@ -132,9 +132,11 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             ApiCompleteFileUpload expected = FactoryFile.ApiCompleteFileUpload;
             expected.FileKey = null;
             expected.ResolutionStrategy = expectedStrategy;
+            expected.KeepShareLinks = true;
 
             FileUploadRequest param = new FileUploadRequest(63534, expected.FileName) {
-                ResolutionStrategy = paramStrategy
+                ResolutionStrategy = paramStrategy,
+                KeepShareLinks = expected.KeepShareLinks
             };
 
             Mock.Arrange(() => EnumConverter.ConvertResolutionStrategyToValue(paramStrategy)).Returns(expectedStrategy);

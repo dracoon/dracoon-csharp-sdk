@@ -12,6 +12,9 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
         [JsonProperty("fileKey", NullValueHandling = NullValueHandling.Ignore)]
         public ApiFileKey FileKey { get; set; }
 
+        [JsonProperty("keepShareLinks", NullValueHandling = NullValueHandling.Ignore)]
+        public bool KeepShareLinks { get; set; }
+
         [JsonProperty("parts", NullValueHandling = NullValueHandling.Ignore)]
         public List<ApiS3FileUploadPart> Parts { get; set; }
 
