@@ -760,7 +760,7 @@ namespace Dracoon.Sdk.Error {
         /// 
         /// Api-Error-Codes or contexts: -41150
         /// </summary>
-        public static readonly DracoonApiCode SERVER_MALICIOUS_FILE_NOT_FOUND = new DracoonApiCode(5115, "Malicious file not found.");
+        public static readonly DracoonApiCode SERVER_MALICIOUS_FILE_NOT_FOUND = new DracoonApiCode(5116, "Malicious file not found.");
         #endregion
 
         #region SHARES

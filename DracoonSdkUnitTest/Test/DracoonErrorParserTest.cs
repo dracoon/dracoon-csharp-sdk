@@ -204,7 +204,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
         [InlineData(RequestType.GetAuthenticatedPing, -41050, new string[] { }, new string[] { }, 5104)]
         [InlineData(RequestType.GetAuthenticatedPing, -41051, new string[] { }, new string[] { }, 5105)]
         [InlineData(RequestType.GetAuthenticatedPing, -41100, new string[] { }, new string[] { }, 5111)]
-        [InlineData(RequestType.GetAuthenticatedPing, -41150, new string[] { }, new string[] { }, 5115)]
+        [InlineData(RequestType.GetAuthenticatedPing, -41150, new string[] { }, new string[] { }, 5116)]
         [InlineData(RequestType.GetAuthenticatedPing, -60000, new string[] { }, new string[] { }, 5200)]
         [InlineData(RequestType.GetAuthenticatedPing, -60500, new string[] { }, new string[] { }, 5201)]
         [InlineData(RequestType.GetAuthenticatedPing, -70020, new string[] { }, new string[] { }, 5550)]
@@ -320,6 +320,8 @@ namespace Dracoon.Sdk.UnitTest.Test {
         }
 
         [Theory]
+        [InlineData(RequestType.PutCompleteS3Upload, 0, new string[] { }, new string[] { }, 5114)]
+        [InlineData(RequestType.GetAuthenticatedPing, -90027, new string[] { }, new string[] { }, 5115)]
         [InlineData(RequestType.GetAuthenticatedPing, -90090, new string[] { }, new string[] { }, 5801)]
         [InlineData(RequestType.GetAuthenticatedPing, 0, new string[] { }, new string[] { }, 5000)]
         internal void TestBadGatewayCodes(RequestType type, int apiCode, string[] headerNames, string[] headerValues, int expectedSdkErrorCode) {
