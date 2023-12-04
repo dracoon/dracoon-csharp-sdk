@@ -51,6 +51,11 @@ namespace Dracoon.Sdk.Model {
         public bool IsPrioritisedVirusScan { get; set; }
 
         /// <summary>
+        ///     Indicates if share links, which are created in the past on this file, should be usable after the file upload or not.
+        /// </summary>
+        public bool KeepShareLinks { get; set; }
+
+        /// <summary>
         ///     Constructs a new file upload request.
         /// </summary>
         /// <param name="parentId"><see cref="ParentId"/></param>
@@ -62,9 +67,10 @@ namespace Dracoon.Sdk.Model {
         /// <param name="creationTime"><see cref="CreationTime"/></param>
         /// <param name="modificationTime"><see cref="ModificationTime"/></param>
         /// <param name="isPrioritisedVirusScan"><see cref="IsPrioritisedVirusScan"/></param>
+        /// <param name="keepShareLinks"><see cref="KeepShareLinks"/></param>
         public FileUploadRequest(long parentId, string name, Classification? classification = null,
             ResolutionStrategy resolutionStrategy = ResolutionStrategy.AutoRename, string notes = null, DateTime? expirationDate = null, DateTime? creationTime = null, DateTime? modificationTime = null,
-            bool isPrioritisedVirusScan = false) {
+            bool isPrioritisedVirusScan = false, bool keepShareLinks = false) {
             ParentId = parentId;
             Name = name;
             Classification = classification;
@@ -74,6 +80,7 @@ namespace Dracoon.Sdk.Model {
             CreationTime = creationTime;
             ModificationTime = modificationTime;
             IsPrioritisedVirusScan = isPrioritisedVirusScan;
+            KeepShareLinks = keepShareLinks;
         }
     }
 }
