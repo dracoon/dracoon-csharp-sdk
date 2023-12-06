@@ -12,7 +12,7 @@ A library to access the DRACOON REST API.
 #### Minimum Requirements
 
 .NET Standard 2.0
-API version: 4.44.0
+API version: 5.0.0
 
 #### Download
 
@@ -21,11 +21,11 @@ In nuget, you can find the DRACOON SDK [here](https://www.nuget.org/packages/Dra
 
 If you are using NuGet with package management "Packages.config", then edit your project's "packages.config" and add this to the packages section:
 ```xml
-<package id="Dracoon.Sdk" version="3.2.0" />
+<package id="Dracoon.Sdk" version="3.3.0" />
 ```
 If you are using Visual Studio 2017 (or higher) and you are using NuGet with package management "PackageReference" then edit your .csproj file and add this to the package dependency group:
 ```xml
-<PackageReference Include="Dracoon.Sdk" Version="3.2.0" />
+<PackageReference Include="Dracoon.Sdk" Version="3.3.0" />
 ```
 
 Note that you also need to include the following dependencies:
