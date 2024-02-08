@@ -15,7 +15,7 @@ namespace Dracoon.Sdk.UnitTest.Test.OAuth {
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
             IOAuth oa = new OAuthClient(c, new DracoonAuth("id1", "secret1", "code1"));
             Mock.Arrange(() => c.Builder.PostOAuthToken(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(FactoryRestSharp.PostOAuthTokenMock("id1", "secret1", "grant", "code1")).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiOAuthToken>(Arg.IsAny<IRestRequest>(), RequestType.PostOAuthToken, 0)).Returns(FactoryUser.ApiOAuthToken).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiOAuthToken>(Arg.IsAny<RestRequest>(), RequestType.PostOAuthToken, 0)).Returns(FactoryUser.ApiOAuthToken).Occurs(1);
 
             // ACT
             string actual = oa.BuildAuthString();
@@ -34,7 +34,7 @@ namespace Dracoon.Sdk.UnitTest.Test.OAuth {
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
             IOAuth oa = new OAuthClient(c, new DracoonAuth("id1", "secret1", "tokenInit", "refreshInit"));
             Mock.Arrange(() => c.Builder.PostOAuthRefresh(Arg.AnyString, Arg.AnyString, Arg.AnyString, Arg.AnyString)).Returns(FactoryRestSharp.PostOAuthRefreshMock("id1", "secret1", "grant", "token1")).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiOAuthToken>(Arg.IsAny<IRestRequest>(), RequestType.PostOAuthRefresh, 0)).Returns(FactoryUser.ApiOAuthToken).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiOAuthToken>(Arg.IsAny<RestRequest>(), RequestType.PostOAuthRefresh, 0)).Returns(FactoryUser.ApiOAuthToken).Occurs(1);
 
             // ACT
             oa.RefreshAccessToken();

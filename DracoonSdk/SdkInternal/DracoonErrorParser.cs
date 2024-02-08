@@ -12,7 +12,7 @@ namespace Dracoon.Sdk.SdkInternal {
         private const string LogTag = nameof(DracoonErrorParser);
 
         private static bool CheckResponseHasHeader(object response, string headerName, string headerValue) {
-            if (response is IRestResponse restResponse && restResponse.Headers != null) {
+            if (response is RestResponse restResponse && restResponse.Headers != null) {
                 foreach (Parameter current in restResponse.Headers) {
                     if (headerName.Equals(current.Name) && headerValue.Equals(current.Value)) {
                         return true;
@@ -31,7 +31,7 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         public static string GetResponseHeaderValue(object response, string headerName) {
-            if (response is IRestResponse restResponse && restResponse.Headers != null) {
+            if (response is RestResponse restResponse && restResponse.Headers != null) {
                 foreach (Parameter current in restResponse.Headers) {
                     if (headerName.Equals(current.Name)) {
                         return current.Value.ToString();
@@ -78,7 +78,7 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        internal static void ParseError(IRestResponse response, RequestType requestType) {
+        internal static void ParseError(RestResponse response, RequestType requestType) {
             ApiErrorResponse apiError = GetApiErrorResponse(response.Content);
             DracoonApiCode resultCode = Parse((int)response.StatusCode, response, apiError, requestType);
             DracoonClient.Log.Debug(LogTag, $"Query for '{requestType.ToString()}' failed with '{resultCode.Text}'");

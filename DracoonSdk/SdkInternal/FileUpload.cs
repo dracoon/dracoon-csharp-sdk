@@ -92,7 +92,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 DracoonClient.Log.Warn(LogTag, "S3 direct upload is not possible.", apiException);
             }
 
-            IRestRequest uploadTokenRequest = Client.Builder.PostCreateFileUpload(apiFileUploadRequest);
+            RestRequest uploadTokenRequest = Client.Builder.PostCreateFileUpload(apiFileUploadRequest);
             UploadToken = Client.Executor.DoSyncApiCall<ApiUploadToken>(uploadTokenRequest, RequestType.PostUploadToken);
             Node publicResultNode;
             if (apiFileUploadRequest.UseS3.HasValue && apiFileUploadRequest.UseS3.Value) {
@@ -100,12 +100,12 @@ namespace Dracoon.Sdk.SdkInternal {
                 ApiCompleteFileUpload apiCompleteFileUpload = FileMapper.ToApiCompleteFileUpload(FileUploadRequest);
                 apiCompleteFileUpload.Parts = s3Parts;
                 apiCompleteFileUpload.IsPrioritisedVirusScan = FileUploadRequest.IsPrioritisedVirusScan;
-                IRestRequest completeFileUploadRequest = Client.Builder.PutCompleteS3FileUpload(UploadToken.UploadId, apiCompleteFileUpload);
+                RestRequest completeFileUploadRequest = Client.Builder.PutCompleteS3FileUpload(UploadToken.UploadId, apiCompleteFileUpload);
                 Client.Executor.DoSyncApiCall<VoidResponse>(completeFileUploadRequest, RequestType.PutCompleteS3Upload);
                 publicResultNode = NodeMapper.FromApiNode(S3Finished());
             } else {
                 Upload();
-                IRestRequest completeFileUploadRequest = Client.Builder.PutCompleteFileUpload(new Uri(UploadToken.UploadUrl).PathAndQuery,
+                RestRequest completeFileUploadRequest = Client.Builder.PutCompleteFileUpload(new Uri(UploadToken.UploadUrl).PathAndQuery,
                     FileMapper.ToApiCompleteFileUpload(FileUploadRequest));
                 ApiNode resultNode = Client.Executor.DoSyncApiCall<ApiNode>(completeFileUploadRequest, RequestType.PutCompleteUpload);
                 publicResultNode = NodeMapper.FromApiNode(resultNode);
@@ -201,7 +201,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         protected bool CheckUseS3() {
             Client.Executor.CheckApiServerVersion();
-            IRestRequest generalSettingsRequest = Client.Builder.GetGeneralSettings();
+            RestRequest generalSettingsRequest = Client.Builder.GetGeneralSettings();
             ApiGeneralSettings apiGeneralSettings =
                 Client.Executor.DoSyncApiCall<ApiGeneralSettings>(generalSettingsRequest, RequestType.GetGeneralSettings);
             return apiGeneralSettings.UseS3Storage;
@@ -212,7 +212,7 @@ namespace Dracoon.Sdk.SdkInternal {
             Stopwatch s3Polling = Stopwatch.StartNew();
             while (true) {
                 if (s3Polling.ElapsedMilliseconds >= currentInterval) {
-                    IRestRequest request = Client.Builder.GetS3Status(UploadToken.UploadId);
+                    RestRequest request = Client.Builder.GetS3Status(UploadToken.UploadId);
                     ApiS3Status status = Client.Executor.DoSyncApiCall<ApiS3Status>(request, RequestType.GetS3Status);
                     switch (status.Status) {
                         case "done":
@@ -346,7 +346,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 FirstPartNumber = firstPartNumber,
                 LastPartNumber = firstPartNumber + count - 1
             };
-            IRestRequest s3UrlRequest = Client.Builder.PostGetS3Urls(UploadToken.UploadId, getS3UrlParams);
+            RestRequest s3UrlRequest = Client.Builder.PostGetS3Urls(UploadToken.UploadId, getS3UrlParams);
             List<ApiS3Url> s3UrlsResult = Client.Executor.DoSyncApiCall<ApiS3Urls>(s3UrlRequest, RequestType.PostGetS3Urls).Urls;
 
             Queue<Uri> newS3UrlQueue = new Queue<Uri>(s3UrlsResult.Count);

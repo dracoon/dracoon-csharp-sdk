@@ -31,7 +31,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             FileDownload f = new FileDownload(c, "id1", FactoryNode.Node, s);
             f.AddFileDownloadCallback(callback);
             Mock.Arrange(() => c.Builder.PostFileDownload(Arg.AnyLong)).Returns(FactoryRestSharp.PostFileDownloadMock(2354)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostDownloadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<RestRequest>(), RequestType.PostDownloadToken, 0))
                     .Returns(FactoryNode.ApiDownloadToken).Occurs(1);
             DracoonWebClientExtension wc = Mock.Create<DracoonWebClientExtension>();
             Mock.Arrange(() => Mock.Create<DownloadProgressChangedEventArgs>().BytesReceived).IgnoreInstance().Returns(expected.Length);
@@ -135,7 +135,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             FileDownload f = new FileDownload(c, "id1", FactoryNode.Node, s);
             f.AddFileDownloadCallback(callback);
             Mock.Arrange(() => c.Builder.PostFileDownload(Arg.AnyLong)).Returns(FactoryRestSharp.PostFileDownloadMock(123)).OnAllThreads();
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostDownloadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<RestRequest>(), RequestType.PostDownloadToken, 0))
                     .Returns(FactoryNode.ApiDownloadToken).OnAllThreads();
             DracoonWebClientExtension wc = Mock.Create<DracoonWebClientExtension>();
             Mock.Arrange(() => Mock.Create<DownloadProgressChangedEventArgs>().BytesReceived).IgnoreInstance().Returns(expected.Length).OnAllThreads();
@@ -167,7 +167,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             FileDownload f = new FileDownload(c, "id1", FactoryNode.Node, s);
             f.AddFileDownloadCallback(callback);
             Mock.Arrange(() => c.Builder.PostFileDownload(Arg.AnyLong)).Returns(FactoryRestSharp.PostFileDownloadMock(123)).OnAllThreads();
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostDownloadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<RestRequest>(), RequestType.PostDownloadToken, 0))
                     .Returns(FactoryNode.ApiDownloadToken).OnAllThreads();
             DracoonWebClientExtension wc = Mock.Create<DracoonWebClientExtension>();
             Mock.Arrange(() => Mock.Create<DownloadProgressChangedEventArgs>().BytesReceived).IgnoreInstance().Returns(expected.Length);
@@ -204,7 +204,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             EncFileDownload f = new EncFileDownload(c, "id1", node, s);
             f.AddFileDownloadCallback(callback);
             Mock.Arrange(() => c.Builder.PostFileDownload(Arg.AnyLong)).Returns(FactoryRestSharp.PostFileDownloadMock(2354)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostDownloadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<RestRequest>(), RequestType.PostDownloadToken, 0))
                     .Returns(FactoryNode.ApiDownloadToken).Occurs(1);
             Mock.Arrange(() => c.NodesImpl.GetEncryptedFileKey(Arg.AnyLong)).Returns(FactoryFile.EncryptedFileKey).Occurs(1);
             Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>())).Returns(FactoryUser.UserKeyPair_2048).Occurs(1);
@@ -255,7 +255,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             EncFileDownload f = new EncFileDownload(c, "id1", node, s);
             f.AddFileDownloadCallback(callback);
             Mock.Arrange(() => c.Builder.PostFileDownload(Arg.AnyLong)).Returns(FactoryRestSharp.PostFileDownloadMock(2354));
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostDownloadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<RestRequest>(), RequestType.PostDownloadToken, 0))
                     .Returns(FactoryNode.ApiDownloadToken);
             Mock.Arrange(() => c.NodesImpl.GetEncryptedFileKey(Arg.AnyLong)).Returns(FactoryFile.EncryptedFileKey);
             FileDecryptionCipher cipher = Mock.Create<FileDecryptionCipher>();
@@ -283,7 +283,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             EncFileDownload f = new EncFileDownload(c, "id1", node, s);
             f.AddFileDownloadCallback(callback);
             Mock.Arrange(() => c.Builder.PostFileDownload(Arg.AnyLong)).Returns(FactoryRestSharp.PostFileDownloadMock(2354));
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostDownloadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<RestRequest>(), RequestType.PostDownloadToken, 0))
                     .Returns(FactoryNode.ApiDownloadToken);
             Mock.Arrange(() => c.NodesImpl.GetEncryptedFileKey(Arg.AnyLong)).Returns(FactoryFile.EncryptedFileKey);
             FileDecryptionCipher cipher = Mock.Create<FileDecryptionCipher>();
@@ -312,7 +312,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             EncFileDownload f = new EncFileDownload(c, "id1", node, s);
             f.AddFileDownloadCallback(callback);
             Mock.Arrange(() => c.Builder.PostFileDownload(Arg.AnyLong)).Returns(FactoryRestSharp.PostFileDownloadMock(2354));
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostDownloadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<RestRequest>(), RequestType.PostDownloadToken, 0))
                     .Returns(FactoryNode.ApiDownloadToken);
             Mock.Arrange(() => c.NodesImpl.GetEncryptedFileKey(Arg.AnyLong)).Returns(FactoryFile.EncryptedFileKey);
             FileDecryptionCipher cipher = Mock.Create<FileDecryptionCipher>();
@@ -343,7 +343,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             EncFileDownload f = new EncFileDownload(c, "id1", node, s);
             f.AddFileDownloadCallback(callback);
             Mock.Arrange(() => c.Builder.PostFileDownload(Arg.AnyLong)).Returns(FactoryRestSharp.PostFileDownloadMock(2354));
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostDownloadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadToken>(Arg.IsAny<RestRequest>(), RequestType.PostDownloadToken, 0))
                     .Returns(FactoryNode.ApiDownloadToken);
             Mock.Arrange(() => c.NodesImpl.GetEncryptedFileKey(Arg.AnyLong)).Returns(FactoryFile.EncryptedFileKey);
             FileDecryptionCipher cipher = Mock.Create<FileDecryptionCipher>();

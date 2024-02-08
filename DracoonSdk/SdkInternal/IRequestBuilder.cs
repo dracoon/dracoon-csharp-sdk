@@ -9,118 +9,118 @@ namespace Dracoon.Sdk.SdkInternal {
     internal interface IRequestBuilder {
         #region Public
 
-        IRestRequest GetServerVersion();
+        RestRequest GetServerVersion();
 
-        IRestRequest GetServerTime();
+        RestRequest GetServerTime();
 
         #endregion
 
         #region User
 
-        IRestRequest GetUserAccount();
+        RestRequest GetUserAccount();
 
-        IRestRequest GetCustomerAccount();
+        RestRequest GetCustomerAccount();
 
-        IRestRequest GetUserKeyPair(string algorithm);
+        RestRequest GetUserKeyPair(string algorithm);
 
-        IRestRequest GetUserKeyPairs();
+        RestRequest GetUserKeyPairs();
 
-        IRestRequest GetAuthenticatedPing();
+        RestRequest GetAuthenticatedPing();
 
-        IRestRequest GetAvatar();
+        RestRequest GetAvatar();
 
-        IRestRequest SetUserKeyPair(ApiUserKeyPair apiUserKeyPair);
+        RestRequest SetUserKeyPair(ApiUserKeyPair apiUserKeyPair);
 
-        IRestRequest DeleteUserKeyPair(string algorithm);
+        RestRequest DeleteUserKeyPair(string algorithm);
 
-        IRestRequest GetUserProfileAttributes();
+        RestRequest GetUserProfileAttributes();
 
-        IRestRequest GetUserProfileAttribute(string attributeKey);
+        RestRequest GetUserProfileAttribute(string attributeKey);
 
-        IRestRequest PutUserProfileAttributes(ApiAddOrUpdateAttributeRequest addOrUpdateParam);
+        RestRequest PutUserProfileAttributes(ApiAddOrUpdateAttributeRequest addOrUpdateParam);
 
-        IRestRequest DeleteUserProfileAttributes(string attributeKey);
+        RestRequest DeleteUserProfileAttributes(string attributeKey);
 
-        IRestRequest DeleteAvatar();
+        RestRequest DeleteAvatar();
 
         WebClient ProvideAvatarDownloadWebClient();
 
         WebClient ProvideAvatarUploadWebClient(string formDataBoundary);
 
-        IRestRequest GetDownloadShareSubscriptions(long? offset, long? limit);
+        RestRequest GetDownloadShareSubscriptions(long? offset, long? limit);
 
-        IRestRequest RemoveDownloadShareSubscription(long shareId);
+        RestRequest RemoveDownloadShareSubscription(long shareId);
 
-        IRestRequest AddDownloadShareSubscription(long shareId);
+        RestRequest AddDownloadShareSubscription(long shareId);
 
-        IRestRequest GetUploadShareSubscriptions(long? offset, long? limit);
+        RestRequest GetUploadShareSubscriptions(long? offset, long? limit);
 
-        IRestRequest RemoveUploadShareSubscription(long shareId);
+        RestRequest RemoveUploadShareSubscription(long shareId);
 
-        IRestRequest AddUploadShareSubscription(long shareId);
+        RestRequest AddUploadShareSubscription(long shareId);
 
         #endregion
 
         #region Nodes
 
-        IRestRequest GetNodes(long parentNodeId, long? offset = null, long? limit = null, GetNodesFilter filter = null, GetNodesSort sort = null);
+        RestRequest GetNodes(long parentNodeId, long? offset = null, long? limit = null, GetNodesFilter filter = null, GetNodesSort sort = null);
 
-        IRestRequest GetNode(long nodeId);
+        RestRequest GetNode(long nodeId);
 
-        IRestRequest GetFileKey(long nodeId);
+        RestRequest GetFileKey(long nodeId);
 
-        IRestRequest GetSearchNodes(long parentNodeId, string searchString, long offset, long limit, int depthLevel = -1,
+        RestRequest GetSearchNodes(long parentNodeId, string searchString, long offset, long limit, int depthLevel = -1,
             SearchNodesFilter filter = null, SearchNodesSort sort = null);
 
-        IRestRequest GetMissingFileKeys(long? fileId, int limit = 10, int offset = 0);
+        RestRequest GetMissingFileKeys(long? fileId, int limit = 10, int offset = 0);
 
-        IRestRequest GetRecycleBin(long parentRoomId, long? offset = null, long? limit = null);
+        RestRequest GetRecycleBin(long parentRoomId, long? offset = null, long? limit = null);
 
-        IRestRequest GetPreviousVersions(long nodeId, string type, string nodeName, long? offset = null, long? limit = null);
+        RestRequest GetPreviousVersions(long nodeId, string type, string nodeName, long? offset = null, long? limit = null);
 
-        IRestRequest GetPreviousVersion(long previousNodeId);
+        RestRequest GetPreviousVersion(long previousNodeId);
 
-        IRestRequest GetS3Status(string uploadId);
+        RestRequest GetS3Status(string uploadId);
 
-        IRestRequest PostRoom(ApiCreateRoomRequest roomParams);
+        RestRequest PostRoom(ApiCreateRoomRequest roomParams);
 
-        IRestRequest PostFolder(ApiCreateFolderRequest folderParams);
+        RestRequest PostFolder(ApiCreateFolderRequest folderParams);
 
-        IRestRequest PostFileDownload(long fileId);
+        RestRequest PostFileDownload(long fileId);
 
-        IRestRequest PostCreateFileUpload(ApiCreateFileUpload uploadParams);
+        RestRequest PostCreateFileUpload(ApiCreateFileUpload uploadParams);
 
-        IRestRequest PostGetS3Urls(string uploadId, ApiGetS3Urls s3UrlParams);
+        RestRequest PostGetS3Urls(string uploadId, ApiGetS3Urls s3UrlParams);
 
-        IRestRequest PostCopyNodes(long targetNodeId, ApiCopyNodesRequest copyParams);
+        RestRequest PostCopyNodes(long targetNodeId, ApiCopyNodesRequest copyParams);
 
-        IRestRequest PostMoveNodes(long targetNodeId, ApiMoveNodesRequest moveParams);
+        RestRequest PostMoveNodes(long targetNodeId, ApiMoveNodesRequest moveParams);
 
-        IRestRequest PostMissingFileKeys(ApiSetUserFileKeysRequest fileKeyParams);
+        RestRequest PostMissingFileKeys(ApiSetUserFileKeysRequest fileKeyParams);
 
-        IRestRequest PostFavorite(long nodeId);
+        RestRequest PostFavorite(long nodeId);
 
-        IRestRequest PostRestoreNodeVersion(ApiRestorePreviousVersionsRequest restoreParams);
+        RestRequest PostRestoreNodeVersion(ApiRestorePreviousVersionsRequest restoreParams);
 
-        IRestRequest PutRoom(long roomId, ApiUpdateRoomRequest roomParams);
+        RestRequest PutRoom(long roomId, ApiUpdateRoomRequest roomParams);
 
-        IRestRequest PutEnableRoomEncryption(long roomId, ApiEnableRoomEncryptionRequest encryptionParams);
+        RestRequest PutEnableRoomEncryption(long roomId, ApiEnableRoomEncryptionRequest encryptionParams);
 
-        IRestRequest PutFolder(long folderId, ApiUpdateFolderRequest folderParams);
+        RestRequest PutFolder(long folderId, ApiUpdateFolderRequest folderParams);
 
-        IRestRequest PutFile(long fileId, ApiUpdateFileRequest fileParams);
+        RestRequest PutFile(long fileId, ApiUpdateFileRequest fileParams);
 
-        IRestRequest PutCompleteFileUpload(string uploadPath, ApiCompleteFileUpload completeParams);
+        RestRequest PutCompleteFileUpload(string uploadPath, ApiCompleteFileUpload completeParams);
 
-        IRestRequest PutCompleteS3FileUpload(string uploadId, ApiCompleteFileUpload completeParams);
+        RestRequest PutCompleteS3FileUpload(string uploadId, ApiCompleteFileUpload completeParams);
 
-        IRestRequest DeleteNodes(ApiDeleteNodesRequest deleteParams);
+        RestRequest DeleteNodes(ApiDeleteNodesRequest deleteParams);
 
-        IRestRequest DeleteFavorite(long nodeId);
+        RestRequest DeleteFavorite(long nodeId);
 
-        IRestRequest DeleteRecycleBin(long parentRoomId);
+        RestRequest DeleteRecycleBin(long parentRoomId);
 
-        IRestRequest DeletePreviousVersion(ApiDeletePreviousVersionsRequest deleteParams);
+        RestRequest DeletePreviousVersion(ApiDeletePreviousVersionsRequest deleteParams);
 
         WebClient ProvideChunkDownloadWebClient(long offset, long count);
 
@@ -128,59 +128,59 @@ namespace Dracoon.Sdk.SdkInternal {
 
         WebClient ProvideS3ChunkUploadWebClient();
 
-        IRestRequest GenerateVirusProtectionInfo(ApiGenerateVirusProtectionInfoRequest generateParams);
+        RestRequest GenerateVirusProtectionInfo(ApiGenerateVirusProtectionInfoRequest generateParams);
 
-        IRestRequest DeleteMaliciousFile(long fileId);
+        RestRequest DeleteMaliciousFile(long fileId);
 
         #endregion
 
         #region Share
 
-        IRestRequest GetDownloadShares(long? offset, long? limit, GetDownloadSharesFilter filter = null, SharesSort sort = null);
+        RestRequest GetDownloadShares(long? offset, long? limit, GetDownloadSharesFilter filter = null, SharesSort sort = null);
 
-        IRestRequest GetUploadShares(long? offset, long? limit, GetUploadSharesFilter filter = null, SharesSort sort = null);
+        RestRequest GetUploadShares(long? offset, long? limit, GetUploadSharesFilter filter = null, SharesSort sort = null);
 
-        IRestRequest PostCreateDownloadShare(ApiCreateDownloadShareRequest downloadShareParams);
+        RestRequest PostCreateDownloadShare(ApiCreateDownloadShareRequest downloadShareParams);
 
-        IRestRequest PostCreateUploadShare(ApiCreateUploadShareRequest uploadShareParams);
+        RestRequest PostCreateUploadShare(ApiCreateUploadShareRequest uploadShareParams);
 
-        IRestRequest PostMailDownloadShare(long shareId, ApiMailShareInfoRequest mailParams);
+        RestRequest PostMailDownloadShare(long shareId, ApiMailShareInfoRequest mailParams);
 
-        IRestRequest PostMailUploadShare(long shareId, ApiMailShareInfoRequest mailParams);
+        RestRequest PostMailUploadShare(long shareId, ApiMailShareInfoRequest mailParams);
 
-        IRestRequest DeleteDownloadShare(long shareId);
+        RestRequest DeleteDownloadShare(long shareId);
 
-        IRestRequest DeleteUploadShare(long shareId);
+        RestRequest DeleteUploadShare(long shareId);
 
         #endregion
 
         #region OAuth
 
-        IRestRequest PostOAuthToken(string clientId, string clientSecret, string grantType, string code);
+        RestRequest PostOAuthToken(string clientId, string clientSecret, string grantType, string code);
 
-        IRestRequest PostOAuthRefresh(string clientId, string clientSecret, string grantType, string refreshToken);
+        RestRequest PostOAuthRefresh(string clientId, string clientSecret, string grantType, string refreshToken);
 
         #endregion
 
         #region Config
 
-        IRestRequest GetGeneralSettings();
+        RestRequest GetGeneralSettings();
 
-        IRestRequest GetInfrastructureSettings();
+        RestRequest GetInfrastructureSettings();
 
-        IRestRequest GetDefaultsSettings();
+        RestRequest GetDefaultsSettings();
 
-        IRestRequest GetPasswordPolicies();
+        RestRequest GetPasswordPolicies();
 
-        IRestRequest GetAlgorithms();
+        RestRequest GetAlgorithms();
 
-        IRestRequest GetClassificationPolicies();
+        RestRequest GetClassificationPolicies();
 
         #endregion
 
         #region Resources
 
-        IRestRequest GetUserAvatar(long userId, string avatarUuid);
+        RestRequest GetUserAvatar(long userId, string avatarUuid);
 
         #endregion
     }

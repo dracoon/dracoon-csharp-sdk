@@ -22,10 +22,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Public_GetServerVersion() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetServerVersion();
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetServerVersion();
 
             // ACT
-            IRestRequest actual = builder.GetServerVersion();
+            RestRequest actual = builder.GetServerVersion();
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -35,10 +35,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Public_GetServerTime() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetServerTime();
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetServerTime();
 
             // ACT
-            IRestRequest actual = builder.GetServerTime();
+            RestRequest actual = builder.GetServerTime();
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -52,10 +52,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void User_GetUserAccount() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetUserAccount();
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetUserAccount();
 
             // ACT
-            IRestRequest actual = builder.GetUserAccount();
+            RestRequest actual = builder.GetUserAccount();
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -65,10 +65,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void User_GetCustomerAccount() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetCustomerAccount();
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetCustomerAccount();
 
             // ACT
-            IRestRequest actual = builder.GetCustomerAccount();
+            RestRequest actual = builder.GetCustomerAccount();
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -78,10 +78,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void User_GetUserKeyPair_RSA2048() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048));
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048));
 
             // ACT
-            IRestRequest actual = builder.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048));
+            RestRequest actual = builder.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048));
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -91,10 +91,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void User_GetUserKeyPair_RSA4096() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096));
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096));
 
             // ACT
-            IRestRequest actual = builder.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096));
+            RestRequest actual = builder.GetUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096));
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -104,10 +104,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void User_GetUserKeyPairs() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetUserKeyPairs();
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetUserKeyPairs();
 
             // ACT
-            IRestRequest actual = builder.GetUserKeyPairs();
+            RestRequest actual = builder.GetUserKeyPairs();
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -117,10 +117,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void User_GetAuthenticatedPing() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetAuthenticatedPing();
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetAuthenticatedPing();
 
             // ACT
-            IRestRequest actual = builder.GetAuthenticatedPing();
+            RestRequest actual = builder.GetAuthenticatedPing();
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -130,10 +130,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void User_GetAvatar() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetAvatar();
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetAvatar();
 
             // ACT
-            IRestRequest actual = builder.GetAvatar();
+            RestRequest actual = builder.GetAvatar();
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -143,10 +143,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void User_SetUserKeyPair() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.SetUserKeyPair(FactoryUser.ApiUserKeyPair_2048);
+            RestRequest expected = FactoryClients.RequestBuilderMock.SetUserKeyPair(FactoryUser.ApiUserKeyPair_2048);
 
             // ACT
-            IRestRequest actual = builder.SetUserKeyPair(FactoryUser.ApiUserKeyPair_2048);
+            RestRequest actual = builder.SetUserKeyPair(FactoryUser.ApiUserKeyPair_2048);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -156,10 +156,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void User_DeleteUserKeyPair_RSA2048() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.DeleteUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048));
+            RestRequest expected = FactoryClients.RequestBuilderMock.DeleteUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048));
 
             // ACT
-            IRestRequest actual = builder.DeleteUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048));
+            RestRequest actual = builder.DeleteUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA2048));
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -170,10 +170,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void User_DeleteUserKeyPair_RSA4096() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.DeleteUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096));
+            RestRequest expected = FactoryClients.RequestBuilderMock.DeleteUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096));
 
             // ACT
-            IRestRequest actual = builder.DeleteUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096));
+            RestRequest actual = builder.DeleteUserKeyPair(UserMapper.ToApiUserKeyPairVersion(UserKeyPairAlgorithm.RSA4096));
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -183,10 +183,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void User_DeleteAvatar() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.DeleteAvatar();
+            RestRequest expected = FactoryClients.RequestBuilderMock.DeleteAvatar();
 
             // ACT
-            IRestRequest actual = builder.DeleteAvatar();
+            RestRequest actual = builder.DeleteAvatar();
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -224,10 +224,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void User_GetUserProfileAttributes() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetUserProfileAttributes();
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetUserProfileAttributes();
 
             // ACT
-            IRestRequest actual = builder.GetUserProfileAttributes();
+            RestRequest actual = builder.GetUserProfileAttributes();
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -238,10 +238,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             string attributeKey = FactoryAttribute.AttributeList.Items[0].Key;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetUserProfileAttribute(attributeKey);
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetUserProfileAttribute(attributeKey);
 
             // ACT
-            IRestRequest actual = builder.GetUserProfileAttribute(attributeKey);
+            RestRequest actual = builder.GetUserProfileAttribute(attributeKey);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -251,10 +251,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void User_AddOrUpdateUserProfileAttributes() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.PutUserProfileAttributes(FactoryAttribute.ApiAddOrUpdateAttributeRequest);
+            RestRequest expected = FactoryClients.RequestBuilderMock.PutUserProfileAttributes(FactoryAttribute.ApiAddOrUpdateAttributeRequest);
 
             // ACT
-            IRestRequest actual = builder.PutUserProfileAttributes(FactoryAttribute.ApiAddOrUpdateAttributeRequest);
+            RestRequest actual = builder.PutUserProfileAttributes(FactoryAttribute.ApiAddOrUpdateAttributeRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -265,10 +265,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             string attributeKey = FactoryAttribute.AttributeList.Items[0].Key;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.DeleteUserProfileAttributes(attributeKey);
+            RestRequest expected = FactoryClients.RequestBuilderMock.DeleteUserProfileAttributes(attributeKey);
 
             // ACT
-            IRestRequest actual = builder.DeleteUserProfileAttributes(attributeKey);
+            RestRequest actual = builder.DeleteUserProfileAttributes(attributeKey);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -279,12 +279,12 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long offset = 2, limit = 3;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetDownloadShareSubscriptions, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetDownloadShareSubscriptions, Method.Get);
             expected.AddQueryParameter("offset", offset.ToString());
             expected.AddQueryParameter("limit", limit.ToString());
 
             // ACT
-            IRestRequest actual = builder.GetDownloadShareSubscriptions(offset, limit);
+            RestRequest actual = builder.GetDownloadShareSubscriptions(offset, limit);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -295,12 +295,12 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long offset = 2, limit = 3;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetUploadShareSubscriptions, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetUploadShareSubscriptions, Method.Get);
             expected.AddQueryParameter("offset", offset.ToString());
             expected.AddQueryParameter("limit", limit.ToString());
 
             // ACT
-            IRestRequest actual = builder.GetUploadShareSubscriptions(offset, limit);
+            RestRequest actual = builder.GetUploadShareSubscriptions(offset, limit);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -311,11 +311,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long shareId = 124;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostDownloadShareSubscription, Method.POST);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostDownloadShareSubscription, Method.Post);
             expected.AddUrlSegment("shareId", shareId);
 
             // ACT
-            IRestRequest actual = builder.AddDownloadShareSubscription(shareId);
+            RestRequest actual = builder.AddDownloadShareSubscription(shareId);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -326,11 +326,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long shareId = 124;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostUploadShareSubscription, Method.POST);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostUploadShareSubscription, Method.Post);
             expected.AddUrlSegment("shareId", shareId);
 
             // ACT
-            IRestRequest actual = builder.AddUploadShareSubscription(shareId);
+            RestRequest actual = builder.AddUploadShareSubscription(shareId);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -341,11 +341,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long shareId = 127;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteDownloadShareSubscription, Method.DELETE);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteDownloadShareSubscription, Method.Delete);
             expected.AddUrlSegment("shareId", shareId);
 
             // ACT
-            IRestRequest actual = builder.RemoveDownloadShareSubscription(shareId);
+            RestRequest actual = builder.RemoveDownloadShareSubscription(shareId);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -356,11 +356,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long shareId = 127;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteUploadShareSubscription, Method.DELETE);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteUploadShareSubscription, Method.Delete);
             expected.AddUrlSegment("shareId", shareId);
 
             // ACT
-            IRestRequest actual = builder.RemoveUploadShareSubscription(shareId);
+            RestRequest actual = builder.RemoveUploadShareSubscription(shareId);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -378,10 +378,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
             GetNodesSort s = GetNodesSort.Name.Ascending();
             f.AddNodeIsEncryptedFilter(GetNodesFilter.IsEncrypted.EqualTo(true).Build());
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetNodes(id, offset, limit, f, s);
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetNodes(id, offset, limit, f, s);
 
             // ACT
-            IRestRequest actual = builder.GetNodes(id, offset, limit, f, s);
+            RestRequest actual = builder.GetNodes(id, offset, limit, f, s);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -392,10 +392,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 5, offset = 3, limit = 2;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetNodes(id, offset, limit);
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetNodes(id, offset, limit);
 
             // ACT
-            IRestRequest actual = builder.GetNodes(id, offset, limit);
+            RestRequest actual = builder.GetNodes(id, offset, limit);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -406,10 +406,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 4;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetNode(id);
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetNode(id);
 
             // ACT
-            IRestRequest actual = builder.GetNode(id);
+            RestRequest actual = builder.GetNode(id);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -420,10 +420,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 2;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetFileKey(id);
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetFileKey(id);
 
             // ACT
-            IRestRequest actual = builder.GetFileKey(id);
+            RestRequest actual = builder.GetFileKey(id);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -439,10 +439,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
             f.AddIsFavoriteFilter(SearchNodesFilter.IsFavorite.EqualTo(true).Build());
             SearchNodesSort s = SearchNodesSort.Name.Ascending();
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetSearchNodes(parent, searchString, offset, limit, depth, f, s);
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetSearchNodes(parent, searchString, offset, limit, depth, f, s);
 
             // ACT
-            IRestRequest actual = builder.GetSearchNodes(parent, searchString, offset, limit, depth, f, s);
+            RestRequest actual = builder.GetSearchNodes(parent, searchString, offset, limit, depth, f, s);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -455,7 +455,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             long parent = 234, offset = 2, limit = 3;
             int depth = 1;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetSearchNodes, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetSearchNodes, Method.Get);
             expected.AddQueryParameter("search_string", searchString);
             expected.AddQueryParameter("parent_id", parent.ToString());
             expected.AddQueryParameter("depth_level", depth.ToString());
@@ -463,7 +463,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             expected.AddQueryParameter("limit", limit.ToString());
 
             // ACT
-            IRestRequest actual = builder.GetSearchNodes(parent, searchString, offset, limit, depth);
+            RestRequest actual = builder.GetSearchNodes(parent, searchString, offset, limit, depth);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -475,13 +475,13 @@ namespace Dracoon.Sdk.UnitTest.Test {
             long id = 346;
             int offset = 2, limit = 3;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetMissingFileKeys, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetMissingFileKeys, Method.Get);
             expected.AddQueryParameter("fileId", id.ToString());
             expected.AddQueryParameter("offset", offset.ToString());
             expected.AddQueryParameter("limit", limit.ToString());
 
             // ACT
-            IRestRequest actual = builder.GetMissingFileKeys(id, limit, offset);
+            RestRequest actual = builder.GetMissingFileKeys(id, limit, offset);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -492,13 +492,13 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 567, offset = 4, limit = 5;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetRecycleBin, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetRecycleBin, Method.Get);
             expected.AddUrlSegment("roomId", id);
             expected.AddQueryParameter("offset", offset.ToString());
             expected.AddQueryParameter("limit", limit.ToString());
 
             // ACT
-            IRestRequest actual = builder.GetRecycleBin(id, offset, limit);
+            RestRequest actual = builder.GetRecycleBin(id, offset, limit);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -511,7 +511,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             long id = 34567;
             int offset = 7, limit = 3;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetPreviousVersions, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetPreviousVersions, Method.Get);
             expected.AddUrlSegment("nodeId", id);
             expected.AddQueryParameter("type", type);
             expected.AddQueryParameter("name", name);
@@ -519,7 +519,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             expected.AddQueryParameter("limit", limit.ToString());
 
             // ACT
-            IRestRequest actual = builder.GetPreviousVersions(id, type, name, offset, limit);
+            RestRequest actual = builder.GetPreviousVersions(id, type, name, offset, limit);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -530,11 +530,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 78654;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetPreviousVersion, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetPreviousVersion, Method.Get);
             expected.AddUrlSegment("previousNodeId", id);
 
             // ACT
-            IRestRequest actual = builder.GetPreviousVersion(id);
+            RestRequest actual = builder.GetPreviousVersion(id);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -544,11 +544,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Nodes_PostRoom() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostRoom, Method.POST);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostRoom, Method.Post);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryRoom.ApiCreateRoomRequest), ParameterType.RequestBody);
 
             // ACT
-            IRestRequest actual = builder.PostRoom(FactoryRoom.ApiCreateRoomRequest);
+            RestRequest actual = builder.PostRoom(FactoryRoom.ApiCreateRoomRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -558,11 +558,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Nodes_PostFolder() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostFolder, Method.POST);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostFolder, Method.Post);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryFolder.ApiCreateFolderRequest), ParameterType.RequestBody);
 
             // ACT
-            IRestRequest actual = builder.PostFolder(FactoryFolder.ApiCreateFolderRequest);
+            RestRequest actual = builder.PostFolder(FactoryFolder.ApiCreateFolderRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -573,11 +573,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 394678;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostCreateFileDownload, Method.POST);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostCreateFileDownload, Method.Post);
             expected.AddUrlSegment("fileId", id);
 
             // ACT
-            IRestRequest actual = builder.PostFileDownload(id);
+            RestRequest actual = builder.PostFileDownload(id);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -587,11 +587,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Nodes_PostCreateFileUpload() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostCreateFileUpload, Method.POST);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostCreateFileUpload, Method.Post);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryFile.ApiCreateFileUpload), ParameterType.RequestBody);
 
             // ACT
-            IRestRequest actual = builder.PostCreateFileUpload(FactoryFile.ApiCreateFileUpload);
+            RestRequest actual = builder.PostCreateFileUpload(FactoryFile.ApiCreateFileUpload);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -602,12 +602,12 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 235678;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostCopyNodes, Method.POST);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostCopyNodes, Method.Post);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryNode.ApiCopyNodesRequest), ParameterType.RequestBody);
             expected.AddUrlSegment("nodeId", id);
 
             // ACT
-            IRestRequest actual = builder.PostCopyNodes(id, FactoryNode.ApiCopyNodesRequest);
+            RestRequest actual = builder.PostCopyNodes(id, FactoryNode.ApiCopyNodesRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -618,12 +618,12 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 8790;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostMoveNodes, Method.POST);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostMoveNodes, Method.Post);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryNode.ApiMoveNodesRequest), ParameterType.RequestBody);
             expected.AddUrlSegment("nodeId", id);
 
             // ACT
-            IRestRequest actual = builder.PostMoveNodes(id, FactoryNode.ApiMoveNodesRequest);
+            RestRequest actual = builder.PostMoveNodes(id, FactoryNode.ApiMoveNodesRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -633,11 +633,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Nodes_PostMissingFileKeys() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostMissingFileKeys, Method.POST);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostMissingFileKeys, Method.Post);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryFile.ApiSetUserFileKeysRequest), ParameterType.RequestBody);
 
             // ACT
-            IRestRequest actual = builder.PostMissingFileKeys(FactoryFile.ApiSetUserFileKeysRequest);
+            RestRequest actual = builder.PostMissingFileKeys(FactoryFile.ApiSetUserFileKeysRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -648,11 +648,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 168;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostFavorite, Method.POST);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostFavorite, Method.Post);
             expected.AddUrlSegment("nodeId", id);
 
             // ACT
-            IRestRequest actual = builder.PostFavorite(id);
+            RestRequest actual = builder.PostFavorite(id);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -662,12 +662,12 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Nodes_PostRestoreNodeVersion() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostRestoreNodeVersion, Method.POST);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostRestoreNodeVersion, Method.Post);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryNode.ApiRestorePreviousVersionsRequest),
                 ParameterType.RequestBody);
 
             // ACT
-            IRestRequest actual = builder.PostRestoreNodeVersion(FactoryNode.ApiRestorePreviousVersionsRequest);
+            RestRequest actual = builder.PostRestoreNodeVersion(FactoryNode.ApiRestorePreviousVersionsRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -678,12 +678,12 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 895647;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPutRoom, Method.PUT);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPutRoom, Method.Put);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryRoom.ApiUpdateRoomRequest), ParameterType.RequestBody);
             expected.AddUrlSegment("roomId", id);
 
             // ACT
-            IRestRequest actual = builder.PutRoom(id, FactoryRoom.ApiUpdateRoomRequest);
+            RestRequest actual = builder.PutRoom(id, FactoryRoom.ApiUpdateRoomRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -694,13 +694,13 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 39478;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPutEnableRoomEncryption, Method.PUT);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPutEnableRoomEncryption, Method.Put);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryRoom.ApiEnableRoomEncryptionRequest),
                 ParameterType.RequestBody);
             expected.AddUrlSegment("roomId", id);
 
             // ACT
-            IRestRequest actual = builder.PutEnableRoomEncryption(id, FactoryRoom.ApiEnableRoomEncryptionRequest);
+            RestRequest actual = builder.PutEnableRoomEncryption(id, FactoryRoom.ApiEnableRoomEncryptionRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -711,12 +711,12 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 897;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPutFolder, Method.PUT);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPutFolder, Method.Put);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryFolder.ApiUpdateFolderRequest), ParameterType.RequestBody);
             expected.AddUrlSegment("folderId", id);
 
             // ACT
-            IRestRequest actual = builder.PutFolder(id, FactoryFolder.ApiUpdateFolderRequest);
+            RestRequest actual = builder.PutFolder(id, FactoryFolder.ApiUpdateFolderRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -727,12 +727,12 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 567;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPutFileUpdate, Method.PUT);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPutFileUpdate, Method.Put);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryFile.ApiUpdateFileRequest), ParameterType.RequestBody);
             expected.AddUrlSegment("fileId", id);
 
             // ACT
-            IRestRequest actual = builder.PutFile(id, FactoryFile.ApiUpdateFileRequest);
+            RestRequest actual = builder.PutFile(id, FactoryFile.ApiUpdateFileRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -743,11 +743,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             string path = "some/dummy/path";
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(path, Method.PUT);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(path, Method.Put);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryFile.ApiCompleteFileUpload), ParameterType.RequestBody);
 
             // ACT
-            IRestRequest actual = builder.PutCompleteFileUpload(path, FactoryFile.ApiCompleteFileUpload);
+            RestRequest actual = builder.PutCompleteFileUpload(path, FactoryFile.ApiCompleteFileUpload);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -757,11 +757,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Nodes_DeleteNodes() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteNodes, Method.DELETE);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteNodes, Method.Delete);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryNode.ApiDeleteNodesRequest), ParameterType.RequestBody);
 
             // ACT
-            IRestRequest actual = builder.DeleteNodes(FactoryNode.ApiDeleteNodesRequest);
+            RestRequest actual = builder.DeleteNodes(FactoryNode.ApiDeleteNodesRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -772,11 +772,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 39468345;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteFavorite, Method.DELETE);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteFavorite, Method.Delete);
             expected.AddUrlSegment("nodeId", id);
 
             // ACT
-            IRestRequest actual = builder.DeleteFavorite(id);
+            RestRequest actual = builder.DeleteFavorite(id);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -787,11 +787,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 39468345;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteRecycleBin, Method.DELETE);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteRecycleBin, Method.Delete);
             expected.AddUrlSegment("roomId", id);
 
             // ACT
-            IRestRequest actual = builder.DeleteRecycleBin(id);
+            RestRequest actual = builder.DeleteRecycleBin(id);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -801,12 +801,12 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Nodes_DeletePreviousVersion() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeletePreviousVersions, Method.DELETE);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeletePreviousVersions, Method.Delete);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryNode.ApiDeletePreviousVersionsRequest),
                 ParameterType.RequestBody);
 
             // ACT
-            IRestRequest actual = builder.DeletePreviousVersion(FactoryNode.ApiDeletePreviousVersionsRequest);
+            RestRequest actual = builder.DeletePreviousVersion(FactoryNode.ApiDeletePreviousVersionsRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -871,10 +871,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             string uploadId = "GH6D5";
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.PostGetS3Urls(uploadId, FactoryFile.ApiGetS3UrlsRequest);
+            RestRequest expected = FactoryClients.RequestBuilderMock.PostGetS3Urls(uploadId, FactoryFile.ApiGetS3UrlsRequest);
 
             // ACT
-            IRestRequest actual = builder.PostGetS3Urls(uploadId, FactoryFile.ApiGetS3UrlsRequest);
+            RestRequest actual = builder.PostGetS3Urls(uploadId, FactoryFile.ApiGetS3UrlsRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -885,10 +885,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             string uploadId = "GH6D5";
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GetS3Status(uploadId);
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetS3Status(uploadId);
 
             // ACT
-            IRestRequest actual = builder.GetS3Status(uploadId);
+            RestRequest actual = builder.GetS3Status(uploadId);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -899,12 +899,12 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             string uploadId = "GH6D5";
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPutCompleteS3Upload, Method.PUT);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPutCompleteS3Upload, Method.Put);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryFile.ApiCompleteS3FileUpload), ParameterType.RequestBody);
             expected.AddUrlSegment("uploadId", uploadId);
 
             // ACT
-            IRestRequest actual = builder.PutCompleteS3FileUpload("GH6D5", FactoryFile.ApiCompleteS3FileUpload);
+            RestRequest actual = builder.PutCompleteS3FileUpload("GH6D5", FactoryFile.ApiCompleteS3FileUpload);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -914,10 +914,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Nodes_PostGenerateVirusProtectionInfo() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            IRestRequest expected = FactoryClients.RequestBuilderMock.GenerateVirusProtectionInfo(FactoryFile.ApiGenerateVirusProtectionInfoRequest);
+            RestRequest expected = FactoryClients.RequestBuilderMock.GenerateVirusProtectionInfo(FactoryFile.ApiGenerateVirusProtectionInfoRequest);
 
             // ACT
-            IRestRequest actual = builder.GenerateVirusProtectionInfo(FactoryFile.ApiGenerateVirusProtectionInfoRequest);
+            RestRequest actual = builder.GenerateVirusProtectionInfo(FactoryFile.ApiGenerateVirusProtectionInfoRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -928,11 +928,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 893756;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteMaliciousFile, Method.DELETE);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteMaliciousFile, Method.Delete);
             expected.AddUrlSegment("fileId", id);
 
             // ACT
-            IRestRequest actual = builder.DeleteMaliciousFile(id);
+            RestRequest actual = builder.DeleteMaliciousFile(id);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -948,7 +948,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             string fString = "name:cn:name_part", sString = "name:asc";
             long offset = 2, limit = 3;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetDownloadShares, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetDownloadShares, Method.Get);
             expected.AddQueryParameter("filter", fString);
             expected.AddQueryParameter("sort", sString);
             expected.AddQueryParameter("offset", offset.ToString());
@@ -957,7 +957,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ACT
             GetDownloadSharesFilter f = new GetDownloadSharesFilter();
             f.AddNameFilter(GetDownloadSharesFilter.Name.Contains("name_part").Build());
-            IRestRequest actual = builder.GetDownloadShares(offset, limit, f, SharesSort.Name.Ascending());
+            RestRequest actual = builder.GetDownloadShares(offset, limit, f, SharesSort.Name.Ascending());
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -968,12 +968,12 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long offset = 2, limit = 3;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetDownloadShares, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetDownloadShares, Method.Get);
             expected.AddQueryParameter("offset", offset.ToString());
             expected.AddQueryParameter("limit", limit.ToString());
 
             // ACT
-            IRestRequest actual = builder.GetDownloadShares(offset, limit);
+            RestRequest actual = builder.GetDownloadShares(offset, limit);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -985,7 +985,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             string fString = "name:cn:name_part_up", sString = "name:desc";
             long offset = 4, limit = 5;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetUploadShares, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetUploadShares, Method.Get);
             expected.AddQueryParameter("filter", fString);
             expected.AddQueryParameter("sort", sString);
             expected.AddQueryParameter("offset", offset.ToString());
@@ -994,7 +994,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ACT
             GetUploadSharesFilter f = new GetUploadSharesFilter();
             f.AddNameFilter(GetUploadSharesFilter.Name.Contains("name_part_up").Build());
-            IRestRequest actual = builder.GetUploadShares(offset, limit, f, SharesSort.Name.Descending());
+            RestRequest actual = builder.GetUploadShares(offset, limit, f, SharesSort.Name.Descending());
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -1005,12 +1005,12 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long offset = 4, limit = 5;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetUploadShares, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetUploadShares, Method.Get);
             expected.AddQueryParameter("offset", offset.ToString());
             expected.AddQueryParameter("limit", limit.ToString());
 
             // ACT
-            IRestRequest actual = builder.GetUploadShares(offset, limit);
+            RestRequest actual = builder.GetUploadShares(offset, limit);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -1020,12 +1020,12 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Shares_PostCreateDownloadShare() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostCreateDownloadShare, Method.POST);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostCreateDownloadShare, Method.Post);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryShare.ApiCreateDownloadShareRequest),
                 ParameterType.RequestBody);
 
             // ACT
-            IRestRequest actual = builder.PostCreateDownloadShare(FactoryShare.ApiCreateDownloadShareRequest);
+            RestRequest actual = builder.PostCreateDownloadShare(FactoryShare.ApiCreateDownloadShareRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -1035,12 +1035,12 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Shares_PostCreateUploadShare() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostCreateUploadShare, Method.POST);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiPostCreateUploadShare, Method.Post);
             expected.AddParameter("application/json", JsonConvert.SerializeObject(FactoryShare.ApiCreateUploadShareRequest),
                 ParameterType.RequestBody);
 
             // ACT
-            IRestRequest actual = builder.PostCreateUploadShare(FactoryShare.ApiCreateUploadShareRequest);
+            RestRequest actual = builder.PostCreateUploadShare(FactoryShare.ApiCreateUploadShareRequest);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -1051,11 +1051,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 893756;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteDownloadShare, Method.DELETE);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteDownloadShare, Method.Delete);
             expected.AddUrlSegment("shareId", id);
 
             // ACT
-            IRestRequest actual = builder.DeleteDownloadShare(id);
+            RestRequest actual = builder.DeleteDownloadShare(id);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -1066,11 +1066,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             long id = 893756;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteUploadShare, Method.DELETE);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiDeleteUploadShare, Method.Delete);
             expected.AddUrlSegment("shareId", id);
 
             // ACT
-            IRestRequest actual = builder.DeleteUploadShare(id);
+            RestRequest actual = builder.DeleteUploadShare(id);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -1085,13 +1085,13 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             string clientId = "GS36SG653FD", clientSecret = "H7BD5D6G", grand = "pw", code = "ty";
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithoutAuth(OAuthConfig.OAuthPostAuthToken, Method.POST);
+            RestRequest expected = FactoryRestSharp.RestRequestWithoutAuth(OAuthConfig.OAuthPostAuthToken, Method.Post);
             expected.AddHeader("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(clientId + ":" + clientSecret)));
             expected.AddParameter("grant_type", grand, ParameterType.GetOrPost);
             expected.AddParameter("code", code, ParameterType.GetOrPost);
 
             // ACT
-            IRestRequest actual = builder.PostOAuthToken(clientId, clientSecret, grand, code);
+            RestRequest actual = builder.PostOAuthToken(clientId, clientSecret, grand, code);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -1102,13 +1102,13 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ARRANGE
             string clientId = "GS36SG653FDAY", clientSecret = "H7BD5D6G56", grand = "pw", refreshToken = "things";
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithoutAuth(OAuthConfig.OAuthPostRefreshToken, Method.POST);
+            RestRequest expected = FactoryRestSharp.RestRequestWithoutAuth(OAuthConfig.OAuthPostRefreshToken, Method.Post);
             expected.AddHeader("Authorization", "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(clientId + ":" + clientSecret)));
             expected.AddParameter("grant_type", grand, ParameterType.GetOrPost);
             expected.AddParameter("refresh_token", refreshToken, ParameterType.GetOrPost);
 
             // ACT
-            IRestRequest actual = builder.PostOAuthRefresh(clientId, clientSecret, grand, refreshToken);
+            RestRequest actual = builder.PostOAuthRefresh(clientId, clientSecret, grand, refreshToken);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -1122,10 +1122,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Config_GetGeneralSettings() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.Get);
 
             // ACT
-            IRestRequest actual = builder.GetGeneralSettings();
+            RestRequest actual = builder.GetGeneralSettings();
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -1135,10 +1135,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Config_GetInfrastructureSettings() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetInfrastructureConfig, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetInfrastructureConfig, Method.Get);
 
             // ACT
-            IRestRequest actual = builder.GetInfrastructureSettings();
+            RestRequest actual = builder.GetInfrastructureSettings();
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -1148,10 +1148,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Config_GetDefaultsSettings() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetDefaultsConfig, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetDefaultsConfig, Method.Get);
 
             // ACT
-            IRestRequest actual = builder.GetDefaultsSettings();
+            RestRequest actual = builder.GetDefaultsSettings();
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -1161,10 +1161,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Config_GetAlgorithms() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetAlgorithms, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetAlgorithms, Method.Get);
 
             // ACT
-            IRestRequest actual = builder.GetAlgorithms();
+            RestRequest actual = builder.GetAlgorithms();
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -1174,10 +1174,10 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void Config_GetClassificationPolicies() {
             // ARRANGE
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetClassificationPolicies, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetClassificationPolicies, Method.Get);
 
             // ACT
-            IRestRequest actual = builder.GetClassificationPolicies();
+            RestRequest actual = builder.GetClassificationPolicies();
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());
@@ -1193,12 +1193,12 @@ namespace Dracoon.Sdk.UnitTest.Test {
             string avatarUuid = "JG7DM2DZ6";
             long userId = 167890;
             IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
-            RestRequest expected = FactoryRestSharp.RestRequestWithoutAuth(ApiConfig.ApiResourcesGetAvatar, Method.GET);
+            RestRequest expected = FactoryRestSharp.RestRequestWithoutAuth(ApiConfig.ApiResourcesGetAvatar, Method.Get);
             expected.AddUrlSegment("userId", userId);
             expected.AddUrlSegment("uuid", avatarUuid);
 
             // ACT
-            IRestRequest actual = builder.GetUserAvatar(userId, avatarUuid);
+            RestRequest actual = builder.GetUserAvatar(userId, avatarUuid);
 
             // ASSERT
             Assert.Equal(expected, actual, new RestRequestComparer());

@@ -84,15 +84,20 @@ namespace Dracoon.Sdk.SdkInternal {
             }
         }
 
-        T IRequestExecutor.DoSyncApiCall<T>(IRestRequest request, RequestType requestType, int sendTry) {
-            IRestClient client = new RestClient(_client.ServerUri) {
+        T IRequestExecutor.DoSyncApiCall<T>(RestRequest request, RequestType requestType, int sendTry) {
+            RestClientOptions clientOptions = new RestClientOptions(_client.ServerUri) {
                 UserAgent = DracoonClient.HttpConfig.UserAgent,
+                MaxTimeout = DracoonClient.HttpConfig.Timeout
             };
+
             if (DracoonClient.HttpConfig.WebProxy != null) {
-                client.Proxy = DracoonClient.HttpConfig.WebProxy;
+                clientOptions.Proxy = DracoonClient.HttpConfig.WebProxy;
             }
 
-            IRestResponse response = client.Execute(request);
+            RestClient client = new RestClient(clientOptions);
+
+
+            RestResponse response = client.Execute(request);
             try {
                 if (response.ErrorException is WebException we) {
                     // It's an HTTP exception
@@ -112,10 +117,8 @@ namespace Dracoon.Sdk.SdkInternal {
                             DracoonClient.Log.Debug(Logtag, "Retry the refresh of the access token in " + sendTry * 1000 + " millis again.");
                             Thread.Sleep(1000 * sendTry);
                             _auth.RefreshAccessToken();
-                            foreach (Parameter cur in request.Parameters) {
-                                if (cur.Name == ApiConfig.AuthorizationHeader) {
-                                    cur.Value = _auth.BuildAuthString();
-                                }
+                            if(request.Parameters.TryFind(ApiConfig.AuthorizationHeader) != null ) {
+                                request.AddOrUpdateParameter(ApiConfig.AuthorizationHeader, _auth.BuildAuthString());
                             }
 
                             return ((IRequestExecutor)this).DoSyncApiCall<T>(request, requestType, sendTry + 1);
@@ -262,7 +265,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 }
 
                 int waitingTime = retryAfter * 1000 + new Random().Next(0, 500);
-                DracoonClient.Log.Debug(Logtag, $"Http status code 429 was given. Retry the request in { waitingTime } millis again.");
+                DracoonClient.Log.Debug(Logtag, $"Http status code 429 was given. Retry the request in {waitingTime} millis again.");
                 Thread.Sleep(waitingTime);
 
                 return true;

@@ -23,9 +23,9 @@ namespace Dracoon.Sdk.UnitTest.Test.OAuth {
         [InlineData(RequestType.GetAuthenticatedPing, "invalid_request", HttpStatusCode.BadRequest, 1000)]
         [InlineData(RequestType.GetAuthenticatedPing, "invalid_request", HttpStatusCode.Unauthorized, 1101)]
         [InlineData(RequestType.GetAuthenticatedPing, "invalid_request", HttpStatusCode.ServiceUnavailable, 1000)]
-        internal void ParseError_IRestResponse(RequestType type, string content, HttpStatusCode statusCode, int expectedSdkErrorCode) {
+        internal void ParseError_RestResponse(RequestType type, string content, HttpStatusCode statusCode, int expectedSdkErrorCode) {
             // ARRANGE
-            IRestResponse response = Mock.Create<IRestResponse>();
+            RestResponse response = Mock.Create<RestResponse>();
             Mock.Arrange(() => response.Content).Returns(GenerateJsonError(content));
             Mock.Arrange(() => response.StatusCode).Returns(statusCode);
 

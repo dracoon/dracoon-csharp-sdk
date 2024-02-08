@@ -20,14 +20,14 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public string GetVersion() {
             _client.Executor.CheckApiServerVersion();
-            IRestRequest request = _client.Builder.GetServerVersion();
+            RestRequest request = _client.Builder.GetServerVersion();
             ApiServerVersion result = _client.Executor.DoSyncApiCall<ApiServerVersion>(request, RequestType.GetServerVersion);
             return result.ServerVersion;
         }
 
         public DateTime? GetTime() {
             _client.Executor.CheckApiServerVersion();
-            IRestRequest request = _client.Builder.GetServerTime();
+            RestRequest request = _client.Builder.GetServerTime();
             ApiServerTime result = _client.Executor.DoSyncApiCall<ApiServerTime>(request, RequestType.GetServerTime);
             return result.Time;
         }
