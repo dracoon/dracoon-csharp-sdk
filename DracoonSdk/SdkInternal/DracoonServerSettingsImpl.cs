@@ -18,7 +18,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public ServerDefaultSettings GetDefault() {
             _client.Executor.CheckApiServerVersion();
-            IRestRequest request = _client.Builder.GetDefaultsSettings();
+            RestRequest request = _client.Builder.GetDefaultsSettings();
             ApiDefaultsSettings apiDefaultsSettings =
                 _client.Executor.DoSyncApiCall<ApiDefaultsSettings>(request, DracoonRequestExecutor.RequestType.GetDefaultsSettings);
             return SettingsMapper.FromApiDefaultsSettings(apiDefaultsSettings);
@@ -26,7 +26,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public ServerGeneralSettings GetGeneral() {
             _client.Executor.CheckApiServerVersion();
-            IRestRequest request = _client.Builder.GetGeneralSettings();
+            RestRequest request = _client.Builder.GetGeneralSettings();
             ApiGeneralSettings apiGeneralSettings =
                 _client.Executor.DoSyncApiCall<ApiGeneralSettings>(request, DracoonRequestExecutor.RequestType.GetGeneralSettings);
             return SettingsMapper.FromApiGeneralSettings(apiGeneralSettings);
@@ -34,7 +34,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public ServerInfrastructureSettings GetInfrastructure() {
             _client.Executor.CheckApiServerVersion();
-            IRestRequest request = _client.Builder.GetInfrastructureSettings();
+            RestRequest request = _client.Builder.GetInfrastructureSettings();
             ApiInfrastructureSettings apiInfrastructureSettings =
                 _client.Executor.DoSyncApiCall<ApiInfrastructureSettings>(request, DracoonRequestExecutor.RequestType.GetInfrastructureSettings);
             return SettingsMapper.FromApiInfrastructureSettings(apiInfrastructureSettings);
@@ -51,7 +51,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 }};
             }
 
-            IRestRequest request = _client.Builder.GetAlgorithms();
+            RestRequest request = _client.Builder.GetAlgorithms();
             ApiAlgorithms algorithms = _client.Executor.DoSyncApiCall<ApiAlgorithms>(request, DracoonRequestExecutor.RequestType.GetAlgorithms);
             return SettingsMapper.FromApiUserKeyPairAlgorithms(algorithms.KeyPairAlgorithms);
         }
@@ -67,7 +67,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 }};
             }
 
-            IRestRequest request = _client.Builder.GetAlgorithms();
+            RestRequest request = _client.Builder.GetAlgorithms();
             ApiAlgorithms algorithms = _client.Executor.DoSyncApiCall<ApiAlgorithms>(request, DracoonRequestExecutor.RequestType.GetAlgorithms);
             return SettingsMapper.FromApiFileKeyAlgorithms(algorithms.FileKeyAlgorithms);
         }

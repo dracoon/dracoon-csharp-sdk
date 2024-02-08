@@ -23,7 +23,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         protected override void StartDownload() {
             NotifyStarted(ActionId);
-            IRestRequest downloadTokenRequest = Client.Builder.PostFileDownload(AssociatedNode.Id);
+            RestRequest downloadTokenRequest = Client.Builder.PostFileDownload(AssociatedNode.Id);
             ApiDownloadToken token = Client.Executor.DoSyncApiCall<ApiDownloadToken>(downloadTokenRequest, RequestType.PostDownloadToken);
             EncryptedFileKey encryptedFileKey = Client.NodesImpl.GetEncryptedFileKey(AssociatedNode.Id);
             UserKeyPair keyPair = Client.AccountImpl.GetAndCheckUserKeyPair(CryptoHelper.DetermineUserKeyPairVersion(encryptedFileKey.Version));

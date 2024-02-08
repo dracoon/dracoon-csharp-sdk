@@ -44,7 +44,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             NumberOfCharacteristicsToEnforce = 2
         };
 
-        internal static ApiPasswordSettings ApiPasswordSettings => new ApiPasswordSettings {
+        internal static ApiPasswordPolicies ApiPasswordSettings => new ApiPasswordPolicies {
             EncryptionPasswordSettings = new ApiEncryptionPasswordSettings {
                 CharacterRules = ApiPasswordCharacterRules,
                 MinimumPasswordLength = 9,

@@ -88,7 +88,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 apiRequest.FileKey = FileMapper.ToApiFileKey(newEncryptedFileKey);
             }
 
-            IRestRequest restRequest = _client.Builder.PostCreateDownloadShare(apiRequest);
+            RestRequest restRequest = _client.Builder.PostCreateDownloadShare(apiRequest);
             ApiDownloadShare resultShare =
                 _client.Executor.DoSyncApiCall<ApiDownloadShare>(restRequest, DracoonRequestExecutor.RequestType.PostCreateDownloadShare);
             return ShareMapper.FromApiDownloadShare(resultShare);
@@ -103,7 +103,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest restRequest = _client.Builder.DeleteDownloadShare(shareId);
+            RestRequest restRequest = _client.Builder.DeleteDownloadShare(shareId);
             _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, DracoonRequestExecutor.RequestType.DeleteDownloadShare);
         }
 
@@ -118,7 +118,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest restRequest = _client.Builder.GetDownloadShares(offset, limit, filter, sort);
+            RestRequest restRequest = _client.Builder.GetDownloadShares(offset, limit, filter, sort);
             ApiDownloadShareList result =
                 _client.Executor.DoSyncApiCall<ApiDownloadShareList>(restRequest, DracoonRequestExecutor.RequestType.GetDownloadShares);
             return ShareMapper.FromApiDownloadShareList(result);
@@ -157,7 +157,7 @@ namespace Dracoon.Sdk.SdkInternal {
             #endregion
 
             ApiCreateUploadShareRequest apiRequest = ShareMapper.ToApiCreateUploadShareRequest(request);
-            IRestRequest restRequest = _client.Builder.PostCreateUploadShare(apiRequest);
+            RestRequest restRequest = _client.Builder.PostCreateUploadShare(apiRequest);
             ApiUploadShare resultShare =
                 _client.Executor.DoSyncApiCall<ApiUploadShare>(restRequest, DracoonRequestExecutor.RequestType.PostCreateUploadShare);
             return ShareMapper.FromApiUploadShare(resultShare);
@@ -172,7 +172,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest restRequest = _client.Builder.DeleteUploadShare(shareId);
+            RestRequest restRequest = _client.Builder.DeleteUploadShare(shareId);
             _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, DracoonRequestExecutor.RequestType.DeleteUploadShare);
         }
 
@@ -186,7 +186,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest restRequest = _client.Builder.GetUploadShares(offset, limit, filter, sort);
+            RestRequest restRequest = _client.Builder.GetUploadShares(offset, limit, filter, sort);
             ApiUploadShareList result =
                 _client.Executor.DoSyncApiCall<ApiUploadShareList>(restRequest, DracoonRequestExecutor.RequestType.GetUploadShares);
             return ShareMapper.FromApiUploadShareList(result);

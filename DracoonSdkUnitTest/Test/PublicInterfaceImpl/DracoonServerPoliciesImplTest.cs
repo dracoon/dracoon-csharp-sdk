@@ -19,8 +19,8 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             PasswordEncryptionPolicies expected = FactoryPolicies.PasswordEncryptionPolicies;
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonServerPoliciesImpl ss = new DracoonServerPoliciesImpl(c);
-            Mock.Arrange(() => c.Builder.GetPasswordPolicies()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetPasswordPolicies, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiPasswordSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetPasswordPolicies, 0)).Returns(FactoryPolicies.ApiPasswordSettings).Occurs(1);
+            Mock.Arrange(() => c.Builder.GetPasswordPolicies()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetPasswordPolicies, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiPasswordPolicies>(Arg.IsAny<RestRequest>(), RequestType.GetPasswordPolicies, 0)).Returns(FactoryPolicies.ApiPasswordSettings).Occurs(1);
             Mock.Arrange(() => SettingsMapper.FromApiPasswordEncryptionPolicies(Arg.IsAny<ApiEncryptionPasswordSettings>())).Returns(FactoryPolicies.PasswordEncryptionPolicies).Occurs(1);
 
             // ACT
@@ -43,8 +43,8 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             PasswordSharePolicies expected = FactoryPolicies.PasswordSharePolicies;
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonServerPoliciesImpl ss = new DracoonServerPoliciesImpl(c);
-            Mock.Arrange(() => c.Builder.GetPasswordPolicies()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetPasswordPolicies, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiPasswordSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetPasswordPolicies, 0)).Returns(FactoryPolicies.ApiPasswordSettings).Occurs(1);
+            Mock.Arrange(() => c.Builder.GetPasswordPolicies()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetPasswordPolicies, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiPasswordPolicies>(Arg.IsAny<RestRequest>(), RequestType.GetPasswordPolicies, 0)).Returns(FactoryPolicies.ApiPasswordSettings).Occurs(1);
             Mock.Arrange(() => SettingsMapper.FromApiPasswordSharePolicies(Arg.IsAny<ApiSharePasswordSettings>())).Returns(FactoryPolicies.PasswordSharePolicies).Occurs(1);
 
             // ACT

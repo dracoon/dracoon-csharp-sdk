@@ -44,14 +44,14 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public UserAccount GetUserAccount() {
             _client.Executor.CheckApiServerVersion();
-            IRestRequest request = _client.Builder.GetUserAccount();
+            RestRequest request = _client.Builder.GetUserAccount();
             ApiUserAccount result = _client.Executor.DoSyncApiCall<ApiUserAccount>(request, RequestType.GetUserAccount);
             return UserMapper.FromApiUserAccount(result);
         }
 
         public CustomerAccount GetCustomerAccount() {
             _client.Executor.CheckApiServerVersion();
-            IRestRequest request = _client.Builder.GetCustomerAccount();
+            RestRequest request = _client.Builder.GetCustomerAccount();
             ApiCustomerAccount result = _client.Executor.DoSyncApiCall<ApiCustomerAccount>(request, RequestType.GetCustomerAccount);
             return CustomerMapper.FromApiCustomerAccount(result);
         }
@@ -63,7 +63,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             UserKeyPair cryptoPair = GenerateNewUserKeyPair(algorithm, _client.EncryptionPassword);
             ApiUserKeyPair apiUserKeyPair = UserMapper.ToApiUserKeyPair(cryptoPair);
-            IRestRequest request = _client.Builder.SetUserKeyPair(apiUserKeyPair);
+            RestRequest request = _client.Builder.SetUserKeyPair(apiUserKeyPair);
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.SetUserKeyPair);
         }
 
@@ -88,7 +88,7 @@ namespace Dracoon.Sdk.SdkInternal {
             AssertUserKeyPairAlgorithmSupported(algorithm);
 
             string algorithmString = UserMapper.ToApiUserKeyPairVersion(algorithm);
-            IRestRequest request = _client.Builder.DeleteUserKeyPair(algorithmString);
+            RestRequest request = _client.Builder.DeleteUserKeyPair(algorithmString);
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.DeleteUserKeyPair);
         }
 
@@ -116,7 +116,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         private UserKeyPair GetUserKeyPair(UserKeyPairAlgorithm algorithm) {
             string algorithmString = UserMapper.ToApiUserKeyPairVersion(algorithm);
-            IRestRequest request = _client.Builder.GetUserKeyPair(algorithmString);
+            RestRequest request = _client.Builder.GetUserKeyPair(algorithmString);
             ApiUserKeyPair result = _client.Executor.DoSyncApiCall<ApiUserKeyPair>(request, RequestType.GetUserKeyPair);
             UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(result);
             return userKeyPair;
@@ -137,7 +137,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public void ValidateTokenValidity() {
             _client.Executor.CheckApiServerVersion();
-            IRestRequest request = _client.Builder.GetAuthenticatedPing();
+            RestRequest request = _client.Builder.GetAuthenticatedPing();
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.GetAuthenticatedPing);
         }
 
@@ -180,8 +180,8 @@ namespace Dracoon.Sdk.SdkInternal {
                 // Check if api supports this api endpoint. If not only provide the keypair using the "old" api.
                 _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetUserKeyPairsMinimumVersion);
 
-                IRestRequest request = _client.Builder.GetUserKeyPairs();
-                List<ApiUserKeyPair> result = _client.Executor.DoSyncApiCall<List<ApiUserKeyPair>>(request, RequestType.GetUserKeyPairs);
+            RestRequest request = _client.Builder.GetUserKeyPairs();
+            List<ApiUserKeyPair> result = _client.Executor.DoSyncApiCall<List<ApiUserKeyPair>>(request, RequestType.GetUserKeyPairs);
 
                 foreach (ApiUserKeyPair apiUserKeyPair in result) {
                     UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(apiUserKeyPair);
@@ -228,7 +228,7 @@ namespace Dracoon.Sdk.SdkInternal {
         private ApiAvatarInfo GetApiAvatarInfoInternally() {
             _client.Executor.CheckApiServerVersion();
 
-            IRestRequest request = _client.Builder.GetAvatar();
+            RestRequest request = _client.Builder.GetAvatar();
             ApiAvatarInfo apiAvatarInfo = _client.Executor.DoSyncApiCall<ApiAvatarInfo>(request, RequestType.GetUserAvatar);
             return apiAvatarInfo;
         }
@@ -236,7 +236,7 @@ namespace Dracoon.Sdk.SdkInternal {
         public AvatarInfo ResetAvatar() {
             _client.Executor.CheckApiServerVersion();
 
-            IRestRequest request = _client.Builder.DeleteAvatar();
+            RestRequest request = _client.Builder.DeleteAvatar();
             ApiAvatarInfo defaultAvatarInfo = _client.Executor.DoSyncApiCall<ApiAvatarInfo>(request, RequestType.DeleteUserAvatar);
             return UserMapper.FromApiAvatarInfo(defaultAvatarInfo);
         }
@@ -274,7 +274,7 @@ namespace Dracoon.Sdk.SdkInternal {
         public AttributeList GetUserProfileAttributeList() {
             _client.Executor.CheckApiServerVersion();
 
-            IRestRequest request = _client.Builder.GetUserProfileAttributes();
+            RestRequest request = _client.Builder.GetUserProfileAttributes();
             ApiAttributeList apiAttributeList = _client.Executor.DoSyncApiCall<ApiAttributeList>(request, RequestType.GetUserProfileAttributes);
             return AttributeMapper.FromApiAttributeList(apiAttributeList);
         }
@@ -288,7 +288,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest request = _client.Builder.GetUserProfileAttribute(attributeKey);
+            RestRequest request = _client.Builder.GetUserProfileAttribute(attributeKey);
             ApiAttributeList apiAttributeList = _client.Executor.DoSyncApiCall<ApiAttributeList>(request, RequestType.GetUserProfileAttributes);
             if (apiAttributeList.Range.Total == 0) {
                 throw new DracoonApiException(DracoonApiCode.SERVER_ATTRIBUTE_NOT_FOUND);
@@ -316,7 +316,7 @@ namespace Dracoon.Sdk.SdkInternal {
             #endregion
 
             ApiAddOrUpdateAttributeRequest apiAttributes = AttributeMapper.ToApiAddOrUpdateAttributeRequest(attributes);
-            IRestRequest request = _client.Builder.PutUserProfileAttributes(apiAttributes);
+            RestRequest request = _client.Builder.PutUserProfileAttributes(apiAttributes);
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.PutUserProfileAttributes);
         }
 
@@ -329,7 +329,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest request = _client.Builder.DeleteUserProfileAttributes(attributeKey);
+            RestRequest request = _client.Builder.DeleteUserProfileAttributes(attributeKey);
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.DeleteUserProfileAttributes);
         }
 

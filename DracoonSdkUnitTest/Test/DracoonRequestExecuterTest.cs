@@ -24,7 +24,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
             IRequestExecutor exec = new DracoonRequestExecutor(c.OAuth, c);
             Mock.Arrange(() => c.Builder.GetServerVersion()).Returns(FactoryRestSharp.GetServerVersionMock()).Occurs(1);
-            Mock.Arrange(() => exec.DoSyncApiCall<ApiServerVersion>(Arg.IsAny<IRestRequest>(), RequestType.GetServerVersion, 0)).Returns(new ApiServerVersion {
+            Mock.Arrange(() => exec.DoSyncApiCall<ApiServerVersion>(Arg.IsAny<RestRequest>(), RequestType.GetServerVersion, 0)).Returns(new ApiServerVersion {
                 ServerVersion = "4.5.0",
                 RestApiVersion = "4.5.0",
                 BuildDate = DateTime.Now
@@ -47,7 +47,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
             IRequestExecutor exec = new DracoonRequestExecutor(c.OAuth, c);
             Mock.Arrange(() => c.Builder.GetServerVersion()).Returns(FactoryRestSharp.GetServerVersionMock()).Occurs(1);
-            Mock.Arrange(() => exec.DoSyncApiCall<ApiServerVersion>(Arg.IsAny<IRestRequest>(), RequestType.GetServerVersion, 0)).Returns(new ApiServerVersion {
+            Mock.Arrange(() => exec.DoSyncApiCall<ApiServerVersion>(Arg.IsAny<RestRequest>(), RequestType.GetServerVersion, 0)).Returns(new ApiServerVersion {
                 ServerVersion = "4.12.0",
                 RestApiVersion = "4.12.0",
                 BuildDate = DateTime.Now
@@ -70,9 +70,9 @@ namespace Dracoon.Sdk.UnitTest.Test {
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
             IRequestExecutor exec = new DracoonRequestExecutor(c.OAuth, c);
             Mock.Arrange(() => c.Builder.GetServerVersion()).Returns(FactoryRestSharp.GetServerVersionMock());
-            Mock.Arrange(() => exec.DoSyncApiCall<ApiServerVersion>(Arg.IsAny<IRestRequest>(), RequestType.GetServerVersion, 0)).Returns(new ApiServerVersion {
-                ServerVersion = "4.99.0",
-                RestApiVersion = "4.99.0",
+            Mock.Arrange(() => exec.DoSyncApiCall<ApiServerVersion>(Arg.IsAny<RestRequest>(), RequestType.GetServerVersion, 0)).Returns(new ApiServerVersion {
+                ServerVersion = "5.99.0",
+                RestApiVersion = "5.99.0",
                 BuildDate = DateTime.Now
             });
 
@@ -90,7 +90,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
             IRequestExecutor exec = new DracoonRequestExecutor(c.OAuth, c);
             Mock.Arrange(() => c.Builder.GetServerVersion()).Returns(FactoryRestSharp.GetServerVersionMock());
-            Mock.Arrange(() => exec.DoSyncApiCall<ApiServerVersion>(Arg.IsAny<IRestRequest>(), RequestType.GetServerVersion, 0)).Returns(new ApiServerVersion {
+            Mock.Arrange(() => exec.DoSyncApiCall<ApiServerVersion>(Arg.IsAny<RestRequest>(), RequestType.GetServerVersion, 0)).Returns(new ApiServerVersion {
                 ServerVersion = "4.13.0",
                 RestApiVersion = "4.13.0",
                 BuildDate = DateTime.Now
@@ -123,11 +123,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             response.Content = JsonConvert.SerializeObject(expected);
             response.StatusCode = HttpStatusCode.OK;
             Mock.NonPublic.Arrange<bool>(response, "IsSuccessful").Returns(true);
-            IRestRequest request = FactoryRestSharp.GetServerVersionMock();
+            RestRequest request = FactoryRestSharp.GetServerVersionMock();
             Mock.Arrange(() => DracoonClient.HttpConfig).Returns(new DracoonHttpConfig {
                 WebProxy = new WebProxy()
             });
-            Mock.Arrange(() => new RestClient().Execute(request)).IgnoreInstance().Returns(response);
+            Mock.Arrange(() => new RestClient(new RestClientOptions(), null, null, false).Execute(request, CancellationToken.None)).IgnoreInstance().Returns(response);
 
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
             IRequestExecutor exec = new DracoonRequestExecutor(FactoryClients.OAuthMock, c);
@@ -147,9 +147,9 @@ namespace Dracoon.Sdk.UnitTest.Test {
             RestResponse response = FactoryRestSharp.RestResponse;
             response.StatusCode = HttpStatusCode.OK;
             Mock.NonPublic.Arrange<bool>(response, "IsSuccessful").Returns(true);
-            IRestRequest request = FactoryRestSharp.GetAuthenticatedPingMock();
+            RestRequest request = FactoryRestSharp.GetAuthenticatedPingMock();
             Mock.Arrange(() => DracoonClient.HttpConfig).Returns(new DracoonHttpConfig());
-            Mock.Arrange(() => new RestClient().Execute(request)).IgnoreInstance().Returns(response);
+            Mock.Arrange(() => new RestClient(new RestClientOptions(), null, null, false).Execute(request, CancellationToken.None)).IgnoreInstance().Returns(response);
 
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
             IRequestExecutor exec = new DracoonRequestExecutor(FactoryClients.OAuthMock, c);
@@ -167,9 +167,9 @@ namespace Dracoon.Sdk.UnitTest.Test {
             WebException we = new WebException();
             RestResponse response = FactoryRestSharp.RestResponse;
             response.ErrorException = we;
-            IRestRequest request = FactoryRestSharp.GetServerVersionMock();
+            RestRequest request = FactoryRestSharp.GetServerVersionMock();
             Mock.Arrange(() => DracoonClient.HttpConfig).Returns(new DracoonHttpConfig());
-            Mock.Arrange(() => new RestClient().Execute(request)).IgnoreInstance().Returns(response);
+            Mock.Arrange(() => new RestClient(new RestClientOptions(), null, null, false).Execute(request, CancellationToken.None)).IgnoreInstance().Returns(response);
             Mock.Arrange(() => DracoonErrorParser.ParseError(we, RequestType.GetServerVersion)).Throws(new DracoonApiException());
 
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
@@ -183,9 +183,9 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void DoSyncApiCall_OAuth_Fail() {
             // ARRANGE
             RestResponse response = FactoryRestSharp.RestResponse;
-            IRestRequest request = FactoryRestSharp.PostOAuthTokenMock("id1", "secret1", "grant", "code1");
+            RestRequest request = FactoryRestSharp.PostOAuthTokenMock("id1", "secret1", "grant", "code1");
             Mock.Arrange(() => DracoonClient.HttpConfig).Returns(new DracoonHttpConfig());
-            Mock.Arrange(() => new RestClient().Execute(request)).IgnoreInstance().Returns(response);
+            Mock.Arrange(() => new RestClient(new RestClientOptions(), null, null, false).Execute(request, CancellationToken.None)).IgnoreInstance().Returns(response);
             Mock.Arrange(() => OAuthErrorParser.ParseError(response, RequestType.PostOAuthToken)).Throws(new DracoonApiException());
 
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
@@ -199,9 +199,9 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void DoSyncApiCall_Fail() {
             // ARRANGE
             RestResponse response = FactoryRestSharp.RestResponse;
-            IRestRequest request = FactoryRestSharp.GetServerVersionMock();
+            RestRequest request = FactoryRestSharp.GetServerVersionMock();
             Mock.Arrange(() => DracoonClient.HttpConfig).Returns(new DracoonHttpConfig());
-            Mock.Arrange(() => new RestClient().Execute(request)).IgnoreInstance().Returns(response);
+            Mock.Arrange(() => new RestClient(new RestClientOptions(), null, null, false).Execute(request, CancellationToken.None)).IgnoreInstance().Returns(response);
             Mock.Arrange(() => DracoonErrorParser.ParseError(response, RequestType.GetServerVersion)).Throws(new DracoonApiException());
 
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock();
@@ -215,9 +215,9 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void DoSyncApiCall_Fail_Retry() {
             // ARRANGE
             RestResponse response = FactoryRestSharp.RestResponse;
-            IRestRequest request = FactoryRestSharp.GetAuthenticatedPingMock();
+            RestRequest request = FactoryRestSharp.GetAuthenticatedPingMock();
             Mock.Arrange(() => DracoonClient.HttpConfig).Returns(new DracoonHttpConfig());
-            Mock.Arrange(() => new RestClient().Execute(request)).IgnoreInstance().Returns(response);
+            Mock.Arrange(() => new RestClient(new RestClientOptions(), null, null, false).Execute(request, CancellationToken.None)).IgnoreInstance().Returns(response);
             Mock.Arrange(() => FactoryClients.OAuthMock.RefreshAccessToken()).IgnoreInstance().DoNothing();
             Mock.Arrange(() => FactoryClients.OAuthMock.BuildAuthString()).IgnoreInstance().Returns("AuthTest");
             Mock.Arrange(() => DracoonErrorParser.ParseError(response, RequestType.GetAuthenticatedPing))
@@ -234,9 +234,9 @@ namespace Dracoon.Sdk.UnitTest.Test {
         public void DoSyncApiCall_TooManyRequestsFail_Retry() {
             // ARRANGE
             RestResponse response = FactoryRestSharp.RestResponse;
-            IRestRequest request = FactoryRestSharp.GetAuthenticatedPingMock();
+            RestRequest request = FactoryRestSharp.GetAuthenticatedPingMock();
             Mock.Arrange(() => DracoonClient.HttpConfig).Returns(new DracoonHttpConfig());
-            Mock.Arrange(() => new RestClient().Execute(request)).IgnoreInstance().Returns(response);
+            Mock.Arrange(() => new RestClient(new RestClientOptions(), null, null, false).Execute(request, CancellationToken.None)).IgnoreInstance().Returns(response);
             Mock.Arrange(() => FactoryClients.OAuthMock.RefreshAccessToken()).IgnoreInstance().DoNothing();
             Mock.Arrange(() => FactoryClients.OAuthMock.BuildAuthString()).IgnoreInstance().Returns("AuthTest");
             Mock.Arrange(() => DracoonErrorParser.ParseError(response, RequestType.GetAuthenticatedPing))

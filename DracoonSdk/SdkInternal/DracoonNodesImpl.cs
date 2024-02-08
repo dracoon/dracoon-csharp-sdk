@@ -40,7 +40,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest restRequest = _client.Builder.GetNodes(parentNodeId, offset, limit, filter: filter);
+            RestRequest restRequest = _client.Builder.GetNodes(parentNodeId, offset, limit, filter: filter);
             ApiNodeList result = _client.Executor.DoSyncApiCall<ApiNodeList>(restRequest, RequestType.GetNodes);
             return NodeMapper.FromApiNodeList(result);
         }
@@ -54,7 +54,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest restRequest = _client.Builder.GetNode(nodeId);
+            RestRequest restRequest = _client.Builder.GetNode(nodeId);
             ApiNode result = _client.Executor.DoSyncApiCall<ApiNode>(restRequest, RequestType.GetNode);
             return NodeMapper.FromApiNode(result);
         }
@@ -101,7 +101,7 @@ namespace Dracoon.Sdk.SdkInternal {
             #endregion
 
             ApiDeleteNodesRequest apiDeleteNodesRequest = NodeMapper.ToApiDeleteNodesRequest(request);
-            IRestRequest restRequest = _client.Builder.DeleteNodes(apiDeleteNodesRequest);
+            RestRequest restRequest = _client.Builder.DeleteNodes(apiDeleteNodesRequest);
             _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, RequestType.DeleteNodes);
         }
 
@@ -118,7 +118,7 @@ namespace Dracoon.Sdk.SdkInternal {
             #endregion
 
             ApiCopyNodesRequest apiCopyNodesRequest = NodeMapper.ToApiCopyNodesRequest(request);
-            IRestRequest restRequest = _client.Builder.PostCopyNodes(request.TargetNodeId, apiCopyNodesRequest);
+            RestRequest restRequest = _client.Builder.PostCopyNodes(request.TargetNodeId, apiCopyNodesRequest);
             ApiNode result = _client.Executor.DoSyncApiCall<ApiNode>(restRequest, RequestType.PostCopyNodes);
             return NodeMapper.FromApiNode(result);
         }
@@ -136,7 +136,7 @@ namespace Dracoon.Sdk.SdkInternal {
             #endregion
 
             ApiMoveNodesRequest apiMoveNodesRequest = NodeMapper.ToApiMoveNodesRequest(request);
-            IRestRequest restRequest = _client.Builder.PostMoveNodes(request.TargetNodeId, apiMoveNodesRequest);
+            RestRequest restRequest = _client.Builder.PostMoveNodes(request.TargetNodeId, apiMoveNodesRequest);
             ApiNode result = _client.Executor.DoSyncApiCall<ApiNode>(restRequest, RequestType.PostMoveNodes);
             return NodeMapper.FromApiNode(result);
         }
@@ -154,7 +154,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest restRequest = _client.Builder.GetSearchNodes(parentNodeId, searchString, offset, limit, filter: filter, sort: sort);
+            RestRequest restRequest = _client.Builder.GetSearchNodes(parentNodeId, searchString, offset, limit, filter: filter, sort: sort);
             ApiNodeList result = _client.Executor.DoSyncApiCall<ApiNodeList>(restRequest, RequestType.GetSearchNodes);
             return NodeMapper.FromApiNodeList(result);
         }
@@ -168,7 +168,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest restRequest = _client.Builder.PostFavorite(nodeId);
+            RestRequest restRequest = _client.Builder.PostFavorite(nodeId);
             ApiNode result = _client.Executor.DoSyncApiCall<ApiNode>(restRequest, RequestType.PostFavorite);
             return NodeMapper.FromApiNode(result);
         }
@@ -182,7 +182,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest restRequest = _client.Builder.DeleteFavorite(nodeId);
+            RestRequest restRequest = _client.Builder.DeleteFavorite(nodeId);
             _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, RequestType.DeleteFavorite);
         }
 
@@ -198,7 +198,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest restRequest = _client.Builder.GetRecycleBin(parentRoomId, offset, limit);
+            RestRequest restRequest = _client.Builder.GetRecycleBin(parentRoomId, offset, limit);
             ApiDeletedNodeSummaryList result = _client.Executor.DoSyncApiCall<ApiDeletedNodeSummaryList>(restRequest, RequestType.GetRecycleBin);
             return NodeMapper.FromApiDeletedNodeSummaryList(result);
         }
@@ -212,7 +212,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest restRequest = _client.Builder.DeleteRecycleBin(parentRoomId);
+            RestRequest restRequest = _client.Builder.DeleteRecycleBin(parentRoomId);
             _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, RequestType.DeleteRecycleBin);
         }
 
@@ -228,7 +228,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest restRequest =
+            RestRequest restRequest =
                 _client.Builder.GetPreviousVersions(parentId, EnumConverter.ConvertNodeTypeEnumToValue(type), nodeName, offset, limit);
             ApiDeletedNodeVersionsList result =
                 _client.Executor.DoSyncApiCall<ApiDeletedNodeVersionsList>(restRequest, RequestType.GetPreviousVersions);
@@ -244,7 +244,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest restRequest = _client.Builder.GetPreviousVersion(previousNodeId);
+            RestRequest restRequest = _client.Builder.GetPreviousVersion(previousNodeId);
             ApiDeletedNodeVersion result = _client.Executor.DoSyncApiCall<ApiDeletedNodeVersion>(restRequest, RequestType.GetPreviousVersion);
             return NodeMapper.FromApiDeletedNodeVersion(result);
         }
@@ -262,7 +262,7 @@ namespace Dracoon.Sdk.SdkInternal {
             #endregion
 
             ApiRestorePreviousVersionsRequest apiRequest = NodeMapper.ToApiRestorePreviousVersionsRequest(request);
-            IRestRequest restRequest = _client.Builder.PostRestoreNodeVersion(apiRequest);
+            RestRequest restRequest = _client.Builder.PostRestoreNodeVersion(apiRequest);
             _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, RequestType.PostRestoreNodeVersion);
         }
 
@@ -278,7 +278,7 @@ namespace Dracoon.Sdk.SdkInternal {
             #endregion
 
             ApiDeletePreviousVersionsRequest apiRequest = NodeMapper.ToApiDeletePreviousVersionsRequest(request);
-            IRestRequest restRequest = _client.Builder.DeletePreviousVersion(apiRequest);
+            RestRequest restRequest = _client.Builder.DeletePreviousVersion(apiRequest);
             _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, RequestType.DeletePreviousVersions);
         }
 
@@ -327,7 +327,7 @@ namespace Dracoon.Sdk.SdkInternal {
             #endregion
 
             ApiCreateRoomRequest apiCreateRoomRequest = RoomMapper.ToApiCreateRoomRequest(request);
-            IRestRequest restRequest = _client.Builder.PostRoom(apiCreateRoomRequest);
+            RestRequest restRequest = _client.Builder.PostRoom(apiCreateRoomRequest);
             ApiNode result = _client.Executor.DoSyncApiCall<ApiNode>(restRequest, RequestType.PostRoom);
             return NodeMapper.FromApiNode(result);
         }
@@ -345,7 +345,7 @@ namespace Dracoon.Sdk.SdkInternal {
             #endregion
 
             ApiUpdateRoomRequest apiUpdateRoomRequest = RoomMapper.ToApiUpdateRoomRequest(request);
-            IRestRequest restRequest = _client.Builder.PutRoom(request.Id, apiUpdateRoomRequest);
+            RestRequest restRequest = _client.Builder.PutRoom(request.Id, apiUpdateRoomRequest);
             ApiNode result = _client.Executor.DoSyncApiCall<ApiNode>(restRequest, RequestType.PutRoom);
             return NodeMapper.FromApiNode(result);
         }
@@ -382,7 +382,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             ApiEnableRoomEncryptionRequest apiEnableRoomEncryptionRequest =
                 RoomMapper.ToApiEnableRoomEncryptionRequest(request, apiDataRoomRescueKey);
-            IRestRequest restRequest = _client.Builder.PutEnableRoomEncryption(request.Id, apiEnableRoomEncryptionRequest);
+            RestRequest restRequest = _client.Builder.PutEnableRoomEncryption(request.Id, apiEnableRoomEncryptionRequest);
             ApiNode result = _client.Executor.DoSyncApiCall<ApiNode>(restRequest, RequestType.PutEnableRoomEncryption);
             return NodeMapper.FromApiNode(result);
         }
@@ -403,7 +403,7 @@ namespace Dracoon.Sdk.SdkInternal {
             #endregion
 
             ApiCreateFolderRequest apiCreateFolderRequest = FolderMapper.ToApiCreateFolderRequest(request);
-            IRestRequest restRequest = _client.Builder.PostFolder(apiCreateFolderRequest);
+            RestRequest restRequest = _client.Builder.PostFolder(apiCreateFolderRequest);
             ApiNode result = _client.Executor.DoSyncApiCall<ApiNode>(restRequest, RequestType.PostFolder);
             return NodeMapper.FromApiNode(result);
         }
@@ -420,7 +420,7 @@ namespace Dracoon.Sdk.SdkInternal {
             #endregion
 
             ApiUpdateFolderRequest apiUpdateFolderRequest = FolderMapper.ToApiUpdateFolderRequest(request);
-            IRestRequest restRequest = _client.Builder.PutFolder(request.Id, apiUpdateFolderRequest);
+            RestRequest restRequest = _client.Builder.PutFolder(request.Id, apiUpdateFolderRequest);
             ApiNode result = _client.Executor.DoSyncApiCall<ApiNode>(restRequest, RequestType.PutFolder);
             return NodeMapper.FromApiNode(result);
         }
@@ -441,7 +441,7 @@ namespace Dracoon.Sdk.SdkInternal {
             #endregion
 
             ApiUpdateFileRequest apiUpdateFileRequest = FileMapper.ToApiUpdateFileRequest(request);
-            IRestRequest restRequest = _client.Builder.PutFile(request.Id, apiUpdateFileRequest);
+            RestRequest restRequest = _client.Builder.PutFile(request.Id, apiUpdateFileRequest);
             ApiNode result = _client.Executor.DoSyncApiCall<ApiNode>(restRequest, RequestType.PutFile);
             return NodeMapper.FromApiNode(result);
         }
@@ -571,7 +571,7 @@ namespace Dracoon.Sdk.SdkInternal {
             int currentBatchOffset = 0;
             const int batchLimit = 10;
             while (currentBatchOffset < limit) {
-                IRestRequest currentBatchRequest = _client.Builder.GetMissingFileKeys(nodeId, batchLimit, currentBatchOffset);
+                RestRequest currentBatchRequest = _client.Builder.GetMissingFileKeys(nodeId, batchLimit, currentBatchOffset);
                 ApiMissingFileKeys missingFileKeys =
                     _client.Executor.DoSyncApiCall<ApiMissingFileKeys>(currentBatchRequest, RequestType.GetMissingFileKeys);
                 HandlePendingMissingFileKeys(missingFileKeys, userKeyPairs);
@@ -607,7 +607,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 setUserFileKeysRequest.Items.Add(newRequestEntry);
             }
 
-            IRestRequest restRequest = _client.Builder.PostMissingFileKeys(setUserFileKeysRequest);
+            RestRequest restRequest = _client.Builder.PostMissingFileKeys(setUserFileKeysRequest);
             _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, RequestType.PostMissingFileKeys);
         }
 
@@ -653,7 +653,7 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         internal EncryptedFileKey GetEncryptedFileKey(long nodeId) {
-            IRestRequest fileKeyRequest = _client.Builder.GetFileKey(nodeId);
+            RestRequest fileKeyRequest = _client.Builder.GetFileKey(nodeId);
             return FileMapper.FromApiFileKey(
                 _client.Executor.DoSyncApiCall<ApiFileKey>(fileKeyRequest, RequestType.GetFileKey));
         }

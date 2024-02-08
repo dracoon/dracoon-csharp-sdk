@@ -22,8 +22,8 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             ServerDefaultSettings expected = FactoryServerSettings.ServerDefaultSettings;
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonServerSettingsImpl ss = new DracoonServerSettingsImpl(c);
-            Mock.Arrange(() => c.Builder.GetDefaultsSettings()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetDefaultsConfig, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDefaultsSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetDefaultsSettings, 0)).Returns(FactoryServerSettings.ApiDefaultsSettings).Occurs(1);
+            Mock.Arrange(() => c.Builder.GetDefaultsSettings()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetDefaultsConfig, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDefaultsSettings>(Arg.IsAny<RestRequest>(), RequestType.GetDefaultsSettings, 0)).Returns(FactoryServerSettings.ApiDefaultsSettings).Occurs(1);
             Mock.Arrange(() => SettingsMapper.FromApiDefaultsSettings(Arg.IsAny<ApiDefaultsSettings>())).Returns(FactoryServerSettings.ServerDefaultSettings).Occurs(1);
 
             // ACT
@@ -46,8 +46,8 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             ServerGeneralSettings expected = FactoryServerSettings.ServerGeneralSettings;
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonServerSettingsImpl ss = new DracoonServerSettingsImpl(c);
-            Mock.Arrange(() => c.Builder.GetGeneralSettings()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0)).Returns(FactoryServerSettings.ApiGeneralSettings).Occurs(1);
+            Mock.Arrange(() => c.Builder.GetGeneralSettings()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<RestRequest>(), RequestType.GetGeneralSettings, 0)).Returns(FactoryServerSettings.ApiGeneralSettings).Occurs(1);
             Mock.Arrange(() => SettingsMapper.FromApiGeneralSettings(Arg.IsAny<ApiGeneralSettings>())).Returns(FactoryServerSettings.ServerGeneralSettings).Occurs(1);
 
             // ACT
@@ -70,8 +70,8 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             ServerInfrastructureSettings expected = FactoryServerSettings.ServerInfrastructureSettings;
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonServerSettingsImpl ss = new DracoonServerSettingsImpl(c);
-            Mock.Arrange(() => c.Builder.GetInfrastructureSettings()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetInfrastructureConfig, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiInfrastructureSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetInfrastructureSettings, 0))
+            Mock.Arrange(() => c.Builder.GetInfrastructureSettings()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetInfrastructureConfig, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiInfrastructureSettings>(Arg.IsAny<RestRequest>(), RequestType.GetInfrastructureSettings, 0))
                     .Returns(FactoryServerSettings.ApiInfrastructureSettings).Occurs(1);
             Mock.Arrange(() => SettingsMapper.FromApiInfrastructureSettings(Arg.IsAny<ApiInfrastructureSettings>()))
                 .Returns(FactoryServerSettings.ServerInfrastructureSettings).Occurs(1);
@@ -95,8 +95,8 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonServerSettingsImpl ss = new DracoonServerSettingsImpl(c);
-            Mock.Arrange(() => c.Builder.GetAlgorithms()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetAlgorithms, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiAlgorithms>(Arg.IsAny<IRestRequest>(), RequestType.GetAlgorithms, 0))
+            Mock.Arrange(() => c.Builder.GetAlgorithms()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetAlgorithms, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiAlgorithms>(Arg.IsAny<RestRequest>(), RequestType.GetAlgorithms, 0))
                 .Returns(FactoryServerSettings.ApiAlgorithms).Occurs(1);
             Mock.Arrange(() => SettingsMapper.FromApiUserKeyPairAlgorithms(Arg.IsAny<List<ApiAlgorithm>>()))
                 .Returns(FactoryServerSettings.UserKeyPairAlgorithms).Occurs(1);
@@ -133,8 +133,8 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonServerSettingsImpl ss = new DracoonServerSettingsImpl(c);
-            Mock.Arrange(() => c.Builder.GetAlgorithms()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetAlgorithms, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiAlgorithms>(Arg.IsAny<IRestRequest>(), RequestType.GetAlgorithms, 0))
+            Mock.Arrange(() => c.Builder.GetAlgorithms()).Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetAlgorithms, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiAlgorithms>(Arg.IsAny<RestRequest>(), RequestType.GetAlgorithms, 0))
                 .Returns(FactoryServerSettings.ApiAlgorithms).Occurs(1);
             Mock.Arrange(() => SettingsMapper.FromApiFileKeyAlgorithms(Arg.IsAny<List<ApiAlgorithm>>()))
                 .Returns(FactoryServerSettings.FileKeyAlgorithms).Occurs(1);
