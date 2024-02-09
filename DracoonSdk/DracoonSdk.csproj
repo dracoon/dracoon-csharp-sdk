@@ -16,11 +16,14 @@
     <PackageIconUrl />
     <PackageProjectUrl>https://github.com/dracoon/dracoon-csharp-sdk</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Version>2.1.0-beta3</Version>
+    <Version>2.1.0-beta4</Version>
     <OutDir></OutDir>
     <Description>The DRACOON SDK for .NET Standard.</Description>
     <Copyright>Copyright ©2021 DRACOON GmbH</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <SignAssembly>False</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,6 +42,10 @@
     <None Include="..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
     <None Include="DracoonSdk_NugetImage.png">
       <Pack>True</Pack>
