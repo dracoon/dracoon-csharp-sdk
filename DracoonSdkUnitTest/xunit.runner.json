@@ -3,5 +3,6 @@
   "diagnosticMessages": true,
   "parallelizeTestCollections": false,
   "maxParallelThreads": -1,
-  "longRunningTestSeconds": 60
+  "longRunningTestSeconds": 60,
+  "appDomain": "denied"
 }
