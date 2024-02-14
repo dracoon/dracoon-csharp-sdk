@@ -9,6 +9,7 @@ using RestSharp;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading;
 using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
@@ -23,7 +24,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         protected override void StartDownload() {
             NotifyStarted(ActionId);
-            IRestRequest downloadTokenRequest = Client.Builder.PostFileDownload(AssociatedNode.Id);
+            RestRequest downloadTokenRequest = Client.Builder.PostFileDownload(AssociatedNode.Id);
             ApiDownloadToken token = Client.Executor.DoSyncApiCall<ApiDownloadToken>(downloadTokenRequest, RequestType.PostDownloadToken);
             EncryptedFileKey encryptedFileKey = Client.NodesImpl.GetEncryptedFileKey(AssociatedNode.Id);
             UserKeyPair keyPair = Client.AccountImpl.GetAndCheckUserKeyPair(CryptoHelper.DetermineUserKeyPairVersion(encryptedFileKey.Version));
@@ -33,7 +34,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         private PlainFileKey DecryptFileKey(EncryptedFileKey encryptedFileKey, UserPrivateKey userPrivateKey) {
             try {
-                return Crypto.Sdk.Crypto.DecryptFileKey(encryptedFileKey, userPrivateKey, Client.EncryptionPassword);
+                return Crypto.Sdk.Crypto.DecryptFileKey(encryptedFileKey, userPrivateKey, Encoding.UTF8.GetBytes(Client.EncryptionPassword));
             } catch (CryptoException ce) {
                 string message = "Decryption of file key for encrypted download " + ActionId + " failed!";
                 DracoonClient.Log.Debug(LogTag, message);

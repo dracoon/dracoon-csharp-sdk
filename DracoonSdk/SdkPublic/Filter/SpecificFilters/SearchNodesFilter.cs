@@ -2,81 +2,37 @@
     /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/SearchNodesFilter/*'/>
     public class SearchNodesFilter : DracoonFilter {
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/Type/*'/>
-        public static NodeTypeFilter Type {
-            get {
-                return new NodeTypeFilter();
-            }
-        }
+        public static NodeTypeFilter Type => new NodeTypeFilter();
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/IsFavorite/*'/>
-        public static IsFavoriteFilter IsFavorite {
-            get {
-                return new IsFavoriteFilter();
-            }
-        }
+        public static IsFavoriteFilter IsFavorite => new IsFavoriteFilter();
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/ParentPath/*'/>
-        public static ParentPathFilter ParentPath {
-            get {
-                return new ParentPathFilter();
-            }
-        }
+        public static ParentPathFilter ParentPath => new ParentPathFilter();
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/UpdatedBy/*'/>
-        public static UpdatedByFilter UpdatedBy {
-            get {
-                return new UpdatedByFilter();
-            }
-        }
+        public static UpdatedByFilter UpdatedBy => new UpdatedByFilter();
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/UpdatedById/*'/>
-        public static UpdatedByIdFilter UpdatedById {
-            get {
-                return new UpdatedByIdFilter();
-            }
-        }
+        public static UpdatedByIdFilter UpdatedById => new UpdatedByIdFilter();
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/CreatedBy/*'/>
-        public static CreatedByFilter CreatedBy {
-            get {
-                return new CreatedByFilter();
-            }
-        }
+        public static CreatedByFilter CreatedBy => new CreatedByFilter();
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/CreatedById/*'/>
-        public static CreatedByIdFilter CreatedById {
-            get {
-                return new CreatedByIdFilter();
-            }
-        }
+        public static CreatedByIdFilter CreatedById => new CreatedByIdFilter();
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/FileType/*'/>
-        public static FileTypeFilter FileType {
-            get {
-                return new FileTypeFilter();
-            }
-        }
+        public static FileTypeFilter FileType => new FileTypeFilter();
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/Classification/*'/>
-        public static ClassificationFilter Classification {
-            get {
-                return new ClassificationFilter();
-            }
-        }
+        public static ClassificationFilter Classification => new ClassificationFilter();
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/ModificationTimestamp/*'/>
-        public static TimestampFilter ModificationTimestamp {
-            get {
-                return new TimestampFilter("timestampModification");
-            }
-        }
+        public static TimestampFilter ModificationTimestamp => new TimestampFilter("timestampModification");
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/CreationTimestamp/*'/>
-        public static TimestampFilter CreationTimestamp {
-            get {
-                return new TimestampFilter("timestampCreation");
-            }
-        }
+        public static TimestampFilter CreationTimestamp => new TimestampFilter("timestampCreation");
 
         /// <include file="SpecificFilterDoc.xml" path='docs/members[@name="searchNodesFilter"]/AddNodeTypeFilter/*'/>
         public void AddNodeTypeFilter(DracoonFilterType<NodeTypeFilter> typeFilter) {

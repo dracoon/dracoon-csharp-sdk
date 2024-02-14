@@ -1,5 +1,5 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace Dracoon.Sdk.SdkInternal.ApiModel.Requests {
     internal class ApiUpdateFileRequest {

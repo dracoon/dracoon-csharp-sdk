@@ -8,12 +8,8 @@ namespace Dracoon.Sdk.SdkInternal.OAuth {
         private DracoonAuth _auth;
 
         DracoonAuth IOAuth.Auth {
-            get {
-                return _auth;
-            }
-            set {
-                _auth = value;
-            }
+            get => _auth;
+            set => _auth = value;
         }
 
         internal OAuthClient(IInternalDracoonClient client, DracoonAuth auth) {
@@ -35,7 +31,7 @@ namespace Dracoon.Sdk.SdkInternal.OAuth {
         }
 
         private void RequestAccessToken() {
-            IRestRequest request = _client.Builder.PostOAuthToken(_auth.ClientId, _auth.ClientSecret,
+            RestRequest request = _client.Builder.PostOAuthToken(_auth.ClientId, _auth.ClientSecret,
                 OAuthConfig.OAuthGrantTypes.AUTHORIZATION_CODE.Text, _auth.AuthorizationCode);
             ApiOAuthToken token = _client.Executor.DoSyncApiCall<ApiOAuthToken>(request, RequestType.PostOAuthToken);
             _auth.AccessToken = token.AccessToken;
@@ -45,7 +41,7 @@ namespace Dracoon.Sdk.SdkInternal.OAuth {
 
         void IOAuth.RefreshAccessToken() {
             if (!string.IsNullOrWhiteSpace(_auth.RefreshToken)) {
-                IRestRequest request = _client.Builder.PostOAuthRefresh(_auth.ClientId, _auth.ClientSecret,
+                RestRequest request = _client.Builder.PostOAuthRefresh(_auth.ClientId, _auth.ClientSecret,
                     OAuthConfig.OAuthGrantTypes.REFRESH_TOKEN.Text, _auth.RefreshToken);
                 ApiOAuthToken token = _client.Executor.DoSyncApiCall<ApiOAuthToken>(request, RequestType.PostOAuthRefresh);
                 _auth.AccessToken = token.AccessToken;

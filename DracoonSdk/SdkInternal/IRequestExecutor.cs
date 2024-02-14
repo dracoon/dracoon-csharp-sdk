@@ -1,13 +1,13 @@
-﻿using System;
+﻿using RestSharp;
+using System;
 using System.Net;
 using System.Threading;
-using RestSharp;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal interface IRequestExecutor {
         void CheckApiServerVersion(string minVersionForCheck = ApiConfig.MinimumApiVersion);
 
-        T DoSyncApiCall<T>(IRestRequest request, DracoonRequestExecutor.RequestType requestType, int sendTry = 0) where T : class, new();
+        T DoSyncApiCall<T>(RestRequest request, DracoonRequestExecutor.RequestType requestType, int sendTry = 0) where T : class, new();
 
         byte[] ExecuteWebClientDownload(WebClient requestClient, Uri target, DracoonRequestExecutor.RequestType type, Thread asyncThread = null,
             int sendTry = 0);

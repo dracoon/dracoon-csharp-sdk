@@ -10,9 +10,6 @@ using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -47,14 +44,14 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public UserAccount GetUserAccount() {
             _client.Executor.CheckApiServerVersion();
-            IRestRequest request = _client.Builder.GetUserAccount();
+            RestRequest request = _client.Builder.GetUserAccount();
             ApiUserAccount result = _client.Executor.DoSyncApiCall<ApiUserAccount>(request, RequestType.GetUserAccount);
             return UserMapper.FromApiUserAccount(result);
         }
 
         public CustomerAccount GetCustomerAccount() {
             _client.Executor.CheckApiServerVersion();
-            IRestRequest request = _client.Builder.GetCustomerAccount();
+            RestRequest request = _client.Builder.GetCustomerAccount();
             ApiCustomerAccount result = _client.Executor.DoSyncApiCall<ApiCustomerAccount>(request, RequestType.GetCustomerAccount);
             return CustomerMapper.FromApiCustomerAccount(result);
         }
@@ -66,7 +63,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             UserKeyPair cryptoPair = GenerateNewUserKeyPair(algorithm, _client.EncryptionPassword);
             ApiUserKeyPair apiUserKeyPair = UserMapper.ToApiUserKeyPair(cryptoPair);
-            IRestRequest request = _client.Builder.SetUserKeyPair(apiUserKeyPair);
+            RestRequest request = _client.Builder.SetUserKeyPair(apiUserKeyPair);
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.SetUserKeyPair);
         }
 
@@ -91,13 +88,13 @@ namespace Dracoon.Sdk.SdkInternal {
             AssertUserKeyPairAlgorithmSupported(algorithm);
 
             string algorithmString = UserMapper.ToApiUserKeyPairVersion(algorithm);
-            IRestRequest request = _client.Builder.DeleteUserKeyPair(algorithmString);
+            RestRequest request = _client.Builder.DeleteUserKeyPair(algorithmString);
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.DeleteUserKeyPair);
         }
 
         internal UserKeyPair GenerateNewUserKeyPair(UserKeyPairAlgorithm algorithm, string encryptionPassword) {
             try {
-                return Crypto.Sdk.Crypto.GenerateUserKeyPair(algorithm, encryptionPassword);
+                return Crypto.Sdk.Crypto.GenerateUserKeyPair(algorithm, Encoding.UTF8.GetBytes(encryptionPassword));
             } catch (CryptoException ce) {
                 DracoonClient.Log.Debug(Logtag, "Generation of user key pair failed with " + ce.Message);
                 throw new DracoonCryptoException(CryptoErrorMapper.ParseCause(ce), ce);
@@ -119,7 +116,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         private UserKeyPair GetUserKeyPair(UserKeyPairAlgorithm algorithm) {
             string algorithmString = UserMapper.ToApiUserKeyPairVersion(algorithm);
-            IRestRequest request = _client.Builder.GetUserKeyPair(algorithmString);
+            RestRequest request = _client.Builder.GetUserKeyPair(algorithmString);
             ApiUserKeyPair result = _client.Executor.DoSyncApiCall<ApiUserKeyPair>(request, RequestType.GetUserKeyPair);
             UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(result);
             return userKeyPair;
@@ -140,7 +137,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         public void ValidateTokenValidity() {
             _client.Executor.CheckApiServerVersion();
-            IRestRequest request = _client.Builder.GetAuthenticatedPing();
+            RestRequest request = _client.Builder.GetAuthenticatedPing();
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.GetAuthenticatedPing);
         }
 
@@ -183,8 +180,8 @@ namespace Dracoon.Sdk.SdkInternal {
                 // Check if api supports this api endpoint. If not only provide the keypair using the "old" api.
                 _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetUserKeyPairsMinimumVersion);
 
-                IRestRequest request = _client.Builder.GetUserKeyPairs();
-                List<ApiUserKeyPair> result = _client.Executor.DoSyncApiCall<List<ApiUserKeyPair>>(request, RequestType.GetUserKeyPairs);
+            RestRequest request = _client.Builder.GetUserKeyPairs();
+            List<ApiUserKeyPair> result = _client.Executor.DoSyncApiCall<List<ApiUserKeyPair>>(request, RequestType.GetUserKeyPairs);
 
                 foreach (ApiUserKeyPair apiUserKeyPair in result) {
                     UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(apiUserKeyPair);
@@ -206,21 +203,20 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         private void CheckKeyPair(UserKeyPair keyPair) {
-            if (!Crypto.Sdk.Crypto.CheckUserKeyPair(keyPair, _client.EncryptionPassword)) {
+            if (!Crypto.Sdk.Crypto.CheckUserKeyPair(keyPair, Encoding.UTF8.GetBytes(_client.EncryptionPassword))) {
                 throw new DracoonCryptoException(DracoonCryptoCode.INVALID_PASSWORD_ERROR);
             }
         }
 
         #region Avatar functions
 
-        public Image GetAvatar() {
+        public byte[] GetAvatar() {
             ApiAvatarInfo apiAvatarInfo = GetApiAvatarInfoInternally();
 
             using (WebClient avatarClient = _client.Builder.ProvideAvatarDownloadWebClient()) {
                 byte[] avatarImageBytes =
                     _client.Executor.ExecuteWebClientDownload(avatarClient, new Uri(apiAvatarInfo.AvatarUri), RequestType.GetUserAvatar);
-                MemoryStream ms = new MemoryStream(avatarImageBytes);
-                return Image.FromStream(ms);
+                return avatarImageBytes;
             }
         }
 
@@ -232,7 +228,7 @@ namespace Dracoon.Sdk.SdkInternal {
         private ApiAvatarInfo GetApiAvatarInfoInternally() {
             _client.Executor.CheckApiServerVersion();
 
-            IRestRequest request = _client.Builder.GetAvatar();
+            RestRequest request = _client.Builder.GetAvatar();
             ApiAvatarInfo apiAvatarInfo = _client.Executor.DoSyncApiCall<ApiAvatarInfo>(request, RequestType.GetUserAvatar);
             return apiAvatarInfo;
         }
@@ -240,19 +236,13 @@ namespace Dracoon.Sdk.SdkInternal {
         public AvatarInfo ResetAvatar() {
             _client.Executor.CheckApiServerVersion();
 
-            IRestRequest request = _client.Builder.DeleteAvatar();
+            RestRequest request = _client.Builder.DeleteAvatar();
             ApiAvatarInfo defaultAvatarInfo = _client.Executor.DoSyncApiCall<ApiAvatarInfo>(request, RequestType.DeleteUserAvatar);
             return UserMapper.FromApiAvatarInfo(defaultAvatarInfo);
         }
 
-        public AvatarInfo UpdateAvatar(Image newAvatar) {
+        public AvatarInfo UpdateAvatar(byte[] newAvatar) {
             _client.Executor.CheckApiServerVersion();
-
-            byte[] avatarBytes = null;
-            using (MemoryStream ms = new MemoryStream()) {
-                newAvatar.Save(ms, newAvatar.RawFormat);
-                avatarBytes = ms.ToArray();
-            }
 
             #region Build multipart
 
@@ -260,10 +250,10 @@ namespace Dracoon.Sdk.SdkInternal {
             byte[] packageHeader = ApiConfig.ENCODING.GetBytes(
                 $"--{formDataBoundary}\r\nContent-Disposition: form-data; name=\"{"file"}\"; filename=\"{"avatarImage"}\"\r\n\r\n");
             byte[] packageFooter = ApiConfig.ENCODING.GetBytes(string.Format("\r\n--" + formDataBoundary + "--"));
-            byte[] multipartFormatedChunkData = new byte[packageHeader.Length + packageFooter.Length + avatarBytes.Length];
+            byte[] multipartFormatedChunkData = new byte[packageHeader.Length + packageFooter.Length + newAvatar.Length];
             Buffer.BlockCopy(packageHeader, 0, multipartFormatedChunkData, 0, packageHeader.Length);
-            Buffer.BlockCopy(avatarBytes, 0, multipartFormatedChunkData, packageHeader.Length, avatarBytes.Length);
-            Buffer.BlockCopy(packageFooter, 0, multipartFormatedChunkData, packageHeader.Length + avatarBytes.Length, packageFooter.Length);
+            Buffer.BlockCopy(newAvatar, 0, multipartFormatedChunkData, packageHeader.Length, newAvatar.Length);
+            Buffer.BlockCopy(packageFooter, 0, multipartFormatedChunkData, packageHeader.Length + newAvatar.Length, packageFooter.Length);
 
             #endregion
 
@@ -284,7 +274,7 @@ namespace Dracoon.Sdk.SdkInternal {
         public AttributeList GetUserProfileAttributeList() {
             _client.Executor.CheckApiServerVersion();
 
-            IRestRequest request = _client.Builder.GetUserProfileAttributes();
+            RestRequest request = _client.Builder.GetUserProfileAttributes();
             ApiAttributeList apiAttributeList = _client.Executor.DoSyncApiCall<ApiAttributeList>(request, RequestType.GetUserProfileAttributes);
             return AttributeMapper.FromApiAttributeList(apiAttributeList);
         }
@@ -298,7 +288,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest request = _client.Builder.GetUserProfileAttribute(attributeKey);
+            RestRequest request = _client.Builder.GetUserProfileAttribute(attributeKey);
             ApiAttributeList apiAttributeList = _client.Executor.DoSyncApiCall<ApiAttributeList>(request, RequestType.GetUserProfileAttributes);
             if (apiAttributeList.Range.Total == 0) {
                 throw new DracoonApiException(DracoonApiCode.SERVER_ATTRIBUTE_NOT_FOUND);
@@ -326,7 +316,7 @@ namespace Dracoon.Sdk.SdkInternal {
             #endregion
 
             ApiAddOrUpdateAttributeRequest apiAttributes = AttributeMapper.ToApiAddOrUpdateAttributeRequest(attributes);
-            IRestRequest request = _client.Builder.PutUserProfileAttributes(apiAttributes);
+            RestRequest request = _client.Builder.PutUserProfileAttributes(apiAttributes);
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.PutUserProfileAttributes);
         }
 
@@ -339,7 +329,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest request = _client.Builder.DeleteUserProfileAttributes(attributeKey);
+            RestRequest request = _client.Builder.DeleteUserProfileAttributes(attributeKey);
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.DeleteUserProfileAttributes);
         }
 

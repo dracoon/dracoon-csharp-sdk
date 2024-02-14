@@ -34,7 +34,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 DracoonClient.Log.Warn(LogTag, "S3 direct upload is not possible.", apiException);
             }
 
-            IRestRequest uploadTokenRequest = Client.Builder.PostCreateFileUpload(apiFileUploadRequest);
+            RestRequest uploadTokenRequest = Client.Builder.PostCreateFileUpload(apiFileUploadRequest);
             UploadToken = Client.Executor.DoSyncApiCall<ApiUploadToken>(uploadTokenRequest, RequestType.PostUploadToken);
 
             Node publicResultNode;
@@ -45,14 +45,14 @@ namespace Dracoon.Sdk.SdkInternal {
                 EncryptedFileKey encryptedFileKey = EncryptFileKey(plainFileKey);
                 apiCompleteFileUpload.FileKey = FileMapper.ToApiFileKey(encryptedFileKey);
                 apiCompleteFileUpload.Parts = s3Parts;
-                IRestRequest completeFileUploadRequest = Client.Builder.PutCompleteS3FileUpload(UploadToken.UploadId, apiCompleteFileUpload);
+                RestRequest completeFileUploadRequest = Client.Builder.PutCompleteS3FileUpload(UploadToken.UploadId, apiCompleteFileUpload);
                 Client.Executor.DoSyncApiCall<VoidResponse>(completeFileUploadRequest, RequestType.PutCompleteS3Upload);
                 publicResultNode = NodeMapper.FromApiNode(S3Finished());
             } else {
                 EncryptedUpload(ref plainFileKey);
                 EncryptedFileKey encryptedFileKey = EncryptFileKey(plainFileKey);
                 apiCompleteFileUpload.FileKey = FileMapper.ToApiFileKey(encryptedFileKey);
-                IRestRequest completeFileUploadRequest =
+                RestRequest completeFileUploadRequest =
                     Client.Builder.PutCompleteFileUpload(new Uri(UploadToken.UploadUrl).PathAndQuery, apiCompleteFileUpload);
                 ApiNode resultNode = Client.Executor.DoSyncApiCall<ApiNode>(completeFileUploadRequest, RequestType.PutCompleteUpload);
                 publicResultNode = NodeMapper.FromApiNode(resultNode);
@@ -203,7 +203,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
                     if (nextByte != -1) {
                         // Do it every time if the current block isn't the last
-                        Buffer.SetByte(buffer, 0, (byte) nextByte);
+                        Buffer.SetByte(buffer, 0, (byte)nextByte);
                         offset = 1;
                     } else {
                         break;
