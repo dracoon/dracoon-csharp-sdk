@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Net;
+using System.Text;
 using Telerik.JustMock;
 
 namespace Dracoon.Sdk.UnitTest.Factory {
@@ -26,7 +27,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
         internal static IInternalDracoonClient InternalDracoonClientMock(bool withVersionCheckOccurance = false) {
             IInternalDracoonClient c = Mock.Create<IInternalDracoonClient>(Behavior.Strict);
             Mock.Arrange(() => c.ServerUri).Returns(new Uri("https://dracoon.team"));
-            Mock.Arrange(() => c.EncryptionPassword).Returns("Pw1298!");
+            Mock.Arrange(() => c.EncryptionPassword).Returns(Encoding.UTF8.GetBytes("Pw1298!"));
             Mock.Arrange(() => c.Builder).Returns(new DracoonRequestBuilder(null));
             Mock.Arrange(() => c.OAuth).Returns(OAuthMock);
             Mock.Arrange(() => c.ServerImpl).Returns(new DracoonServerImpl(null));

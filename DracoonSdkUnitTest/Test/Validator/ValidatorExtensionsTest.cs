@@ -3,6 +3,7 @@ using Dracoon.Sdk.SdkInternal.Validator;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Xunit;
 
 namespace Dracoon.Sdk.UnitTest.Test.Validator {
@@ -155,6 +156,63 @@ namespace Dracoon.Sdk.UnitTest.Test.Validator {
             // ACT - ASSERT
             Assert.Throws<ArgumentException>(() =>
                 param.MustNotNullOrEmptyOrWhitespace(nameof(MustNotNullOrEmptyOrWhitespace_AllowedNull_Null_Empty_Whitespace), true));
+        }
+
+        #endregion
+
+        #region MustNotNullOrEmpty
+
+        [Fact]
+        public void MustNotNullOrEmpty_NotNull_NotEmpty() {
+            // ARRANGE
+            byte[] param = Encoding.UTF8.GetBytes("Test");
+
+            // ACT
+            param.MustNotNullOrEmpty(nameof(MustNotNullOrEmpty_NotNull_NotEmpty));
+
+            // ASSERT
+            // No exception should be thrown
+        }
+
+        [Fact]
+        public void MustNotNullOrEmpty_NotNull_Empty() {
+            // ARRANGE
+            byte[] param = new byte[0];
+
+            // ACT - ASSERT
+            Assert.Throws<ArgumentException>(() =>
+                param.MustNotNullOrEmpty(nameof(MustNotNullOrEmpty_NotNull_Empty)));
+        }
+
+        [Fact]
+        public void MustNotNullOrEmpty_Null() {
+            // ARRANGE
+            byte[] param = null;
+
+            // ACT - ASSERT
+            Assert.Throws<ArgumentNullException>(() => param.MustNotNullOrEmpty(nameof(MustNotNullOrEmpty_Null)));
+        }
+
+        [Fact]
+        public void MustNotNullOrEmpty_AllowedNull_Null() {
+            // ARRANGE
+            byte[] param = null;
+
+            // ACT
+            param.MustNotNullOrEmpty(nameof(MustNotNullOrEmpty_AllowedNull_Null), true);
+
+            // ASSERT
+            // No exception should be thrown
+        }
+
+        [Fact]
+        public void MustNotNullOrEmpty_AllowedNull_Null_Empty() {
+            // ARRANGE
+            byte[] param = new byte[0];
+
+            // ACT - ASSERT
+            Assert.Throws<ArgumentException>(() =>
+                param.MustNotNullOrEmpty(nameof(MustNotNullOrEmpty_AllowedNull_Null_Empty), true));
         }
 
         #endregion

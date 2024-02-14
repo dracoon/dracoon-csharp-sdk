@@ -25,7 +25,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 ShowCreatorName = request.ShowCreatorName,
                 ShowCreatorUserName = request.ShowCreatorUserName,
                 MaxAllowedDownloads = request.MaxAllowedDownloads,
-                Password = request.Password,
+                Password = Encoding.UTF8.GetString(request.Password, 0, request.Password.Length),
                 ReceiverLanguage = request.ReceiverLanguage,
                 TextMessageRecipients = request.TextMessageRecipients
             };

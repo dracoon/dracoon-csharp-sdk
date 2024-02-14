@@ -4,6 +4,7 @@ using Dracoon.Sdk.SdkInternal.Mapper;
 using Dracoon.Sdk.SdkInternal.Util;
 using Dracoon.Sdk.UnitTest.Factory;
 using Dracoon.Sdk.UnitTest.XUnitComparer;
+using System.Text;
 using Telerik.JustMock;
 using Xunit;
 
@@ -78,7 +79,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             ApiEnableRoomEncryptionRequest expected = FactoryRoom.ApiEnableRoomEncryptionRequest;
 
             EnableRoomEncryptionRequest param = new EnableRoomEncryptionRequest(1234, expected.IsEncryptionEnabled) {
-                DataRoomRescueKeyPassword = "Pass12!",
+                DataRoomRescueKeyPassword = Encoding.UTF8.GetBytes("Pass12!"),
                 UseDataSpaceRescueKey = expected.UseDataSpaceRescueKey,
             };
 

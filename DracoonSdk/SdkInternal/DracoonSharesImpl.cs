@@ -36,7 +36,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 throw new DracoonApiException(DracoonApiCode.VALIDATION_DL_SHARE_CANNOT_CREATE_ON_ENCRYPTED_ROOM_FOLDER);
             }
 
-            if (targetNode.IsEncrypted.GetValueOrDefault(false) && string.IsNullOrWhiteSpace(request.Password)) {
+            if (targetNode.IsEncrypted.GetValueOrDefault(false) && (request.Password == null || request.Password.Length == 0)) {
                 throw new ArgumentException("Download share of a encrypted node must have a encryption password.");
             }
 
@@ -47,7 +47,7 @@ namespace Dracoon.Sdk.SdkInternal {
                 if (targetNode.IsEncrypted.GetValueOrDefault(false)) {
                     throw new ArgumentException("You can not send text messages with passwords for encrypted shares. Due to the fact that the password is never sent to the server.");
                 }
-                if (string.IsNullOrEmpty(request.Password)) {
+                if (request.Password == null || request.Password.Length == 0) {
                     throw new ArgumentException("If a text message should be sent, a password must be set.");
                 }
                 request.TextMessageRecipients.ForEach(current => current.MustNotNullOrEmptyOrWhitespace(nameof(request.TextMessageRecipients) + " element"));

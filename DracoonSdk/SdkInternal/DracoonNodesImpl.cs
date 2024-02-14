@@ -364,7 +364,7 @@ namespace Dracoon.Sdk.SdkInternal {
             }
 
             if (request.DataRoomRescueKeyPairAlgorithm != null) {
-                request.DataRoomRescueKeyPassword.MustNotNullOrEmptyOrWhitespace(nameof(request.DataRoomRescueKeyPassword));
+                request.DataRoomRescueKeyPassword.MustNotNullOrEmpty(nameof(request.DataRoomRescueKeyPassword));
             }
 
             #endregion
@@ -372,7 +372,7 @@ namespace Dracoon.Sdk.SdkInternal {
             ApiUserKeyPair apiDataRoomRescueKey = null;
             if (request.DataRoomRescueKeyPassword != null) {
                 try {
-                    UserKeyPair cryptoPair = Crypto.Sdk.Crypto.GenerateUserKeyPair(request.DataRoomRescueKeyPairAlgorithm.Value, Encoding.UTF8.GetBytes(request.DataRoomRescueKeyPassword));
+                    UserKeyPair cryptoPair = Crypto.Sdk.Crypto.GenerateUserKeyPair(request.DataRoomRescueKeyPairAlgorithm.Value, request.DataRoomRescueKeyPassword);
                     apiDataRoomRescueKey = UserMapper.ToApiUserKeyPair(cryptoPair);
                 } catch (CryptoException ce) {
                     DracoonClient.Log.Debug(Logtag, $"Generation of user key pair failed with '{ce.Message}'!");
@@ -638,12 +638,14 @@ namespace Dracoon.Sdk.SdkInternal {
                                  ce.Message;
                 DracoonClient.Log.Debug(Logtag, message);
                 throw new DracoonCryptoException(CryptoErrorMapper.ParseCause(ce));
+            } finally {
+                Array.Clear(plainFileKey.Key, 0, plainFileKey.Key.Length);
             }
         }
 
         internal PlainFileKey DecryptFileKey(EncryptedFileKey encryptedFileKey, UserPrivateKey userPrivateKey, long? nodeId = null) {
             try {
-                return Crypto.Sdk.Crypto.DecryptFileKey(encryptedFileKey, userPrivateKey, Encoding.UTF8.GetBytes(_client.EncryptionPassword));
+                return Crypto.Sdk.Crypto.DecryptFileKey(encryptedFileKey, userPrivateKey, _client.EncryptionPassword);
             } catch (CryptoException ce) {
                 string message = "Decryption file key for node " + (nodeId.HasValue ? nodeId.Value.ToString() : "NULL") + " failed with " +
                                  ce.Message;

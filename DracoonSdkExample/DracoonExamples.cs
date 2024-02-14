@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using Attribute = Dracoon.Sdk.Model.Attribute;
 
 namespace Dracoon.Sdk.Example {
@@ -26,7 +27,7 @@ namespace Dracoon.Sdk.Example {
             IWebProxy wp = WebRequest.GetSystemWebProxy();
             wp.Credentials = CredentialCache.DefaultNetworkCredentials;
             DracoonHttpConfig config = new DracoonHttpConfig(retryEnabled: true, webProxy: wp);
-            dc = new DracoonClient(SERVER_URI, dracoonAuth, ENCRYPTION_PASSWORD, new Logger(), config);
+            dc = new DracoonClient(SERVER_URI, dracoonAuth, Encoding.UTF8.GetBytes(ENCRYPTION_PASSWORD), new Logger(), config);
         }
 
         #region DracoonClient.Server
@@ -261,7 +262,7 @@ namespace Dracoon.Sdk.Example {
         }
 
         private static void DownloadEncryptedFile() {
-            dc.EncryptionPassword = ENCRYPTION_PASSWORD;
+            dc.EncryptionPassword = Encoding.UTF8.GetBytes(ENCRYPTION_PASSWORD);
             Node node = dc.Nodes.GetNode(1);
             FileStream stream = File.Create("C:\\temp\\" + node.Name);
             dc.Nodes.DownloadFile(Guid.NewGuid().ToString(), node.Id, stream, new DLCallback());
@@ -296,7 +297,7 @@ namespace Dracoon.Sdk.Example {
         #region DracoonClient.Shares
 
         public static void CreateDownloadShare() {
-            CreateDownloadShareRequest req = new CreateDownloadShareRequest(1, password: "Passw0rd!");
+            CreateDownloadShareRequest req = new CreateDownloadShareRequest(1, password: Encoding.UTF8.GetBytes("Passw0rd!"));
 
             DownloadShare dl = dc.Shares.CreateDownloadShare(req);
         }
