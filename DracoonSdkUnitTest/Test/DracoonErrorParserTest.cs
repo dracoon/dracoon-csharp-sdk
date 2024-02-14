@@ -2,6 +2,7 @@
 using Dracoon.Sdk.SdkInternal;
 using Dracoon.Sdk.UnitTest.Factory;
 using RestSharp;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -43,9 +44,9 @@ namespace Dracoon.Sdk.UnitTest.Test {
         }
 
         [Fact]
-        internal void TestSingleCodeWithIRestResponse() {
+        internal void TestSingleCodeWithRestResponse() {
             // ARRANGE
-            IRestResponse response = FactoryRestSharp.RestResponse;
+            RestResponse response = FactoryRestSharp.RestResponse;
 
             try {
                 // ACT
@@ -399,11 +400,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
         }
 
         [Fact]
-        internal void TestCustomErrorCodesIRestRequest() {
+        internal void TestCustomErrorCodesRestRequest() {
             // ARRANGE
-            IRestResponse response = FactoryRestSharp.RestResponse;
-            response.Headers.Add(new Parameter("testHeader", "1234", ParameterType.HttpHeader));
-            response.Headers.Add(new Parameter("X-Forbidden", "403", ParameterType.HttpHeader));
+            RestResponse response = FactoryRestSharp.RestResponse;
+            IReadOnlyCollection<HeaderParameter> list = new List<HeaderParameter> { new HeaderParameter("testHeader", "1234"), new HeaderParameter("X-Forbidden", "403") };
+            response.Headers = list;
 
             try {
                 // ACT

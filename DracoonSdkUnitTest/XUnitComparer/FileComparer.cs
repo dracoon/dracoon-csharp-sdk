@@ -3,6 +3,7 @@ using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Dracoon.Sdk.UnitTest.XUnitComparer {
@@ -83,7 +84,7 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
                 return false;
             }
             return string.Equals(x.Iv, y.Iv) &&
-                   string.Equals(x.Key, y.Key) &&
+                   Enumerable.SequenceEqual(x.Key, y.Key) &&
                    string.Equals(x.Tag, y.Tag) &&
                    string.Equals(x.Version, y.Version);
         }

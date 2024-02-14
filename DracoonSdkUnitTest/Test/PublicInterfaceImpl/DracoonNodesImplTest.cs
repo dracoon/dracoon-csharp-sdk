@@ -33,7 +33,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.IsAny<long?>().NullableMustNotNegative(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.IsAny<long>().MustNotNegative(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.GetNodes(Arg.AnyLong, Arg.IsAny<long?>(), Arg.IsAny<long?>(), Arg.IsAny<GetNodesFilter>(), Arg.IsAny<GetNodesSort>())).Returns(FactoryRestSharp.GetNodesMock(1)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNodeList>(Arg.IsAny<IRestRequest>(), RequestType.GetNodes, 0)).Returns(FactoryNode.ApiNodeList).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNodeList>(Arg.IsAny<RestRequest>(), RequestType.GetNodes, 0)).Returns(FactoryNode.ApiNodeList).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNodeList(Arg.IsAny<ApiNodeList>())).Returns(FactoryNode.NodeList).Occurs(1);
 
             // ACT
@@ -60,7 +60,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             DracoonNodesImpl n = new DracoonNodesImpl(c);
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.GetNode(Arg.AnyLong)).Returns(FactoryRestSharp.GetNodeMock(1)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<IRestRequest>(), RequestType.GetNode, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<RestRequest>(), RequestType.GetNode, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
 
             // ACT
@@ -149,7 +149,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().OccursAtLeast(1);
             Mock.Arrange(() => NodeMapper.ToApiDeleteNodesRequest(Arg.IsAny<DeleteNodesRequest>())).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.DeleteNodes(Arg.IsAny<ApiDeleteNodesRequest>())).Returns(FactoryRestSharp.DeleteNodesMock()).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.DeleteNodes, 0)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<RestRequest>(), RequestType.DeleteNodes, 0)).DoNothing().Occurs(1);
 
             // ACT
             n.DeleteNodes(FactoryNode.DeleteNodesRequest);
@@ -177,7 +177,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().OccursAtLeast(2);
             Mock.Arrange(() => NodeMapper.ToApiCopyNodesRequest(Arg.IsAny<CopyNodesRequest>())).Returns(FactoryNode.ApiCopyNodesRequest).Occurs(1);
             Mock.Arrange(() => c.Builder.PostCopyNodes(Arg.AnyLong, Arg.IsAny<ApiCopyNodesRequest>())).Returns(FactoryRestSharp.CopyNodesMock(2)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<IRestRequest>(), RequestType.PostCopyNodes, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<RestRequest>(), RequestType.PostCopyNodes, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
 
             // ACT
@@ -208,7 +208,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().OccursAtLeast(2);
             Mock.Arrange(() => NodeMapper.ToApiMoveNodesRequest(Arg.IsAny<MoveNodesRequest>())).Returns(FactoryNode.ApiMoveNodesRequest).Occurs(1);
             Mock.Arrange(() => c.Builder.PostMoveNodes(Arg.AnyLong, Arg.IsAny<ApiMoveNodesRequest>())).Returns(FactoryRestSharp.MoveNodesMock(2134)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<IRestRequest>(), RequestType.PostMoveNodes, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<RestRequest>(), RequestType.PostMoveNodes, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
 
             // ACT
@@ -239,7 +239,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.GetSearchNodes(Arg.AnyLong, Arg.AnyString, Arg.AnyLong, Arg.AnyLong, Arg.AnyInt, Arg.IsAny<SearchNodesFilter>(),
                     Arg.IsAny<SearchNodesSort>())).Returns(FactoryRestSharp.GetSearchNodesMock(1234, "test", 0, 1)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNodeList>(Arg.IsAny<IRestRequest>(), RequestType.GetSearchNodes, 0)).Returns(FactoryNode.ApiNodeList).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNodeList>(Arg.IsAny<RestRequest>(), RequestType.GetSearchNodes, 0)).Returns(FactoryNode.ApiNodeList).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNodeList(Arg.IsAny<ApiNodeList>())).Returns(FactoryNode.NodeList).Occurs(1);
 
             // ACT
@@ -266,7 +266,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             DracoonNodesImpl n = new DracoonNodesImpl(c);
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.PostFavorite(Arg.AnyLong)).Returns(FactoryRestSharp.PostFavoriteMock(123)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<IRestRequest>(), RequestType.PostFavorite, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<RestRequest>(), RequestType.PostFavorite, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
 
             // ACT
@@ -291,7 +291,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             DracoonNodesImpl n = new DracoonNodesImpl(c);
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.DeleteFavorite(Arg.AnyLong)).Returns(FactoryRestSharp.DeleteFavoriteMock(123)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.DeleteFavorite, 0)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<RestRequest>(), RequestType.DeleteFavorite, 0)).DoNothing().Occurs(1);
 
             // ACT
             n.DeleteNodeFromFavorites(2345);
@@ -315,7 +315,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.IsAny<long?>().NullableMustNotNegative(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.GetRecycleBin(Arg.AnyLong, Arg.IsAny<long?>(), Arg.IsAny<long?>())).Returns(FactoryRestSharp.GetRecycleBinItemsMock(213)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDeletedNodeSummaryList>(Arg.IsAny<IRestRequest>(), RequestType.GetRecycleBin, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDeletedNodeSummaryList>(Arg.IsAny<RestRequest>(), RequestType.GetRecycleBin, 0))
                     .Returns(FactoryNode.ApiDeletedNodeSummaryList).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiDeletedNodeSummaryList(Arg.IsAny<ApiDeletedNodeSummaryList>()))
                 .Returns(FactoryNode.RecycleBinItemList).Occurs(1);
@@ -344,7 +344,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             DracoonNodesImpl n = new DracoonNodesImpl(c);
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.DeleteRecycleBin(Arg.AnyLong)).Returns(FactoryRestSharp.DeleteRecycleBinMock(12542)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.DeleteRecycleBin, 0)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<RestRequest>(), RequestType.DeleteRecycleBin, 0)).DoNothing().Occurs(1);
 
             // ACT
             n.EmptyRecycleBin(243);
@@ -369,7 +369,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.GetPreviousVersions(Arg.AnyLong, Arg.AnyString, Arg.AnyString, Arg.IsAny<long?>(), Arg.IsAny<long?>())).Returns(FactoryRestSharp.GetPreviousVersionsMock(124, "file", "name")).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDeletedNodeVersionsList>(Arg.IsAny<IRestRequest>(), RequestType.GetPreviousVersions, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDeletedNodeVersionsList>(Arg.IsAny<RestRequest>(), RequestType.GetPreviousVersions, 0))
                 .Returns(FactoryNode.ApiDeletedNodeVersionsList).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiDeletedNodeVersionsList(Arg.IsAny<ApiDeletedNodeVersionsList>()))
                 .Returns(FactoryNode.PreviousVersionList).Occurs(1);
@@ -399,7 +399,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             DracoonNodesImpl n = new DracoonNodesImpl(c);
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.GetPreviousVersion(Arg.AnyLong)).Returns(FactoryRestSharp.GetPreviousVersionMock(213)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDeletedNodeVersion>(Arg.IsAny<IRestRequest>(), RequestType.GetPreviousVersion, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDeletedNodeVersion>(Arg.IsAny<RestRequest>(), RequestType.GetPreviousVersion, 0))
                 .Returns(FactoryNode.ApiDeletedNodeVersion).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiDeletedNodeVersion(Arg.IsAny<ApiDeletedNodeVersion>())).Returns(FactoryNode.PreviousVersion).Occurs(1);
 
@@ -430,7 +430,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => NodeMapper.ToApiRestorePreviousVersionsRequest(Arg.IsAny<RestorePreviousVersionsRequest>()))
                 .Returns(FactoryNode.ApiRestorePreviousVersionsRequest).Occurs(1);
             Mock.Arrange(() => c.Builder.PostRestoreNodeVersion(Arg.IsAny<ApiRestorePreviousVersionsRequest>())).Returns(FactoryRestSharp.PostRestoreNodeVersionMock).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.PostRestoreNodeVersion, 0)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<RestRequest>(), RequestType.PostRestoreNodeVersion, 0)).DoNothing().Occurs(1);
 
             // ACT
             n.RestorePreviousVersion(FactoryNode.RestorePreviousVersionsRequest);
@@ -460,7 +460,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => NodeMapper.ToApiDeletePreviousVersionsRequest(Arg.IsAny<DeletePreviousVersionsRequest>()))
                 .Returns(FactoryNode.ApiDeletePreviousVersionsRequest).Occurs(1);
             Mock.Arrange(() => c.Builder.DeletePreviousVersion(Arg.IsAny<ApiDeletePreviousVersionsRequest>())).Returns(FactoryRestSharp.DeletePreviousVersionMock).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.DeletePreviousVersions, 0)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<RestRequest>(), RequestType.DeletePreviousVersions, 0)).DoNothing().Occurs(1);
 
             // ACT
             n.DeletePreviousVersions(FactoryNode.DeletePreviousVersionsRequest);
@@ -492,7 +492,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.IsAny<IEnumerable<long>>().EnumerableMustNotNullOrEmpty(Arg.AnyString)).DoNothing().Occurs(2);
             Mock.Arrange(() => RoomMapper.ToApiCreateRoomRequest(Arg.IsAny<CreateRoomRequest>())).Returns(FactoryRoom.ApiCreateRoomRequest);
             Mock.Arrange(() => c.Builder.PostRoom(Arg.IsAny<ApiCreateRoomRequest>())).Returns(FactoryRestSharp.PostRoomMock).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<IRestRequest>(), RequestType.PostRoom, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<RestRequest>(), RequestType.PostRoom, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node);
 
             // ACT
@@ -543,7 +543,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.IsAny<long?>().NullableMustNotNegative(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.PutRoom(Arg.AnyLong, Arg.IsAny<ApiUpdateRoomRequest>())).Returns(FactoryRestSharp.PutRoomMock(13)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<IRestRequest>(), RequestType.PutRoom, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<RestRequest>(), RequestType.PutRoom, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
             Mock.Arrange(() => RoomMapper.ToApiUpdateRoomRequest(Arg.IsAny<UpdateRoomRequest>())).Returns(FactoryRoom.ApiUpdateRoomRequest).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
 
@@ -575,12 +575,12 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.IsAny<UserKeyPairAlgorithm?>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
-            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.AnyString)).Returns(FactoryUser.UserKeyPair_2048).Occurs(1);
+            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.IsAny<byte[]>())).Returns(FactoryUser.UserKeyPair_2048).Occurs(1);
             Mock.Arrange(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>())).Returns(FactoryUser.ApiUserKeyPair_2048).Occurs(1);
             Mock.Arrange(() => RoomMapper.ToApiEnableRoomEncryptionRequest(Arg.IsAny<EnableRoomEncryptionRequest>(), Arg.IsAny<ApiUserKeyPair>()))
                 .Returns(FactoryRoom.ApiEnableRoomEncryptionRequest).Occurs(1);
             Mock.Arrange(() => c.Builder.PutEnableRoomEncryption(Arg.AnyLong, Arg.IsAny<ApiEnableRoomEncryptionRequest>())).Returns(FactoryRestSharp.PutEnableRoomEncryptionMock(132)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<IRestRequest>(), RequestType.PutEnableRoomEncryption, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<RestRequest>(), RequestType.PutEnableRoomEncryption, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
 
             // ACT
@@ -592,7 +592,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Assert(() => Arg.IsAny<UserKeyPairAlgorithm?>().MustNotNull(Arg.AnyString));
             Mock.Assert(() => Arg.AnyLong.MustPositive(Arg.AnyString));
             Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
-            Mock.Assert(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.AnyString));
+            Mock.Assert(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.IsAny<byte[]>()));
             Mock.Assert(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>()));
             Mock.Assert(() => RoomMapper.ToApiEnableRoomEncryptionRequest(Arg.IsAny<EnableRoomEncryptionRequest>(), Arg.IsAny<ApiUserKeyPair>()));
             Mock.Assert(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>()));
@@ -609,7 +609,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.IsAny<EnableRoomEncryptionRequest>().MustNotNull(Arg.AnyString)).DoNothing();
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing();
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing();
-            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.AnyString)).Throws(new CryptoException());
+            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.IsAny<byte[]>())).Throws(new CryptoException());
             Mock.Arrange(() => CryptoErrorMapper.ParseCause(Arg.IsAny<Exception>())).Returns(DracoonCryptoCode.INVALID_PASSWORD_ERROR).Occurs(1);
 
             // ACT - ASSERT
@@ -631,7 +631,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(1);
             Mock.Arrange(() => FolderMapper.ToApiCreateFolderRequest(Arg.IsAny<CreateFolderRequest>())).Returns(FactoryFolder.ApiCreateFolderRequest).Occurs(1);
             Mock.Arrange(() => c.Builder.PostFolder(Arg.IsAny<ApiCreateFolderRequest>())).Returns(FactoryRestSharp.PostFolderMock).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<IRestRequest>(), RequestType.PostFolder, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<RestRequest>(), RequestType.PostFolder, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
 
             // ACT
@@ -662,7 +662,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, true)).DoNothing().Occurs(1);
             Mock.Arrange(() => FolderMapper.ToApiUpdateFolderRequest(Arg.IsAny<UpdateFolderRequest>())).Returns(FactoryFolder.ApiUpdateFolderRequest).Occurs(1);
             Mock.Arrange(() => c.Builder.PutFolder(Arg.AnyLong, Arg.IsAny<ApiUpdateFolderRequest>())).Returns(FactoryRestSharp.PutFolderMock(23)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<IRestRequest>(), RequestType.PutFolder, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<RestRequest>(), RequestType.PutFolder, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
 
             // ACT
@@ -693,7 +693,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, true)).DoNothing().Occurs(1);
             Mock.Arrange(() => FileMapper.ToApiUpdateFileRequest(Arg.IsAny<UpdateFileRequest>())).Returns(FactoryFile.ApiUpdateFileRequest).Occurs(1);
             Mock.Arrange(() => c.Builder.PutFile(Arg.AnyLong, Arg.IsAny<ApiUpdateFileRequest>())).Returns(FactoryRestSharp.PutFileMock(123)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<IRestRequest>(), RequestType.PutFile, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<RestRequest>(), RequestType.PutFile, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
 
             // ACT
@@ -990,13 +990,13 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyInt.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPairs()).Returns(FactoryUser.UserKeyPairs).Occurs(1);
             Mock.Arrange(() => c.Builder.GetMissingFileKeys(Arg.IsAny<long?>(), Arg.AnyInt, Arg.AnyInt)).Returns(FactoryRestSharp.GetMissingFileKeysMock(10, 0)).OccursAtLeast(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiMissingFileKeys>(Arg.IsAny<IRestRequest>(), RequestType.GetMissingFileKeys, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiMissingFileKeys>(Arg.IsAny<RestRequest>(), RequestType.GetMissingFileKeys, 0))
                     .Returns(FactoryFile.ApiMissingFileKeys).OccursAtLeast(1);
             Mock.Arrange(() => UserMapper.ConvertApiUserIdPublicKeys(Arg.IsAny<List<ApiUserIdPublicKey>>())).Returns(FactoryFile.FileUserPublicKey).OccursAtLeast(1);
             Mock.Arrange(() => FileMapper.FromApiFileKey(Arg.IsAny<ApiFileKey>())).Returns(FactoryFile.EncryptedFileKey).OccursAtLeast(1);
             Mock.Arrange(() => FileMapper.ToApiFileKey(Arg.IsAny<EncryptedFileKey>())).Returns(FactoryFile.ApiFileKey).OccursAtLeast(1);
             Mock.Arrange(() => c.Builder.PostMissingFileKeys(Arg.IsAny<ApiSetUserFileKeysRequest>())).Returns(FactoryRestSharp.PostMissingFileKeysMock).OccursAtLeast(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.PostMissingFileKeys, 0)).DoNothing().OccursAtLeast(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<RestRequest>(), RequestType.PostMissingFileKeys, 0)).DoNothing().OccursAtLeast(1);
             Mock.Arrange(() => n.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.IsAny<long?>()))
                 .Returns(FactoryFile.PlainFileKey).OccursAtLeast(1);
             Mock.Arrange(() => n.EncryptFileKey(Arg.IsAny<PlainFileKey>(), Arg.IsAny<UserPublicKey>(), Arg.IsAny<long?>()))
@@ -1028,7 +1028,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyInt.MustPositive(Arg.AnyString)).DoNothing();
             Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPairs()).Returns(FactoryUser.UserKeyPairs).Occurs(1);
             Mock.Arrange(() => c.Builder.GetMissingFileKeys(Arg.IsAny<long?>(), Arg.AnyInt, Arg.AnyInt)).Returns(FactoryRestSharp.GetMissingFileKeysMock(10, 0));
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiMissingFileKeys>(Arg.IsAny<IRestRequest>(), RequestType.GetMissingFileKeys, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiMissingFileKeys>(Arg.IsAny<RestRequest>(), RequestType.GetMissingFileKeys, 0))
                     .Returns(new ApiMissingFileKeys() {
                         Items = new List<ApiUserIdFileId>()
                     });
@@ -1036,7 +1036,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => FileMapper.FromApiFileKey(Arg.IsAny<ApiFileKey>())).Returns(FactoryFile.EncryptedFileKey).OccursNever();
             Mock.Arrange(() => FileMapper.ToApiFileKey(Arg.IsAny<EncryptedFileKey>())).Returns(FactoryFile.ApiFileKey).OccursNever();
             Mock.Arrange(() => c.Builder.PostMissingFileKeys(Arg.IsAny<ApiSetUserFileKeysRequest>())).Returns(FactoryRestSharp.PostMissingFileKeysMock).OccursNever();
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.PostMissingFileKeys, 0)).DoNothing().OccursNever();
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<RestRequest>(), RequestType.PostMissingFileKeys, 0)).DoNothing().OccursNever();
             Mock.Arrange(() => n.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.IsAny<long?>()))
                 .Returns(FactoryFile.PlainFileKey).OccursNever();
             Mock.Arrange(() => n.EncryptFileKey(Arg.IsAny<PlainFileKey>(), Arg.IsAny<UserPublicKey>(), Arg.IsAny<long?>()))
@@ -1102,7 +1102,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonNodesImpl n = new DracoonNodesImpl(c);
-            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.AnyString))
+            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.IsAny<byte[]>()))
                 .Returns(FactoryFile.PlainFileKey).Occurs(1);
 
             // ACT
@@ -1110,7 +1110,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
 
             // ASSERT
             Assert.Equal(FactoryFile.PlainFileKey, actual, new PlainFileKeyComparer());
-            Mock.Assert(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.AnyString));
+            Mock.Assert(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.IsAny<byte[]>()));
         }
 
         [Fact]
@@ -1118,7 +1118,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonNodesImpl n = new DracoonNodesImpl(c);
-            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.AnyString))
+            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.IsAny<byte[]>()))
                 .Throws(new CryptoException());
             Mock.Arrange(() => CryptoErrorMapper.ParseCause(Arg.IsAny<Exception>())).Returns(DracoonCryptoCode.INTERNAL_ERROR).Occurs(1);
 
@@ -1136,7 +1136,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonNodesImpl n = new DracoonNodesImpl(c);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiFileKey>(Arg.IsAny<IRestRequest>(), RequestType.GetFileKey, 0)).Returns(FactoryFile.ApiFileKey).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiFileKey>(Arg.IsAny<RestRequest>(), RequestType.GetFileKey, 0)).Returns(FactoryFile.ApiFileKey).Occurs(1);
             Mock.Arrange(() => FileMapper.FromApiFileKey(Arg.IsAny<ApiFileKey>())).Returns(FactoryFile.EncryptedFileKey).Occurs(1);
             Mock.Arrange(() => c.Builder.GetFileKey(Arg.AnyLong)).Returns(FactoryRestSharp.GetFileKeyMock(213)).Occurs(1);
 
@@ -1145,7 +1145,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
 
             // ASSERT
             Assert.Equal(FactoryFile.EncryptedFileKey, actual, new EncryptedFileKeyComparer());
-            Mock.Assert(() => c.Executor.DoSyncApiCall<ApiFileKey>(Arg.IsAny<IRestRequest>(), RequestType.GetFileKey, 0));
+            Mock.Assert(() => c.Executor.DoSyncApiCall<ApiFileKey>(Arg.IsAny<RestRequest>(), RequestType.GetFileKey, 0));
             Mock.Assert(() => FileMapper.FromApiFileKey(Arg.IsAny<ApiFileKey>()));
             Mock.Assert(() => c.Builder.GetFileKey(Arg.AnyLong));
         }
@@ -1161,7 +1161,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             DracoonNodesImpl n = new DracoonNodesImpl(c);
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.IsAny<IEnumerable<long>>().EnumerableMustNotNullOrEmpty(Arg.AnyString)).DoNothing().Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<List<ApiFileVirusProtectionInfo>>(Arg.IsAny<IRestRequest>(), RequestType.GenerateVirusProtectionInfo, 0)).Returns(new List<ApiFileVirusProtectionInfo> { FactoryFile.ApiFileVirusProtectionInfo }).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<List<ApiFileVirusProtectionInfo>>(Arg.IsAny<RestRequest>(), RequestType.GenerateVirusProtectionInfo, 0)).Returns(new List<ApiFileVirusProtectionInfo> { FactoryFile.ApiFileVirusProtectionInfo }).Occurs(1);
             Mock.Arrange(() => FileMapper.FromApiFileVirusProtectionInfo(Arg.IsAny<ApiFileVirusProtectionInfo>())).Returns(FactoryFile.FileVirusProtectionInfo).Occurs(1);
             Mock.Arrange(() => c.Builder.GenerateVirusProtectionInfo(Arg.IsAny<ApiGenerateVirusProtectionInfoRequest>())).Returns(FactoryRestSharp.GenerateVirusProtectionInfoMock()).Occurs(1);
 
@@ -1188,7 +1188,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             DracoonNodesImpl n = new DracoonNodesImpl(c);
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().OccursAtLeast(1);
             Mock.Arrange(() => c.Builder.DeleteMaliciousFile(Arg.AnyLong)).Returns(FactoryRestSharp.DeleteMaliciousFileMock(123)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.DeleteMaliciousFile, 0)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<RestRequest>(), RequestType.DeleteMaliciousFile, 0)).DoNothing().Occurs(1);
 
             // ACT
             n.DeleteMaliciousFile(123);

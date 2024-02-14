@@ -27,7 +27,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.GetUserAvatar(Arg.AnyLong, Arg.AnyString)).Returns(FactoryRestSharp.GetUserAvatarMock()).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiAvatarInfo>(Arg.IsAny<IRestRequest>(), RequestType.GetResourcesAvatar, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiAvatarInfo>(Arg.IsAny<RestRequest>(), RequestType.GetResourcesAvatar, 0))
                     .Returns(FactoryUser.ApiAvatarInfo).Occurs(1);
             Mock.Arrange(() => c.Builder.ProvideAvatarDownloadWebClient()).Returns(() => {
                 DracoonWebClientExtension wc = new DracoonWebClientExtension();

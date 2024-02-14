@@ -17,8 +17,8 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             string expected = "4.13.0";
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonServerImpl s = new DracoonServerImpl(c);
-            Mock.Arrange(() => c.Builder.GetServerVersion()).Returns(FactoryRestSharp.RestRequestWithoutAuth(ApiConfig.ApiGetServerVersion, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiServerVersion>(Arg.IsAny<IRestRequest>(), RequestType.GetServerVersion, 0)).Returns(FactoryServer.ApiServerVersionMock).Occurs(1);
+            Mock.Arrange(() => c.Builder.GetServerVersion()).Returns(FactoryRestSharp.RestRequestWithoutAuth(ApiConfig.ApiGetServerVersion, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiServerVersion>(Arg.IsAny<RestRequest>(), RequestType.GetServerVersion, 0)).Returns(FactoryServer.ApiServerVersionMock).Occurs(1);
 
             // ACT
             string actual = s.GetVersion();
@@ -39,8 +39,8 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             DateTime expected = new DateTime(2000, 1, 1, 0, 0, 0);
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonServerImpl s = new DracoonServerImpl(c);
-            Mock.Arrange(() => c.Builder.GetServerTime()).Returns(FactoryRestSharp.RestRequestWithoutAuth(ApiConfig.ApiGetServerTime, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiServerTime>(Arg.IsAny<IRestRequest>(), RequestType.GetServerTime, 0)).Returns(FactoryServer.ApiServerTimeMock).Occurs(1);
+            Mock.Arrange(() => c.Builder.GetServerTime()).Returns(FactoryRestSharp.RestRequestWithoutAuth(ApiConfig.ApiGetServerTime, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiServerTime>(Arg.IsAny<RestRequest>(), RequestType.GetServerTime, 0)).Returns(FactoryServer.ApiServerTimeMock).Occurs(1);
 
             // ACT
             DateTime? actual = s.GetTime();

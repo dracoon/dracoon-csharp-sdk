@@ -46,7 +46,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>())).Returns(FactoryUser.ApiUserKeyPair_2048).Occurs(1);
             Mock.Arrange(() => FileMapper.ToApiFileKey(Arg.IsAny<EncryptedFileKey>())).Returns(FactoryFile.ApiFileKey).Occurs(1);
             Mock.Arrange(() => c.Builder.PostCreateDownloadShare(Arg.IsAny<ApiCreateDownloadShareRequest>())).Returns(FactoryRestSharp.PostCreateDownloadShareMock()).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadShare>(Arg.IsAny<IRestRequest>(), RequestType.PostCreateDownloadShare, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadShare>(Arg.IsAny<RestRequest>(), RequestType.PostCreateDownloadShare, 0))
                     .Returns(FactoryShare.ApiDownloadShare).Occurs(1);
             Mock.Arrange(() => ShareMapper.FromApiDownloadShare(Arg.IsAny<ApiDownloadShare>())).Returns(FactoryShare.DownloadShare).Occurs(1);
 
@@ -193,7 +193,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             DracoonSharesImpl s = new DracoonSharesImpl(c);
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.DeleteDownloadShare(Arg.AnyLong)).Returns(FactoryRestSharp.DeleteDownloadShareMock(123));
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.DeleteDownloadShare, 0)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<RestRequest>(), RequestType.DeleteDownloadShare, 0)).DoNothing().Occurs(1);
 
             // ACT
             s.DeleteDownloadShare(5);
@@ -219,7 +219,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.GetDownloadShares(Arg.IsAny<long?>(), Arg.IsAny<long?>(), Arg.IsAny<GetDownloadSharesFilter>(), Arg.IsAny<SharesSort>()))
                     .Returns(FactoryRestSharp.GetDownloadSharesMock()).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadShareList>(Arg.IsAny<IRestRequest>(), RequestType.GetDownloadShares, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiDownloadShareList>(Arg.IsAny<RestRequest>(), RequestType.GetDownloadShares, 0))
                     .Returns(FactoryShare.ApiDownloadShareList).Occurs(1);
             Mock.Arrange(() => ShareMapper.FromApiDownloadShareList(Arg.IsAny<ApiDownloadShareList>())).Returns(FactoryShare.DownloadShareList).Occurs(1);
 
@@ -253,7 +253,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => ShareMapper.ToApiCreateUploadShareRequest(Arg.IsAny<CreateUploadShareRequest>()))
                 .Returns(FactoryShare.ApiCreateUploadShareRequest).Occurs(1);
             Mock.Arrange(() => c.Builder.PostCreateUploadShare(Arg.IsAny<ApiCreateUploadShareRequest>())).Returns(FactoryRestSharp.PostCreateUploadShareMock()).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadShare>(Arg.IsAny<IRestRequest>(), RequestType.PostCreateUploadShare, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadShare>(Arg.IsAny<RestRequest>(), RequestType.PostCreateUploadShare, 0))
                     .Returns(FactoryShare.ApiUploadShare).Occurs(1);
             Mock.Arrange(() => ShareMapper.FromApiUploadShare(Arg.IsAny<ApiUploadShare>())).Returns(FactoryShare.UploadShare).Occurs(1);
 
@@ -328,7 +328,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             DracoonSharesImpl s = new DracoonSharesImpl(c);
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.DeleteUploadShare(Arg.AnyLong)).Returns(FactoryRestSharp.DeleteUploadShareMock(2134)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.DeleteUploadShare, 0)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<RestRequest>(), RequestType.DeleteUploadShare, 0)).DoNothing().Occurs(1);
 
             // ACT
             s.DeleteUploadShare(5);
@@ -352,7 +352,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.IsAny<long?>().NullableMustNotNegative(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.GetUploadShares(Arg.IsAny<long?>(), Arg.IsAny<long?>(), Arg.IsAny<GetUploadSharesFilter>(), Arg.IsAny<SharesSort>())).Returns(FactoryRestSharp.GetUploadSharesMock()).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadShareList>(Arg.IsAny<IRestRequest>(), RequestType.GetUploadShares, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadShareList>(Arg.IsAny<RestRequest>(), RequestType.GetUploadShares, 0))
                 .Returns(FactoryShare.ApiUploadShareList).Occurs(1);
             Mock.Arrange(() => ShareMapper.FromApiUploadShareList(Arg.IsAny<ApiUploadShareList>())).Returns(FactoryShare.UploadShareList).Occurs(1);
 
@@ -383,7 +383,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool)).DoNothing().OccursAtLeast(3);
             Mock.Arrange(() => Arg.IsAny<IEnumerable<string>>().EnumerableMustNotNullOrEmpty(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.PostMailDownloadShare(Arg.AnyLong, Arg.IsAny<ApiMailShareInfoRequest>())).Returns(FactoryRestSharp.PostMailDownloadShare(123)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.PostMailDownloadShare, 0)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<RestRequest>(), RequestType.PostMailDownloadShare, 0)).DoNothing().Occurs(1);
             Mock.Arrange(() => ShareMapper.ToApiMailShareInfoRequest(Arg.IsAny<MailShareInfoRequest>())).Returns(FactoryShare.ApiMailShareInfoRequest).Occurs(1);
 
             // ACT
@@ -413,7 +413,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, Arg.AnyBool)).DoNothing().OccursAtLeast(3);
             Mock.Arrange(() => Arg.IsAny<IEnumerable<string>>().EnumerableMustNotNullOrEmpty(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.Builder.PostMailUploadShare(Arg.AnyLong, Arg.IsAny<ApiMailShareInfoRequest>())).Returns(FactoryRestSharp.PostMailUploadShare(123)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.PostMailUploadShare, 0)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<RestRequest>(), RequestType.PostMailUploadShare, 0)).DoNothing().Occurs(1);
             Mock.Arrange(() => ShareMapper.ToApiMailShareInfoRequest(Arg.IsAny<MailShareInfoRequest>())).Returns(FactoryShare.ApiMailShareInfoRequest).Occurs(1);
 
             // ACT

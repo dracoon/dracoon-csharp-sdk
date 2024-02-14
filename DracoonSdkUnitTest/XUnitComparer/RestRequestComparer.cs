@@ -1,23 +1,24 @@
 ﻿using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Dracoon.Sdk.UnitTest.XUnitComparer {
-    internal class RestRequestComparer : IEqualityComparer<IRestRequest> {
-        public bool Equals(IRestRequest x, IRestRequest y) {
+    internal class RestRequestComparer : IEqualityComparer<RestRequest> {
+        public bool Equals(RestRequest x, RestRequest y) {
             if (x == null && y == null) {
                 return true;
             }
 
             if (x != null && y != null) {
-                return CompareHelper.ListIsEqual(x.Parameters, y.Parameters) && x.Method == y.Method && x.ReadWriteTimeout == y.ReadWriteTimeout &&
+                return CompareHelper.ListIsEqual(x.Parameters.ToList(), y.Parameters.ToList()) && x.Method == y.Method  &&
                        x.Timeout == y.Timeout && x.Resource == y.Resource;
             }
 
             return false;
         }
 
-        public int GetHashCode(IRestRequest obj) {
+        public int GetHashCode(RestRequest obj) {
             throw new NotImplementedException();
         }
     }

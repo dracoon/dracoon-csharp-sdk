@@ -24,7 +24,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
             #endregion
 
-            IRestRequest request = _client.Builder.GetUserAvatar(userId, avatarUuid);
+            RestRequest request = _client.Builder.GetUserAvatar(userId, avatarUuid);
             ApiAvatarInfo apiAvatarInfo = _client.Executor.DoSyncApiCall<ApiAvatarInfo>(request, RequestType.GetResourcesAvatar);
 
             using (WebClient avatarClient = _client.Builder.ProvideAvatarDownloadWebClient()) {

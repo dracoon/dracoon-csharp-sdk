@@ -37,15 +37,15 @@ namespace Dracoon.Sdk.UnitTest.Test {
             acfu.Classification = null;
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock())
                 .Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostUploadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<RestRequest>(), RequestType.PostUploadToken, 0))
                 .Returns(FactoryFile.ApiUploadToken).Occurs(1);
             Mock.Arrange(() => c.Builder.PutCompleteFileUpload(Arg.AnyString, Arg.IsAny<ApiCompleteFileUpload>()))
                 .Returns(FactoryRestSharp.PutCompleteFileUploadMock("path")).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<IRestRequest>(), RequestType.PutCompleteUpload, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<RestRequest>(), RequestType.PutCompleteUpload, 0))
                 .Returns(FactoryNode.ApiNode).Occurs(1);
             Mock.Arrange(() => c.Builder.GetGeneralSettings())
-                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
+                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<RestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(FactoryServerSettings.ApiGeneralSettings).Occurs(1);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
@@ -87,15 +87,15 @@ namespace Dracoon.Sdk.UnitTest.Test {
             acfu.Classification = null;
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock())
                 .Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostUploadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<RestRequest>(), RequestType.PostUploadToken, 0))
                 .Returns(FactoryFile.ApiUploadToken).Occurs(1);
             Mock.Arrange(() => c.Builder.PutCompleteFileUpload(Arg.AnyString, Arg.IsAny<ApiCompleteFileUpload>()))
                 .Returns(FactoryRestSharp.PutCompleteFileUploadMock("path")).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<IRestRequest>(), RequestType.PutCompleteUpload, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<RestRequest>(), RequestType.PutCompleteUpload, 0))
                 .Returns(FactoryNode.ApiNode).Occurs(1);
             Mock.Arrange(() => c.Builder.GetGeneralSettings())
-                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
+                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<RestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(FactoryServerSettings.ApiGeneralSettings).Occurs(1);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
@@ -136,15 +136,15 @@ namespace Dracoon.Sdk.UnitTest.Test {
             ApiCreateFileUpload acfu = FactoryFile.ApiCreateFileUpload;
             acfu.Classification = null;
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock());
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostUploadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<RestRequest>(), RequestType.PostUploadToken, 0))
                 .Returns(FactoryFile.ApiUploadToken);
             Mock.Arrange(() => c.Builder.PutCompleteFileUpload(Arg.AnyString, Arg.IsAny<ApiCompleteFileUpload>()))
                 .Returns(FactoryRestSharp.PutCompleteFileUploadMock("path"));
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<IRestRequest>(), RequestType.PutCompleteUpload, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<RestRequest>(), RequestType.PutCompleteUpload, 0))
                 .Returns(FactoryNode.ApiNode);
             Mock.Arrange(() => c.Builder.GetGeneralSettings())
-                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
+                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<RestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(FactoryServerSettings.ApiGeneralSettings).Occurs(1);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node);
@@ -242,15 +242,15 @@ namespace Dracoon.Sdk.UnitTest.Test {
             f.AddFileUploadCallback(callback);
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock())
                 .OnAllThreads();
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostUploadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<RestRequest>(), RequestType.PostUploadToken, 0))
                 .Returns(FactoryFile.ApiUploadToken).OnAllThreads();
             Mock.Arrange(() => c.Builder.PutCompleteFileUpload(Arg.AnyString, Arg.IsAny<ApiCompleteFileUpload>()))
                 .Returns(FactoryRestSharp.PutCompleteFileUploadMock("path")).OnAllThreads();
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<IRestRequest>(), RequestType.PutCompleteUpload, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<RestRequest>(), RequestType.PutCompleteUpload, 0))
                 .Returns(FactoryNode.ApiNode).OnAllThreads();
             Mock.Arrange(() => c.Builder.GetGeneralSettings())
-                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).OnAllThreads();
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
+                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.Get)).OnAllThreads();
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<RestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(FactoryServerSettings.ApiGeneralSettings).OnAllThreads();
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(FactoryFile.ApiCreateFileUpload)
                 .OnAllThreads();
@@ -299,11 +299,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu).Occurs(1);
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock())
                 .Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostUploadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<RestRequest>(), RequestType.PostUploadToken, 0))
                 .Returns(FactoryFile.ApiUploadToken).Occurs(1);
             Mock.Arrange(() => c.Builder.GetGeneralSettings())
-                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
+                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<RestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(FactoryServerSettings.ApiGeneralSettings).Occurs(1);
             Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.IsAny<PlainFileKeyAlgorithm>())).Returns(FactoryFile.PlainFileKey).Occurs(1);
             FileEncryptionCipher cipher = Mock.Create<FileEncryptionCipher>();
@@ -321,7 +321,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Mock.Arrange(() => FileMapper.ToApiFileKey(Arg.IsAny<EncryptedFileKey>())).Returns(FactoryFile.ApiFileKey);
             Mock.Arrange(() => c.Builder.PutCompleteFileUpload(Arg.AnyString, Arg.IsAny<ApiCompleteFileUpload>()))
                 .Returns(FactoryRestSharp.PutCompleteFileUploadMock("path")).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<IRestRequest>(), RequestType.PutCompleteUpload, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<RestRequest>(), RequestType.PutCompleteUpload, 0))
                 .Returns(FactoryNode.ApiNode).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
 
@@ -363,12 +363,12 @@ namespace Dracoon.Sdk.UnitTest.Test {
             EncFileUpload f = new EncFileUpload(c, "id1", FactoryFile.UploadFileRequest, s, FactoryUser.UserPublicKey_2048, fileMock.Length);
             f.AddFileUploadCallback(callback);
             Mock.Arrange(() => c.Builder.GetGeneralSettings())
-                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
+                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<RestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(FactoryServerSettings.ApiGeneralSettings).Occurs(1);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu);
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock());
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostUploadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<RestRequest>(), RequestType.PostUploadToken, 0))
                 .Returns(FactoryFile.ApiUploadToken);
             Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.IsAny<PlainFileKeyAlgorithm>())).Throws(new CryptoException("Error"));
 
@@ -391,11 +391,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             f.AddFileUploadCallback(callback);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu);
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock());
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostUploadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<RestRequest>(), RequestType.PostUploadToken, 0))
                 .Returns(FactoryFile.ApiUploadToken);
             Mock.Arrange(() => c.Builder.GetGeneralSettings())
-                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
+                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<RestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(FactoryServerSettings.ApiGeneralSettings).Occurs(1);
             Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.IsAny<PlainFileKeyAlgorithm>())).Returns(FactoryFile.PlainFileKey);
             FileEncryptionCipher cipher = Mock.Create<FileEncryptionCipher>();
@@ -427,11 +427,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             f.AddFileUploadCallback(callback);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu);
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock());
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostUploadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<RestRequest>(), RequestType.PostUploadToken, 0))
                 .Returns(FactoryFile.ApiUploadToken);
             Mock.Arrange(() => c.Builder.GetGeneralSettings())
-                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
+                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<RestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(FactoryServerSettings.ApiGeneralSettings).Occurs(1);
             Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.IsAny<PlainFileKeyAlgorithm>())).Returns(FactoryFile.PlainFileKey);
             FileEncryptionCipher cipher = Mock.Create<FileEncryptionCipher>();
@@ -456,11 +456,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             f.AddFileUploadCallback(callback);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu);
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock());
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostUploadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<RestRequest>(), RequestType.PostUploadToken, 0))
                 .Returns(FactoryFile.ApiUploadToken);
             Mock.Arrange(() => c.Builder.GetGeneralSettings())
-                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
+                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<RestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(FactoryServerSettings.ApiGeneralSettings).Occurs(1);
             Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.IsAny<PlainFileKeyAlgorithm>())).Returns(FactoryFile.PlainFileKey);
             FileEncryptionCipher cipher = Mock.Create<FileEncryptionCipher>();
@@ -490,11 +490,11 @@ namespace Dracoon.Sdk.UnitTest.Test {
             f.AddFileUploadCallback(callback);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu);
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock());
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostUploadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<RestRequest>(), RequestType.PostUploadToken, 0))
                 .Returns(FactoryFile.ApiUploadToken);
             Mock.Arrange(() => c.Builder.GetGeneralSettings())
-                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
+                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<RestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(FactoryServerSettings.ApiGeneralSettings).Occurs(1);
             Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateFileKey(Arg.IsAny<PlainFileKeyAlgorithm>())).Returns(FactoryFile.PlainFileKey);
             FileEncryptionCipher cipher = Mock.Create<FileEncryptionCipher>();
@@ -533,22 +533,22 @@ namespace Dracoon.Sdk.UnitTest.Test {
             acfu.Classification = null;
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock())
                 .Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostUploadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<RestRequest>(), RequestType.PostUploadToken, 0))
                 .Returns(FactoryFile.ApiUploadToken).Occurs(1);
             Mock.Arrange(() => c.Builder.PutCompleteS3FileUpload(Arg.AnyString, Arg.IsAny<ApiCompleteFileUpload>()))
                 .Returns(FactoryRestSharp.PutCompleteFileUploadMock("path")).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.PutCompleteS3Upload, 0)).DoNothing()
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<RestRequest>(), RequestType.PutCompleteS3Upload, 0)).DoNothing()
                 .Occurs(1);
             Mock.Arrange(() => c.Builder.GetGeneralSettings())
-                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
+                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<RestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(generalSettings).Occurs(1);
             Mock.Arrange(() => c.Builder.PostGetS3Urls(Arg.AnyString, Arg.IsAny<ApiGetS3Urls>())).Returns(FactoryRestSharp.PostGetS3UrlsMock())
                 .OccursAtLeast(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Urls>(Arg.IsAny<IRestRequest>(), RequestType.PostGetS3Urls, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Urls>(Arg.IsAny<RestRequest>(), RequestType.PostGetS3Urls, 0))
                 .Returns(FactoryFile.ApiS3Urls).OccursAtLeast(1);
             Mock.Arrange(() => c.Builder.GetS3Status(Arg.AnyString)).Returns(FactoryRestSharp.GetS3StatusMock).OccursAtLeast(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Status>(Arg.IsAny<IRestRequest>(), RequestType.GetS3Status, 0)).Returns(resultStatus)
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Status>(Arg.IsAny<RestRequest>(), RequestType.GetS3Status, 0)).Returns(resultStatus)
                 .OccursAtLeast(1);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
@@ -596,22 +596,22 @@ namespace Dracoon.Sdk.UnitTest.Test {
             acfu.Classification = null;
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock())
                 .Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostUploadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<RestRequest>(), RequestType.PostUploadToken, 0))
                 .Returns(FactoryFile.ApiUploadToken).Occurs(1);
             Mock.Arrange(() => c.Builder.PutCompleteS3FileUpload(Arg.AnyString, Arg.IsAny<ApiCompleteFileUpload>()))
                 .Returns(FactoryRestSharp.PutCompleteFileUploadMock("path")).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.PutCompleteS3Upload, 0)).DoNothing()
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<RestRequest>(), RequestType.PutCompleteS3Upload, 0)).DoNothing()
                 .Occurs(1);
             Mock.Arrange(() => c.Builder.GetGeneralSettings())
-                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
+                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<RestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(generalSettings).Occurs(1);
             Mock.Arrange(() => c.Builder.PostGetS3Urls(Arg.AnyString, Arg.IsAny<ApiGetS3Urls>())).Returns(FactoryRestSharp.PostGetS3UrlsMock())
                 .OccursAtLeast(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Urls>(Arg.IsAny<IRestRequest>(), RequestType.PostGetS3Urls, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Urls>(Arg.IsAny<RestRequest>(), RequestType.PostGetS3Urls, 0))
                 .Returns(FactoryFile.ApiS3Urls).OccursAtLeast(1);
             Mock.Arrange(() => c.Builder.GetS3Status(Arg.AnyString)).Returns(FactoryRestSharp.GetS3StatusMock).OccursAtLeast(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Status>(Arg.IsAny<IRestRequest>(), RequestType.GetS3Status, 0)).Returns(resultStatus)
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Status>(Arg.IsAny<RestRequest>(), RequestType.GetS3Status, 0)).Returns(resultStatus)
                 .OccursAtLeast(1);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
@@ -655,22 +655,22 @@ namespace Dracoon.Sdk.UnitTest.Test {
             acfu.Classification = null;
             Mock.Arrange(() => c.Builder.PostCreateFileUpload(Arg.IsAny<ApiCreateFileUpload>())).Returns(FactoryRestSharp.PostCreateFileUploadMock())
                 .Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<IRestRequest>(), RequestType.PostUploadToken, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiUploadToken>(Arg.IsAny<RestRequest>(), RequestType.PostUploadToken, 0))
                 .Returns(FactoryFile.ApiUploadToken).Occurs(1);
             Mock.Arrange(() => c.Builder.PutCompleteS3FileUpload(Arg.AnyString, Arg.IsAny<ApiCompleteFileUpload>()))
                 .Returns(FactoryRestSharp.PutCompleteFileUploadMock("path")).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<IRestRequest>(), RequestType.PutCompleteS3Upload, 0)).DoNothing()
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<VoidResponse>(Arg.IsAny<RestRequest>(), RequestType.PutCompleteS3Upload, 0)).DoNothing()
                 .Occurs(1);
             Mock.Arrange(() => c.Builder.GetGeneralSettings())
-                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.GET)).Occurs(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<IRestRequest>(), RequestType.GetGeneralSettings, 0))
+                .Returns(FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetGeneralConfig, Method.Get)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiGeneralSettings>(Arg.IsAny<RestRequest>(), RequestType.GetGeneralSettings, 0))
                 .Returns(generalSettings).Occurs(1);
             Mock.Arrange(() => c.Builder.PostGetS3Urls(Arg.AnyString, Arg.IsAny<ApiGetS3Urls>())).Returns(FactoryRestSharp.PostGetS3UrlsMock())
                 .OccursAtLeast(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Urls>(Arg.IsAny<IRestRequest>(), RequestType.PostGetS3Urls, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Urls>(Arg.IsAny<RestRequest>(), RequestType.PostGetS3Urls, 0))
                 .Returns(FactoryFile.ApiS3Urls).OccursAtLeast(1);
             Mock.Arrange(() => c.Builder.GetS3Status(Arg.AnyString)).Returns(FactoryRestSharp.GetS3StatusMock).OccursAtLeast(1);
-            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Status>(Arg.IsAny<IRestRequest>(), RequestType.GetS3Status, 0))
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiS3Status>(Arg.IsAny<RestRequest>(), RequestType.GetS3Status, 0))
                 .Returns(FactoryFile.ApiS3Status).OccursAtLeast(1);
             Mock.Arrange(() => FileMapper.ToApiCreateFileUpload(Arg.IsAny<FileUploadRequest>())).Returns(acfu).Occurs(1);
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node).Occurs(1);
