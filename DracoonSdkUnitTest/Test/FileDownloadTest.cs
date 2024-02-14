@@ -209,7 +209,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Mock.Arrange(() => c.NodesImpl.GetEncryptedFileKey(Arg.AnyLong)).Returns(FactoryFile.EncryptedFileKey).Occurs(1);
             Mock.Arrange(() => c.AccountImpl.GetAndCheckUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>())).Returns(FactoryUser.UserKeyPair_2048).Occurs(1);
             FileDecryptionCipher cipher = Mock.Create<FileDecryptionCipher>();
-            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.AnyString))
+            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.IsAny<byte[]>()))
                 .Returns(FactoryFile.PlainFileKey).Occurs(1);
             Mock.Arrange(() => Crypto.Sdk.Crypto.CreateFileDecryptionCipher(Arg.IsAny<PlainFileKey>())).Returns(cipher).Occurs(1);
             Mock.NonPublic.Arrange<byte[]>(f, "DownloadChunk", ArgExpr.IsAny<Uri>(), ArgExpr.IsAny<long>(), ArgExpr.IsAny<long>()).Returns(expected);
@@ -232,7 +232,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
             // ASSERT
             Assert.Equal(expected, actual);
             Mock.Assert(() => CryptoHelper.DetermineUserKeyPairVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>()));
-            Mock.Assert(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.AnyString));
+            Mock.Assert(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.IsAny<byte[]>()));
             Mock.Assert(() => Crypto.Sdk.Crypto.CreateFileDecryptionCipher(Arg.IsAny<PlainFileKey>()));
             Mock.Assert(() => c.AccountImpl);
             Mock.Assert(callback);
@@ -259,7 +259,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
                     .Returns(FactoryNode.ApiDownloadToken);
             Mock.Arrange(() => c.NodesImpl.GetEncryptedFileKey(Arg.AnyLong)).Returns(FactoryFile.EncryptedFileKey);
             FileDecryptionCipher cipher = Mock.Create<FileDecryptionCipher>();
-            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.AnyString))
+            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.IsAny<byte[]>()))
                 .Throws(new CryptoException("Error"));
             Mock.NonPublic.Arrange<byte[]>(f, "DownloadChunk", ArgExpr.IsAny<Uri>(), ArgExpr.IsAny<long>(), ArgExpr.IsAny<long>()).Returns(expected);
             Mock.Arrange(() => CryptoHelper.DetermineUserKeyPairVersion(Arg.IsAny<EncryptedFileKeyAlgorithm>())).Returns(UserKeyPairAlgorithm.RSA2048);
@@ -287,7 +287,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
                     .Returns(FactoryNode.ApiDownloadToken);
             Mock.Arrange(() => c.NodesImpl.GetEncryptedFileKey(Arg.AnyLong)).Returns(FactoryFile.EncryptedFileKey);
             FileDecryptionCipher cipher = Mock.Create<FileDecryptionCipher>();
-            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.AnyString))
+            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.IsAny<byte[]>()))
                 .Returns(FactoryFile.PlainFileKey);
             Mock.Arrange(() => Crypto.Sdk.Crypto.CreateFileDecryptionCipher(Arg.IsAny<PlainFileKey>())).Throws(new CryptoException("Error"));
             Mock.NonPublic.Arrange<byte[]>(f, "DownloadChunk", ArgExpr.IsAny<Uri>(), ArgExpr.IsAny<long>(), ArgExpr.IsAny<long>()).Returns(expected);
@@ -316,7 +316,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
                     .Returns(FactoryNode.ApiDownloadToken);
             Mock.Arrange(() => c.NodesImpl.GetEncryptedFileKey(Arg.AnyLong)).Returns(FactoryFile.EncryptedFileKey);
             FileDecryptionCipher cipher = Mock.Create<FileDecryptionCipher>();
-            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.AnyString))
+            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.IsAny<byte[]>()))
                 .Returns(FactoryFile.PlainFileKey);
             Mock.Arrange(() => Crypto.Sdk.Crypto.CreateFileDecryptionCipher(Arg.IsAny<PlainFileKey>())).Returns(cipher);
             Mock.NonPublic.Arrange<byte[]>(f, "DownloadChunk", ArgExpr.IsAny<Uri>(), ArgExpr.IsAny<long>(), ArgExpr.IsAny<long>()).Returns(expected);
@@ -347,7 +347,7 @@ namespace Dracoon.Sdk.UnitTest.Test {
                     .Returns(FactoryNode.ApiDownloadToken);
             Mock.Arrange(() => c.NodesImpl.GetEncryptedFileKey(Arg.AnyLong)).Returns(FactoryFile.EncryptedFileKey);
             FileDecryptionCipher cipher = Mock.Create<FileDecryptionCipher>();
-            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.AnyString))
+            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.IsAny<byte[]>()))
                 .Returns(FactoryFile.PlainFileKey);
             Mock.Arrange(() => Crypto.Sdk.Crypto.CreateFileDecryptionCipher(Arg.IsAny<PlainFileKey>())).Returns(cipher);
             Mock.NonPublic.Arrange<byte[]>(f, "DownloadChunk", ArgExpr.IsAny<Uri>(), ArgExpr.IsAny<long>(), ArgExpr.IsAny<long>()).Returns(expected);

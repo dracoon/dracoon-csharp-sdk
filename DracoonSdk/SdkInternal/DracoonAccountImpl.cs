@@ -74,7 +74,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal UserKeyPair GenerateNewUserKeyPair(UserKeyPairAlgorithm algorithm, string encryptionPassword) {
             try {
-                return Crypto.Sdk.Crypto.GenerateUserKeyPair(algorithm, encryptionPassword);
+                return Crypto.Sdk.Crypto.GenerateUserKeyPair(algorithm, Encoding.UTF8.GetBytes(encryptionPassword));
             } catch (CryptoException ce) {
                 DracoonClient.Log.Debug(Logtag, "Generation of user key pair failed with " + ce.Message);
                 throw new DracoonCryptoException(CryptoErrorMapper.ParseCause(ce), ce);
@@ -176,7 +176,7 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         private void CheckKeyPair(UserKeyPair keyPair) {
-            if (!Crypto.Sdk.Crypto.CheckUserKeyPair(keyPair, _client.EncryptionPassword)) {
+            if (!Crypto.Sdk.Crypto.CheckUserKeyPair(keyPair, Encoding.UTF8.GetBytes(_client.EncryptionPassword))) {
                 throw new DracoonCryptoException(DracoonCryptoCode.INVALID_PASSWORD_ERROR);
             }
         }

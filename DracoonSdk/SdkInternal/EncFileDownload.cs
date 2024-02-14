@@ -9,6 +9,7 @@ using RestSharp;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading;
 using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
@@ -33,7 +34,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         private PlainFileKey DecryptFileKey(EncryptedFileKey encryptedFileKey, UserPrivateKey userPrivateKey) {
             try {
-                return Crypto.Sdk.Crypto.DecryptFileKey(encryptedFileKey, userPrivateKey, Client.EncryptionPassword);
+                return Crypto.Sdk.Crypto.DecryptFileKey(encryptedFileKey, userPrivateKey, Encoding.UTF8.GetBytes(Client.EncryptionPassword));
             } catch (CryptoException ce) {
                 string message = "Decryption of file key for encrypted download " + ActionId + " failed!";
                 DracoonClient.Log.Debug(LogTag, message);
