@@ -3,6 +3,7 @@ using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Dracoon.Sdk.UnitTest.Factory {
     internal static class FactoryShare {
@@ -171,7 +172,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             ShowCreatorName = true,
             ShowCreatorUserName = false,
             MaxAllowedDownloads = 5,
-            Password = "Pass1234!",
+            Password = Encoding.UTF8.GetBytes("Pass1234!"),
             ReceiverLanguage = "de",
             TextMessageRecipients = new List<string> { "092834574" }
         };

@@ -2,6 +2,7 @@
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Dracoon.Sdk.UnitTest.Factory {
     internal class FactoryRoom {
@@ -69,7 +70,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
 
         internal static EnableRoomEncryptionRequest EnableRoomEncryptionRequest => new EnableRoomEncryptionRequest(1254, true) {
             UseDataSpaceRescueKey = false,
-            DataRoomRescueKeyPassword = "Pass1234!",
+            DataRoomRescueKeyPassword = Encoding.UTF8.GetBytes("Pass1234!"),
             DataRoomRescueKeyPairAlgorithm = Crypto.Sdk.UserKeyPairAlgorithm.RSA2048
         };
     }

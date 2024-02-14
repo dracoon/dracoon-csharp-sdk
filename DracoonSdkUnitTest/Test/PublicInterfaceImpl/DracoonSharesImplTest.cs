@@ -41,7 +41,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => c.NodesImpl.GetEncryptedFileKey(Arg.AnyLong)).Returns(FactoryFile.EncryptedFileKey).Occurs(1);
             Mock.Arrange(() => c.NodesImpl.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.IsAny<long?>())).Returns(FactoryFile.PlainFileKey).Occurs(1);
             Mock.Arrange(() => c.AccountImpl.GetPreferredUserKeyPairAlgorithm()).Returns(UserKeyPairAlgorithm.RSA4096).Occurs(1);
-            Mock.Arrange(() => c.AccountImpl.GenerateNewUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.AnyString)).Returns(FactoryUser.UserKeyPair_2048);
+            Mock.Arrange(() => c.AccountImpl.GenerateNewUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.IsAny<byte[]>())).Returns(FactoryUser.UserKeyPair_2048);
             Mock.Arrange(() => c.NodesImpl.EncryptFileKey(Arg.IsAny<PlainFileKey>(), Arg.IsAny<UserPublicKey>(), Arg.IsAny<long?>())).Returns(FactoryFile.EncryptedFileKey).Occurs(1);
             Mock.Arrange(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>())).Returns(FactoryUser.ApiUserKeyPair_2048).Occurs(1);
             Mock.Arrange(() => FileMapper.ToApiFileKey(Arg.IsAny<EncryptedFileKey>())).Returns(FactoryFile.ApiFileKey).Occurs(1);

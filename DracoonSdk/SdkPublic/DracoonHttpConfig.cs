@@ -17,10 +17,7 @@ namespace Dracoon.Sdk {
     ///             <description><see cref="RetryEnabled"/></description>
     ///         </item>
     ///         <item>
-    ///             <description><see cref="ReadWriteTimeout"/></description>
-    ///         </item>
-    ///         <item>
-    ///             <description><see cref="ConnectionTimeout"/></description>
+    ///             <description><see cref="Timeout"/></description>
     ///         </item>
     ///         <item>
     ///             <description><see cref="WebProxy"/></description>

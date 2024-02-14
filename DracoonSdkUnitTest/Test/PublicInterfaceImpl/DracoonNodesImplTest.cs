@@ -573,7 +573,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             DracoonNodesImpl n = new DracoonNodesImpl(c);
             Mock.Arrange(() => Arg.IsAny<EnableRoomEncryptionRequest>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.IsAny<UserKeyPairAlgorithm?>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
-            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.IsAny<byte[]>().MustNotNullOrEmpty(Arg.AnyString, false)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.IsAny<byte[]>())).Returns(FactoryUser.UserKeyPair_2048).Occurs(1);
             Mock.Arrange(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>())).Returns(FactoryUser.ApiUserKeyPair_2048).Occurs(1);
@@ -591,7 +591,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Assert(() => Arg.IsAny<EnableRoomEncryptionRequest>().MustNotNull(Arg.AnyString));
             Mock.Assert(() => Arg.IsAny<UserKeyPairAlgorithm?>().MustNotNull(Arg.AnyString));
             Mock.Assert(() => Arg.AnyLong.MustPositive(Arg.AnyString));
-            Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
+            Mock.Assert(() => Arg.IsAny<byte[]>().MustNotNullOrEmpty(Arg.AnyString, false));
             Mock.Assert(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.IsAny<byte[]>()));
             Mock.Assert(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>()));
             Mock.Assert(() => RoomMapper.ToApiEnableRoomEncryptionRequest(Arg.IsAny<EnableRoomEncryptionRequest>(), Arg.IsAny<ApiUserKeyPair>()));

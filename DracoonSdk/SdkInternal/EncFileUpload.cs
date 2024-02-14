@@ -43,6 +43,7 @@ namespace Dracoon.Sdk.SdkInternal {
             if (apiFileUploadRequest.UseS3.HasValue && apiFileUploadRequest.UseS3.Value) {
                 List<ApiS3FileUploadPart> s3Parts = EncryptedS3Upload(ref plainFileKey);
                 EncryptedFileKey encryptedFileKey = EncryptFileKey(plainFileKey);
+                Array.Clear(plainFileKey.Key, 0, plainFileKey.Key.Length);
                 apiCompleteFileUpload.FileKey = FileMapper.ToApiFileKey(encryptedFileKey);
                 apiCompleteFileUpload.Parts = s3Parts;
                 RestRequest completeFileUploadRequest = Client.Builder.PutCompleteS3FileUpload(UploadToken.UploadId, apiCompleteFileUpload);
@@ -51,6 +52,7 @@ namespace Dracoon.Sdk.SdkInternal {
             } else {
                 EncryptedUpload(ref plainFileKey);
                 EncryptedFileKey encryptedFileKey = EncryptFileKey(plainFileKey);
+                Array.Clear(plainFileKey.Key, 0, plainFileKey.Key.Length);
                 apiCompleteFileUpload.FileKey = FileMapper.ToApiFileKey(encryptedFileKey);
                 RestRequest completeFileUploadRequest =
                     Client.Builder.PutCompleteFileUpload(new Uri(UploadToken.UploadUrl).PathAndQuery, apiCompleteFileUpload);
