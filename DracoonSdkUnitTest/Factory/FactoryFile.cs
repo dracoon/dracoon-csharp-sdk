@@ -4,6 +4,7 @@ using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Dracoon.Sdk.UnitTest.Factory {
     internal static class FactoryFile {
@@ -36,7 +37,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
 
         internal static PlainFileKey PlainFileKey => new PlainFileKey {
             Iv = "PlainIv",
-            Key = "PlainKey",
+            Key = Encoding.UTF8.GetBytes("PlainKey"),
             Tag = "PlainTag",
             Version = Crypto.Sdk.PlainFileKeyAlgorithm.AES256GCM
         };

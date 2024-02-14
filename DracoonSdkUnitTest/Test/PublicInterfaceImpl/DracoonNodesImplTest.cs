@@ -576,7 +576,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => c.AccountImpl.AssertUserKeyPairAlgorithmSupported(Arg.IsAny<UserKeyPairAlgorithm>())).DoNothing().Occurs(1);
-            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.AnyString)).Returns(FactoryUser.UserKeyPair_2048).Occurs(1);
+            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.IsAny<byte[]>())).Returns(FactoryUser.UserKeyPair_2048).Occurs(1);
             Mock.Arrange(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>())).Returns(FactoryUser.ApiUserKeyPair_2048).Occurs(1);
             Mock.Arrange(() => RoomMapper.ToApiEnableRoomEncryptionRequest(Arg.IsAny<EnableRoomEncryptionRequest>(), Arg.IsAny<ApiUserKeyPair>()))
                 .Returns(FactoryRoom.ApiEnableRoomEncryptionRequest).Occurs(1);
@@ -593,7 +593,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Assert(() => Arg.IsAny<UserKeyPairAlgorithm?>().MustNotNull(Arg.AnyString));
             Mock.Assert(() => Arg.AnyLong.MustPositive(Arg.AnyString));
             Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
-            Mock.Assert(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.AnyString));
+            Mock.Assert(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.IsAny<byte[]>()));
             Mock.Assert(() => UserMapper.ToApiUserKeyPair(Arg.IsAny<UserKeyPair>()));
             Mock.Assert(() => RoomMapper.ToApiEnableRoomEncryptionRequest(Arg.IsAny<EnableRoomEncryptionRequest>(), Arg.IsAny<ApiUserKeyPair>()));
             Mock.Assert(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>()));
@@ -611,7 +611,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing();
             Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing();
             Mock.Arrange(() => c.AccountImpl.AssertUserKeyPairAlgorithmSupported(Arg.IsAny<UserKeyPairAlgorithm>())).DoNothing();
-            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.AnyString)).Throws(new CryptoException());
+            Mock.Arrange(() => Crypto.Sdk.Crypto.GenerateUserKeyPair(Arg.IsAny<UserKeyPairAlgorithm>(), Arg.IsAny<byte[]>())).Throws(new CryptoException());
             Mock.Arrange(() => CryptoErrorMapper.ParseCause(Arg.IsAny<Exception>())).Returns(DracoonCryptoCode.INVALID_PASSWORD_ERROR).Occurs(1);
 
             // ACT - ASSERT
@@ -1104,7 +1104,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonNodesImpl n = new DracoonNodesImpl(c);
-            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.AnyString))
+            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.IsAny<byte[]>()))
                 .Returns(FactoryFile.PlainFileKey).Occurs(1);
 
             // ACT
@@ -1112,7 +1112,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
 
             // ASSERT
             Assert.Equal(FactoryFile.PlainFileKey, actual, new PlainFileKeyComparer());
-            Mock.Assert(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.AnyString));
+            Mock.Assert(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.IsAny<byte[]>()));
         }
 
         [Fact]
@@ -1120,7 +1120,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonNodesImpl n = new DracoonNodesImpl(c);
-            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.AnyString))
+            Mock.Arrange(() => Crypto.Sdk.Crypto.DecryptFileKey(Arg.IsAny<EncryptedFileKey>(), Arg.IsAny<UserPrivateKey>(), Arg.IsAny<byte[]>()))
                 .Throws(new CryptoException());
             Mock.Arrange(() => CryptoErrorMapper.ParseCause(Arg.IsAny<Exception>())).Returns(DracoonCryptoCode.INTERNAL_ERROR).Occurs(1);
 
