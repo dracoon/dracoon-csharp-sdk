@@ -29,10 +29,9 @@ If you are using Visual Studio 2017 (or higher) and you are using NuGet with pac
 ```
 
 Note that you also need to include the following dependencies:
-1. Bouncy Castle Provider (v2.3.0): https://www.nuget.org/packages/BouncyCastle.Cryptography
-2. Dracoon Crypto SDK (v4.0.0): https://www.nuget.org/packages/Dracoon.Crypto.Sdk/
-3. NewtonSoft.Json (v13.0.3): https://www.nuget.org/packages/Newtonsoft.Json/
-4. RestSharp (v110.2.0): https://www.nuget.org/packages/RestSharp/
+1. Dracoon Crypto SDK (v4.0.0): https://www.nuget.org/packages/Dracoon.Crypto.Sdk/
+2. NewtonSoft.Json (v13.0.3): https://www.nuget.org/packages/Newtonsoft.Json/
+3. RestSharp (v110.2.0): https://www.nuget.org/packages/RestSharp/
 
 ## Example
 
@@ -59,7 +58,7 @@ The easiest way to view these is through Visual Studio's built in "Object Browse
 
 ## Contribution
 
-If you would like to contribute code, fork the repository and send a pull request. We don't use the GitHub Flow, so please create a feature branch of the develop branch and make your changes there.
+If you would like to contribute code, fork the repository and send a pull request. We don't use the GitHub Flow, so please create a feature branch of the main branch and make your changes there.
 
 ## Copyright and License
 
