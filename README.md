@@ -12,7 +12,7 @@ A library to access the DRACOON REST API.
 #### Minimum Requirements
 
 .NET Standard 2.0
-API version: 4.23.0
+API version: 4.11.0
 
 #### Download
 
@@ -21,18 +21,17 @@ In nuget, you can find the DRACOON SDK [here](https://www.nuget.org/packages/Dra
 
 If you are using NuGet with package management "Packages.config", then edit your project's "packages.config" and add this to the packages section:
 ```xml
-<package id="Dracoon.Sdk" version="2.1.0-beta3" />
+<package id="Dracoon.Sdk" version="2.1.0-beta4" />
 ```
 If you are using Visual Studio 2017 (or higher) and you are using NuGet with package management "PackageReference" then edit your .csproj file and add this to the package dependency group:
 ```xml
-<PackageReference Include="Dracoon.Sdk" Version="2.1.0-beta3" />
+<PackageReference Include="Dracoon.Sdk" Version="2.1.0-beta4" />
 ```
 
 Note that you also need to include the following dependencies:
-1. Bouncy Castle Provider Portable (v1.9.0): https://www.nuget.org/packages/Portable.BouncyCastle/
-2. Dracoon Crypto SDK (v3.0.0): https://www.nuget.org/packages/Dracoon.Crypto.Sdk/
-3. NewtonSoft.Json (v13.0.1): https://www.nuget.org/packages/Newtonsoft.Json/
-4. RestSharp (v106.13.0): https://www.nuget.org/packages/RestSharp/
+1. Dracoon Crypto SDK (v4.0.0): https://www.nuget.org/packages/Dracoon.Crypto.Sdk/
+2. NewtonSoft.Json (v13.0.3): https://www.nuget.org/packages/Newtonsoft.Json/
+3. RestSharp (v110.2.0): https://www.nuget.org/packages/RestSharp/
 
 ## Example
 
@@ -59,7 +58,7 @@ The easiest way to view these is through Visual Studio's built in "Object Browse
 
 ## Contribution
 
-If you would like to contribute code, fork the repository and send a pull request. We don't use the GitHub Flow, so please create a feature branch of the develop branch and make your changes there.
+If you would like to contribute code, fork the repository and send a pull request. We don't use the GitHub Flow, so please create a feature branch of the main branch and make your changes there.
 
 ## Copyright and License
 
