@@ -38,6 +38,32 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             Assert.Equal(expected, actual, new ApiCreateDownloadShareRequestComparer());
         }
 
+        [Fact]
+        public void ToUnencryptedApiCreateDownloadShareRequest_NoPassword() {
+            // ARRANGE
+            ApiCreateDownloadShareRequest expected = FactoryShare.ApiCreateDownloadShareRequest;
+            expected.Password = null;
+
+            CreateDownloadShareRequest param = new CreateDownloadShareRequest(expected.NodeId) {
+                Name = expected.Name,
+                Notes = expected.Notes,
+                InternalNotes = expected.InternalNotes,
+                Expiration = expected.Expiration.ExpireAt,
+                ShowCreatorName = expected.ShowCreatorName,
+                ShowCreatorUserName = expected.ShowCreatorUserName,
+                MaxAllowedDownloads = expected.MaxAllowedDownloads,
+                Password = null,
+                ReceiverLanguage = expected.ReceiverLanguage,
+                TextMessageRecipients = expected.TextMessageRecipients
+            };
+
+            // ACT
+            ApiCreateDownloadShareRequest actual = ShareMapper.ToUnencryptedApiCreateDownloadShareRequest(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new ApiCreateDownloadShareRequestComparer());
+        }
+
         #endregion
 
         #region FromApiDownloadShare
