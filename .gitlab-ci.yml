@@ -68,7 +68,7 @@ unit-test:
     - prepare
   script:
     - nuget restore .\DracoonSdk.sln -Source https://api.nuget.org/v3/index.json -Source https://$ARTIFACTORY_DOMAIN/artifactory/api/nuget/nuget-local
-    - C:\BuildTools\MSBuild\Current\Bin\MSBuild.exe DracoonSdkUnitTest\DracoonSdkUnitTest.csproj /p:Configuration="Release"
+    - C:\BuildToolsNEW\VS2022BuildTools\MSBuild\Current\Bin\MSBuild.exe DracoonSdkUnitTest\DracoonSdkUnitTest.csproj /p:Configuration="Release"
     - C:\BuildTools\TelerikJustMock\Libraries\Telerik.JustMock.Console runadvanced --command "dotnet" --command-args "vstest .\DracoonSdkUnitTest\bin\Release\Dracoon.Sdk.UnitTest.dll"
 
 sonar:
@@ -89,9 +89,9 @@ sonar:
     - $BASE_DIR=(Get-Location).path
   script:
     - nuget restore .\DracoonSdk.sln -Source https://api.nuget.org/v3/index.json -Source https://$ARTIFACTORY_DOMAIN/artifactory/api/nuget/nuget-local
-    - C:\BuildTools\MSBuild\Current\Bin\MSBuild.exe DracoonSdkUnitTest\DracoonSdkUnitTest.csproj /p:Configuration="Release"
+    - C:\BuildToolsNEW\VS2022BuildTools\MSBuild\Current\Bin\MSBuild.exe DracoonSdkUnitTest\DracoonSdkUnitTest.csproj /p:Configuration="Release"
     - C:\BuildTools\dependency-check\bin\dependency-check.bat --scan .\DracoonSdk --project dracoon-sdk-csharp --format ALL
-    - C:\BuildTools\TelerikJustMock\Libraries\Telerik.JustMock.Console runadvanced --command "C:\BuildTools\dotCover\dotCover.exe" --command-args 'cover /TargetExecutable="C:\BuildTools\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" /TargetArguments="Dracoon.Sdk.UnitTest.dll" /TargetWorkingDir="DracoonSdkUnitTest\bin\Release" /Scope="Dracoon.Sdk.dll" /Filters="-:module=Dracoon.Sdk.Example;-:module=Dracoon.Sdk.UnitTest" /Output=".\dotCoverResult.html" /ReportType="HTML"'
+    - C:\BuildTools\TelerikJustMock\Libraries\Telerik.JustMock.Console runadvanced --command "C:\BuildTools\dotCover\dotCover.exe" --command-args 'cover /TargetExecutable="C:\BuildToolsNEW\VS2022BuildTools\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" /TargetArguments="Dracoon.Sdk.UnitTest.dll" /TargetWorkingDir="DracoonSdkUnitTest\bin\Release" /Scope="Dracoon.Sdk.dll" /Filters="-:module=Dracoon.Sdk.Example;-:module=Dracoon.Sdk.UnitTest" /Output=".\dotCoverResult.html" /ReportType="HTML"'
     - dotnet clean -c Release .\DracoonSdk.sln
     - C:\ProgramData\chocolatey\lib\sonarscanner-msbuild-net46\tools\SonarScanner.MSBuild.exe begin /s:${BASE_DIR}\SonarQube.Analysis.xml /k:dracoon-sdk-csharp /v:${VERSION} /d:sonar.host.url=$SONAR_URL /d:sonar.login=$SONAR_TOKEN /d:sonar.branch.name="${CI_COMMIT_REF_SLUG}" /d:sonar.scm.revision=${CI_COMMIT_SHORT_SHA}
     - dotnet build -c Release .\DracoonSdk\DracoonSdk.csproj
