@@ -5,7 +5,6 @@ using Dracoon.Sdk.SdkInternal.Mapper;
 using Dracoon.Sdk.UnitTest.Factory;
 using Dracoon.Sdk.UnitTest.XUnitComparer;
 using System.Collections.Generic;
-using System.Text;
 using Telerik.JustMock;
 using Xunit;
 
@@ -26,7 +25,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 ShowCreatorName = expected.ShowCreatorName,
                 ShowCreatorUserName = expected.ShowCreatorUserName,
                 MaxAllowedDownloads = expected.MaxAllowedDownloads,
-                Password = Encoding.UTF8.GetBytes(expected.Password),
+                Password = expected.Password.ToCharArray(),
                 ReceiverLanguage = expected.ReceiverLanguage,
                 TextMessageRecipients = expected.TextMessageRecipients
             };

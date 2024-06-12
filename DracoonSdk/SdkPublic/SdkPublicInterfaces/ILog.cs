@@ -4,7 +4,7 @@ namespace Dracoon.Sdk {
     /// <summary>
     ///     ILog is the interface for custom logger implementations of the DRACOON SDK.
     ///     <para>
-    ///         A custom logger can be set via the DracoonClient constructor(<see cref = "Dracoon.Sdk.DracoonClient.DracoonClient(Uri, DracoonAuth, byte[], ILog, DracoonHttpConfig)" />).
+    ///         A custom logger can be set via the DracoonClient constructor(<see cref = "Dracoon.Sdk.DracoonClient.DracoonClient(Uri, DracoonAuth, char[], ILog, DracoonHttpConfig)" />).
     ///     </para>
     /// </summary>
     public interface ILog {

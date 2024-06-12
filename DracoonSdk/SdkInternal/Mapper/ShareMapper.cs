@@ -3,7 +3,6 @@ using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Util;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Dracoon.Sdk.SdkInternal.Mapper {
     internal static class ShareMapper {
@@ -25,7 +24,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 ShowCreatorName = request.ShowCreatorName,
                 ShowCreatorUserName = request.ShowCreatorUserName,
                 MaxAllowedDownloads = request.MaxAllowedDownloads,
-                Password = request.Password != null ? Encoding.UTF8.GetString(request.Password, 0, request.Password.Length) : null,
+                Password = request.Password != null ? new string(request.Password) : null,
                 ReceiverLanguage = request.ReceiverLanguage,
                 TextMessageRecipients = request.TextMessageRecipients
             };
