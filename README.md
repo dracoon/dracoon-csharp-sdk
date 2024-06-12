@@ -29,7 +29,7 @@ If you are using Visual Studio 2017 (or higher) and you are using NuGet with pac
 ```
 
 Note that you also need to include the following dependencies:
-1. Dracoon Crypto SDK (v4.0.0): https://www.nuget.org/packages/Dracoon.Crypto.Sdk/
+1. Dracoon Crypto SDK (v5.0.0): https://www.nuget.org/packages/Dracoon.Crypto.Sdk/
 2. NewtonSoft.Json (v13.0.3): https://www.nuget.org/packages/Newtonsoft.Json/
 3. RestSharp (v110.2.0): https://www.nuget.org/packages/RestSharp/
 
