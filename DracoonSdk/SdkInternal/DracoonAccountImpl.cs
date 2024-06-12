@@ -94,7 +94,7 @@ namespace Dracoon.Sdk.SdkInternal {
 
         internal UserKeyPair GenerateNewUserKeyPair(UserKeyPairAlgorithm algorithm, string encryptionPassword) {
             try {
-                return Crypto.Sdk.Crypto.GenerateUserKeyPair(algorithm, Encoding.UTF8.GetBytes(encryptionPassword));
+                return Crypto.Sdk.Crypto.GenerateUserKeyPair(algorithm, encryptionPassword.ToCharArray());
             } catch (CryptoException ce) {
                 DracoonClient.Log.Debug(Logtag, "Generation of user key pair failed with " + ce.Message);
                 throw new DracoonCryptoException(CryptoErrorMapper.ParseCause(ce), ce);
@@ -180,8 +180,8 @@ namespace Dracoon.Sdk.SdkInternal {
                 // Check if api supports this api endpoint. If not only provide the keypair using the "old" api.
                 _client.Executor.CheckApiServerVersion(ApiConfig.ApiGetUserKeyPairsMinimumVersion);
 
-            RestRequest request = _client.Builder.GetUserKeyPairs();
-            List<ApiUserKeyPair> result = _client.Executor.DoSyncApiCall<List<ApiUserKeyPair>>(request, RequestType.GetUserKeyPairs);
+                RestRequest request = _client.Builder.GetUserKeyPairs();
+                List<ApiUserKeyPair> result = _client.Executor.DoSyncApiCall<List<ApiUserKeyPair>>(request, RequestType.GetUserKeyPairs);
 
                 foreach (ApiUserKeyPair apiUserKeyPair in result) {
                     UserKeyPair userKeyPair = UserMapper.FromApiUserKeyPair(apiUserKeyPair);
@@ -203,7 +203,7 @@ namespace Dracoon.Sdk.SdkInternal {
         }
 
         private void CheckKeyPair(UserKeyPair keyPair) {
-            if (!Crypto.Sdk.Crypto.CheckUserKeyPair(keyPair, Encoding.UTF8.GetBytes(_client.EncryptionPassword))) {
+            if (!Crypto.Sdk.Crypto.CheckUserKeyPair(keyPair, _client.EncryptionPassword.ToCharArray())) {
                 throw new DracoonCryptoException(DracoonCryptoCode.INVALID_PASSWORD_ERROR);
             }
         }
