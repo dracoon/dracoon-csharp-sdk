@@ -14,7 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 
 namespace Dracoon.Sdk.SdkInternal {
@@ -364,7 +363,7 @@ namespace Dracoon.Sdk.SdkInternal {
             }
 
             if (request.DataRoomRescueKeyPairAlgorithm != null) {
-                request.DataRoomRescueKeyPassword.MustNotNullOrEmpty(nameof(request.DataRoomRescueKeyPassword));
+                request.DataRoomRescueKeyPassword.MustNotNullOrEmptyOrWhitespace(nameof(request.DataRoomRescueKeyPassword));
             }
 
             #endregion

@@ -72,7 +72,7 @@ namespace Dracoon.Sdk.SdkInternal {
             _client.Executor.DoSyncApiCall<VoidResponse>(request, RequestType.DeleteUserKeyPair);
         }
 
-        internal UserKeyPair GenerateNewUserKeyPair(UserKeyPairAlgorithm algorithm, byte[] encryptionPassword) {
+        internal UserKeyPair GenerateNewUserKeyPair(UserKeyPairAlgorithm algorithm, char[] encryptionPassword) {
             try {
                 return Crypto.Sdk.Crypto.GenerateUserKeyPair(algorithm, encryptionPassword);
             } catch (CryptoException ce) {

@@ -3,7 +3,7 @@ using System;
 
 namespace Dracoon.Sdk.SdkInternal {
     internal interface IInternalDracoonClient {
-        byte[] EncryptionPassword { get; set; }
+        char[] EncryptionPassword { get; set; }
         Uri ServerUri { get; }
         IRequestBuilder Builder { get; }
         IRequestExecutor Executor { get; }

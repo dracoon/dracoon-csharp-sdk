@@ -53,7 +53,7 @@ namespace Dracoon.Sdk {
         /// <summary>
         ///     The client's encryption password.
         /// </summary>
-        public byte[] EncryptionPassword { get; set; }
+        public char[] EncryptionPassword { get; set; }
 
         #region Internal
 
@@ -141,7 +141,7 @@ namespace Dracoon.Sdk {
         /// <param name="encryptionPassword">The client's encryption password.</param>
         /// <param name="logger">The logger which should be used. See also <seealso cref="Dracoon.Sdk.ILog"/></param>
         /// <param name="httpConfig">The self defined http configuration (otherwise the defaults of the DracoonHttpConfig is used). See also <seealso cref="Dracoon.Sdk.DracoonHttpConfig"/></param>
-        public DracoonClient(Uri serverUri, DracoonAuth auth = null, byte[] encryptionPassword = null, ILog logger = null,
+        public DracoonClient(Uri serverUri, DracoonAuth auth = null, char[] encryptionPassword = null, ILog logger = null,
             DracoonHttpConfig httpConfig = null) {
             serverUri.MustBeValid(nameof(serverUri));
 

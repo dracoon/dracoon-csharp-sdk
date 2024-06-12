@@ -23,7 +23,7 @@ namespace Dracoon.Sdk.Model {
         /// <summary>
         ///     If a room rescue key should be set you have to specify a private key password for the new key pair.
         /// </summary>
-        public byte[] DataRoomRescueKeyPassword { get; set; }
+        public char[] DataRoomRescueKeyPassword { get; set; }
 
         /// <summary>
         ///     The algorithm for the key pair which should be used as rescue key pair.
@@ -39,7 +39,7 @@ namespace Dracoon.Sdk.Model {
         /// <param name="dataRoomRescueKeyPassword"><see cref="DataRoomRescueKeyPassword"/></param>
         /// <param name="dataRoomRescueKeyPairAlgorithm"><see cref="DataRoomRescueKeyPairAlgorithm"/></param>
         public EnableRoomEncryptionRequest(long id, bool isEncryptionEnabled, bool useDataSpaceRescueKey = false,
-            byte[] dataRoomRescueKeyPassword = null, UserKeyPairAlgorithm? dataRoomRescueKeyPairAlgorithm = null) {
+            char[] dataRoomRescueKeyPassword = null, UserKeyPairAlgorithm? dataRoomRescueKeyPairAlgorithm = null) {
             Id = id;
             IsEncryptionEnabled = isEncryptionEnabled;
             UseDataSpaceRescueKey = useDataSpaceRescueKey;
