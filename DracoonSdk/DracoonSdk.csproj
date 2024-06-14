@@ -16,7 +16,7 @@
     <PackageIconUrl />
     <PackageProjectUrl>https://github.com/dracoon/dracoon-csharp-sdk</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Version>5.0.1-SNAPSHOT</Version>
+    <Version>5.0.1</Version>
     <OutDir></OutDir>
     <Description>The DRACOON SDK for .NET Standard.</Description>
     <Copyright>Copyright ©2021 DRACOON GmbH</Copyright>
