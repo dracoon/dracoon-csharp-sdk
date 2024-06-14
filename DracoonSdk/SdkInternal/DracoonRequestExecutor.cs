@@ -117,8 +117,9 @@ namespace Dracoon.Sdk.SdkInternal {
                             DracoonClient.Log.Debug(Logtag, "Retry the refresh of the access token in " + sendTry * 1000 + " millis again.");
                             Thread.Sleep(1000 * sendTry);
                             _auth.RefreshAccessToken();
-                            if(request.Parameters.TryFind(ApiConfig.AuthorizationHeader) != null ) {
-                                request.AddOrUpdateParameter(ApiConfig.AuthorizationHeader, _auth.BuildAuthString());
+                            // Update the auth header with new tokens if it was an auth required test
+                            if (request.Parameters.TryFind(ApiConfig.AuthorizationHeader) != null) {
+                                request.AddOrUpdateHeader(ApiConfig.AuthorizationHeader, _auth.BuildAuthString());
                             }
 
                             return ((IRequestExecutor)this).DoSyncApiCall<T>(request, requestType, sendTry + 1);
