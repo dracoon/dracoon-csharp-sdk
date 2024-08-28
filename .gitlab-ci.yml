@@ -1,47 +1,18 @@
-workflow:
-    rules:
-        - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-        - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
-          when: never
-        - if: $CI_COMMIT_BRANCH
-        - if: $CI_COMMIT_TAG
-
-#------------------------------- GLOBAL DEFAULTS ------------------------------
-
-default:
-  id_tokens:
-    ID_TOKEN:
-      aud: https://vault.dracoon.net
-
-#------------------------------ VARIABLES -----------------------------
-
-variables:
-  DISABLE_QUALITY_GATES: 'false'
-
-#------------------------------ TEMPLATES -----------------------------
-
-.secrets-template: &secrets-template
-  secrets:
-    ARTIFACTORY_REPO:
-      vault: Artifactory/repo-dracoon-sdk-csharp@Build-Environment
-      file: false
-    ARTIFACTORY_DOMAIN:
-      vault: Artifactory/domain@Build-Environment
-      file: false
-    SONAR_TOKEN:
-      vault: Sonar/token@Build-Environment
-      file: false
-    SONAR_URL:
-      vault: Sonar/url@Build-Environment
-      file: false
-    NUGET_ACCESS_KEY:
-      vault: nuget/access-key@Build-Environment
-      file: false
+include:
+  - project: "dracoon/cicd/pipeline/apps-guild-ci/dotnet-ci"
+    ref: "main"
+    file:
+      - "base.yml"
+      - "fetch-credentials.yml"
+      - "dependency-scanning.yml"
+      - "secret-detection.yml"
+      - "deploy-nupkg-artifactory.yml"
+      - "deploy-nupkg-nuget.yml"
 
 #------------------------------- PREPARE ------------------------------
 
-prepare:
-  stage: .pre
+prepare-build:
+  stage: prepare
   tags:
     - windows-amd64
   script:
@@ -62,8 +33,6 @@ build:
   stage: build
   tags:
     - windows-amd64
-  dependencies:
-    - prepare
   before_script:
     - mkdir .\dist
   script:
@@ -78,68 +47,48 @@ build:
 
 unit-test:
   stage: test
-  <<: *secrets-template
+  secrets:
+    ARTIFACTORY_DOMAIN:
+      vault: Artifactory/domain@Build-Environment
+      file: false
   tags:
     - windows-amd64
-  dependencies:
-    - prepare
   script:
     - nuget restore .\DracoonSdk.sln -Source https://api.nuget.org/v3/index.json -Source https://$ARTIFACTORY_DOMAIN/artifactory/api/nuget/nuget-local
     - C:\BuildToolsNEW\VS2022BuildTools\MSBuild\Current\Bin\MSBuild.exe DracoonSdkUnitTest\DracoonSdkUnitTest.csproj /p:Configuration="Release"
     - C:\BuildTools\TelerikJustMock\Libraries\Telerik.JustMock.Console runadvanced --command "dotnet" --command-args "vstest .\DracoonSdkUnitTest\bin\Release\Dracoon.Sdk.UnitTest.dll"
 
+#-------------------------------- ANALYZE --------------------------------
+
 sonar:
-  stage: test
-  <<: *secrets-template
+  stage: analyze
+  secrets:
+    ARTIFACTORY_DOMAIN:
+      vault: Artifactory/domain@Build-Environment
+      file: false
+    SONAR_TOKEN:
+      vault: Sonar/token@Build-Environment
+      file: false
+    SONAR_URL:
+      vault: Sonar/url@Build-Environment
+      file: false
   rules:
-    - if: $DISABLE_QUALITY_GATES == "false" && ($CI_COMMIT_REF_SLUG == "main" || $CI_COMMIT_REF_SLUG == "develop")
+    - if: $DC_DISABLE_SONAR_GATES == 'true'
       when: on_success
-    - if: $DISABLE_QUALITY_GATES == "true" || ($CI_COMMIT_REF_SLUG != "main" && $CI_COMMIT_REF_SLUG != "develop")
       allow_failure: true
-      when: on_success
+    - allow_failure: false
   tags:
     - windows-amd64
   dependencies:
-    - prepare
+    - prepare-build
   before_script:
     - $VERSION = (GET-CONTENT ./shared.txt)
     - $BASE_DIR=(Get-Location).path
   script:
     - nuget restore .\DracoonSdk.sln -Source https://api.nuget.org/v3/index.json -Source https://$ARTIFACTORY_DOMAIN/artifactory/api/nuget/nuget-local
     - C:\BuildToolsNEW\VS2022BuildTools\MSBuild\Current\Bin\MSBuild.exe DracoonSdkUnitTest\DracoonSdkUnitTest.csproj /p:Configuration="Release"
-    - C:\BuildTools\dependency-check\bin\dependency-check.bat --scan .\DracoonSdk --project dracoon-sdk-csharp --format ALL
     - C:\BuildTools\TelerikJustMock\Libraries\Telerik.JustMock.Console runadvanced --command "C:\BuildTools\dotCover\dotCover.exe" --command-args 'cover /TargetExecutable="C:\BuildToolsNEW\VS2022BuildTools\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" /TargetArguments="Dracoon.Sdk.UnitTest.dll" /TargetWorkingDir="DracoonSdkUnitTest\bin\Release" /Scope="Dracoon.Sdk.dll" /Filters="-:module=Dracoon.Sdk.Example;-:module=Dracoon.Sdk.UnitTest" /Output=".\dotCoverResult.html" /ReportType="HTML"'
     - dotnet clean -c Release .\DracoonSdk.sln
     - C:\ProgramData\chocolatey\lib\sonarscanner-msbuild-net46\tools\SonarScanner.MSBuild.exe begin /s:${BASE_DIR}\SonarQube.Analysis.xml /k:dracoon-sdk-csharp /v:${VERSION} /d:sonar.host.url=$SONAR_URL /d:sonar.login=$SONAR_TOKEN /d:sonar.branch.name="${CI_COMMIT_REF_SLUG}" /d:sonar.scm.revision=${CI_COMMIT_SHORT_SHA}
     - dotnet build -c Release .\DracoonSdk\DracoonSdk.csproj
     - C:\ProgramData\chocolatey\lib\sonarscanner-msbuild-net46\tools\SonarScanner.MSBuild.exe end /d:sonar.login=$SONAR_TOKEN
-
-#-------------------------------- DEPLOY ------------------------------
-
-deploy-to-artifactory:
-  stage: deploy
-  <<: *secrets-template
-  rules:
-    - when: manual
-      allow_failure: true
-  tags:
-    - windows-amd64
-  dependencies:
-    - build
-  script:
-    - jf rt u --flat=true "dist\*.nupkg" $ARTIFACTORY_REPO
-
-deploy-to-nuget:
-  stage: deploy
-  <<: *secrets-template
-  rules:
-    - if: $CI_COMMIT_TAG
-      when: manual
-      allow_failure: true
-    - when: never
-  tags:
-    - windows-amd64
-  dependencies:
-    - build
-  script:
-    - dotnet nuget push .\dist\*.nupkg -k $NUGET_ACCESS_KEY -s https://www.nuget.org/api/v2/package
