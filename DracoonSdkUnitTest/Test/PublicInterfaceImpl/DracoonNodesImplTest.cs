@@ -479,7 +479,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
         #region CreateRoom
 
         [Fact]
-        public void CreateRoom_Success() {
+        public void CreateRoom_Success_TopLevel() {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonNodesImpl n = new DracoonNodesImpl(c);
@@ -488,7 +488,7 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.IsAny<long?>().NullableMustNotNegative(Arg.AnyString)).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.IsAny<int?>().NullableMustNotNegative(Arg.AnyString)).DoNothing().Occurs(1);
-            Mock.Arrange(() => Arg.IsAny<IEnumerable<long>>().CheckEnumerableNullOrEmpty()).Returns(false).OccursAtLeast(1);
+            Mock.Arrange(() => Arg.IsAny<IEnumerable<long>>().CheckEnumerableNullOrEmpty()).DoNothing().Occurs(1);
             Mock.Arrange(() => Arg.IsAny<IEnumerable<long>>().EnumerableMustNotNullOrEmpty(Arg.AnyString)).DoNothing().Occurs(2);
             Mock.Arrange(() => RoomMapper.ToApiCreateRoomRequest(Arg.IsAny<CreateRoomRequest>())).Returns(FactoryRoom.ApiCreateRoomRequest);
             Mock.Arrange(() => c.Builder.PostRoom(Arg.IsAny<ApiCreateRoomRequest>())).Returns(FactoryRestSharp.PostRoomMock).Occurs(1);
@@ -496,7 +496,10 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node);
 
             // ACT
-            Node actual = n.CreateRoom(FactoryRoom.CreateRoomRequest);
+            CreateRoomRequest req = FactoryRoom.CreateRoomRequest;
+            req.HasInheritPermissions = false;
+            req.ParentId = null;
+            Node actual = n.CreateRoom(req);
 
             // ASSERT
             Assert.NotNull(actual);
@@ -514,7 +517,62 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
         }
 
         [Fact]
-        public void CreateRoom_Fail() {
+        public void CreateRoom_Success_SubLevelWithInheritance() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonNodesImpl n = new DracoonNodesImpl(c);
+            Mock.Arrange(() => Arg.IsAny<CreateRoomRequest>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().OccursAtLeast(1);
+            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.IsAny<long?>().NullableMustNotNegative(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.IsAny<int?>().NullableMustNotNegative(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.IsAny<IEnumerable<long>>().CheckEnumerableNullOrEmpty()).DoNothing().Occurs(0);
+            Mock.Arrange(() => Arg.IsAny<IEnumerable<long>>().EnumerableMustNotNullOrEmpty(Arg.AnyString)).DoNothing().Occurs(2);
+            Mock.Arrange(() => RoomMapper.ToApiCreateRoomRequest(Arg.IsAny<CreateRoomRequest>())).Returns(FactoryRoom.ApiCreateRoomRequest);
+            Mock.Arrange(() => c.Builder.PostRoom(Arg.IsAny<ApiCreateRoomRequest>())).Returns(FactoryRestSharp.PostRoomMock).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiNode>(Arg.IsAny<RestRequest>(), RequestType.PostRoom, 0)).Returns(FactoryNode.ApiNode).Occurs(1);
+            Mock.Arrange(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>())).Returns(FactoryNode.Node);
+
+            // ACT
+            CreateRoomRequest req = FactoryRoom.CreateRoomRequest;
+            req.HasInheritPermissions = true;
+            Node actual = n.CreateRoom(req);
+
+            // ASSERT
+            Assert.NotNull(actual);
+            Mock.Assert(() => Arg.IsAny<CreateRoomRequest>().MustNotNull(Arg.AnyString));
+            Mock.Assert(() => Arg.AnyLong.MustPositive(Arg.AnyString));
+            Mock.Assert(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false));
+            Mock.Assert(() => Arg.IsAny<long?>().NullableMustNotNegative(Arg.AnyString));
+            Mock.Assert(() => Arg.IsAny<int?>().NullableMustNotNegative(Arg.AnyString));
+            Mock.Assert(() => Arg.IsAny<IEnumerable<long>>().CheckEnumerableNullOrEmpty());
+            Mock.Assert(() => Arg.IsAny<IEnumerable<long>>().EnumerableMustNotNullOrEmpty(Arg.AnyString));
+            Mock.Assert(() => RoomMapper.ToApiCreateRoomRequest(Arg.IsAny<CreateRoomRequest>()));
+            Mock.Assert(() => NodeMapper.FromApiNode(Arg.IsAny<ApiNode>()));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        [Fact]
+        public void CreateRoom_Fail_TopLevel() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonNodesImpl n = new DracoonNodesImpl(c);
+            Mock.Arrange(() => Arg.IsAny<CreateRoomRequest>().MustNotNull(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.AnyLong.MustPositive(Arg.AnyString)).DoNothing().OccursAtLeast(1);
+            Mock.Arrange(() => Arg.AnyString.MustNotNullOrEmptyOrWhitespace(Arg.AnyString, false)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.IsAny<long?>().NullableMustNotNegative(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.IsAny<int?>().NullableMustNotNegative(Arg.AnyString)).DoNothing().Occurs(1);
+
+            // ACT - ASSERT
+            CreateRoomRequest req = FactoryRoom.CreateRoomRequest;
+            req.HasInheritPermissions = true;
+            req.ParentId = null;
+            Assert.Throws<ArgumentException>(() => n.CreateRoom(req));
+        }
+
+        [Fact]
+        public void CreateRoom_Fail_SubLevelWithoutInheritance() {
             // ARRANGE
             IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
             DracoonNodesImpl n = new DracoonNodesImpl(c);
@@ -526,7 +584,11 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
             Mock.Arrange(() => Arg.IsAny<IEnumerable<long>>().CheckEnumerableNullOrEmpty()).Returns(true);
 
             // ACT - ASSERT
-            Assert.Throws<ArgumentNullException>(() => n.CreateRoom(FactoryRoom.CreateRoomRequest));
+            CreateRoomRequest req = FactoryRoom.CreateRoomRequest;
+            req.HasInheritPermissions = false;
+            req.AdminGroupIds = new List<long>();
+            req.AdminUserIds = new List<long>();
+            Assert.Throws<ArgumentNullException>(() => n.CreateRoom(req));
         }
 
         #endregion

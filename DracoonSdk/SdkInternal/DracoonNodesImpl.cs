@@ -309,9 +309,15 @@ namespace Dracoon.Sdk.SdkInternal {
             request.Name.MustNotNullOrEmptyOrWhitespace(nameof(request.Name));
             request.Quota.NullableMustNotNegative(nameof(request.Quota));
             request.RecycleBinRetentionPeriod.NullableMustNotNegative(nameof(request.RecycleBinRetentionPeriod));
-            if (request.AdminUserIds.CheckEnumerableNullOrEmpty() && request.AdminGroupIds.CheckEnumerableNullOrEmpty()) {
+
+            if (!request.ParentId.HasValue && request.HasInheritPermissions.HasValue && request.HasInheritPermissions.Value) {
+                // it is not allowed if its a top level room and the requests sets inheritance to true
+                throw new ArgumentException(nameof(request.HasInheritPermissions), "Inheritance cannot be activated for top level rooms.");
+            }
+
+            if (request.HasInheritPermissions.HasValue && !request.HasInheritPermissions.Value && request.AdminUserIds.CheckEnumerableNullOrEmpty() && request.AdminGroupIds.CheckEnumerableNullOrEmpty()) {
                 throw new ArgumentNullException(nameof(request.AdminUserIds) + " | " + nameof(request.AdminGroupIds),
-                    "Room must have an admin user or admin group.");
+                    "If inheritance is disabled than the room must have an admin user or admin group.");
             }
 
             if (request.AdminUserIds != null) {
