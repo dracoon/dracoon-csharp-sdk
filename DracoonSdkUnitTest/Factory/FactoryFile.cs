@@ -1,6 +1,7 @@
 ﻿using Dracoon.Crypto.Sdk.Model;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
+using Dracoon.Sdk.SdkInternal.ApiModel.Nodes;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using System;
 using System.Collections.Generic;
@@ -190,6 +191,34 @@ namespace Dracoon.Sdk.UnitTest.Factory {
 
         internal static ApiGenerateVirusProtectionInfoRequest ApiGenerateVirusProtectionInfoRequest => new ApiGenerateVirusProtectionInfoRequest {
             FileIds = new List<long> { 1242 }
+        };
+
+        internal static ApiFileVersion ApiFileVersion => new ApiFileVersion {
+            Id = 34587,
+            ReferenceId = 982543,
+            ParentId = 784356,
+            Name = "FileVersion",
+            Deleted = false
+        };
+
+        internal static FileVersion FileVersion => new FileVersion {
+            Id = 34587,
+            ReferenceId = 982543,
+            ParentId = 784356,
+            Name = "FileVersion",
+            IsDeleted = false
+        };
+
+        internal static ApiFileVersionList ApiFileVersionList => new ApiFileVersionList {
+            Items = new List<ApiFileVersion> { ApiFileVersion },
+            Range = new ApiRange { Limit = 1, Offset = 0, Total = 1 }
+        };
+
+        internal static FileVersionList FileVersionList => new FileVersionList {
+            Items = new List<FileVersion> { FileVersion },
+            Total = 1,
+            Offset = 0,
+            Limit = 1
         };
     }
 }

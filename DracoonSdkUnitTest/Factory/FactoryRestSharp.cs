@@ -82,6 +82,20 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             return rr;
         }
 
+        internal static RestRequest GetFileVersionsMock(long referenceId, long? offset = null, long? limit = null) {
+            RestRequest rr = RestRequestWithAuth(ApiConfig.ApiGetFileVersions, Method.Get);
+            rr.AddQueryParameter("reference_id", referenceId.ToString());
+            if (offset.HasValue) {
+                rr.AddQueryParameter("offset", offset.ToString());
+            }
+
+            if (limit.HasValue) {
+                rr.AddQueryParameter("limit", limit.ToString());
+            }
+
+            return rr;
+        }
+
         internal static RestRequest GetNodeMock(long nodeId) {
             return RestRequestWithAuth(ApiConfig.ApiGetNode, Method.Get).AddUrlSegment("nodeId", nodeId);
         }
@@ -308,7 +322,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
         }
 
         internal static RestRequest PostMailDownloadShare(long id) {
-            return RestRequestWithAuth(ApiConfig.ApiPostMailDownloadShare, Method.Post).AddUrlSegment("shareId", id).AddParameter("application/json", 
+            return RestRequestWithAuth(ApiConfig.ApiPostMailDownloadShare, Method.Post).AddUrlSegment("shareId", id).AddParameter("application/json",
                 JsonConvert.SerializeObject(FactoryShare.ApiMailShareInfoRequest), ParameterType.RequestBody);
         }
 

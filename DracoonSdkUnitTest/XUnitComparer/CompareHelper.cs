@@ -131,6 +131,30 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             return true;
         }
 
+        internal static bool ListIsEqual(List<FileVersion> x, List<FileVersion> y) {
+            if (x == null && y == null) {
+                return true;
+            }
+
+            if (x == null && y != null) {
+                return false;
+            }
+
+            if (x != null && y == null) {
+                return false;
+            }
+            if (x.Count != y.Count) {
+                return false;
+            }
+            FileVersionComparer comparer = new FileVersionComparer();
+            for (int i = 0; i < x.Count; i++) {
+                if (!comparer.Equals(x[i], y[i])) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         internal static bool ListIsEqual(List<ApiCopyNode> x, List<ApiCopyNode> y) {
             if (x == null && y == null) {
                 return true;

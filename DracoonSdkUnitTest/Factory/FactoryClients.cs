@@ -302,6 +302,21 @@ namespace Dracoon.Sdk.UnitTest.Factory {
                     FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGenerateVirusProtectionInfo, Method.Post).AddParameter("application/json",
                         JsonConvert.SerializeObject(FactoryFile.ApiGenerateVirusProtectionInfoRequest), ParameterType.RequestBody));
 
+                Mock.Arrange(() => r.GetFileVersions(Arg.AnyLong, Arg.IsAny<long?>(), Arg.IsAny<long?>())).Returns(
+                    (long referenceId, long? offset, long? limit) => {
+                        RestRequest rr = FactoryRestSharp.RestRequestWithAuth(ApiConfig.ApiGetFileVersions, Method.Get);
+                        rr.AddUrlSegment("reference_id", referenceId.ToString());
+                        if (offset.HasValue) {
+                            rr.AddQueryParameter("offset", offset.ToString());
+                        }
+
+                        if (limit.HasValue) {
+                            rr.AddQueryParameter("limit", limit.ToString());
+                        }
+
+                        return rr;
+                    });
+
                 #endregion
 
                 #region Share request mocks

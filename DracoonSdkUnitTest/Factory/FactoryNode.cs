@@ -46,6 +46,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
 
         internal static Node Node => new Node {
             Id = 12,
+            ReferenceId = 153,
             Type = NodeType.File,
             ParentId = 10,
             ParentPath = "/",
@@ -96,6 +97,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
 
         internal static ApiNode ApiNode => new ApiNode {
             Id = 12,
+            ReferenceId = 153,
             Type = "file",
             ParentId = 10,
             ParentPath = "/",

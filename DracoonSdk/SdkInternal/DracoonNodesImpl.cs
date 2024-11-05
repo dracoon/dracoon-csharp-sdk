@@ -4,6 +4,7 @@ using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Filter;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
+using Dracoon.Sdk.SdkInternal.ApiModel.Nodes;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Mapper;
 using Dracoon.Sdk.SdkInternal.Util;
@@ -699,6 +700,22 @@ namespace Dracoon.Sdk.SdkInternal {
 
             RestRequest restRequest = _client.Builder.DeleteMaliciousFile(fileId);
             _client.Executor.DoSyncApiCall<VoidResponse>(restRequest, RequestType.DeleteMaliciousFile);
+        }
+
+        public FileVersionList GetFileVersions(long referenceId, long? offset = null, long? limit = null) {
+            _client.Executor.CheckApiServerVersion();
+
+            #region Parameter Validation
+
+            referenceId.MustPositive(nameof(referenceId));
+            offset.NullableMustNotNegative(nameof(offset));
+            limit.NullableMustPositive(nameof(limit));
+
+            #endregion
+
+            RestRequest restRequest = _client.Builder.GetFileVersions(referenceId, offset, limit);
+            ApiFileVersionList result = _client.Executor.DoSyncApiCall<ApiFileVersionList>(restRequest, RequestType.GetFileVersions);
+            return FileMapper.FromApiFileVersionList(result);
         }
 
         #region IFileDownloadCallback / IFileUploadCallback implementation

@@ -3,12 +3,14 @@ using Dracoon.Crypto.Sdk.Model;
 using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
+using Dracoon.Sdk.SdkInternal.ApiModel.Nodes;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Mapper;
 using Dracoon.Sdk.SdkInternal.Util;
 using Dracoon.Sdk.UnitTest.Factory;
 using Dracoon.Sdk.UnitTest.XUnitComparer;
 using System;
+using System.Collections.Generic;
 using Telerik.JustMock;
 using Xunit;
 
@@ -267,5 +269,81 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
 
         #endregion
 
+        #region FromApiFileVersion-List
+
+        [Fact]
+        public void FromApiFileVersion() {
+            // ARRANGE
+            FileVersion expected = FactoryFile.FileVersion;
+
+            ApiFileVersion param = new ApiFileVersion() {
+                Id = expected.Id,
+                ReferenceId = expected.ReferenceId,
+                ParentId = expected.ParentId,
+                Name = expected.Name,
+                Deleted = expected.IsDeleted
+            };
+
+            // ACT
+            FileVersion actual = FileMapper.FromApiFileVersion(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new FileVersionComparer());
+        }
+
+        [Fact]
+        public void FromApiFileVersion_Null() {
+            // ARRANGE
+            FileVersion expected = null;
+
+            ApiFileVersion param = null;
+
+            // ACT
+            FileVersion actual = FileMapper.FromApiFileVersion(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void FromApiFileVersionList() {
+            // ARRANGE
+            FileVersionList expected = FactoryFile.FileVersionList;
+
+            ApiFileVersionList param = new ApiFileVersionList() {
+                Range = new ApiRange { Limit = expected.Limit, Offset = expected.Offset, Total = expected.Total },
+                Items = new List<ApiFileVersion> {
+                    new ApiFileVersion {
+                        Id = expected.Items[0].Id,
+                        ReferenceId = expected.Items[0].ReferenceId,
+                        ParentId = expected.Items[0].ParentId,
+                        Name = expected.Items[0].Name,
+                        Deleted = expected.Items[0].IsDeleted
+                    }
+                }
+            };
+
+            // ACT
+            FileVersionList actual = FileMapper.FromApiFileVersionList(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new FileVersionListComparer());
+        }
+
+        [Fact]
+        public void FromApiFileVersionList_Null() {
+            // ARRANGE
+            FileVersionList expected = null;
+
+            ApiFileVersionList param = null;
+
+            // ACT
+            FileVersionList actual = FileMapper.FromApiFileVersionList(param);
+
+            // ASSERT
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
     }
 }

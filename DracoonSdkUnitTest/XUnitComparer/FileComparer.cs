@@ -161,4 +161,43 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             throw new System.NotImplementedException();
         }
     }
+
+    internal class FileVersionComparer : IEqualityComparer<FileVersion> {
+        public bool Equals(FileVersion x, FileVersion y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            return x.Id == y.Id &&
+                x.ReferenceId == y.ReferenceId &&
+                x.ParentId == y.ParentId &&
+                x.Name == y.Name &&
+                x.IsDeleted == y.IsDeleted;
+        }
+
+        public int GetHashCode(FileVersion obj) {
+            throw new System.NotImplementedException();
+        }
+    }
+
+    internal class FileVersionListComparer : IEqualityComparer<FileVersionList> {
+        public bool Equals(FileVersionList x, FileVersionList y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if ((x == null && y != null) || (x != null && y == null)) {
+                return false;
+            }
+            return x.Offset == y.Offset &&
+                x.Limit == y.Limit &&
+                x.Total == y.Total &&
+                CompareHelper.ListIsEqual(x.Items, y.Items);
+        }
+
+        public int GetHashCode(FileVersionList obj) {
+            throw new System.NotImplementedException();
+        }
+    }
 }

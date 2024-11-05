@@ -19,6 +19,7 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             Assert.Equal(x.VirusProtectionInfo, y.VirusProtectionInfo, new VirusProtectionInfoComparer());
 
             return x.Id == y.Id &&
+                x.ReferenceId == y.ReferenceId &&
                 x.Type == y.Type &&
                 x.ParentId == y.ParentId &&
                 string.Equals(x.ParentPath, y.ParentPath) &&

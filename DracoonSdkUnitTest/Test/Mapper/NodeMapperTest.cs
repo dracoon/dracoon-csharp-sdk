@@ -36,6 +36,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 current.Classification = expectedClassification;
                 ApiNode currentApi = new ApiNode {
                     Id = current.Id,
+                    ReferenceId = current.ReferenceId,
                     Type = expectedTypeValue,
                     ParentId = current.ParentId,
                     ParentPath = current.ParentPath,
@@ -143,6 +144,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
 
             ApiNode param = new ApiNode {
                 Id = expected.Id,
+                ReferenceId = expected.ReferenceId,
                 Type = expectedTypeValue,
                 ParentId = expected.ParentId,
                 ParentPath = expected.ParentPath,

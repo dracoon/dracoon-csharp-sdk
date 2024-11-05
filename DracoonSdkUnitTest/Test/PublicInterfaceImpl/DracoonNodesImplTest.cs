@@ -5,6 +5,7 @@ using Dracoon.Sdk.Filter;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal;
 using Dracoon.Sdk.SdkInternal.ApiModel;
+using Dracoon.Sdk.SdkInternal.ApiModel.Nodes;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Mapper;
 using Dracoon.Sdk.SdkInternal.Util;
@@ -1257,6 +1258,35 @@ namespace Dracoon.Sdk.UnitTest.Test.PublicInterfaceImpl {
 
             // ASSERT
             Mock.Assert(() => Arg.AnyLong.MustPositive(Arg.AnyString));
+            Mock.Assert(c.Builder);
+            Mock.Assert(c.Executor);
+        }
+
+        #endregion
+
+        #region GetNodes
+
+        [Fact]
+        public void GetFileVersions() {
+            // ARRANGE
+            IInternalDracoonClient c = FactoryClients.InternalDracoonClientMock(true);
+            DracoonNodesImpl n = new DracoonNodesImpl(c);
+            Mock.Arrange(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.IsAny<long?>().NullableMustNotNegative(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => Arg.IsAny<long>().MustPositive(Arg.AnyString)).DoNothing().Occurs(1);
+            Mock.Arrange(() => c.Builder.GetFileVersions(Arg.AnyLong, Arg.IsAny<long?>(), Arg.IsAny<long?>())).Returns(FactoryRestSharp.GetFileVersionsMock(1)).Occurs(1);
+            Mock.Arrange(() => c.Executor.DoSyncApiCall<ApiFileVersionList>(Arg.IsAny<RestRequest>(), RequestType.GetFileVersions, 0)).Returns(FactoryFile.ApiFileVersionList).Occurs(1);
+            Mock.Arrange(() => FileMapper.FromApiFileVersionList(Arg.IsAny<ApiFileVersionList>())).Returns(FactoryFile.FileVersionList).Occurs(1);
+
+            // ACT
+            FileVersionList actual = n.GetFileVersions(1);
+
+            // ASSERT
+            Assert.NotNull(actual);
+            Mock.Assert(() => Arg.IsAny<long?>().NullableMustPositive(Arg.AnyString));
+            Mock.Assert(() => Arg.IsAny<long?>().NullableMustNotNegative(Arg.AnyString));
+            Mock.Assert(() => Arg.IsAny<long>().MustPositive(Arg.AnyString));
+            Mock.Assert(() => FileMapper.FromApiFileVersionList(Arg.IsAny<ApiFileVersionList>()));
             Mock.Assert(c.Builder);
             Mock.Assert(c.Executor);
         }

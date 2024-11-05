@@ -27,7 +27,7 @@ namespace Dracoon.Sdk.SdkInternal {
             GetPreviousVersion, PostRestoreNodeVersion, DeletePreviousVersions, PostGetS3Urls, GetS3Status, GetPasswordPolicies,
             GetAlgorithms, GetClassificationPolicies, GenerateVirusProtectionInfo, DeleteMaliciousFile, GetDownloadShareSubscriptions,
             GetUploadShareSubscriptions, PostUploadShareSubscription, PostDownloadShareSubscription, DeleteDownloadShareSubscription,
-            DeleteUploadShareSubscription
+            DeleteUploadShareSubscription, GetFileVersions
         }
 
         private const string Logtag = nameof(DracoonRequestExecutor);

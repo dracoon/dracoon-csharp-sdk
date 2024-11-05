@@ -44,6 +44,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
 
             Node node = new Node {
                 Id = apiNode.Id,
+                ReferenceId = apiNode.ReferenceId,
                 Type = EnumConverter.ConvertValueToNodeTypeEnum(apiNode.Type),
                 ParentId = apiNode.ParentId,
                 ParentPath = apiNode.ParentPath,
