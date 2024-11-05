@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.ComponentModel;
 
 namespace Dracoon.Sdk.SdkInternal.ApiModel {
     internal class ApiInfrastructureSettings {

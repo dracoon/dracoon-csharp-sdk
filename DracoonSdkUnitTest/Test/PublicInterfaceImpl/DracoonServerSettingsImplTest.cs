@@ -1,5 +1,4 @@
-﻿using Dracoon.Sdk.Error;
-using Dracoon.Sdk.Model;
+﻿using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal;
 using Dracoon.Sdk.SdkInternal.ApiModel;
 using Dracoon.Sdk.SdkInternal.ApiModel.Settings;

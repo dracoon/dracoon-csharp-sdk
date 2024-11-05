@@ -46,12 +46,12 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             MustSetEmail = false,
             NeedsToAcceptEULA = false,
             Phone = null,
-            UserGroups = new List<UserGroup> { 
-                new UserGroup { 
-                    Id = 12345, 
-                    IsMember = true, 
+            UserGroups = new List<UserGroup> {
+                new UserGroup {
+                    Id = 12345,
+                    IsMember = true,
                     Name = "Admin"
-                } 
+                }
             }
         };
 
@@ -91,7 +91,7 @@ namespace Dracoon.Sdk.UnitTest.Factory {
             MustSetEmail = false,
             NeedsToAcceptEULA = false,
             Phone = null,
-            UserGroups = new List<ApiUserGroup> { new ApiUserGroup { Id = 12345, IsMember = true, Name = "Admin"} }
+            UserGroups = new List<ApiUserGroup> { new ApiUserGroup { Id = 12345, IsMember = true, Name = "Admin" } }
         };
 
         internal static ApiAuthData ApiUserAuthData => new ApiAuthData {

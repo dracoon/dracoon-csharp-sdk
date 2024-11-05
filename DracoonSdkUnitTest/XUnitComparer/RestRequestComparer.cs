@@ -11,7 +11,7 @@ namespace Dracoon.Sdk.UnitTest.XUnitComparer {
             }
 
             if (x != null && y != null) {
-                return CompareHelper.ListIsEqual(x.Parameters.ToList(), y.Parameters.ToList()) && x.Method == y.Method  &&
+                return CompareHelper.ListIsEqual(x.Parameters.ToList(), y.Parameters.ToList()) && x.Method == y.Method &&
                        x.Timeout == y.Timeout && x.Resource == y.Resource;
             }
 

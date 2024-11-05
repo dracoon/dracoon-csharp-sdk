@@ -93,7 +93,7 @@ namespace Dracoon.Sdk.Model {
         /// <param name="maxAllowedTotalSizeOverAllUploadedFiles"><see cref="MaxAllowedTotalSizeOverAllUploadedFiles"/></param>
         /// <param name="receiverLanguage"><see cref="ReceiverLanguage"/></param>
         /// <param name="textMessageRecipients"><see cref="TextMessageRecipients"/></param>
-        public CreateUploadShareRequest(long nodeId, string name, bool showUploadedFiles = false, bool showCreatorName = false, bool showCreatorUsername = false, string password = null, DateTime? expiration = null, 
+        public CreateUploadShareRequest(long nodeId, string name, bool showUploadedFiles = false, bool showCreatorName = false, bool showCreatorUsername = false, string password = null, DateTime? expiration = null,
             int? uploadedFileExpirationPeriod = null, string notes = null, int? maxAllowedUploads = null, long? maxAllowedTotalSizeOverAllUploadedFiles = null,
             string receiverLanguage = null, List<string> textMessageRecipients = null) {
             NodeId = nodeId;
