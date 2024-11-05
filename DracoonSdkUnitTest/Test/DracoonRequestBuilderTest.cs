@@ -938,6 +938,20 @@ namespace Dracoon.Sdk.UnitTest.Test {
             Assert.Equal(expected, actual, new RestRequestComparer());
         }
 
+        [Fact]
+        public void Nodes_GetFileVersions() {
+            // ARRANGE
+            long referenceId = 5, offset = 3, limit = 2;
+            IRequestBuilder builder = new DracoonRequestBuilder(FactoryClients.OAuthMock);
+            RestRequest expected = FactoryClients.RequestBuilderMock.GetFileVersions(referenceId, offset, limit);
+
+            // ACT
+            RestRequest actual = builder.GetFileVersions(referenceId, offset, limit);
+
+            // ASSERT
+            Assert.Equal(expected, actual, new RestRequestComparer());
+        }
+
         #endregion
 
         #region Share-Endpoint

@@ -27,7 +27,7 @@ namespace Dracoon.Sdk.SdkInternal {
             GetPreviousVersion, PostRestoreNodeVersion, DeletePreviousVersions, PostGetS3Urls, GetS3Status, GetPasswordPolicies,
             GetAlgorithms, GetClassificationPolicies, GenerateVirusProtectionInfo, DeleteMaliciousFile, GetDownloadShareSubscriptions,
             GetUploadShareSubscriptions, PostUploadShareSubscription, PostDownloadShareSubscription, DeleteDownloadShareSubscription,
-            DeleteUploadShareSubscription
+            DeleteUploadShareSubscription, GetFileVersions
         }
 
         private const string Logtag = nameof(DracoonRequestExecutor);
@@ -87,7 +87,7 @@ namespace Dracoon.Sdk.SdkInternal {
         T IRequestExecutor.DoSyncApiCall<T>(RestRequest request, RequestType requestType, int sendTry) {
             RestClientOptions clientOptions = new RestClientOptions(_client.ServerUri) {
                 UserAgent = DracoonClient.HttpConfig.UserAgent,
-                MaxTimeout = DracoonClient.HttpConfig.Timeout
+                Timeout = TimeSpan.FromMilliseconds(DracoonClient.HttpConfig.Timeout)
             };
 
             if (DracoonClient.HttpConfig.WebProxy != null) {

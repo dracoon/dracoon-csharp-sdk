@@ -3,8 +3,10 @@ using Dracoon.Crypto.Sdk.Model;
 using Dracoon.Sdk.Error;
 using Dracoon.Sdk.Model;
 using Dracoon.Sdk.SdkInternal.ApiModel;
+using Dracoon.Sdk.SdkInternal.ApiModel.Nodes;
 using Dracoon.Sdk.SdkInternal.ApiModel.Requests;
 using Dracoon.Sdk.SdkInternal.Util;
+using System.Collections.Generic;
 
 namespace Dracoon.Sdk.SdkInternal.Mapper {
     internal static class FileMapper {
@@ -112,6 +114,39 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 NodeId = apiInfo.NodeId
             };
             return info;
+        }
+
+        internal static FileVersionList FromApiFileVersionList(ApiFileVersionList apiFileVersionList) {
+            if (apiFileVersionList == null) {
+                return null;
+            }
+
+            FileVersionList fileVersionList = new FileVersionList {
+                Offset = apiFileVersionList.Range.Offset,
+                Limit = apiFileVersionList.Range.Limit,
+                Total = apiFileVersionList.Range.Total,
+                Items = new List<FileVersion>()
+            };
+            foreach (ApiFileVersion currentFileVersion in apiFileVersionList.Items) {
+                fileVersionList.Items.Add(FromApiFileVersion(currentFileVersion));
+            }
+
+            return fileVersionList;
+        }
+
+        internal static FileVersion FromApiFileVersion(ApiFileVersion apiFileVersion) {
+            if (apiFileVersion == null) {
+                return null;
+            }
+
+            FileVersion fileVersion = new FileVersion {
+                Id = apiFileVersion.Id,
+                ReferenceId = apiFileVersion.ReferenceId,
+                ParentId = apiFileVersion.ParentId,
+                Name = apiFileVersion.Name,
+                IsDeleted = apiFileVersion.Deleted
+            };
+            return fileVersion;
         }
     }
 }

@@ -315,6 +315,19 @@ namespace Dracoon.Sdk {
         PreviousVersionList GetPreviousVersions(long parentId, NodeType type, string nodeName, long? offset = null, long? limit = null);
 
         /// <summary>
+        ///     Get all versions of a file by the reference id.
+        /// </summary>
+        /// <param name="referenceId">The reference id of the file.</param>
+        /// <param name="offset">The range offset. (Zero-based index; must be 0 or positive if set)</param>
+        /// <param name="limit">The range limit. (Number of returned records; must be positive if set)</param>
+        /// <returns>All versions of the requested reference id including the current version of this file.</returns>
+        /// <exception cref="Dracoon.Sdk.Error.DracoonApiException"></exception>
+        /// <exception cref="Dracoon.Sdk.Error.DracoonNetIOException"></exception>
+        /// <exception cref="System.ArgumentException"></exception>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        FileVersionList GetFileVersions(long referenceId, long? offset = null, long? limit = null);
+
+        /// <summary>
         ///     Get a single previous (old) version of a node.
         /// </summary>
         /// <param name="previousNodeId">The id of the previous (old) version of the node.</param>

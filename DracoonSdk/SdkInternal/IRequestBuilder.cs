@@ -132,6 +132,8 @@ namespace Dracoon.Sdk.SdkInternal {
 
         RestRequest DeleteMaliciousFile(long fileId);
 
+        RestRequest GetFileVersions(long referenceId, long? offset = null, long? limit = null);
+
         #endregion
 
         #region Share

@@ -7,6 +7,9 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public long Id { get; set; }
 
+        [JsonProperty("referenceId", NullValueHandling = NullValueHandling.Ignore)]
+        public long? ReferenceId { get; set; }
+
         [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
         public string Type { get; set; }
 
@@ -108,7 +111,7 @@ namespace Dracoon.Sdk.SdkInternal.ApiModel {
 
         [JsonProperty("authParentId", NullValueHandling = NullValueHandling.Ignore)]
         public long? ConfigParentRoomId { get; set; }
-        
+
         [JsonProperty("isBrowsable", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsBrowsable { get; set; }
 
