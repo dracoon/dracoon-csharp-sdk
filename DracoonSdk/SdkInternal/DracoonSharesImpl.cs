@@ -123,7 +123,7 @@ namespace Dracoon.Sdk.SdkInternal {
             request.MaxAllowedTotalSizeOverAllUploadedFiles.NullableMustPositive(nameof(request.MaxAllowedTotalSizeOverAllUploadedFiles));
             request.UploadedFilesExpirationPeriod.NullableMustPositive(nameof(request.UploadedFilesExpirationPeriod));
             request.ReceiverLanguage.MustNotNullOrEmptyOrWhitespace(nameof(request.ReceiverLanguage), true);
-            if(request.TextMessageRecipients != null) {
+            if (request.TextMessageRecipients != null) {
                 if (string.IsNullOrEmpty(request.Password)) {
                     throw new ArgumentException("If a text message should be sent, a password must be set.");
                 }

@@ -9,7 +9,6 @@ using RestSharp;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading;
 using static Dracoon.Sdk.SdkInternal.DracoonRequestExecutor;
 

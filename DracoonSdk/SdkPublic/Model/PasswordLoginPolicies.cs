@@ -1,5 +1,4 @@
-﻿using Dracoon.Sdk.Model;
-using System;
+﻿using System;
 
 namespace Dracoon.Sdk.Model {
     /// <summary>

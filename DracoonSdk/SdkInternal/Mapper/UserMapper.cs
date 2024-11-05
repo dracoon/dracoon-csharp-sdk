@@ -193,7 +193,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
         internal static ShareSubscription FromApiShareSubscription(ApiShareSubscription apiSubscription) {
             ShareSubscription subscription = new ShareSubscription {
                 ShareId = apiSubscription.ShareId,
-                AuthParentRoomId =  apiSubscription.AuthParentId
+                AuthParentRoomId = apiSubscription.AuthParentId
             };
             return subscription;
         }
@@ -205,7 +205,7 @@ namespace Dracoon.Sdk.SdkInternal.Mapper {
                 Total = apiSubscriptionList.Range.Total,
                 Items = new List<ShareSubscription>()
             };
-            foreach(ApiShareSubscription apiSubscription in apiSubscriptionList.Items) {
+            foreach (ApiShareSubscription apiSubscription in apiSubscriptionList.Items) {
                 subscriptionList.Items.Add(FromApiShareSubscription(apiSubscription));
             }
             return subscriptionList;

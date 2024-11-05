@@ -293,7 +293,7 @@ namespace Dracoon.Sdk.SdkInternal {
                     uploadedByteCount += chunk.Length;
                 }
 
-                if(S3Parts.Count == 0) { // if it was an empty file we have to put an empty part to s3 so that we put the empty file info to our api
+                if (S3Parts.Count == 0) { // if it was an empty file we have to put an empty part to s3 so that we put the empty file info to our api
                     DracoonClient.Log.Debug(LogTag, "The file [" + FileUploadRequest.Name + "] was an empty file. Therefore an empty part is uploaded to s3 now.");
                     S3Urls = RequestS3Urls(S3Parts.Count + 1, 1, 0);
                     string partETag = UploadS3ChunkWebClient(S3Urls.Dequeue(), new byte[0], 0);

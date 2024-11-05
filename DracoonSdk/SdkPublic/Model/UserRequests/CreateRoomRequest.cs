@@ -6,7 +6,7 @@ namespace Dracoon.Sdk.Model {
     ///     Request to create a new room.
     /// </summary>
     public class CreateRoomRequest {
-        
+
         /// <summary>
         ///     The parent node id for this ne created room.
         ///     <para>

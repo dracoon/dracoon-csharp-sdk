@@ -88,7 +88,7 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
                 UserGroups = new List<ApiUserGroup>(expected.UserGroups.Count)
             };
 
-            foreach(UserGroup current in expected.UserGroups) {
+            foreach (UserGroup current in expected.UserGroups) {
                 ApiUserGroup currentGroup = new ApiUserGroup {
                     Id = current.Id,
                     IsMember = current.IsMember,

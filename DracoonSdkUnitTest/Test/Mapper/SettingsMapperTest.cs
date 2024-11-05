@@ -265,8 +265,8 @@ namespace Dracoon.Sdk.UnitTest.Test.Mapper {
             PasswordExpiration expected = FactoryPolicies.PasswordLoginPolicies.PasswordExpiration;
 
             ApiPasswordExpiration param = new ApiPasswordExpiration {
-                    Enabled = expected.IsEnabled,
-                    MaxDaysPasswordAge = expected.ExpiresAfterDays
+                Enabled = expected.IsEnabled,
+                MaxDaysPasswordAge = expected.ExpiresAfterDays
             };
 
             // ACT
