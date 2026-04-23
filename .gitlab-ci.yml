@@ -49,12 +49,12 @@ unit-test:
   stage: test
   secrets:
     ARTIFACTORY_DOMAIN:
-      vault: Artifactory/domain@Build-Environment
+      vault: Artifactory-KW/domain@Build-Environment
       file: false
   tags:
     - windows-amd64
   script:
-    - nuget restore .\DracoonSdk.sln -Source https://api.nuget.org/v3/index.json -Source https://$ARTIFACTORY_DOMAIN/artifactory/api/nuget/nuget-local
+    - nuget restore .\DracoonSdk.sln -Source https://api.nuget.org/v3/index.json -Source https://$ARTIFACTORY_DOMAIN/artifactory/api/nuget/ma-dracoon-nuget-local
     - C:\BuildToolsNEW\VS2022BuildTools\MSBuild\Current\Bin\MSBuild.exe DracoonSdkUnitTest\DracoonSdkUnitTest.csproj /p:Configuration="Release"
     - C:\BuildTools\TelerikJustMock\Libraries\Telerik.JustMock.Console runadvanced --command "dotnet" --command-args "vstest .\DracoonSdkUnitTest\bin\Release\Dracoon.Sdk.UnitTest.dll"
 
@@ -64,7 +64,7 @@ sonar:
   stage: analyze
   secrets:
     ARTIFACTORY_DOMAIN:
-      vault: Artifactory/domain@Build-Environment
+      vault: Artifactory-KW/domain@Build-Environment
       file: false
     SONAR_TOKEN:
       vault: Sonar/token@Build-Environment
@@ -85,7 +85,7 @@ sonar:
     - $VERSION = (GET-CONTENT ./shared.txt)
     - $BASE_DIR=(Get-Location).path
   script:
-    - nuget restore .\DracoonSdk.sln -Source https://api.nuget.org/v3/index.json -Source https://$ARTIFACTORY_DOMAIN/artifactory/api/nuget/nuget-local
+    - nuget restore .\DracoonSdk.sln -Source https://api.nuget.org/v3/index.json -Source https://$ARTIFACTORY_DOMAIN/artifactory/api/nuget/ma-dracoon-nuget-local
     - C:\BuildToolsNEW\VS2022BuildTools\MSBuild\Current\Bin\MSBuild.exe DracoonSdkUnitTest\DracoonSdkUnitTest.csproj /p:Configuration="Release"
     - C:\BuildTools\TelerikJustMock\Libraries\Telerik.JustMock.Console runadvanced --command "C:\BuildTools\dotCover\dotCover.exe" --command-args 'cover /TargetExecutable="C:\BuildToolsNEW\VS2022BuildTools\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" /TargetArguments="Dracoon.Sdk.UnitTest.dll" /TargetWorkingDir="DracoonSdkUnitTest\bin\Release" /Scope="Dracoon.Sdk.dll" /Filters="-:module=Dracoon.Sdk.Example;-:module=Dracoon.Sdk.UnitTest" /Output=".\dotCoverResult.html" /ReportType="HTML"'
     - dotnet clean -c Release .\DracoonSdk.sln
