@@ -1,5 +1,5 @@
 include:
-  - project: "dracoon/cicd/pipeline/apps-guild-ci/dotnet-ci"
+  - project: "kiteworks-ma/dracoon/cicd/pipeline/apps-guild-ci/dotnet-ci"
     ref: "main"
     file:
       - "base.yml"
