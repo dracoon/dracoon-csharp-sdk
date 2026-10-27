@@ -87,7 +87,8 @@ namespace Dracoon.Sdk.SdkInternal {
         T IRequestExecutor.DoSyncApiCall<T>(RestRequest request, RequestType requestType, int sendTry) {
             RestClientOptions clientOptions = new RestClientOptions(_client.ServerUri) {
                 UserAgent = DracoonClient.HttpConfig.UserAgent,
-                Timeout = TimeSpan.FromMilliseconds(DracoonClient.HttpConfig.Timeout)
+                Timeout = TimeSpan.FromMilliseconds(DracoonClient.HttpConfig.Timeout),
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
             };
 
             if (DracoonClient.HttpConfig.WebProxy != null) {
